@@ -48,10 +48,15 @@ make check DECK=github-enterprise-platform
 - `decks/<slug>/components/`: Vue components owned by a deck.
 - `decks/<slug>/styles/index.css`: per-deck CSS entrypoint.
 - `decks/<slug>/slide-bottom.vue`: custom global bottom layer/navigation.
+- `shared/components/`: shared Vue components promoted after reuse.
 - `shared/styles/theme.css`: shared visual system.
 - `scripts/deck.mjs`: multi-deck dev/build/export wrapper.
+- `docs/project-state.md`: current architecture and operating state.
+- `docs/component-catalog.md`: reusable visual component catalog.
+- `docs/new-deck-agent-guide.md`: prompt and workflow for new decks.
 - `docs/slide-guidelines.md`: design and content guidelines.
 - `docs/checkpoints/`: continuation notes for future sessions.
+- `.github/workflows/deploy.yml`: GitHub Pages deployment workflow.
 
 ## Deck Architecture
 
@@ -60,9 +65,37 @@ make check DECK=github-enterprise-platform
 - New decks should start from `decks/_template`.
 - Shared behavior belongs in `shared/`; deck-specific visuals belong in the
   deck folder.
+- Before creating a component, inspect `docs/component-catalog.md`.
+- Promote components to `shared/components/` only after they are useful across
+  decks and can accept data through props or slots.
+- Deck-local components may be copied and generalized into a new deck when they
+  are still too domain-specific for `shared/components/`.
 - Do not add external rendering dependencies unless the deck cannot meet its
   goal without them.
 - Do not rely on remote images, scripts, or fonts for core rendering.
+
+## New Deck Agent Flow
+
+- Read `docs/new-deck-agent-guide.md` before scaffolding a new presentation.
+- Start from `decks/_template`.
+- Reuse `data/person.js` and create a deck-level `data/speaker.js` only for
+  talk-specific overrides.
+- Use the component catalog before inventing new visuals.
+- If a new component becomes reusable, document it in
+  `docs/component-catalog.md`.
+- If the deck becomes stable, add its slug to the `Deploy Slides` workflow
+  dropdown.
+
+## Deployment Standard
+
+- GitHub Pages deployments are handled by the `Deploy Slides` workflow.
+- The workflow must support manual `workflow_dispatch` deployment with a deck
+  selector.
+- Keep `all`, current stable deck slugs, and `custom` as deploy targets.
+- When a new deck becomes stable, add its slug to the workflow dropdown so the
+  owner can deploy it without remembering exact folder names.
+- Selected-deck deploys replace the published Pages artifact with that deck and
+  an index pointing to it. Use `all` when the public site should list every deck.
 
 ## Visual Standard
 
@@ -227,6 +260,11 @@ decks/<slug>/public/speaker/
 ## Documentation Rules
 
 - Update `docs/slide-guidelines.md` when a reusable design rule changes.
+- Update `README.md` and `docs/component-catalog.md` in the same commit that
+  creates, deletes, renames, promotes, or meaningfully changes a visual
+  component.
+- If a component is promoted to `shared/components/`, update
+  `shared/components/README.md` in the same commit.
 - Update the relevant checkpoint when pausing a workstream.
 - Keep checkpoint notes factual:
   - current state,

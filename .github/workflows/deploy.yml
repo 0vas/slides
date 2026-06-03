@@ -3,10 +3,19 @@ name: Deploy Slides
 on:
   workflow_dispatch:
     inputs:
-      deck:
-        description: Deck slug to deploy, or all
+      target:
+        description: Deck to deploy
         required: true
+        type: choice
         default: all
+        options:
+          - all
+          - github-enterprise-platform
+          - custom
+      custom_deck:
+        description: Deck slug when target is custom
+        required: false
+        type: string
   push:
     branches:
       - main
@@ -36,13 +45,43 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Resolve deck target
+        id: target
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          TARGET: ${{ inputs.target }}
+          CUSTOM_DECK: ${{ inputs.custom_deck }}
+        run: |
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            deck="all"
+          elif [[ "$TARGET" == "custom" ]]; then
+            deck="$CUSTOM_DECK"
+          else
+            deck="$TARGET"
+          fi
+
+          if [[ -z "$deck" ]]; then
+            echo "::error::custom_deck is required when target is custom"
+            exit 1
+          fi
+
+          if [[ "$deck" != "all" && ! "$deck" =~ ^[a-zA-Z0-9._-]+$ ]]; then
+            echo "::error::Invalid deck slug: $deck"
+            exit 1
+          fi
+
+          echo "deck=$deck" >> "$GITHUB_OUTPUT"
+          echo "Deploy target: $deck"
+          npm run list
+
       - name: Build all decks
-        if: github.event_name == 'push' || inputs.deck == 'all'
+        if: steps.target.outputs.deck == 'all'
         run: npm run build:all
 
       - name: Build selected deck
-        if: github.event_name == 'workflow_dispatch' && inputs.deck != 'all'
-        run: npm run build -- ${{ inputs.deck }}
+        if: steps.target.outputs.deck != 'all'
+        run: npm run build -- ${{ steps.target.outputs.deck }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

@@ -2,6 +2,13 @@
 
 Estos lineamientos son la base para futuras iteraciones de IA en este repositorio.
 
+Documentos relacionados:
+
+- `docs/project-state.md`
+- `docs/component-catalog.md`
+- `docs/new-deck-agent-guide.md`
+- `agent.md`
+
 ## Objetivo visual
 
 - Crear presentaciones minimalistas, pero no planas.
@@ -13,6 +20,8 @@ Estos lineamientos son la base para futuras iteraciones de IA en este repositori
 
 - Un deck vive en `decks/<slug>/slides.md`.
 - Componentes propios del deck viven en `decks/<slug>/components/`.
+- Componentes reutilizables entre decks deben promoverse a `shared/components/`
+  cuando ya no dependan de una charla especifica.
 - Estilos compartidos viven en `shared/styles/theme.css`.
 - Cada deck debe tener `decks/<slug>/styles/index.css` importando el tema compartido.
 - No meter assets generados en `public/` hasta que sean necesarios.
@@ -54,6 +63,7 @@ Estos lineamientos son la base para futuras iteraciones de IA en este repositori
   - Dashboards.
   - Radars.
   - Curvas de madurez.
+- Revisar `docs/component-catalog.md` antes de crear una visual nueva.
 - Evitar imagenes borrosas o capturas que no aporten informacion.
 
 ## Estilo

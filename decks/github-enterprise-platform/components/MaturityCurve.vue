@@ -1,11 +1,11 @@
 <template>
   <div class="maturity-curve">
-    <svg viewBox="0 0 900 320" role="img">
-      <path d="M70 260 C210 250 260 190 350 178 C470 160 500 92 610 86 C720 80 760 58 830 48" class="curve-line" />
+    <svg viewBox="0 0 900 280" role="img">
+      <path d="M110 230 C225 220 270 184 350 172 C470 152 500 96 610 88 C700 82 735 62 790 58" class="curve-line" />
       <g v-for="(point, index) in points" :key="point.title">
         <circle :cx="point.x" :cy="point.y" r="10" class="curve-dot" />
-        <text :x="point.x - 36" :y="point.y - 24">{{ point.title }}</text>
-        <text :x="point.x - 36" :y="point.y + 42" class="curve-small">{{ point.detail }}</text>
+        <text :x="point.x" :y="point.y - 24">{{ point.title }}</text>
+        <text :x="point.x" :y="point.y + 42" class="curve-small">{{ point.detail }}</text>
       </g>
     </svg>
   </div>
@@ -13,9 +13,9 @@
 
 <script setup>
 const points = [
-  { x: 90, y: 258, title: 'Caos', detail: 'Repos sueltos' },
-  { x: 320, y: 183, title: 'Orden', detail: 'Estandares' },
-  { x: 590, y: 90, title: 'Escala', detail: 'Self-service' },
-  { x: 820, y: 50, title: 'Plataforma', detail: 'Medicion' }
+  { x: 110, y: 230, title: 'Caos', detail: 'Repos sueltos' },
+  { x: 350, y: 172, title: 'Orden', detail: 'Estandares' },
+  { x: 610, y: 88, title: 'Escala', detail: 'Self-service' },
+  { x: 790, y: 58, title: 'Plataforma', detail: 'Medicion' }
 ]
 </script>

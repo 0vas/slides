@@ -39,18 +39,6 @@
   position: absolute;
 }
 
-.slidev-layout::after {
-  background: linear-gradient(90deg, transparent, rgba(57, 197, 207, 0.16), transparent);
-  content: "";
-  height: 1px;
-  left: 7%;
-  opacity: 0.75;
-  pointer-events: none;
-  position: absolute;
-  right: 7%;
-  top: 19%;
-}
-
 .slidev-layout > * {
   position: relative;
   z-index: 1;
@@ -601,7 +589,7 @@
   display: grid;
   gap: 0.7rem;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  padding: 0.85rem 1rem;
+  padding: 0.72rem 0.92rem;
 }
 
 .mock-logo {
@@ -639,13 +627,13 @@
 .mock-org {
   display: grid;
   grid-template-columns: 0.75fr 1.25fr;
-  min-height: 330px;
+  min-height: 230px;
 }
 
 .mock-org aside {
   background: #0a0f18;
   border-right: 1px solid var(--deck-line);
-  padding: 1.2rem;
+  padding: 0.95rem;
 }
 
 .mock-org aside span,
@@ -654,19 +642,25 @@
 .job-row small {
   color: var(--deck-soft);
   display: block;
-  font-size: 0.86rem;
+  font-size: 0.8rem;
 }
 
 .mock-org aside strong {
   display: block;
-  font-size: 1.55rem;
-  margin: 0.45rem 0;
+  font-size: 1.16rem;
+  margin: 0.28rem 0;
+}
+
+.mock-org aside small {
+  font-size: 0.76rem;
+  line-height: 1.25;
 }
 
 .mock-org section {
   display: grid;
-  gap: 0.75rem;
-  padding: 1rem;
+  gap: 0.42rem;
+  grid-auto-rows: minmax(0, 1fr);
+  padding: 0.64rem;
 }
 
 .mock-row,
@@ -676,20 +670,21 @@
   border: 1px solid #263247;
   border-radius: 6px;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.24rem;
   grid-template-columns: 1fr auto;
-  padding: 0.85rem;
+  padding: 0.48rem 0.62rem;
 }
 
 .mock-row span {
   color: var(--deck-ink);
+  font-size: 0.92rem;
   font-weight: 760;
 }
 
 .mock-row em {
   border-radius: 999px;
   color: var(--deck-green);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-style: normal;
   grid-row: span 2;
   text-transform: uppercase;
@@ -697,17 +692,17 @@
 
 .mock-security {
   display: grid;
-  gap: 1rem;
+  gap: 0.8rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding: 1.1rem;
+  padding: 0.85rem;
 }
 
 .security-tile {
   background: #0a0f18;
   border: 1px solid #263247;
   border-radius: 8px;
-  min-height: 220px;
-  padding: 1rem;
+  min-height: 174px;
+  padding: 0.85rem;
 }
 
 .security-tile span {
@@ -716,7 +711,7 @@
   font-size: 2.6rem;
   font-weight: 860;
   line-height: 1;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 .security-tile strong {
@@ -801,8 +796,9 @@
 
 .enterprise-topology {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 0.65rem;
   position: relative;
 }
 
@@ -813,8 +809,8 @@
     radial-gradient(circle at 100% 0%, rgba(47, 129, 247, 0.1), transparent 42%);
   border: 1px solid var(--deck-line);
   border-radius: 8px;
-  min-height: 128px;
-  padding: 1rem;
+  min-height: 112px;
+  padding: 0.82rem;
 }
 
 .topology-center {
@@ -822,9 +818,8 @@
   border-color: rgba(47, 129, 247, 0.7);
   display: flex;
   flex-direction: column;
-  grid-column: 2;
+  grid-column: span 2;
   justify-content: center;
-  order: -1;
 }
 
 .topology-center span,
@@ -837,13 +832,13 @@
 }
 
 .topology-center strong {
-  font-size: 2.2rem;
+  font-size: 2rem;
 }
 
 .topology-node strong {
   display: block;
-  font-size: 1.25rem;
-  margin: 1.5rem 0 0.4rem;
+  font-size: 1.08rem;
+  margin: 1.15rem 0 0.34rem;
 }
 
 .topology-node small {
@@ -1263,11 +1258,13 @@
     radial-gradient(circle at 100% 0%, rgba(57, 197, 207, 0.12), transparent 42%);
   border: 1px solid var(--deck-line);
   border-radius: 8px;
-  padding: 1rem;
+  margin-top: 0.55rem;
+  padding: 0.82rem;
 }
 
 .maturity-curve svg {
-  height: 330px;
+  height: 258px;
+  overflow: visible;
   width: 100%;
 }
 
@@ -1288,13 +1285,14 @@
 
 .maturity-curve text {
   fill: var(--deck-ink);
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 760;
+  text-anchor: middle;
 }
 
 .maturity-curve .curve-small {
   fill: var(--deck-muted);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .trial-card {

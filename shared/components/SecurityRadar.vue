@@ -1,5 +1,5 @@
 <template>
-  <div class="security-radar" aria-label="Radar de GitHub Advanced Security">
+  <div class="security-radar" :aria-label="ariaLabel">
     <svg viewBox="0 0 520 360" role="img">
       <defs>
         <linearGradient id="radarSweep" x1="0" x2="1" y1="0" y2="1">
@@ -13,23 +13,34 @@
       <path d="M260 180 L380 134 A128 128 0 0 1 348 274 Z" class="radar-sweep" />
       <line x1="132" y1="180" x2="388" y2="180" class="radar-axis" />
       <line x1="260" y1="52" x2="260" y2="308" class="radar-axis" />
-      <g v-for="point in points" :key="point.label">
+      <g v-for="point in props.points" :key="point.label">
         <circle :cx="point.x" :cy="point.y" r="7" :class="['radar-dot', point.tone]" />
         <text :x="point.x + 14" :y="point.y + 5">{{ point.label }}</text>
       </g>
     </svg>
     <div class="radar-copy">
-      <strong>Shift-left real</strong>
-      <span>Secret scanning, code scanning y dependencias aparecen dentro del flujo, no despues del incidente.</span>
+      <strong>{{ title }}</strong>
+      <span>{{ detail }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
-const points = [
-  { label: 'Secrets', x: 332, y: 118, tone: 'blue' },
-  { label: 'CodeQL', x: 186, y: 146, tone: 'green' },
-  { label: 'Deps', x: 306, y: 246, tone: 'amber' },
-  { label: 'Policy', x: 226, y: 220, tone: 'rose' }
-]
+const props = defineProps({
+  ariaLabel: { type: String, default: 'Radar de capacidades' },
+  title: { type: String, default: 'Shift-left real' },
+  detail: {
+    type: String,
+    default: 'Secret scanning, code scanning y dependencias aparecen dentro del flujo, no despues del incidente.'
+  },
+  points: {
+    type: Array,
+    default: () => [
+      { label: 'Secrets', x: 332, y: 118, tone: 'blue' },
+      { label: 'CodeQL', x: 186, y: 146, tone: 'green' },
+      { label: 'Deps', x: 306, y: 246, tone: 'amber' },
+      { label: 'Policy', x: 226, y: 220, tone: 'rose' }
+    ]
+  }
+})
 </script>

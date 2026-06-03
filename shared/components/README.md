@@ -1,15 +1,31 @@
 # Shared Components
 
-This folder is reserved for Vue components that are reusable across decks.
+This folder contains Vue components that are reusable across decks.
 
-Current status:
+Shared components must be:
 
-- No component has been promoted here yet.
-- Reusable patterns are documented in `docs/component-catalog.md`.
-- Existing component implementations live in
-  `decks/github-enterprise-platform/components/`.
+- generic enough to work outside one talk,
+- data-driven through props or slots,
+- styled by `shared/styles/theme.css`,
+- documented in `README.md` and `docs/component-catalog.md`.
 
-Promotion rule:
+Current shared components:
 
-Move a component here when it is useful for more than one deck, accepts data via
-props or slots, and does not depend on a single talk's copy or domain.
+- `SpeakerProfile.vue`
+- `TypingTitle.vue`
+- `PlatformMap.vue`
+- `EnterpriseTopology.vue`
+- `GovernanceGrid.vue`
+- `SecurityRadar.vue`
+- `MaturityCurve.vue`
+
+Decks should import these explicitly from `slides.md` or from a local wrapper:
+
+```md
+<script setup>
+import PlatformMap from '../../shared/components/PlatformMap.vue'
+</script>
+```
+
+Keep domain-specific components inside `decks/<slug>/components/` until they are
+generalized.

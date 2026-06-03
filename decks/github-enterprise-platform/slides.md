@@ -13,6 +13,17 @@ drawings:
   enabled: false
 ---
 
+<script setup>
+import EnterpriseTopology from '../../shared/components/EnterpriseTopology.vue'
+import GovernanceGrid from '../../shared/components/GovernanceGrid.vue'
+import MaturityCurve from '../../shared/components/MaturityCurve.vue'
+import PlatformMap from '../../shared/components/PlatformMap.vue'
+import SecurityRadar from '../../shared/components/SecurityRadar.vue'
+import SpeakerProfile from '../../shared/components/SpeakerProfile.vue'
+import TypingTitle from '../../shared/components/TypingTitle.vue'
+import { speaker } from './data/speaker.js'
+</script>
+
 <div class="hero-grid">
   <div>
     <span class="kicker">Git · GitHub · Actions · Seguridad · AI</span>
@@ -29,7 +40,7 @@ drawings:
 transition: slide-up
 ---
 
-<SpeakerProfile />
+<SpeakerProfile :speaker="speaker" />
 
 ---
 transition: fade

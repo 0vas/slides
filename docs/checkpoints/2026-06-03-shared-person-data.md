@@ -29,8 +29,8 @@ Date: 2026-06-03
 
 - `data/person.js`
 - `shared/public/speaker/`
+- `shared/components/SpeakerProfile.vue`
 - `decks/github-enterprise-platform/data/speaker.js`
-- `decks/github-enterprise-platform/components/SpeakerProfile.vue`
 - `shared/styles/theme.css`
 - `agent.md`
 - `docs/slide-guidelines.md`

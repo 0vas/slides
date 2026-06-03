@@ -6,7 +6,7 @@
       :enter="{ opacity: 1, x: 0, transition: { duration: 560 } }"
       class="speaker-identity"
     >
-      <span class="kicker">Quien les habla</span>
+      <span class="kicker">{{ kicker }}</span>
       <h2>{{ speaker.name }}</h2>
       <p>{{ speaker.headline }} en {{ speaker.organization }}</p>
 
@@ -68,7 +68,7 @@
         <img
           v-if="qrSrc && !qrFailed"
           :src="qrSrc"
-          :alt="`QR de LinkedIn de ${speaker.name}`"
+          :alt="qrAlt"
           @error="qrFailed = true"
         />
         <div v-else class="qr-placeholder" aria-label="QR de LinkedIn pendiente">
@@ -78,7 +78,7 @@
           <strong>QR</strong>
         </div>
         <div>
-          <span>LinkedIn</span>
+          <span>{{ qrLabel }}</span>
           <strong>{{ speaker.linkedin.handle }}</strong>
         </div>
       </div>
@@ -88,10 +88,15 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { speaker } from '../data/speaker.js'
 
 const photoFailed = ref(false)
 const qrFailed = ref(false)
+
+const props = defineProps({
+  speaker: { type: Object, required: true },
+  kicker: { type: String, default: 'Quien les habla' },
+  qrLabel: { type: String, default: 'LinkedIn' }
+})
 
 const asset = (path) => {
   if (!path) return ''
@@ -99,6 +104,7 @@ const asset = (path) => {
   return `${import.meta.env.BASE_URL}${path}`
 }
 
-const photoSrc = computed(() => asset(speaker.photoImage))
-const qrSrc = computed(() => asset(speaker.linkedin.qrImage))
+const photoSrc = computed(() => asset(props.speaker.photoImage))
+const qrSrc = computed(() => asset(props.speaker.linkedin.qrImage))
+const qrAlt = computed(() => `QR de ${props.qrLabel} de ${props.speaker.name}`)
 </script>

@@ -89,7 +89,10 @@ El workflow `Deploy Slides` permite publicar en GitHub Pages:
 - `target = <slug>`: publica solo ese deck.
 - `target = custom`: permite escribir un slug que aun no este en el dropdown.
 
-En GitHub Pages, configura el origen como **GitHub Actions**.
+El workflow intenta habilitar GitHub Pages automaticamente usando
+`actions/configure-pages` con `enablement: true`. Si el primer despliegue falla
+por politicas del repositorio u organizacion, entra a **Settings > Pages** y
+configura el origen como **GitHub Actions**.
 
 Para desplegar manualmente:
 
@@ -103,25 +106,27 @@ workflow para que aparezca en el selector.
 
 ## Componentes Disponibles
 
-El catalogo visual actual nace del deck `github-enterprise-platform`. Sus
-componentes viven en `decks/github-enterprise-platform/components/` y sirven
-como base para nuevos decks. Cuando un componente se use en mas de una
-presentacion y deje de depender del tema GitHub, debe moverse o generalizarse en
-`shared/components/`.
+El catalogo visual tiene dos capas:
 
-| Componente | Uso principal | Estado |
+- `shared/components/`: componentes globales, data-driven y reutilizables.
+- `decks/<slug>/components/`: componentes especificos de una charla o producto.
+
+Slidev auto-importa los componentes locales de cada deck. Los componentes
+globales deben importarse explicitamente desde `slides.md`.
+
+| Componente | Uso principal | Ubicacion |
 | --- | --- | --- |
-| `SpeakerProfile` | Slide de presentacion personal con QR, roles, handles y metadata desde datos compartidos. | Reutilizable con `data/person.js` |
-| `TypingTitle` | Titulos con revelado tipo escritura limpio para portadas o separadores. | Reutilizable |
-| `GitHubMockup` | Mockups HTML/CSS de superficies tipo GitHub: checks, org admin y seguridad. | Especifico GitHub |
-| `PlatformMap` | Mapa de etapas, dominios o transformacion de herramienta a plataforma. | Candidato a shared |
-| `EnterpriseTopology` | Diagrama compacto de dependencias y dominios empresariales. | Candidato a shared |
-| `GovernanceGrid` | Grilla 2x2 para pilares, gobierno u operating model. | Candidato a shared |
-| `BranchProtectionFlow` | Flujo lineal de PR, checks, reviews y merge gates. | Especifico GitHub |
-| `SecurityRadar` | Radar visual para capacidades, riesgos o postura de seguridad. | Candidato a shared |
-| `CopilotFlow` | Flujo de productividad/adopcion con asistente de codigo. | Especifico GitHub/Copilot |
-| `MaturityCurve` | Curva de madurez con etapas y puntos de decision. | Candidato a shared |
-| `TrialCard` | Tarjeta CTA para trial de GitHub Enterprise. | Especifico GitHub |
+| `SpeakerProfile` | Slide de presentacion personal con QR, roles, handles y metadata desde datos compartidos. | `shared/components/` |
+| `TypingTitle` | Titulos con revelado tipo escritura limpio para portadas o separadores. | `shared/components/` |
+| `PlatformMap` | Mapa de etapas, dominios o transformacion de herramienta a plataforma. | `shared/components/` |
+| `EnterpriseTopology` | Diagrama compacto de dependencias y dominios empresariales. | `shared/components/` |
+| `GovernanceGrid` | Grilla 2x2 para pilares, gobierno u operating model. | `shared/components/` |
+| `SecurityRadar` | Radar visual para capacidades, riesgos o postura de seguridad. | `shared/components/` |
+| `MaturityCurve` | Curva de madurez con etapas y puntos de decision. | `shared/components/` |
+| `GitHubMockup` | Mockups HTML/CSS de superficies tipo GitHub: checks, org admin y seguridad. | `decks/github-enterprise-platform/components/` |
+| `BranchProtectionFlow` | Flujo lineal de PR, checks, reviews y merge gates. | `decks/github-enterprise-platform/components/` |
+| `CopilotFlow` | Flujo de productividad/adopcion con asistente de codigo. | `decks/github-enterprise-platform/components/` |
+| `TrialCard` | Tarjeta CTA para trial de GitHub Enterprise. | `decks/github-enterprise-platform/components/` |
 
 El detalle de props, casos de uso y criterios de promocion esta en
 [docs/component-catalog.md](docs/component-catalog.md).

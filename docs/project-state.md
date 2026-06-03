@@ -21,6 +21,7 @@ reutilizables, validacion local y despliegue por GitHub Pages.
   `custom`.
 - Datos personales compartidos: `data/person.js`.
 - Assets personales compartidos: `shared/public/speaker/`.
+- Componentes visuales compartidos: `shared/components/`.
 
 ## Arquitectura
 
@@ -109,18 +110,21 @@ se salgan del canvas.
 
 ## Componentes Existentes
 
-El deck `github-enterprise-platform` contiene el primer catalogo de componentes:
+Componentes compartidos actuales en `shared/components/`:
 
 - `SpeakerProfile`: slide de presentacion personal data-driven.
 - `TypingTitle`: efecto de escritura limpio para titulos.
-- `GitHubMockup`: mockup de producto con variantes `org`, `security` y acciones.
 - `PlatformMap`: mapa de transformacion de herramienta a plataforma.
 - `EnterpriseTopology`: topologia enterprise compacta.
 - `GovernanceGrid`: grilla de gobierno.
-- `BranchProtectionFlow`: flujo de pull request con controles.
 - `SecurityRadar`: radar de seguridad.
-- `CopilotFlow`: flujo de adopcion/productividad con Copilot.
 - `MaturityCurve`: curva de madurez.
+
+Componentes especificos del deck `github-enterprise-platform`:
+
+- `GitHubMockup`: mockup de producto con variantes `org`, `security` y acciones.
+- `BranchProtectionFlow`: flujo de pull request con controles.
+- `CopilotFlow`: flujo de adopcion/productividad con Copilot.
 - `TrialCard`: tarjeta de trial de GitHub Enterprise Cloud.
 
 Ver detalles y patrones de uso en `docs/component-catalog.md`.
@@ -128,6 +132,8 @@ Ver detalles y patrones de uso en `docs/component-catalog.md`.
 ## Deploy
 
 El workflow `.github/workflows/deploy.yml` publica en GitHub Pages.
+El paso `actions/configure-pages` usa `enablement: true` para que el primer
+despliegue pueda habilitar Pages cuando la politica del repositorio lo permita.
 
 Targets manuales:
 
@@ -159,9 +165,9 @@ Para cambios visuales, validar al menos:
 
 ## Pendientes Recomendados
 
-- Promover el primer componente real a `shared/components/` cuando al menos dos
-  decks usen el mismo componente generico.
-- Separar componentes GitHub-specific de componentes visuales genericos.
+- Seguir separando componentes GitHub-specific de componentes visuales genericos.
+- Considerar wrappers locales por deck si los imports de `shared/components/`
+  crecen demasiado dentro de `slides.md`.
 - Agregar capturas de referencia por deck en `docs/checkpoints/` cuando se
   cierre una version lista para charla.
 - Mantener el dropdown del workflow actualizado con cada deck estable.

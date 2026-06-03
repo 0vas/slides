@@ -26,6 +26,7 @@ Si el deck nuevo se parece al deck actual, revisar tambien:
 ```text
 decks/github-enterprise-platform/slides.md
 decks/github-enterprise-platform/components/
+shared/components/
 shared/styles/theme.css
 ```
 
@@ -57,15 +58,17 @@ suposicion en el resumen final.
 4. Crear `decks/<slug>/styles/index.css` importando el tema compartido.
 5. Crear `decks/<slug>/data/speaker.js` importando `person` si habra slide de
    speaker.
-6. Reusar componentes existentes antes de crear nuevos.
+6. Reusar componentes de `shared/components/` antes de crear nuevos.
 7. Crear componentes especificos en `decks/<slug>/components/`.
-8. Usar `TypingTitle` solo en portada o secciones clave.
-9. Mantener ritmo de 24-32 slides para 30 minutos.
-10. Validar con `make check DECK=<slug>`.
-11. Revisar capturas de portada, slide densa y slide con mockup.
-12. Si el deck queda estable, agregar su slug al workflow `Deploy Slides`.
-13. Actualizar `docs/component-catalog.md` si nace un patron reutilizable.
-14. Crear checkpoint si el usuario pide pausar o cerrar version.
+8. Importar componentes compartidos explicitamente en `slides.md`.
+9. Usar `TypingTitle` solo en portada o secciones clave.
+10. Mantener ritmo de 24-32 slides para 30 minutos.
+11. Validar con `make check DECK=<slug>`.
+12. Revisar capturas de portada, slide densa y slide con mockup.
+13. Si el deck queda estable, agregar su slug al workflow `Deploy Slides`.
+14. Actualizar `README.md` y `docs/component-catalog.md` si nace o cambia un
+    componente.
+15. Crear checkpoint si el usuario pide pausar o cerrar version.
 
 ## Prompt Base Para Un Nuevo Deck
 

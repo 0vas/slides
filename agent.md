@@ -48,7 +48,7 @@ make check DECK=github-enterprise-platform
 - `decks/<slug>/components/`: Vue components owned by a deck.
 - `decks/<slug>/styles/index.css`: per-deck CSS entrypoint.
 - `decks/<slug>/slide-bottom.vue`: custom global bottom layer/navigation.
-- `shared/components/`: shared Vue components promoted after reuse.
+- `shared/components/`: reusable Vue components shared across decks.
 - `shared/styles/theme.css`: shared visual system.
 - `scripts/deck.mjs`: multi-deck dev/build/export wrapper.
 - `docs/project-state.md`: current architecture and operating state.
@@ -66,8 +66,8 @@ make check DECK=github-enterprise-platform
 - Shared behavior belongs in `shared/`; deck-specific visuals belong in the
   deck folder.
 - Before creating a component, inspect `docs/component-catalog.md`.
-- Promote components to `shared/components/` only after they are useful across
-  decks and can accept data through props or slots.
+- Put generic, data-driven components in `shared/components/` when they can be
+  reused across decks through props or slots.
 - Deck-local components may be copied and generalized into a new deck when they
   are still too domain-specific for `shared/components/`.
 - Do not add external rendering dependencies unless the deck cannot meet its
@@ -91,6 +91,8 @@ make check DECK=github-enterprise-platform
 - GitHub Pages deployments are handled by the `Deploy Slides` workflow.
 - The workflow must support manual `workflow_dispatch` deployment with a deck
   selector.
+- `actions/configure-pages` must keep `enablement: true` so a first deployment
+  can create or enable the Pages site when repository policy allows it.
 - Keep `all`, current stable deck slugs, and `custom` as deploy targets.
 - When a new deck becomes stable, add its slug to the workflow dropdown so the
   owner can deploy it without remembering exact folder names.

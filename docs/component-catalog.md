@@ -5,68 +5,75 @@ crear decks pulidos en este repositorio.
 
 ## Estado Del Catalogo
 
-Los componentes actuales viven en:
+El catalogo tiene dos capas:
 
 ```text
-decks/github-enterprise-platform/components/
+shared/components/                         # componentes globales reutilizables
+decks/github-enterprise-platform/components/ # componentes especificos del deck
 ```
 
-La mayoria nacieron para el deck de GitHub Enterprise, pero varios ya funcionan
-como patrones reutilizables. Cuando un componente se use en otro deck y deje de
-ser especifico de GitHub, debe promoverse o copiarse a una capa compartida con
-un nombre mas generico.
-
-La carpeta `shared/components/` ya existe como destino de promocion. Por ahora
-no contiene componentes reales; el criterio es mover alli solo piezas probadas
-en mas de un deck.
-
-## Reglas De Reuso
-
-- Reusar antes de crear desde cero.
-- Adaptar datos y copy, no duplicar estilos grandes.
-- Si un componente queda acoplado a una charla, mantenerlo en `decks/<slug>/`.
-- Si un componente sirve para varios decks, moverlo a `shared/components/` o
-  crear una version generica ahi.
-- Mantener props simples y data arrays legibles.
-- Evitar dependencias remotas para renderizar componentes centrales.
-
-## Componentes
-
-### `SpeakerProfile`
-
-Uso: slide de presentacion del speaker con QR, perfiles publicos, roles y tags.
-
-Fuente:
-
-```text
-decks/github-enterprise-platform/components/SpeakerProfile.vue
-```
-
-Datos:
-
-```text
-data/person.js
-decks/<slug>/data/speaker.js
-shared/public/speaker/
-```
-
-Cuando usarlo:
-
-- Al inicio de una charla.
-- Cuando el contexto de la persona aporte credibilidad a la sesion.
-- Cuando haya QR escaneable de LinkedIn u otro perfil.
+Slidev auto-importa componentes desde `decks/<slug>/components/`. Los
+componentes de `shared/components/` deben importarse explicitamente desde el
+`slides.md` del deck o desde un wrapper local.
 
 Ejemplo:
 
 ```md
----
-transition: slide-up
----
+<script setup>
+import PlatformMap from '../../shared/components/PlatformMap.vue'
+</script>
 
-<SpeakerProfile />
+<PlatformMap />
+```
+
+## Reglas De Reuso
+
+- Reusar antes de crear desde cero.
+- Usar `shared/components/` para piezas genericas, data-driven y sin dominio
+  demasiado especifico.
+- Usar `decks/<slug>/components/` para mockups, CTAs o visuales propias de una
+  charla.
+- Mantener props simples y data arrays legibles.
+- Evitar dependencias remotas para renderizar componentes centrales.
+- Cada cambio de componente debe actualizar `README.md` y este catalogo en el
+  mismo commit.
+
+## Componentes Compartidos
+
+### `SpeakerProfile`
+
+Fuente:
+
+```text
+shared/components/SpeakerProfile.vue
+```
+
+Uso: slide de presentacion del speaker con QR, perfiles publicos, roles y tags.
+
+Props:
+
+- `speaker`: objeto requerido. Normalmente viene de `decks/<slug>/data/speaker.js`.
+- `kicker`: etiqueta superior, default `Quien les habla`.
+- `qrLabel`: etiqueta del QR, default `LinkedIn`.
+
+Ejemplo:
+
+```md
+<script setup>
+import SpeakerProfile from '../../shared/components/SpeakerProfile.vue'
+import { speaker } from './data/speaker.js'
+</script>
+
+<SpeakerProfile :speaker="speaker" />
 ```
 
 ### `TypingTitle`
+
+Fuente:
+
+```text
+shared/components/TypingTitle.vue
+```
 
 Uso: titulo con revelado tipo escritura, sin cursor persistente.
 
@@ -76,19 +83,107 @@ Props:
 - `text`: texto requerido.
 - `delay`: demora en milisegundos.
 
-Cuando usarlo:
-
-- Portadas.
-- Separadores de seccion.
-- Una o dos slides de alto impacto.
-
 Ejemplo:
 
 ```md
 <TypingTitle as="h2" text="Vamos a cambiar el lente" />
 ```
 
-No usarlo en todos los titulos; pierde impacto y puede distraer.
+Usarlo solo en portadas o separadores clave.
+
+### `PlatformMap`
+
+Fuente:
+
+```text
+shared/components/PlatformMap.vue
+```
+
+Uso: mapa de cuatro etapas, dominios o transformaciones.
+
+Props:
+
+- `ariaLabel`: descripcion accesible.
+- `nodes`: array de nodos.
+
+Patron de datos:
+
+```js
+{ label: '01', title: 'Codigo', detail: 'Repos, ramas, PRs', tone: 'blue' }
+```
+
+### `EnterpriseTopology`
+
+Fuente:
+
+```text
+shared/components/EnterpriseTopology.vue
+```
+
+Uso: topologia compacta con centro y nodos alrededor.
+
+Props:
+
+- `centerLabel`: etiqueta del nodo central.
+- `centerTitle`: titulo del nodo central.
+- `nodes`: array con `code`, `title`, `detail` y `tone`.
+
+Mantener entre 4 y 6 nodos para que respire en 16:9.
+
+### `GovernanceGrid`
+
+Fuente:
+
+```text
+shared/components/GovernanceGrid.vue
+```
+
+Uso: grilla 2x2 para pilares, gobierno u operating model.
+
+Props:
+
+- `items`: array con `code`, `title` y `detail`.
+
+### `SecurityRadar`
+
+Fuente:
+
+```text
+shared/components/SecurityRadar.vue
+```
+
+Uso: radar visual para capacidades, riesgos o postura de seguridad.
+
+Props:
+
+- `ariaLabel`: descripcion accesible.
+- `title`: titulo del bloque de copy.
+- `detail`: descripcion corta.
+- `points`: array con `label`, coordenadas `x/y` y `tone`.
+
+Usa SVG propio y no depende de imagenes externas.
+
+### `MaturityCurve`
+
+Fuente:
+
+```text
+shared/components/MaturityCurve.vue
+```
+
+Uso: curva de madurez compacta con cuatro puntos.
+
+Props:
+
+- `points`: array con `x`, `y`, `title` y `detail`.
+
+Mantener maximo cuatro puntos y revisar que las etiquetas no toquen los bordes
+del SVG.
+
+## Componentes Especificos Del Deck GitHub
+
+Estos siguen en `decks/github-enterprise-platform/components/` porque dependen
+del contexto GitHub, GHAS, Copilot o Enterprise trial.
 
 ### `GitHubMockup`
 
@@ -100,123 +195,25 @@ Props:
 - `title`: titulo del mockup.
 - `badge`: etiqueta del estado o vista.
 
-Variantes:
-
-- `org`: vista enterprise/admin.
-- `security`: tiles de seguridad.
-- default: filas tipo workflow/checks.
-
-Ejemplo:
-
-```md
-<GitHubMockup variant="security" title="Security overview" badge="Secret protection" />
-```
-
-Notas:
-
-- Actualmente es GitHub-specific.
-- Para otros temas, crear una version generica tipo `ProductMockup`.
-
-### `PlatformMap`
-
-Uso: mapa de cuatro etapas o dominios.
-
-Cuando usarlo:
-
-- Para explicar transformaciones.
-- Para comparar niveles de madurez.
-- Para introducir un marco mental.
-
-Patron de datos:
-
-```js
-{ label: '01', title: 'Codigo', detail: 'Repos, ramas, PRs', tone: 'blue' }
-```
-
-### `EnterpriseTopology`
-
-Uso: topologia compacta con centro y nodos alrededor.
-
-Cuando usarlo:
-
-- Arquitectura mental.
-- Mapa de dependencias.
-- Sistemas empresariales y dominios de gobierno.
-
-Notas:
-
-- Ya esta compactado para no cortar en 16:9.
-- Mantener entre 4 y 6 nodos para que respire.
-
-### `GovernanceGrid`
-
-Uso: grilla 2x2 de dominios de gobierno.
-
-Cuando usarlo:
-
-- Explicar pilares.
-- Mostrar decisiones previas a escalar.
-- Resumir operating model.
+Para otros temas, crear una version generica tipo `ProductMockup`.
 
 ### `BranchProtectionFlow`
 
-Uso: flujo de pasos lineales tipo PR/checks/review/merge.
+Uso: flujo lineal de pull request, checks, reviews y merge gates.
 
-Cuando usarlo:
-
-- Procesos operativos.
-- Gateways de calidad.
-- Ciclos de aprobacion.
-
-### `SecurityRadar`
-
-Uso: radar visual con puntos y texto explicativo.
-
-Cuando usarlo:
-
-- Security posture.
-- Deteccion temprana.
-- Priorizacion de capacidades.
-
-Notas:
-
-- Usa SVG propio; no depende de imagenes externas.
-- Adaptar labels y puntos segun la historia.
+Mantenerlo en el deck hasta convertirlo en un flujo generico de aprobaciones.
 
 ### `CopilotFlow`
 
-Uso: cuatro pasos para adopcion, productividad o asistencia.
+Uso: flujo de adopcion/productividad con GitHub Copilot.
 
-Cuando usarlo:
-
-- Flujos de cambio cultural.
-- Procesos con etapas claras.
-- Frameworks de adopcion.
-
-### `MaturityCurve`
-
-Uso: curva de madurez compacta con cuatro puntos.
-
-Cuando usarlo:
-
-- Mostrar evolucion.
-- Cerrar una seccion con direccion estrategica.
-- Explicar progreso desde caos a plataforma.
-
-Notas:
-
-- Mantener maximo cuatro puntos.
-- Revisar que labels no queden cerca del borde del SVG.
+Mantenerlo especifico mientras use lenguaje o estructura de Copilot.
 
 ### `TrialCard`
 
-Uso: tarjeta informativa para una oferta, trial o call-to-action practico.
+Uso: tarjeta CTA para trial de GitHub Enterprise.
 
-Cuando usarlo:
-
-- Practicas posteriores a la charla.
-- Recursos para la audiencia.
-- Cierre accionable.
+Mantenerlo especifico porque representa una accion concreta de esta charla.
 
 ## Clases Visuales Compartidas
 
@@ -237,20 +234,21 @@ Markdown o componentes:
 
 1. Revisar este catalogo.
 2. Reusar una estructura existente si la forma visual ya existe.
-3. Crear el componente en `decks/<slug>/components/` si es especifico.
-4. Usar props o arrays locales simples.
-5. Agregar animacion con `v-motion` solo si aclara orden o jerarquia.
-6. Validar a 1440x900 y 1600x900.
-7. Documentarlo aqui si queda como patron reutilizable.
+3. Crear el componente en `shared/components/` si sera generico desde el inicio.
+4. Crear el componente en `decks/<slug>/components/` si es especifico.
+5. Usar props o arrays locales simples.
+6. Agregar animacion con `v-motion` solo si aclara orden o jerarquia.
+7. Validar a 1440x900 y 1600x900.
+8. Documentarlo aqui y en `README.md` en el mismo commit.
 
-## Criterio Para Promover A Compartido
+## Criterio Para Compartir
 
-Mover a `shared/components/` cuando se cumplan al menos dos condiciones:
+Un componente pertenece en `shared/components/` cuando cumple estas condiciones:
 
-- Se usa o se usara en mas de un deck.
 - No depende de texto, marcas o conceptos de un solo tema.
 - Acepta datos por props o slots.
 - Su estilo ya esta alineado con `shared/styles/theme.css`.
+- Puede ser usado por un agente al crear un deck nuevo sin copiar codigo.
 
-Mientras no exista `shared/components/`, los agentes pueden copiar un componente
-del deck actual y generalizarlo en el nuevo deck.
+Si un componente todavia depende de un producto, charla o CTA especifico,
+mantenerlo en `decks/<slug>/components/`.

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+decks/*/dist/
+.slidev/
+.slidev-dist/
+decks/*/.slidev-dist/
+*.pdf
+*.pptx
+*.png
+.DS_Store

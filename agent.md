@@ -1,0 +1,239 @@
+# Agent Spec
+
+This repository is a multi-deck Slidev workspace. This file is the canonical
+spec for AI agents creating, editing, validating, and documenting presentations
+in this repo.
+
+## Mission
+
+- Build presentations as code, using Slidev, Markdown, Vue, HTML, and CSS.
+- Prioritize usable decks over landing pages or generic documentation.
+- Make each deck publishable as static HTML and exportable through the standard
+  repo commands.
+- Preserve a consistent visual and operational standard across future decks.
+
+## Required Workflow
+
+1. Inspect the existing deck and shared theme before editing.
+2. Use the existing structure and components when possible.
+3. Make scoped changes only; avoid unrelated refactors.
+4. After meaningful changes, run `make check DECK=<slug>`.
+5. For visual changes, capture at least the cover and one internal slide at
+   1440x900 when a local server is available.
+6. Document new reusable decisions in `docs/slide-guidelines.md`.
+7. Add or update a checkpoint under `docs/checkpoints/` when the user asks to
+   pause, checkpoint, or continue later.
+
+## Commands
+
+- `make install`: install dependencies.
+- `make list`: list available decks.
+- `make dev DECK=<slug> PORT=4100`: run a deck locally.
+- `make build DECK=<slug>`: build one deck.
+- `make build-all`: build every deck.
+- `make pdf DECK=<slug>`: export PDF.
+- `make pptx DECK=<slug>`: export PPTX.
+- `make check DECK=<slug>`: syntax-check scripts and build the selected deck.
+
+Default deck:
+
+```bash
+make dev DECK=github-enterprise-platform
+make check DECK=github-enterprise-platform
+```
+
+## Repo Structure
+
+- `decks/<slug>/slides.md`: deck content and per-slide frontmatter.
+- `decks/<slug>/components/`: Vue components owned by a deck.
+- `decks/<slug>/styles/index.css`: per-deck CSS entrypoint.
+- `decks/<slug>/slide-bottom.vue`: custom global bottom layer/navigation.
+- `shared/styles/theme.css`: shared visual system.
+- `scripts/deck.mjs`: multi-deck dev/build/export wrapper.
+- `docs/slide-guidelines.md`: design and content guidelines.
+- `docs/checkpoints/`: continuation notes for future sessions.
+
+## Deck Architecture
+
+- A deck slug must be URL and folder friendly, for example
+  `github-enterprise-platform`.
+- New decks should start from `decks/_template`.
+- Shared behavior belongs in `shared/`; deck-specific visuals belong in the
+  deck folder.
+- Do not add external rendering dependencies unless the deck cannot meet its
+  goal without them.
+- Do not rely on remote images, scripts, or fonts for core rendering.
+
+## Visual Standard
+
+- Use a dark enterprise-tech visual language with strong contrast.
+- Prefer a real slide experience: dense enough for a talk, minimal enough to be
+  readable from a projector.
+- Use gradient typography and gradient borders as signature styling.
+- Use a subtle grid and restrained radial gradients for depth.
+- Cards and panels should use `border-radius: 8px` unless a component has a
+  specific reason to differ.
+- Avoid one-color themes; combine blue, green, cyan, purple, amber, and rose as
+  semantic accents.
+- Never let decorative gradients, overlays, or glows reduce text contrast.
+- Avoid nested card-in-card layouts unless the nested element represents a real
+  product surface, modal, or repeated item.
+
+## Typography
+
+- Use large type only for true slide headlines and section breaks.
+- Keep compact panels, cards, mockups, and navigation text smaller and stable.
+- Do not use negative letter spacing.
+- Do not scale text directly with viewport width.
+- Confirm long Spanish headings fit at 1440x900.
+- If a headline is too long, rewrite it or split it intentionally; do not rely
+  on clipping or overflow.
+
+## Animation Standard
+
+- Use motion to clarify order, hierarchy, or transformation.
+- Prefer smooth `fade`, `slide-left`, and `slide-up` transitions.
+- Avoid `view-transition` or flash-like transitions in projector decks.
+- Use `v-click` for progressive disclosure.
+- Use `v-motion` for components that enter, move, or stage information.
+- Keep most durations between 420ms and 680ms.
+- Typewriter/code-writing effects are allowed only on selected high-impact
+  titles.
+- The typewriter effect must not show a vertical caret, border, cursor line, or
+  fake terminal prompt unless explicitly requested.
+- The typewriter effect should reveal text cleanly without leaving a persistent
+  visual mark after the animation.
+- Do not animate every object on a slide; the deck should feel intentional, not
+  noisy.
+
+## Navigation
+
+- Prefer Slidev native navigation when it can be styled cleanly.
+- Native navigation icons must remain visible in play mode and presenter mode.
+- Do not hide the native ribbon just to solve contrast; fix icon color,
+  background, borders, and hover states instead.
+- Avoid duplicating navigation ribbons. Use a custom `slide-bottom.vue` only
+  when the native controls cannot support the required workflow.
+- The grid action must open the visual Slidev overview with slide thumbnails,
+  not a numbers-only picker.
+- Keep the mouse cursor visible over controls; do not use `cursor: none`.
+- When capturing screenshots, move the mouse outside the deck viewport or away
+  from navigation controls.
+
+## Mockups, Graphics, And Screenshots
+
+- Prefer HTML/CSS/Vue mockups over static screenshots when real platform access
+  or permissions are not available.
+- Mockups should feel like product surfaces, but should avoid copying sensitive
+  or private UI.
+- Use grid-based top bars when badges sit next to long titles, so text cannot
+  collide.
+- Use Vue components for diagrams, flows, dashboards, topology maps, radars,
+  maturity curves, and platform surfaces.
+- Screenshots are acceptable only when the user provides them or asks for them,
+  and when they are readable at presentation size.
+- Do not use blurry, cropped, stock-like, or purely atmospheric visuals when the
+  audience needs to understand a platform concept.
+
+## Content Standard
+
+- Present GitHub from a platform perspective, not only from the developer
+  workflow.
+- Connect governance, identity, repository ownership, security, automation,
+  Actions, Advanced Security, Copilot, and adoption metrics.
+- Include practical enterprise operating lessons, not only feature lists.
+- Prefer short phrases written for spoken delivery.
+- For a 30 minute talk, target roughly 24-32 slides.
+- Use section breaks every 5-7 slides to reset attention.
+- Include a clear final takeaway or operating model.
+
+## Speaker Profile Slides
+
+- Speaker/profile slides must be data-driven, not hardcoded only in Markdown.
+- Root personal data is canonical in `data/person.js`. This file is for stable
+  owner metadata shared by all decks: name, email, role/headline,
+  organization, location, public profiles, QR image references, profile image
+  references, reusable roles, and reusable tags.
+- Deck-specific speaker files may exist at `decks/<slug>/data/speaker.js`, but
+  they must import `person` from `data/person.js` and override only talk-specific
+  fields such as `talkRole`, deck-specific roles, or deck-specific tags.
+- Prefer a `data/<name>.js` file plus a reusable Vue component when a deck has
+  additional data beyond the root `person` object.
+- Include profile metadata organically:
+  - name,
+  - email when the owner wants it public,
+  - role/headline,
+  - organization,
+  - relevant affiliations,
+  - GitHub handle,
+  - LinkedIn handle,
+  - X/Twitter handle when relevant,
+  - ORCID only when the speaker uses it or the talk has research context.
+- Do not overload the profile slide with a full CV.
+- The profile slide should connect the speaker's background to the talk topic.
+- QR codes must be real image assets, not AI-generated fake QR codes.
+- Until the QR image is provided, use a clear visual placeholder and document
+  the expected file path.
+- Store shared speaker public assets in the repository-level shared folder:
+
+```text
+shared/public/speaker/linkedin-qr.png
+```
+
+- If an asset is imported from `data/person.js`, use Vite asset imports with
+  `?url`, for example `../shared/public/speaker/linkedin-qr.svg?url`.
+- Use `import.meta.env.BASE_URL` only for string paths that intentionally point
+  to a deck's `public/` folder.
+- Deck-specific speaker assets may still live under:
+
+```text
+decks/<slug>/public/speaker/
+```
+
+- Keep the root data as the source of truth. Do not duplicate unchanged personal
+  metadata inside Markdown slides or deck-specific data files.
+- Never use a QR screenshot that is blurry, cropped, or impossible to scan.
+
+## Current GitHub Enterprise Deck Requirements
+
+- Topic: GitHub as an enterprise platform.
+- Audience: intermediate, familiar with GitHub basics.
+- Duration: around 30 minutes.
+- Tone: practical, real-world platform governance, not a beginner tutorial.
+- Must include GitHub Advanced Security, Copilot, Actions, governance, scaling,
+  and GitHub Enterprise trial.
+- Must not include camera/recording UI as part of the deck experience.
+- Must use strong but controlled animations and visual mockups.
+
+## Validation
+
+- Run `make check DECK=<slug>` after meaningful changes.
+- Treat build warnings from dependencies as non-blocking only when the build
+  exits successfully and the warning is unrelated to authored code.
+- Validate at least:
+  - cover slide,
+  - one dense content slide,
+  - one animated/mockup slide,
+  - navigation visibility.
+- Check for:
+  - text overlap,
+  - text clipping,
+  - unreadable contrast,
+  - badges colliding with titles,
+  - native Slidev UI leaking into the deck,
+  - mouse pointer artifacts,
+  - excessive or distracting transitions.
+
+## Documentation Rules
+
+- Update `docs/slide-guidelines.md` when a reusable design rule changes.
+- Update the relevant checkpoint when pausing a workstream.
+- Keep checkpoint notes factual:
+  - current state,
+  - important files,
+  - decisions made,
+  - known issues,
+  - validation commands,
+  - local preview URL.
+- Do not document temporary experiments as standards unless the user approves
+  them or they become part of the final deck direction.

@@ -29,6 +29,10 @@ Documentos relacionados:
 - Estilos compartidos viven en `shared/styles/theme.css`.
 - Paletas compartidas viven en `shared/styles/palettes.css`.
 - Cada deck debe tener `decks/<slug>/styles/index.css` importando el tema compartido.
+- Imagenes, videos, GIFs, capturas, logos, graficas de comunidad y mascotas de
+  una charla viven en `decks/<slug>/public/media/`.
+- Referenciar multimedia del deck como `media/<archivo>` desde Markdown/props o
+  resolverla con `import.meta.env.BASE_URL` dentro de componentes Vue.
 - No meter assets generados en `public/` hasta que sean necesarios.
 
 ## Duracion y ritmo
@@ -82,9 +86,8 @@ Documentos relacionados:
   y borde sutil para separarse de fondos claros o oscuros.
 - Para imagen, video o GIF, usar `MediaFrame` y assets locales cuando sean parte
   esencial de la charla.
-- Guardar imagenes, videos, GIFs, capturas y logos propios de una charla en
-  `decks/<slug>/public/media/`. Referenciarlos como `media/<archivo>` o
-  resolverlos con `import.meta.env.BASE_URL` dentro de componentes Vue.
+- En portadas o slides con una visual nueva, agregar sin reemplazar lo que ya
+  comunica la slide, salvo que el usuario pida explicitamente sustituirlo.
 - Para 3D, usar `Shape3DStage`/Three.js y validar con screenshot que el canvas
   renderiza correctamente.
 - Evitar imagenes borrosas o capturas que no aporten informacion.
@@ -104,6 +107,8 @@ Documentos relacionados:
   - Rosa: alertas, gates, excepciones.
 - Texto grande para ideas principales.
 - Texto pequeno solo para etiquetas, notas o detalle de soporte.
+- En fondos oscuros, el texto de lectura debe ser blanco o casi blanco. El gris
+  queda solo para etiquetas secundarias que no afecten la comprension.
 - No usar paletas de un solo color.
 - Elegir una paleta de `docs/style-catalog.md` antes de diseñar slides.
 - Cambiar de paleta via `class: palette-*` y `defaults.class`, no copiando CSS
@@ -134,6 +139,12 @@ Documentos relacionados:
   aun no existe, usar placeholder visual y documentar la ruta esperada.
 - La metadata personal debe entrar de forma organica: rol, organizacion,
   afiliaciones relevantes y handles publicos, sin convertirlo en CV completo.
+- Evitar redundancia en slides de speaker y cierre: si el QR ya comunica el
+  contacto, no repetir una etiqueta grande; si el nombre/rol ya aparecen, no
+  duplicarlos en tarjetas cercanas.
+- Para handles ambiguos, escribirlos con claridad tipografica. En `@0vas`, el
+  primer caracter es cero; si se aclara, hacerlo una sola vez y no repetirlo en
+  cada bloque de contacto.
 - Si se menciona una capacidad actual de GitHub, verificarla con fuentes oficiales cuando sea temporal o pueda cambiar.
 - No prometer features incluidas en trials o planes sin validacion.
 

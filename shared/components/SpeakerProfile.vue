@@ -41,7 +41,7 @@
         <span v-else>{{ speaker.initials }}</span>
       </div>
 
-      <div class="speaker-meta">
+      <div v-if="showMeta" class="speaker-meta">
         <span>{{ speaker.talkRole }}</span>
         <strong>{{ speaker.shortName }}</strong>
         <small>{{ speaker.location }}</small>
@@ -77,7 +77,7 @@
           <span></span>
           <strong>QR</strong>
         </div>
-        <div>
+        <div v-if="showQrLabel">
           <span>{{ qrLabel }}</span>
           <strong>{{ speaker.linkedin.handle }}</strong>
         </div>
@@ -95,7 +95,9 @@ const qrFailed = ref(false)
 const props = defineProps({
   speaker: { type: Object, required: true },
   kicker: { type: String, default: 'Quien les habla' },
-  qrLabel: { type: String, default: 'LinkedIn' }
+  qrLabel: { type: String, default: 'LinkedIn' },
+  showMeta: { type: Boolean, default: true },
+  showQrLabel: { type: Boolean, default: true }
 })
 
 const asset = (path) => {

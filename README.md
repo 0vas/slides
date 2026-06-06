@@ -46,6 +46,21 @@ scripts/
 - `shared/styles/palettes.css`: paletas reutilizables para cambiar el tono del
   deck sin duplicar CSS.
 
+## Multimedia Y Datos
+
+- La multimedia propia de una charla vive en `decks/<slug>/public/media/`.
+  Ejemplos: imagenes, videos, GIFs, capturas, logos, graficas de comunidad,
+  mascotas o piezas del evento.
+- Referencia esos archivos como `media/<archivo>` en Markdown/props. En
+  componentes Vue, construye la ruta con `import.meta.env.BASE_URL` cuando el
+  archivo venga del `public/` del deck.
+- Los datos personales estables y assets compartidos del speaker viven en
+  `data/speaker/`; los decks solo deben crear overrides especificos de la
+  charla en `decks/<slug>/data/speaker.js`.
+- Mantener slides de speaker y cierre sin duplicacion: QR, handles, nombre,
+  rol y aclaraciones como `0 = cero` deben aparecer solo cuando agreguen
+  claridad real.
+
 ## Decks Disponibles
 
 | Deck | Proposito | Comando |

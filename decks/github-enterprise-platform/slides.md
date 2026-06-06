@@ -24,14 +24,17 @@ drawings:
     </h1>
     <p class="lead">Lo que no aparece en los tutoriales cuando GitHub empieza a operar a escala.</p>
   </div>
-<GitHubMockup variant="actions" title="Repository checks" badge="Enterprise flow" />
+  <div class="hero-visual-stack">
+    <GitHubMockup variant="actions" title="Repository checks" badge="Enterprise flow" />
+    <NonaHero />
+  </div>
 </div>
 
 ---
 transition: slide-up
 ---
 
-<SpeakerProfile />
+<SpeakerProfile :show-meta="false" :show-qr-label="false" />
 
 ---
 transition: fade

@@ -64,8 +64,9 @@ const qrSrc = computed(() => speaker.linkedin?.qrImage || '')
 }
 
 .thank-you-copy p {
-  color: rgba(226, 232, 240, 0.74);
+  color: #ffffff;
   font-size: 1.28rem;
+  font-weight: 700;
   line-height: 1.35;
   margin: 0;
   max-width: 740px;
@@ -85,8 +86,9 @@ const qrSrc = computed(() => speaker.linkedin?.qrImage || '')
 }
 
 .thank-you-meta span {
-  color: var(--deck-muted);
+  color: #ffffff;
   font-size: 0.92rem;
+  font-weight: 680;
 }
 
 .thank-you-card {

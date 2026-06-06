@@ -72,6 +72,10 @@ kill a running dev server when the requested deck cannot be resolved.
 - New decks should start from `decks/_template`.
 - Shared behavior belongs in `shared/`; deck-specific visuals belong in the
   deck folder.
+- Deck-specific images, videos, GIFs, screenshots, community graphics, event
+  art, and mascots belong in `decks/<slug>/public/media/`. Reference them as
+  `media/<file>` in Markdown/props, or with `import.meta.env.BASE_URL` from
+  Vue components.
 - Before creating a component, inspect `docs/component-catalog.md`.
 - Put generic, data-driven components in `shared/components/` when they can be
   reused across decks through props or slots.
@@ -129,6 +133,9 @@ kill a running dev server when the requested deck cannot be resolved.
 - Use gradient typography and gradient borders as signature styling.
 - Use palette variables from `shared/styles/palettes.css`; do not fork the theme
   for one-off color changes.
+- On dark slides, supporting copy and speaker-role text must remain high
+  contrast. Use white or near-white for readable prose; reserve gray for labels,
+  timestamps, or metadata that can safely be secondary.
 - Use a subtle grid and restrained radial gradients for depth.
 - Cards and panels should use `border-radius: 8px` unless a component has a
   specific reason to differ.
@@ -240,6 +247,11 @@ kill a running dev server when the requested deck cannot be resolved.
   - ORCID only when the speaker uses it or the talk has research context.
 - Do not overload the profile slide with a full CV.
 - The profile slide should connect the speaker's background to the talk topic.
+- Avoid repeated identity blocks on speaker and closing slides. If a handle,
+  talk title, QR label, or role is already clear from context, hide it instead
+  of repeating it.
+- `SpeakerProfile` can hide the top metadata block and QR label with props when
+  a deck needs a cleaner profile slide.
 - QR codes must be real image assets, not AI-generated fake QR codes.
 - Until the QR image is provided, use a clear visual placeholder and document
   the expected file path.

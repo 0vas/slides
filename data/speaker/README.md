@@ -21,3 +21,9 @@ needs a different QR, profile photo, badge, or event-specific graphic.
 
 Deck-specific images, videos, GIFs, screenshots, and event graphics belong under
 `decks/<slug>/public/media/`, not in this folder.
+
+Use deck-level `decks/<slug>/data/speaker.js` files only for talk-specific
+overrides such as `talkRole`, selected profiles, tags, or roles. Avoid repeating
+stable identity data in Markdown. If a profile or closing slide feels crowded,
+prefer hiding redundant labels/metadata instead of duplicating handles or QR
+descriptions.

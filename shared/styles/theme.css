@@ -353,6 +353,12 @@
   padding: 0.72rem;
 }
 
+.speaker-qr:has(> img:only-child),
+.speaker-qr:has(> .qr-placeholder:only-child) {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
 .speaker-qr img,
 .qr-placeholder {
   aspect-ratio: 1;

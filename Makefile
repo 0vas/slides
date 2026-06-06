@@ -8,7 +8,7 @@ help:
 	@echo ""
 	@echo "  make install          Install dependencies"
 	@echo "  make list             List available decks"
-	@echo "  make dev              Run selected deck locally"
+	@echo "  make dev              Run selected deck locally, correcting close typos and freeing PORT if needed"
 	@echo "  make build            Build selected deck"
 	@echo "  make build-all        Build all decks"
 	@echo "  make pdf              Export selected deck to PDF"

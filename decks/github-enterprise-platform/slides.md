@@ -5,24 +5,15 @@ info: |
   Como GitHub pasa de ser una herramienta para developers a una plataforma empresarial.
 transition: slide-left
 background: "#080b10"
-class: deck
+class: deck palette-aurora
+defaults:
+  class: deck palette-aurora
 routerMode: hash
 record: false
 download: false
 drawings:
   enabled: false
 ---
-
-<script setup>
-import EnterpriseTopology from '../../shared/components/EnterpriseTopology.vue'
-import GovernanceGrid from '../../shared/components/GovernanceGrid.vue'
-import MaturityCurve from '../../shared/components/MaturityCurve.vue'
-import PlatformMap from '../../shared/components/PlatformMap.vue'
-import SecurityRadar from '../../shared/components/SecurityRadar.vue'
-import SpeakerProfile from '../../shared/components/SpeakerProfile.vue'
-import TypingTitle from '../../shared/components/TypingTitle.vue'
-import { speaker } from './data/speaker.js'
-</script>
 
 <div class="hero-grid">
   <div>
@@ -40,7 +31,7 @@ import { speaker } from './data/speaker.js'
 transition: slide-up
 ---
 
-<SpeakerProfile :speaker="speaker" />
+<SpeakerProfile />
 
 ---
 transition: fade
@@ -80,7 +71,7 @@ transition: slide-left
 ---
 transition: fade
 layout: section
-class: section-platform
+class: deck palette-aurora section-platform
 ---
 
 <TypingTitle text="1. De repo a plataforma" />
@@ -145,7 +136,7 @@ transition: slide-left
 ---
 transition: fade
 layout: section
-class: section-platform
+class: deck palette-aurora section-platform
 ---
 
 <TypingTitle text="2. Gobierno y escala" />
@@ -226,7 +217,7 @@ transition: fade
 ---
 transition: fade
 layout: section
-class: section-security
+class: deck palette-aurora section-security
 ---
 
 <TypingTitle text="3. Seguridad integrada" />
@@ -302,7 +293,7 @@ transition: slide-left
 ---
 transition: fade
 layout: section
-class: section-copilot
+class: deck palette-aurora section-copilot
 ---
 
 <TypingTitle text="4. Productividad asistida" />
@@ -350,7 +341,7 @@ transition: slide-left
 ---
 transition: fade
 layout: section
-class: section-trial
+class: deck palette-aurora section-trial
 ---
 
 <TypingTitle text="5. Enterprise real" />
@@ -421,3 +412,15 @@ transition: slide-left
 </div>
 
 <p class="closing">Ese es el salto: de usar GitHub a operar GitHub.</p>
+
+---
+transition: fade
+---
+
+<ThankYouQr />
+
+---
+transition: fade
+---
+
+<DesecOpsSpaceInvite image-path="media/devsecops-space.jpeg" />

@@ -1,0 +1,32 @@
+{
+  "name": "Oscar Lobaton Salas",
+  "shortName": "Oscar Lobaton",
+  "initials": "OL",
+  "headline": "Platform Product Lead",
+  "organization": "Credicorp",
+  "location": "LatAm",
+  "email": "",
+  "website": "",
+  "photoImage": "",
+  "linkedin": {
+    "label": "LinkedIn",
+    "handle": "in/oscarlobatons",
+    "url": "https://www.linkedin.com/in/oscarlobatons/",
+    "qrAsset": "linkedin-qr.svg"
+  },
+  "profiles": [
+    { "label": "GitHub", "value": "@0vas", "url": "https://github.com/0vas" },
+    { "label": "X", "value": "@0vas", "url": "https://x.com/0vas" }
+  ],
+  "roles": [
+    "Investigador colaborador en LABIAR-UNI",
+    "DevOps Ambassador de PeopleCert",
+    "DevSecOps Space Ambassador"
+  ],
+  "tags": [
+    "Platform engineering",
+    "GitHub governance",
+    "DevSecOps",
+    "AI adoption"
+  ]
+}

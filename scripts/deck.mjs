@@ -18,6 +18,10 @@ function decks() {
     .sort()
 }
 
+function deckSlides(slug) {
+  return join(decksDir, slug, 'slides.md')
+}
+
 function usage() {
   console.log(`Usage:
   npm run list
@@ -28,21 +32,69 @@ function usage() {
   npm run export:pptx -- <deck>`)
 }
 
-function resolveDeck(slug) {
+function editDistance(a, b) {
+  const previous = Array.from({ length: b.length + 1 }, (_, index) => index)
+  const current = Array.from({ length: b.length + 1 }, () => 0)
+
+  for (let i = 1; i <= a.length; i += 1) {
+    current[0] = i
+
+    for (let j = 1; j <= b.length; j += 1) {
+      const substitutionCost = a[i - 1] === b[j - 1] ? 0 : 1
+      current[j] = Math.min(
+        current[j - 1] + 1,
+        previous[j] + 1,
+        previous[j - 1] + substitutionCost
+      )
+    }
+
+    previous.splice(0, previous.length, ...current)
+  }
+
+  return previous[b.length]
+}
+
+function closestDeck(slug, availableDecks) {
+  const candidates = availableDecks
+    .map((name) => ({ name, distance: editDistance(slug, name) }))
+    .sort((a, b) => a.distance - b.distance || a.name.localeCompare(b.name))
+
+  const [best, second] = candidates
+  const threshold = Math.max(2, Math.floor(slug.length * 0.18))
+
+  if (!best || best.distance > threshold) {
+    return undefined
+  }
+
+  if (second && second.distance === best.distance) {
+    return undefined
+  }
+
+  return best.name
+}
+
+function resolveDeckSlug(slug) {
   if (!slug) {
     usage()
     process.exit(1)
   }
 
-  const slides = join(decksDir, slug, 'slides.md')
+  const availableDecks = decks()
 
-  if (!existsSync(slides)) {
-    console.error(`Deck not found: ${slug}`)
-    console.error(`Available decks: ${decks().join(', ') || '(none)'}`)
-    process.exit(1)
+  if (availableDecks.includes(slug) && existsSync(deckSlides(slug))) {
+    return slug
   }
 
-  return slides
+  const match = closestDeck(slug, availableDecks)
+
+  if (match && existsSync(deckSlides(match))) {
+    console.log(`Deck not found: ${slug}. Using closest match: ${match}`)
+    return match
+  }
+
+  console.error(`Deck not found: ${slug}`)
+  console.error(`Available decks: ${availableDecks.join(', ') || '(none)'}`)
+  process.exit(1)
 }
 
 function run(args) {
@@ -57,11 +109,80 @@ function run(args) {
   }
 }
 
+function portPids(port) {
+  if (process.platform === 'win32') {
+    return []
+  }
+
+  const result = spawnSync('lsof', ['-ti', `tcp:${port}`, '-sTCP:LISTEN'], {
+    cwd: root,
+    encoding: 'utf8'
+  })
+
+  if (result.status !== 0 && !result.stdout) {
+    return []
+  }
+
+  return result.stdout
+    .split('\n')
+    .map((pid) => pid.trim())
+    .filter(Boolean)
+    .filter((pid) => pid !== String(process.pid))
+}
+
+function waitForPort(port) {
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    if (portPids(port).length === 0) {
+      return true
+    }
+
+    spawnSync('sleep', ['0.1'])
+  }
+
+  return false
+}
+
+function freePort(port) {
+  const pids = portPids(port)
+
+  if (pids.length === 0) {
+    return
+  }
+
+  console.log(`Port ${port} is already in use. Stopping process(es): ${pids.join(', ')}`)
+
+  for (const pid of pids) {
+    try {
+      process.kill(Number(pid), 'SIGTERM')
+    } catch {
+      // Process may have already exited.
+    }
+  }
+
+  if (waitForPort(port)) {
+    return
+  }
+
+  for (const pid of portPids(port)) {
+    try {
+      process.kill(Number(pid), 'SIGKILL')
+    } catch {
+      // Process may have already exited.
+    }
+  }
+
+  if (!waitForPort(port)) {
+    console.error(`Could not free port ${port}`)
+    process.exit(1)
+  }
+}
+
 function basePath(slug) {
   return process.env.BASE_PATH ?? `/${repoName}/${slug}/`
 }
 
-function build(slug) {
+function build(requestedSlug) {
+  const slug = resolveDeckSlug(requestedSlug)
   const tempOut = join(decksDir, slug, '.slidev-dist')
   const finalOut = join(root, 'dist', slug)
 
@@ -70,7 +191,7 @@ function build(slug) {
 
   run([
     'build',
-    resolveDeck(slug),
+    deckSlides(slug),
     '--out',
     tempOut,
     '--base',
@@ -80,6 +201,8 @@ function build(slug) {
   mkdirSync(join(root, 'dist'), { recursive: true })
   cpSync(tempOut, finalOut, { recursive: true })
   rmSync(tempOut, { recursive: true, force: true })
+
+  return slug
 }
 
 function writeIndex(slugs) {
@@ -154,12 +277,15 @@ switch (command) {
     break
   }
   case 'dev': {
-    run([resolveDeck(deck), '--port', process.env.PORT ?? '4100'])
+    const port = process.env.PORT ?? '4100'
+    const slug = resolveDeckSlug(deck)
+    freePort(port)
+    run([deckSlides(slug), '--port', port])
     break
   }
   case 'build': {
-    build(deck)
-    writeIndex([deck])
+    const slug = build(deck)
+    writeIndex([slug])
     break
   }
   case 'build-all': {
@@ -171,11 +297,13 @@ switch (command) {
     break
   }
   case 'export-pdf': {
-    run(['export', resolveDeck(deck), '--format', 'pdf', '--output', `${deck}.pdf`])
+    const slug = resolveDeckSlug(deck)
+    run(['export', deckSlides(slug), '--format', 'pdf', '--output', `${slug}.pdf`])
     break
   }
   case 'export-pptx': {
-    run(['export', resolveDeck(deck), '--format', 'pptx', '--output', `${deck}.pptx`])
+    const slug = resolveDeckSlug(deck)
+    run(['export', deckSlides(slug), '--format', 'pptx', '--output', `${slug}.pptx`])
     break
   }
   default: {

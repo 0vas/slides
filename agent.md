@@ -42,6 +42,10 @@ make dev DECK=github-enterprise-platform
 make check DECK=github-enterprise-platform
 ```
 
+`make dev` resolves the requested deck first, accepts an unambiguous close deck
+name typo, and then frees the requested `PORT` before starting Slidev. Do not
+kill a running dev server when the requested deck cannot be resolved.
+
 ## Repo Structure
 
 - `decks/<slug>/slides.md`: deck content and per-slide frontmatter.
@@ -53,10 +57,13 @@ make check DECK=github-enterprise-platform
 - `scripts/deck.mjs`: multi-deck dev/build/export wrapper.
 - `docs/project-state.md`: current architecture and operating state.
 - `docs/component-catalog.md`: reusable visual component catalog.
+- `docs/style-catalog.md`: available palette and style catalog.
 - `docs/new-deck-agent-guide.md`: prompt and workflow for new decks.
 - `docs/slide-guidelines.md`: design and content guidelines.
 - `docs/checkpoints/`: continuation notes for future sessions.
 - `.github/workflows/deploy.yml`: GitHub Pages deployment workflow.
+- `decks/component-showcase/`: example deck that exercises the current visual
+  component catalog.
 
 ## Deck Architecture
 
@@ -68,6 +75,9 @@ make check DECK=github-enterprise-platform
 - Before creating a component, inspect `docs/component-catalog.md`.
 - Put generic, data-driven components in `shared/components/` when they can be
   reused across decks through props or slots.
+- Expose shared components to Slidev Markdown through local wrappers in
+  `decks/<slug>/components/`, because Slidev auto-imports deck-local
+  components.
 - Deck-local components may be copied and generalized into a new deck when they
   are still too domain-specific for `shared/components/`.
 - Do not add external rendering dependencies unless the deck cannot meet its
@@ -78,11 +88,19 @@ make check DECK=github-enterprise-platform
 
 - Read `docs/new-deck-agent-guide.md` before scaffolding a new presentation.
 - Start from `decks/_template`.
-- Reuse `data/person.js` and create a deck-level `data/speaker.js` only for
-  talk-specific overrides.
+- Choose a palette from `docs/style-catalog.md` and apply it with a
+  `palette-*` class in both `class` and `defaults.class`.
+- Reuse `data/speaker/person.js` and create a deck-level `data/speaker.js` only
+  for talk-specific overrides.
+- Store deck-specific images, videos, GIFs, screenshots, and event graphics
+  under `decks/<slug>/public/media/`.
 - Use the component catalog before inventing new visuals.
 - If a new component becomes reusable, document it in
   `docs/component-catalog.md`.
+- When the component catalog changes, update `decks/component-showcase/`.
+- When the style catalog changes, update `shared/styles/palettes.css`,
+  `shared/components/StylePalette.vue`, `README.md`, `docs/style-catalog.md`,
+  and `decks/component-showcase/`.
 - If the deck becomes stable, add its slug to the `Deploy Slides` workflow
   dropdown.
 
@@ -101,10 +119,16 @@ make check DECK=github-enterprise-platform
 
 ## Visual Standard
 
-- Use a dark enterprise-tech visual language with strong contrast.
+- Use a light enterprise-tech visual language by default, with strong contrast,
+  subtle grid, and polished product-like surfaces.
+- Reserve dark palettes for talks that explicitly need a nocturnal, keynote, or
+  high-contrast mood; never make new templates or showcase decks dark by
+  default.
 - Prefer a real slide experience: dense enough for a talk, minimal enough to be
   readable from a projector.
 - Use gradient typography and gradient borders as signature styling.
+- Use palette variables from `shared/styles/palettes.css`; do not fork the theme
+  for one-off color changes.
 - Use a subtle grid and restrained radial gradients for depth.
 - Cards and panels should use `border-radius: 8px` unless a component has a
   specific reason to differ.
@@ -165,6 +189,14 @@ make check DECK=github-enterprise-platform
   collide.
 - Use Vue components for diagrams, flows, dashboards, topology maps, radars,
   maturity curves, and platform surfaces.
+- Prefer the shared catalog for common visual primitives: browser mockups,
+  metrics, comparison tables, decision matrices, hierarchy trees, icon grids,
+  timelines, swimlanes, pyramids, Venn diagrams, callout stacks, quotes,
+  architecture layers, media frames, and 3D stages.
+- Use `BrowserMockup` for generic product surfaces; keep `GitHubMockup` for
+  GitHub-specific screens.
+- Use `Shape3DStage` for 3D slides and validate that its canvas renders nonblank
+  in Playwright screenshots.
 - Screenshots are acceptable only when the user provides them or asks for them,
   and when they are readable at presentation size.
 - Do not use blurry, cropped, stock-like, or purely atmospheric visuals when the
@@ -185,13 +217,15 @@ make check DECK=github-enterprise-platform
 ## Speaker Profile Slides
 
 - Speaker/profile slides must be data-driven, not hardcoded only in Markdown.
-- Root personal data is canonical in `data/person.js`. This file is for stable
-  owner metadata shared by all decks: name, email, role/headline,
+- Root personal data is canonical in `data/speaker/speaker.json`, with
+  `data/speaker/person.js` as the Vite-facing wrapper. These files are for
+  stable owner metadata shared by all decks: name, email, role/headline,
   organization, location, public profiles, QR image references, profile image
   references, reusable roles, and reusable tags.
 - Deck-specific speaker files may exist at `decks/<slug>/data/speaker.js`, but
-  they must import `person` from `data/person.js` and override only talk-specific
-  fields such as `talkRole`, deck-specific roles, or deck-specific tags.
+  they must import `person` from `data/speaker/person.js` and override only
+  talk-specific fields such as `talkRole`, deck-specific roles, or deck-specific
+  tags.
 - Prefer a `data/<name>.js` file plus a reusable Vue component when a deck has
   additional data beyond the root `person` object.
 - Include profile metadata organically:
@@ -209,20 +243,20 @@ make check DECK=github-enterprise-platform
 - QR codes must be real image assets, not AI-generated fake QR codes.
 - Until the QR image is provided, use a clear visual placeholder and document
   the expected file path.
-- Store shared speaker public assets in the repository-level shared folder:
+- Store shared speaker assets next to the speaker data:
 
 ```text
-shared/public/speaker/linkedin-qr.png
+data/speaker/linkedin-qr.svg
 ```
 
-- If an asset is imported from `data/person.js`, use Vite asset imports with
-  `?url`, for example `../shared/public/speaker/linkedin-qr.svg?url`.
+- If an asset is imported from `data/speaker/person.js`, use Vite asset imports
+  with `?url`, for example `./linkedin-qr.svg?url`.
 - Use `import.meta.env.BASE_URL` only for string paths that intentionally point
   to a deck's `public/` folder.
-- Deck-specific speaker assets may still live under:
+- Deck-specific media assets must live under:
 
 ```text
-decks/<slug>/public/speaker/
+decks/<slug>/public/media/
 ```
 
 - Keep the root data as the source of truth. Do not duplicate unchanged personal
@@ -265,6 +299,8 @@ decks/<slug>/public/speaker/
 - Update `README.md` and `docs/component-catalog.md` in the same commit that
   creates, deletes, renames, promotes, or meaningfully changes a visual
   component.
+- Update `decks/component-showcase/` in the same commit when the visible
+  component catalog changes.
 - If a component is promoted to `shared/components/`, update
   `shared/components/README.md` in the same commit.
 - Update the relevant checkpoint when pausing a workstream.

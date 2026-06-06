@@ -16,7 +16,7 @@ Date: 2026-05-28
 - `decks/github-enterprise-platform/components/`
 - `decks/github-enterprise-platform/slide-bottom.vue`
 - `decks/github-enterprise-platform/data/speaker.js`
-- `decks/github-enterprise-platform/public/speaker/`
+- `decks/github-enterprise-platform/public/media/`
 - `shared/styles/theme.css`
 - `docs/slide-guidelines.md`
 - `agent.md`

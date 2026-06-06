@@ -6,7 +6,8 @@ Shared components must be:
 
 - generic enough to work outside one talk,
 - data-driven through props or slots,
-- styled by `shared/styles/theme.css`,
+- styled by `shared/styles/theme.css` and palette variables from
+  `shared/styles/palettes.css`,
 - documented in `README.md` and `docs/component-catalog.md`.
 
 Current shared components:
@@ -18,12 +19,45 @@ Current shared components:
 - `GovernanceGrid.vue`
 - `SecurityRadar.vue`
 - `MaturityCurve.vue`
+- `GraphDiagram.vue`
+- `SequenceDiagram.vue`
+- `MediaFrame.vue`
+- `StylePalette.vue`
+- `BrowserMockup.vue`
+- `MetricStrip.vue`
+- `ComparisonTable.vue`
+- `DecisionMatrix.vue`
+- `HierarchyTree.vue`
+- `IconGrid.vue`
+- `ShapeSystem.vue`
+- `TimelineFlow.vue`
+- `SwimlaneFlow.vue`
+- `PyramidDiagram.vue`
+- `VennDiagram.vue`
+- `CalloutStack.vue`
+- `QuoteFrame.vue`
+- `ArchitectureLayers.vue`
+- `Shape3DStage.vue`
 
-Decks should import these explicitly from `slides.md` or from a local wrapper:
+Reference deck:
 
-```md
+```bash
+make dev DECK=component-showcase
+```
+
+`Shape3DStage.vue` uses `three`; validate it visually with Playwright because a
+passing build does not prove the WebGL canvas rendered.
+
+Decks should expose shared components through local wrappers so Slidev can
+auto-import them from `decks/<slug>/components/`:
+
+```vue
+<template>
+  <SharedPlatformMap v-bind="$attrs" />
+</template>
+
 <script setup>
-import PlatformMap from '../../shared/components/PlatformMap.vue'
+import SharedPlatformMap from '../../../shared/components/PlatformMap.vue'
 </script>
 ```
 

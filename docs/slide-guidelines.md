@@ -6,6 +6,7 @@ Documentos relacionados:
 
 - `docs/project-state.md`
 - `docs/component-catalog.md`
+- `docs/style-catalog.md`
 - `docs/new-deck-agent-guide.md`
 - `agent.md`
 
@@ -13,7 +14,10 @@ Documentos relacionados:
 
 - Crear presentaciones minimalistas, pero no planas.
 - Usar HTML/CSS/Vue como una experiencia web animada y fluida.
-- Mantener una estetica enterprise-tech: oscura, contrastada, sobria y con acentos de color.
+- Mantener una estetica enterprise-tech clara por defecto: luminosa,
+  contrastada, sobria y con acentos de color.
+- Usar paletas oscuras solo cuando la charla pida un tono nocturno, keynote o
+  de alto contraste.
 - Priorizar una idea por slide y apoyar esa idea con un componente visual.
 
 ## Estructura recomendada
@@ -23,6 +27,7 @@ Documentos relacionados:
 - Componentes reutilizables entre decks deben promoverse a `shared/components/`
   cuando ya no dependan de una charla especifica.
 - Estilos compartidos viven en `shared/styles/theme.css`.
+- Paletas compartidas viven en `shared/styles/palettes.css`.
 - Cada deck debe tener `decks/<slug>/styles/index.css` importando el tema compartido.
 - No meter assets generados en `public/` hasta que sean necesarios.
 
@@ -63,12 +68,32 @@ Documentos relacionados:
   - Dashboards.
   - Radars.
   - Curvas de madurez.
+  - Tablas comparativas.
+  - Matrices de decision.
+  - Jerarquias.
+  - Timelines.
+  - Diagramas de capas.
 - Revisar `docs/component-catalog.md` antes de crear una visual nueva.
+- Usar componentes compartidos para grafos, diagramas de secuencia y media antes
+  de crear visuales ad hoc.
+- Usar `BrowserMockup` para mockups genericos claros; reservar `GitHubMockup`
+  para la charla GitHub.
+- Los mockups de producto deben ser superficies claras por defecto, con sombra
+  y borde sutil para separarse de fondos claros o oscuros.
+- Para imagen, video o GIF, usar `MediaFrame` y assets locales cuando sean parte
+  esencial de la charla.
+- Guardar imagenes, videos, GIFs, capturas y logos propios de una charla en
+  `decks/<slug>/public/media/`. Referenciarlos como `media/<archivo>` o
+  resolverlos con `import.meta.env.BASE_URL` dentro de componentes Vue.
+- Para 3D, usar `Shape3DStage`/Three.js y validar con screenshot que el canvas
+  renderiza correctamente.
 - Evitar imagenes borrosas o capturas que no aporten informacion.
 
 ## Estilo
 
-- Fondo oscuro con grid sutil.
+- Fondo claro por defecto con grid sutil y gradientes suaves.
+- `palette-crystal` es la base recomendada para templates, showcase y decks
+  nuevos cuando no hay una direccion visual especifica.
 - Usar gradientes radiales y lineales con moderacion para dar profundidad, sin tapar el contenido.
 - Usar gradientes en tipografia y bordes como recurso principal de marca visual.
 - Tarjetas con `border-radius: 8px`.
@@ -80,6 +105,13 @@ Documentos relacionados:
 - Texto grande para ideas principales.
 - Texto pequeno solo para etiquetas, notas o detalle de soporte.
 - No usar paletas de un solo color.
+- Elegir una paleta de `docs/style-catalog.md` antes de diseñar slides.
+- Cambiar de paleta via `class: palette-*` y `defaults.class`, no copiando CSS
+  por deck.
+- Si una slide declara una clase propia, debe conservar tambien la clase de la
+  paleta para no volver al estilo por defecto.
+- Cuando una paleta nueva sea necesaria, actualizar `shared/styles/palettes.css`,
+  `StylePalette`, `README.md` y `docs/style-catalog.md` en el mismo cambio.
 - Preferir la navegacion nativa de Slidev cuando pueda estilizarse bien.
 - La cinta nativa debe conservar iconos visibles en modo play y presenter.
 - No ocultar la cinta nativa para resolver contraste; corregir color,
@@ -95,9 +127,9 @@ Documentos relacionados:
 - Mostrar la relacion entre gobierno, seguridad, automatizacion y productividad.
 - Incluir siempre lecciones operativas o criterios de decision.
 - Las slides de presentacion personal deben ser data-driven y reutilizables.
-- Los datos personales estables deben vivir en `data/person.js`; los decks solo
-  deben sobreescribir campos especificos de la charla.
-- Los assets personales compartidos deben vivir en `shared/public/speaker/`.
+- Los datos personales estables deben vivir en `data/speaker/speaker.json`; los
+  decks solo deben sobreescribir campos especificos de la charla.
+- Los assets personales compartidos deben vivir en `data/speaker/`.
 - El QR de LinkedIn debe ser una imagen real importada desde los datos root; si
   aun no existe, usar placeholder visual y documentar la ruta esperada.
 - La metadata personal debe entrar de forma organica: rol, organizacion,

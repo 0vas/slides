@@ -17,6 +17,7 @@ Antes de crear o editar un deck, leer:
 agent.md
 docs/project-state.md
 docs/component-catalog.md
+docs/style-catalog.md
 docs/slide-guidelines.md
 README.md
 ```
@@ -24,10 +25,13 @@ README.md
 Si el deck nuevo se parece al deck actual, revisar tambien:
 
 ```text
+decks/_template/slides.md
+decks/component-showcase/slides.md
 decks/github-enterprise-platform/slides.md
 decks/github-enterprise-platform/components/
 shared/components/
 shared/styles/theme.css
+shared/styles/palettes.css
 ```
 
 ## Informacion Que Debe Pedir O Inferir
@@ -53,22 +57,30 @@ suposicion en el resumen final.
 ## Flujo De Trabajo
 
 1. Definir slug URL-friendly.
-2. Copiar o adaptar `decks/_template/`.
-3. Crear `decks/<slug>/slides.md`.
-4. Crear `decks/<slug>/styles/index.css` importando el tema compartido.
-5. Crear `decks/<slug>/data/speaker.js` importando `person` si habra slide de
-   speaker.
-6. Reusar componentes de `shared/components/` antes de crear nuevos.
-7. Crear componentes especificos en `decks/<slug>/components/`.
-8. Importar componentes compartidos explicitamente en `slides.md`.
-9. Usar `TypingTitle` solo en portada o secciones clave.
-10. Mantener ritmo de 24-32 slides para 30 minutos.
-11. Validar con `make check DECK=<slug>`.
-12. Revisar capturas de portada, slide densa y slide con mockup.
-13. Si el deck queda estable, agregar su slug al workflow `Deploy Slides`.
-14. Actualizar `README.md` y `docs/component-catalog.md` si nace o cambia un
+2. Copiar o adaptar `decks/_template/`, que debe contener lorem ipsum y no
+   contenido especifico de otra charla.
+3. Reemplazar el lorem ipsum por la narrativa real del deck.
+4. Crear o ajustar `decks/<slug>/styles/index.css` importando el tema compartido.
+5. Elegir una paleta de `docs/style-catalog.md` y ponerla en `class` y
+   `defaults.class`.
+6. Crear `decks/<slug>/data/speaker.js` importando `person` desde
+   `data/speaker/person.js` si habra slide de speaker.
+7. Reusar componentes de `shared/components/` antes de crear nuevos.
+8. Crear componentes especificos en `decks/<slug>/components/`.
+9. Crear wrappers locales para componentes compartidos que se usen en Markdown.
+10. Elegir visuales del catalogo por necesidad narrativa: mockup, metrica,
+    tabla, matriz, jerarquia, grafo, secuencia, timeline, swimlane, media,
+    cita, capas o 3D.
+11. Usar `TypingTitle` solo en portada o secciones clave.
+12. Mantener ritmo de 24-32 slides para 30 minutos.
+13. Validar con `make check DECK=<slug>`.
+14. Revisar capturas de portada, slide densa, slide con mockup/media y
+    navegacion.
+15. Si el deck queda estable, agregar su slug al workflow `Deploy Slides`.
+16. Actualizar `README.md` y `docs/component-catalog.md` si nace o cambia un
     componente.
-15. Crear checkpoint si el usuario pide pausar o cerrar version.
+17. Actualizar `docs/style-catalog.md` si nace o cambia una paleta.
+18. Crear checkpoint si el usuario pide pausar o cerrar version.
 
 ## Prompt Base Para Un Nuevo Deck
 
@@ -110,8 +122,11 @@ Assets disponibles:
 Slug sugerido:
 <slug>
 
+Paleta sugerida:
+<palette-crystal | palette-aurora | palette-lab | palette-sunset | palette-mono | palette-carbon | palette-citrus | palette-orchid>
+
 Usa la arquitectura del repo, reutiliza componentes del catalogo, manten el
-estilo enterprise-tech y deja el deck listo para `make check`.
+estilo enterprise-tech claro por defecto y deja el deck listo para `make check`.
 ```
 
 ## Prompt Para Mejorar Un Deck Existente
@@ -128,7 +143,8 @@ Problemas observados:
 
 Mantener:
 - estructura modular,
-- datos personales desde `data/person.js`,
+- datos personales desde `data/speaker/person.js`,
+- multimedia propia en `decks/<slug>/public/media/`,
 - componentes reutilizables,
 - navegacion nativa visible,
 - build limpio con `make check`.
@@ -154,8 +170,11 @@ Un deck nuevo esta listo cuando:
 - Crear un landing page en vez de una presentacion usable.
 - Duplicar datos personales dentro de Markdown.
 - Crear componentes nuevos sin revisar el catalogo.
+- Olvidar actualizar `component-showcase` cuando cambia el catalogo.
 - Usar screenshots borrosos o ilegibles.
 - Meter assets generados o builds en git.
 - Ocultar la navegacion nativa para resolver contraste.
 - Usar animaciones que distraen o flashes de transicion.
 - Dejar textos o tarjetas cortadas por falta de validacion visual.
+- Modificar `shared/styles/theme.css` para resolver un caso local que podia
+  haberse resuelto con una paleta o CSS propio del deck.

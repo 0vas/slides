@@ -10,6 +10,7 @@ on:
         default: all
         options:
           - all
+          - component-showcase
           - github-enterprise-platform
           - custom
       custom_deck:

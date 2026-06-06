@@ -1,4 +1,4 @@
-import { person } from '../../../data/person.js'
+import { person } from '../../../data/speaker/person.js'
 
 export const speaker = {
   ...person,

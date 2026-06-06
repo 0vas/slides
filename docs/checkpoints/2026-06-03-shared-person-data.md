@@ -6,29 +6,32 @@ Date: 2026-06-03
 
 - The repo is a multi-deck Slidev workspace for presentations owned by one
   person.
-- Stable owner metadata now lives in `data/person.js`.
-- Shared speaker assets now live in `shared/public/speaker/`.
+- Stable owner metadata now lives in `data/speaker/speaker.json`.
+- Shared speaker assets now live in `data/speaker/`.
 - The GitHub Enterprise deck imports root person data through
   `decks/github-enterprise-platform/data/speaker.js` and only adds talk-specific
   fields such as `talkRole`.
 
 ## Decisions Made
 
-- `data/person.js` is the source of truth for name, short name, initials,
-  headline, organization, location, public profiles, reusable roles, reusable
-  tags, and shared QR/profile asset references.
+- `data/speaker/speaker.json` is the editable source of truth for name, short
+  name, initials, headline, organization, location, public profiles, reusable
+  roles, reusable tags, and shared QR/profile asset references.
+- `data/speaker/person.js` is the Vite-facing wrapper that imports local speaker
+  assets with `?url`.
 - `decks/<slug>/data/speaker.js` may exist, but it must import the root `person`
   object and override only fields that belong to that talk.
 - Shared QR and profile images should be imported with Vite `?url` so dev,
   production builds, and GitHub Pages base paths work consistently.
-- Deck `public/speaker/` folders are reserved for intentional per-deck overrides.
+- Deck multimedia belongs in `decks/<slug>/public/media/`.
 - Native Slidev navigation remains styled, visible, and clickable in play,
   overview, and presenter modes.
 
 ## Important Files
 
-- `data/person.js`
-- `shared/public/speaker/`
+- `data/speaker/speaker.json`
+- `data/speaker/person.js`
+- `data/speaker/linkedin-qr.svg`
 - `shared/components/SpeakerProfile.vue`
 - `decks/github-enterprise-platform/data/speaker.js`
 - `shared/styles/theme.css`

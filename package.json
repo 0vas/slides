@@ -15,6 +15,7 @@
     "@slidev/theme-default": "^0.25.0",
     "@vueuse/motion": "^3.0.3",
     "qrcode": "^1.5.4",
+    "three": "^0.184.0",
     "vue": "^3.5.16"
   },
   "devDependencies": {

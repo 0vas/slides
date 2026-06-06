@@ -10,27 +10,52 @@ decks/
     slides.md
     components/
     public/
+      media/
   _template/
     slides.md
+    components/
+    data/
+    public/
+      media/
 data/
-  person.js
+  speaker/
+    README.md
+    speaker.json
+    person.js
+    linkedin-qr.svg
+  person.js              # re-export de compatibilidad
 shared/
   components/
   styles/
+    palettes.css
     theme.css
-  public/
-    speaker/
 scripts/
   deck.mjs
 ```
 
 - `decks/<slug>/slides.md`: entrada principal de cada presentación.
-- `decks/<slug>/public/`: assets propios del deck.
+- `decks/<slug>/public/media/`: imagenes, videos, GIFs, screenshots y assets
+  propios del deck.
 - `decks/<slug>/components/`: componentes Vue propios del deck.
-- `data/person.js`: datos personales canónicos del dueño del repositorio.
+- `data/speaker/speaker.json`: datos personales canonicos del dueño del
+  repositorio.
+- `data/speaker/`: assets personales globales, como QR o foto.
+- `data/person.js`: re-export temporal para compatibilidad con imports antiguos.
 - `shared/components/`: componentes Vue reutilizables entre decks.
 - `shared/styles/theme.css`: estilos compartidos por todos los decks.
-- `shared/public/`: assets reutilizables entre presentaciones, como QR o foto.
+- `shared/styles/palettes.css`: paletas reutilizables para cambiar el tono del
+  deck sin duplicar CSS.
+
+## Decks Disponibles
+
+| Deck | Proposito | Comando |
+| --- | --- | --- |
+| `github-enterprise-platform` | Charla principal sobre GitHub como plataforma empresarial. | `make dev DECK=github-enterprise-platform` |
+| `component-showcase` | Deck de ejemplo que usa todos los componentes y paletas del catalogo actual. | `make dev DECK=component-showcase` |
+
+`decks/_template/` no es una charla terminada: es una plantilla con lorem ipsum,
+wrappers locales y ejemplos minimos de componentes para iniciar presentaciones
+nuevas sin arrastrar contenido real de otro deck.
 
 ## Uso
 
@@ -61,6 +86,10 @@ Desarrolla un deck:
 ```bash
 npm run dev -- github-enterprise-platform
 ```
+
+`make dev` y `npm run dev -- <deck>` validan el deck, corrigen un typo cercano
+cuando hay una coincidencia inequivoca y liberan automaticamente el `PORT`
+indicado si ya hay un proceso escuchando ahi. Por defecto usan `4100`.
 
 Compila un deck:
 
@@ -110,9 +139,14 @@ El catalogo visual tiene dos capas:
 
 - `shared/components/`: componentes globales, data-driven y reutilizables.
 - `decks/<slug>/components/`: componentes especificos de una charla o producto.
+- `shared/styles/palettes.css`: paletas elegibles con clases `palette-*`.
 
-Slidev auto-importa los componentes locales de cada deck. Los componentes
-globales deben importarse explicitamente desde `slides.md`.
+Slidev auto-importa los componentes locales de cada deck. Para usar un
+componente global, crea un wrapper liviano en `decks/<slug>/components/` que
+apunte a `shared/components/`.
+
+Los componentes 3D usan `three`; mantenerlos como slides principales o bloques
+grandes y validar que el canvas renderice antes de publicar.
 
 | Componente | Uso principal | Ubicacion |
 | --- | --- | --- |
@@ -123,6 +157,25 @@ globales deben importarse explicitamente desde `slides.md`.
 | `GovernanceGrid` | Grilla 2x2 para pilares, gobierno u operating model. | `shared/components/` |
 | `SecurityRadar` | Radar visual para capacidades, riesgos o postura de seguridad. | `shared/components/` |
 | `MaturityCurve` | Curva de madurez con etapas y puntos de decision. | `shared/components/` |
+| `GraphDiagram` | Grafo SVG para relaciones entre conceptos, sistemas o decisiones. | `shared/components/` |
+| `SequenceDiagram` | Diagrama de secuencia entre actores y mensajes. | `shared/components/` |
+| `MediaFrame` | Marco para imagen, video, GIF o placeholder multimedia. | `shared/components/` |
+| `StylePalette` | Visualizacion de las paletas disponibles para decks. | `shared/components/` |
+| `BrowserMockup` | Mockup generico claro para productos, dashboards o screenshots. | `shared/components/` |
+| `MetricStrip` | KPIs grandes con delta y tono semantico. | `shared/components/` |
+| `ComparisonTable` | Tabla visual para comparar opciones, planes o criterios. | `shared/components/` |
+| `DecisionMatrix` | Matriz 2x2 para impacto, esfuerzo, prioridad o riesgo. | `shared/components/` |
+| `HierarchyTree` | Jerarquia root > ramas para organizaciones, dominios o sistemas. | `shared/components/` |
+| `IconGrid` | Grilla compacta de conceptos con iconos textuales. | `shared/components/` |
+| `ShapeSystem` | Formas 2D reutilizables para lenguaje visual o estados. | `shared/components/` |
+| `TimelineFlow` | Timeline horizontal para hitos, fases o evolucion. | `shared/components/` |
+| `SwimlaneFlow` | Flujo por carriles para roles, equipos o sistemas. | `shared/components/` |
+| `PyramidDiagram` | Piramide por niveles para madurez, estrategia o capas. | `shared/components/` |
+| `VennDiagram` | Interseccion de tres dominios con foco central. | `shared/components/` |
+| `CalloutStack` | Lista visual de insights, riesgos o decisiones. | `shared/components/` |
+| `QuoteFrame` | Cita o insight editorial con atribucion. | `shared/components/` |
+| `ArchitectureLayers` | Capas horizontales para arquitectura u operating model. | `shared/components/` |
+| `Shape3DStage` | Escena Three.js con formas 3D para slides de impacto. | `shared/components/` |
 | `GitHubMockup` | Mockups HTML/CSS de superficies tipo GitHub: checks, org admin y seguridad. | `decks/github-enterprise-platform/components/` |
 | `BranchProtectionFlow` | Flujo lineal de PR, checks, reviews y merge gates. | `decks/github-enterprise-platform/components/` |
 | `CopilotFlow` | Flujo de productividad/adopcion con asistente de codigo. | `decks/github-enterprise-platform/components/` |
@@ -130,6 +183,47 @@ globales deben importarse explicitamente desde `slides.md`.
 
 El detalle de props, casos de uso y criterios de promocion esta en
 [docs/component-catalog.md](docs/component-catalog.md).
+
+Para ver todos los componentes juntos, ejecuta:
+
+```bash
+make dev DECK=component-showcase
+```
+
+## Estilos Y Paletas
+
+Los decks pueden elegir estilo con una clase `palette-*` en el frontmatter:
+
+```md
+---
+class: mi-deck palette-crystal
+defaults:
+  class: mi-deck palette-crystal
+---
+```
+
+Cuando una slide tenga una clase propia, debe conservar tambien la paleta:
+`class: mi-deck palette-crystal section-break`.
+
+`palette-crystal` es la base clara recomendada para decks nuevos, templates y
+showcases. El resto de paletas permite cambiar el tono sin copiar CSS local.
+
+Paletas disponibles:
+
+| Paleta | Uso recomendado |
+| --- | --- |
+| `palette-aurora` | Plataformas, DevSecOps, GitHub e infraestructura. |
+| `palette-lab` | Investigacion, docencia, notebooks y demos tecnicas. |
+| `palette-sunset` | Producto, adopcion, estrategia y storytelling. |
+| `palette-mono` | Reportes ejecutivos, gobierno y narrativa sobria. |
+| `palette-carbon` | Keynotes tecnicas, operaciones y contraste alto. |
+| `palette-citrus` | Workshops, labs y demos con energia fresca. |
+| `palette-orchid` | AI, innovacion, producto y narrativa visual. |
+| `palette-crystal` | Default claro para decks nuevos, dashboards y lectura cercana. |
+
+El detalle vive en [docs/style-catalog.md](docs/style-catalog.md). Si se agrega
+o cambia una paleta, el mismo commit debe actualizar `shared/styles/palettes.css`,
+`StylePalette`, este README y el catalogo de estilos.
 
 ## Lineamientos
 
@@ -141,6 +235,7 @@ Documentacion operativa:
 
 - [Estado actual](docs/project-state.md)
 - [Catalogo de componentes](docs/component-catalog.md)
+- [Catalogo de estilos](docs/style-catalog.md)
 - [Guia para crear decks con IA](docs/new-deck-agent-guide.md)
 
 Los agentes de IA deben seguir tambien [agent.md](agent.md).
@@ -153,9 +248,28 @@ reutilizable, tambien debe actualizar `docs/slide-guidelines.md`.
 ## Datos Personales
 
 Este repositorio esta pensado para multiples presentaciones de una misma persona.
-Los datos que no cambian entre charlas viven en `data/person.js`: nombre,
-headline, organizacion, ubicacion, roles, tags, redes y QR de LinkedIn.
+Los datos que no cambian entre charlas viven en `data/speaker/speaker.json`:
+nombre, headline, organizacion, ubicacion, roles, tags y redes publicas.
 
-Los assets personales compartidos viven en `shared/public/speaker/`. Si un deck
-necesita una variante especifica, crea un `decks/<slug>/data/speaker.js` que
-importe `person` y sobreescriba solo lo necesario, por ejemplo `talkRole`.
+Los assets personales compartidos viven junto a esos datos en `data/speaker/`,
+por ejemplo `linkedin-qr.svg`. `data/speaker/person.js` conecta el JSON con los
+imports `?url` requeridos por Vite.
+
+Si un deck necesita una variante especifica, crea o ajusta
+`decks/<slug>/data/speaker.js`, importa `person` desde
+`data/speaker/person.js` y sobreescribe solo lo necesario, por ejemplo
+`talkRole`.
+
+## Assets De Deck
+
+Cada deck debe guardar sus imagenes, videos, GIFs, capturas, logos de evento y
+multimedia propia en:
+
+```text
+decks/<slug>/public/media/
+```
+
+Referencia esos assets desde Markdown o componentes con rutas relativas al
+`public/` del deck, por ejemplo `media/community/desecops-space.png`. En
+componentes Vue, usa `import.meta.env.BASE_URL` para que la ruta funcione tanto
+en desarrollo como en GitHub Pages.

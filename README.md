@@ -133,10 +133,11 @@ El workflow `Deploy Slides` permite publicar en GitHub Pages:
 - `target = <slug>`: publica solo ese deck.
 - `target = custom`: permite escribir un slug que aun no este en el dropdown.
 
-El workflow intenta habilitar GitHub Pages automaticamente usando
-`actions/configure-pages` con `enablement: true`. Si el primer despliegue falla
-por politicas del repositorio u organizacion, entra a **Settings > Pages** y
-configura el origen como **GitHub Actions**.
+Antes del primer despliegue, habilita GitHub Pages una vez en
+**Settings > Pages** y configura el origen como **GitHub Actions**. El workflow
+no intenta crear el sitio automaticamente porque algunas politicas de GitHub
+bloquean esa accion para `GITHUB_TOKEN` y producen el error
+`Resource not accessible by integration`.
 
 Para desplegar manualmente:
 

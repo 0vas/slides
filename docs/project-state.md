@@ -185,8 +185,9 @@ Los componentes compartidos se consumen mediante wrappers locales en
 ## Deploy
 
 El workflow `.github/workflows/deploy.yml` publica en GitHub Pages.
-El paso `actions/configure-pages` usa `enablement: true` para que el primer
-despliegue pueda habilitar Pages cuando la politica del repositorio lo permita.
+GitHub Pages debe estar habilitado una vez en **Settings > Pages** con origen
+**GitHub Actions**. El workflow no intenta crear el sitio automaticamente porque
+algunas politicas bloquean esa llamada para `GITHUB_TOKEN`.
 
 Targets manuales:
 

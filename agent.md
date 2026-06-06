@@ -113,8 +113,10 @@ kill a running dev server when the requested deck cannot be resolved.
 - GitHub Pages deployments are handled by the `Deploy Slides` workflow.
 - The workflow must support manual `workflow_dispatch` deployment with a deck
   selector.
-- `actions/configure-pages` must keep `enablement: true` so a first deployment
-  can create or enable the Pages site when repository policy allows it.
+- GitHub Pages must be enabled manually once with source `GitHub Actions`.
+  Do not rely on `actions/configure-pages` to create the Pages site; repository
+  or organization policy can block that call for `GITHUB_TOKEN` with
+  `Resource not accessible by integration`.
 - Keep `all`, current stable deck slugs, and `custom` as deploy targets.
 - When a new deck becomes stable, add its slug to the workflow dropdown so the
   owner can deploy it without remembering exact folder names.

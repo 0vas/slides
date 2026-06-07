@@ -19,7 +19,7 @@ Date: 2026-06-06
 
 - `decks/github-enterprise-platform/slides.md`
 - `decks/github-enterprise-platform/components/ThankYouQr.vue`
-- `decks/github-enterprise-platform/components/DesecOpsSpaceInvite.vue`
+- `decks/github-enterprise-platform/components/DevSecOpsSpaceInvite.vue`
 - `decks/github-enterprise-platform/components/NonaHero.vue`
 - `decks/github-enterprise-platform/public/media/devsecops-space.jpeg`
 - `decks/github-enterprise-platform/public/media/nona-github.png`

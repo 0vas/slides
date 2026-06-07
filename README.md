@@ -286,6 +286,6 @@ decks/<slug>/public/media/
 ```
 
 Referencia esos assets desde Markdown o componentes con rutas relativas al
-`public/` del deck, por ejemplo `media/community/desecops-space.png`. En
+`public/` del deck, por ejemplo `media/community/devsecops-space.png`. En
 componentes Vue, usa `import.meta.env.BASE_URL` para que la ruta funcione tanto
 en desarrollo como en GitHub Pages.

@@ -426,4 +426,4 @@ transition: fade
 transition: fade
 ---
 
-<DesecOpsSpaceInvite image-path="media/devsecops-space.jpeg" />
+<DevSecOpsSpaceInvite image-path="media/devsecops-space.jpeg" />

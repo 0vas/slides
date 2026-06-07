@@ -1,13 +1,13 @@
 <template>
-  <section class="desecops-invite">
+  <section class="devsecops-invite">
     <div
       v-motion
       :initial="{ opacity: 0, x: -24 }"
       :enter="{ opacity: 1, x: 0, transition: { duration: 560 } }"
-      class="desecops-copy"
+      class="devsecops-copy"
     >
       <span class="kicker">Comunidad</span>
-      <h1>DesecOps Space</h1>
+      <h1>DevSecOps Space</h1>
       <p>Un espacio para seguir compartiendo practicas, aprendizajes y comunidad.</p>
     </div>
 
@@ -15,16 +15,16 @@
       v-motion
       :initial="{ opacity: 0, scale: 0.96, y: 20 }"
       :enter="{ opacity: 1, scale: 1, y: 0, transition: { delay: 140, duration: 560 } }"
-      class="desecops-media"
+      class="devsecops-media"
     >
       <img
         v-if="resolvedImageSrc"
         :src="resolvedImageSrc"
         :alt="imageAlt"
       >
-      <div v-else class="desecops-placeholder">
+      <div v-else class="devsecops-placeholder">
         <span>Imagen</span>
-        <strong>DesecOps Space</strong>
+        <strong>DevSecOps Space</strong>
       </div>
     </figure>
   </section>
@@ -36,7 +36,7 @@ import { computed } from 'vue'
 const props = defineProps({
   imageSrc: { type: String, default: '' },
   imagePath: { type: String, default: '' },
-  imageAlt: { type: String, default: 'Invitacion a DesecOps Space' }
+  imageAlt: { type: String, default: 'Invitacion a DevSecOps Space' }
 })
 
 const resolvedImageSrc = computed(() => {
@@ -50,7 +50,7 @@ const resolvedImageSrc = computed(() => {
 </script>
 
 <style scoped>
-.desecops-invite {
+.devsecops-invite {
   align-items: stretch;
   display: grid;
   gap: 1.6rem;
@@ -58,19 +58,19 @@ const resolvedImageSrc = computed(() => {
   min-height: 100%;
 }
 
-.desecops-copy {
+.devsecops-copy {
   align-content: center;
   display: grid;
 }
 
-.desecops-copy h1 {
+.devsecops-copy h1 {
   font-size: 3.25rem;
   line-height: 1;
   margin: 0.35rem 0 1rem;
   max-width: 620px;
 }
 
-.desecops-copy p {
+.devsecops-copy p {
   color: rgba(226, 232, 240, 0.74);
   font-size: 1.18rem;
   line-height: 1.36;
@@ -78,7 +78,7 @@ const resolvedImageSrc = computed(() => {
   max-width: 560px;
 }
 
-.desecops-media {
+.devsecops-media {
   background:
     linear-gradient(145deg, rgba(15, 21, 32, 0.94), rgba(8, 11, 16, 0.94)) padding-box,
     var(--border-gradient) border-box;
@@ -91,13 +91,13 @@ const resolvedImageSrc = computed(() => {
   overflow: hidden;
 }
 
-.desecops-media img {
+.devsecops-media img {
   height: 100%;
   object-fit: contain;
   width: 100%;
 }
 
-.desecops-placeholder {
+.devsecops-placeholder {
   align-content: center;
   background:
     radial-gradient(circle at 30% 20%, rgba(47, 129, 247, 0.22), transparent 34%),
@@ -111,7 +111,7 @@ const resolvedImageSrc = computed(() => {
   text-align: center;
 }
 
-.desecops-placeholder span {
+.devsecops-placeholder span {
   color: var(--deck-green);
   font-size: 0.74rem;
   font-weight: 800;
@@ -119,18 +119,18 @@ const resolvedImageSrc = computed(() => {
   text-transform: uppercase;
 }
 
-.desecops-placeholder strong {
+.devsecops-placeholder strong {
   color: var(--deck-ink);
   font-size: 2rem;
   line-height: 1.05;
 }
 
 @media (max-width: 820px) {
-  .desecops-invite {
+  .devsecops-invite {
     grid-template-columns: 1fr;
   }
 
-  .desecops-media {
+  .devsecops-media {
     min-height: 320px;
   }
 }

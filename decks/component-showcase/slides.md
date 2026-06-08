@@ -40,7 +40,7 @@ transition: fade
 
 <div class="showcase-index">
   <div v-click><span>Shared</span><strong>26 componentes</strong><small>Base global para nuevos decks.</small></div>
-  <div v-click><span>Local GitHub</span><strong>4 componentes</strong><small>Referencia especifica de la charla enterprise.</small></div>
+  <div v-click><span>Agnostico</span><strong>0 producto fijo</strong><small>El catalogo no depende de una marca o charla.</small></div>
   <div v-click><span>Style</span><strong>8 paletas</strong><small>Elegibles desde el frontmatter del deck.</small></div>
 </div>
 
@@ -302,46 +302,6 @@ transition: slide-left
 ## Shape3DStage
 
 <Shape3DStage />
-
----
-transition: fade
----
-
-<span class="kicker">GitHub local component</span>
-
-## GitHubMockup
-
-<GitHubMockup variant="actions" title="Showcase checks" badge="Local component" />
-
----
-transition: slide-left
----
-
-<span class="kicker">GitHub local component</span>
-
-## BranchProtectionFlow
-
-<BranchProtectionFlow />
-
----
-transition: slide-left
----
-
-<span class="kicker">GitHub local component</span>
-
-## CopilotFlow
-
-<CopilotFlow />
-
----
-transition: slide-up
----
-
-<span class="kicker">GitHub local component</span>
-
-## TrialCard
-
-<TrialCard />
 
 ---
 transition: fade

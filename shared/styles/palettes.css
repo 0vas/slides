@@ -223,6 +223,8 @@
 .slidev-layout.palette-crystal .maturity-curve,
 .slidev-layout.palette-crystal .trial-card,
 .slidev-layout.palette-crystal .final-frame,
+.slidev-layout.palette-crystal .security-radar svg,
+.slidev-layout.palette-crystal .radar-copy,
 .slidev-layout.palette-crystal .graph-diagram svg,
 .slidev-layout.palette-crystal .sequence-diagram,
 .slidev-layout.palette-crystal .media-frame,
@@ -286,7 +288,39 @@
 .slidev-layout.palette-crystal .speaker-links strong,
 .slidev-layout.palette-crystal .speaker-qr strong,
 .slidev-layout.palette-crystal .speaker-meta strong,
-.slidev-layout.palette-crystal .speaker-roles strong {
+.slidev-layout.palette-crystal .speaker-roles strong,
+.slidev-layout.palette-crystal .radar-copy strong {
+  color: var(--deck-ink);
+}
+
+.slidev-layout.palette-crystal .radar-copy span {
+  color: var(--deck-muted);
+}
+
+.slidev-layout.palette-crystal .radar-ring,
+.slidev-layout.palette-crystal .radar-axis {
+  stroke: rgba(15, 23, 42, 0.22);
+}
+
+.slidev-layout.palette-crystal .security-radar text {
+  fill: var(--deck-ink);
+}
+
+.slidev-layout.palette-crystal .graph-node circle {
+  fill: rgba(255, 255, 255, 0.96);
+}
+
+.slidev-layout.palette-crystal .graph-title {
+  fill: var(--deck-ink);
+}
+
+.slidev-layout.palette-crystal .graph-detail {
+  fill: var(--deck-muted);
+}
+
+.slidev-layout.palette-crystal .trial-facts span {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(148, 163, 184, 0.34);
   color: var(--deck-ink);
 }
 

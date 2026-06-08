@@ -42,9 +42,9 @@ const props = defineProps({
     type: Array,
     default: () => [
       { id: 'idea', label: 'Idea', detail: 'Narrativa', x: 150, y: 210, tone: 'blue' },
-      { id: 'data', label: 'Data', detail: 'Props', x: 360, y: 110, tone: 'green' },
-      { id: 'visual', label: 'Visual', detail: 'Vue', x: 560, y: 210, tone: 'amber' },
-      { id: 'deck', label: 'Deck', detail: 'Slidev', x: 760, y: 310, tone: 'rose' }
+      { id: 'data', label: 'Data', detail: 'Entradas', x: 360, y: 110, tone: 'green' },
+      { id: 'visual', label: 'Visual', detail: 'Modelo', x: 560, y: 210, tone: 'amber' },
+      { id: 'outcome', label: 'Salida', detail: 'Decision', x: 760, y: 310, tone: 'rose' }
     ]
   },
   edges: {
@@ -52,7 +52,7 @@ const props = defineProps({
     default: () => [
       { from: 'idea', to: 'data' },
       { from: 'data', to: 'visual' },
-      { from: 'visual', to: 'deck' },
+      { from: 'visual', to: 'outcome' },
       { from: 'idea', to: 'visual' }
     ]
   }

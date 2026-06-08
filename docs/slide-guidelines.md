@@ -85,6 +85,9 @@ Documentos relacionados:
 - Revisar `docs/component-catalog.md` antes de crear una visual nueva.
 - Usar componentes compartidos para grafos, diagramas de secuencia y media antes
   de crear visuales ad hoc.
+- El `component-showcase` debe mostrar solo componentes agnosticos y patrones
+  reutilizables. Los componentes ligados a un producto, marca o CTA especifico
+  se quedan en su deck.
 - Usar `BrowserMockup` para mockups genericos claros; reservar `GitHubMockup`
   para la charla GitHub.
 - Los mockups de producto deben ser superficies claras por defecto, con sombra

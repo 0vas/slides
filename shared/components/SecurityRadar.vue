@@ -31,13 +31,13 @@ const props = defineProps({
   title: { type: String, default: 'Shift-left real' },
   detail: {
     type: String,
-    default: 'Secret scanning, code scanning y dependencias aparecen dentro del flujo, no despues del incidente.'
+    default: 'Senales, controles y dependencias aparecen dentro del flujo, no despues del incidente.'
   },
   points: {
     type: Array,
     default: () => [
-      { label: 'Secrets', x: 332, y: 118, tone: 'blue' },
-      { label: 'CodeQL', x: 186, y: 146, tone: 'green' },
+      { label: 'Signals', x: 332, y: 118, tone: 'blue' },
+      { label: 'Controls', x: 186, y: 146, tone: 'green' },
       { label: 'Deps', x: 306, y: 246, tone: 'amber' },
       { label: 'Policy', x: 226, y: 220, tone: 'rose' }
     ]

@@ -526,7 +526,9 @@ canvas no este en blanco antes de cerrar cambios.
 ## Componentes Especificos Del Deck GitHub
 
 Estos siguen en `decks/github-enterprise-platform/components/` porque dependen
-del contexto GitHub, GHAS, Copilot o Enterprise trial.
+del contexto GitHub, GHAS, Copilot o Enterprise trial. No deben aparecer en
+`decks/component-showcase/`, porque el showcase representa componentes
+agnosticos y reutilizables.
 
 ### `GitHubMockup`
 
@@ -613,7 +615,8 @@ Markdown o componentes:
 
 1. Revisar este catalogo.
 2. Reusar una estructura existente si la forma visual ya existe.
-3. Crear el componente en `shared/components/` si sera generico desde el inicio.
+3. Crear el componente en `shared/components/` si sera generico, agnostico y
+   configurable desde el inicio.
 4. Crear el componente en `decks/<slug>/components/` si es especifico.
 5. Usar props o arrays locales simples.
 6. Agregar animacion con `v-motion` solo si aclara orden o jerarquia.

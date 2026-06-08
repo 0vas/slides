@@ -199,16 +199,12 @@ grandes y validar que el canvas renderice antes de publicar.
 | `QuoteFrame` | Cita o insight editorial con atribucion. | `shared/components/` |
 | `ArchitectureLayers` | Capas horizontales para arquitectura u operating model. | `shared/components/` |
 | `Shape3DStage` | Escena Three.js con formas 3D para slides de impacto. | `shared/components/` |
-| `GitHubMockup` | Mockups HTML/CSS de superficies tipo GitHub: checks, org admin y seguridad. | `decks/github-enterprise-platform/components/` |
-| `BranchProtectionFlow` | Flujo lineal de PR, checks, reviews y merge gates. | `decks/github-enterprise-platform/components/` |
-| `CopilotFlow` | Flujo de productividad/adopcion con asistente de codigo. | `decks/github-enterprise-platform/components/` |
-| `TrialCard` | Tarjeta CTA para trial de GitHub Enterprise. | `decks/github-enterprise-platform/components/` |
 | `AssetSourcingShowcase` | Slide del showcase para demostrar iconos SVG locales e imagen editorial descargada. | `decks/component-showcase/components/` |
 
 El detalle de props, casos de uso y criterios de promocion esta en
 [docs/component-catalog.md](docs/component-catalog.md).
 
-Para ver todos los componentes juntos, ejecuta:
+Para ver los componentes agnosticos y patrones reutilizables juntos, ejecuta:
 
 ```bash
 make dev DECK=component-showcase

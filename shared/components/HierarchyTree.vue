@@ -32,7 +32,7 @@ defineProps({
     default: () => [
       { label: 'Nivel 1', title: 'Consectetur', detail: 'Dominio principal' },
       { label: 'Nivel 2', title: 'Adipiscing', detail: 'Equipo o capability' },
-      { label: 'Nivel 3', title: 'Vestibulum', detail: 'Servicio o repositorio' }
+      { label: 'Nivel 3', title: 'Vestibulum', detail: 'Servicio o artefacto' }
     ]
   }
 })

@@ -23,16 +23,16 @@
 <script setup>
 const props = defineProps({
   centerLabel: { type: String, default: 'Enterprise' },
-  centerTitle: { type: String, default: 'GitHub' },
+  centerTitle: { type: String, default: 'Platform' },
   nodes: {
     type: Array,
     default: () => [
       { code: 'SSO', title: 'Identidad', detail: 'SAML · SCIM', tone: 'blue' },
-      { code: 'ORG', title: 'Organizaciones', detail: 'Equipos y repos', tone: 'green' },
-      { code: 'SEC', title: 'Seguridad', detail: 'GHAS · reglas', tone: 'amber' },
-      { code: 'AUTO', title: 'Automatizacion', detail: 'Actions · APIs', tone: 'rose' },
+      { code: 'ORG', title: 'Organizaciones', detail: 'Equipos y dominios', tone: 'green' },
+      { code: 'SEC', title: 'Seguridad', detail: 'Controles · reglas', tone: 'amber' },
+      { code: 'AUTO', title: 'Automatizacion', detail: 'Pipelines · APIs', tone: 'rose' },
       { code: 'OBS', title: 'Auditoria', detail: 'Logs · metricas', tone: 'blue' },
-      { code: 'AI', title: 'Copilot', detail: 'Adopcion guiada', tone: 'green' }
+      { code: 'AI', title: 'Asistencia', detail: 'Adopcion guiada', tone: 'green' }
     ]
   }
 })

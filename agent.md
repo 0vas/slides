@@ -107,6 +107,9 @@ kill a running dev server when the requested deck cannot be resolved.
 - If a new component becomes reusable, document it in
   `docs/component-catalog.md`.
 - When the component catalog changes, update `decks/component-showcase/`.
+- `decks/component-showcase/` must demonstrate agnostic shared components and
+  reusable sourcing/style patterns. Do not include product-specific local
+  components such as GitHub-only mockups, flows, or CTAs in the showcase.
 - When the style catalog changes, update `shared/styles/palettes.css`,
   `shared/components/StylePalette.vue`, `README.md`, `docs/style-catalog.md`,
   and `decks/component-showcase/`.

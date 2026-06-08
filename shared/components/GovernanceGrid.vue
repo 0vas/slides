@@ -21,7 +21,7 @@ const props = defineProps({
     type: Array,
     default: () => [
       { code: 'ID', title: 'Identidad', detail: 'SSO, SCIM, roles y acceso minimo.' },
-      { code: 'OWN', title: 'Ownership', detail: 'Responsables claros por repo y producto.' },
+      { code: 'OWN', title: 'Ownership', detail: 'Responsables claros por dominio y producto.' },
       { code: 'POL', title: 'Politicas', detail: 'Reglas consistentes sin frenar a los equipos.' },
       { code: 'AUD', title: 'Auditoria', detail: 'Trazabilidad para operar con confianza.' }
     ]

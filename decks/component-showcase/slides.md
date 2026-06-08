@@ -47,6 +47,16 @@ transition: fade
 <p class="showcase-note">La idea es simple: si una visual ya existe, el agente debe reutilizarla, pasarle datos y validar que respire en 16:9.</p>
 
 ---
+transition: slide-up
+---
+
+<span class="kicker">Asset sourcing</span>
+
+## Iconos SVG e imagenes editoriales
+
+<AssetSourcingShowcase />
+
+---
 transition: slide-left
 ---
 

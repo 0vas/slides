@@ -76,6 +76,11 @@ kill a running dev server when the requested deck cannot be resolved.
   art, and mascots belong in `decks/<slug>/public/media/`. Reference them as
   `media/<file>` in Markdown/props, or with `import.meta.env.BASE_URL` from
   Vue components.
+- For future decks, proactively search for relevant SVG icons from SVG Repo and
+  editorial images from Pexels or similar reputable free-media sites when they
+  improve comprehension, mood, or visual hierarchy. Download approved assets
+  into the deck `public/media/` tree, keep source/license notes, and render them
+  locally.
 - Before creating a component, inspect `docs/component-catalog.md`.
 - Put generic, data-driven components in `shared/components/` when they can be
   reused across decks through props or slots.

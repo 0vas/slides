@@ -558,6 +558,25 @@ Uso: tarjeta CTA para trial de GitHub Enterprise.
 
 Mantenerlo especifico porque representa una accion concreta de esta charla.
 
+## Componentes Especificos Del Showcase
+
+Estos viven en `decks/component-showcase/components/` porque son ejemplos de
+uso del catalogo o de lineamientos visuales, no componentes de produccion para
+otros decks.
+
+### `AssetSourcingShowcase`
+
+Uso: slide de referencia para demostrar como combinar iconos SVG descargados y
+una imagen editorial local dentro de una narrativa visual.
+
+Assets usados:
+
+- SVG desde SVG Repo, guardado en `public/media/icons/`.
+- Imagen desde Pexels, guardada en `public/media/`.
+
+Mantener la trazabilidad de fuente, autor y licencia en el README del folder de
+media del deck.
+
 ## Clases Visuales Compartidas
 
 Estas clases viven en `shared/styles/theme.css` y pueden usarse directamente en

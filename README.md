@@ -51,6 +51,10 @@ scripts/
 - La multimedia propia de una charla vive en `decks/<slug>/public/media/`.
   Ejemplos: imagenes, videos, GIFs, capturas, logos, graficas de comunidad,
   mascotas o piezas del evento.
+- Para futuros decks, conviene buscar proactivamente iconos SVG en SVG Repo e
+  imagenes editoriales en Pexels, Unsplash, Pixabay o fuentes similares cuando
+  ayuden a explicar una idea. Descargar siempre los assets al deck y documentar
+  fuente/licencia.
 - Referencia esos archivos como `media/<archivo>` en Markdown/props. En
   componentes Vue, construye la ruta con `import.meta.env.BASE_URL` cuando el
   archivo venga del `public/` del deck.
@@ -133,6 +137,9 @@ El workflow `Deploy Slides` permite publicar en GitHub Pages:
 - `target = <slug>`: publica solo ese deck.
 - `target = custom`: permite escribir un slug que aun no este en el dropdown.
 
+El home generado en `dist/index.html` muestra tarjetas por deck con preview
+embebido, titulo y descripcion tomada del frontmatter de `slides.md`.
+
 Antes del primer despliegue, habilita GitHub Pages una vez en
 **Settings > Pages** y configura el origen como **GitHub Actions**. El workflow
 no intenta crear el sitio automaticamente porque algunas politicas de GitHub
@@ -196,6 +203,7 @@ grandes y validar que el canvas renderice antes de publicar.
 | `BranchProtectionFlow` | Flujo lineal de PR, checks, reviews y merge gates. | `decks/github-enterprise-platform/components/` |
 | `CopilotFlow` | Flujo de productividad/adopcion con asistente de codigo. | `decks/github-enterprise-platform/components/` |
 | `TrialCard` | Tarjeta CTA para trial de GitHub Enterprise. | `decks/github-enterprise-platform/components/` |
+| `AssetSourcingShowcase` | Slide del showcase para demostrar iconos SVG locales e imagen editorial descargada. | `decks/component-showcase/components/` |
 
 El detalle de props, casos de uso y criterios de promocion esta en
 [docs/component-catalog.md](docs/component-catalog.md).

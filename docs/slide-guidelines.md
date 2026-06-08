@@ -33,6 +33,11 @@ Documentos relacionados:
   una charla viven en `decks/<slug>/public/media/`.
 - Referenciar multimedia del deck como `media/<archivo>` desde Markdown/props o
   resolverla con `import.meta.env.BASE_URL` dentro de componentes Vue.
+- En decks futuros, buscar proactivamente iconos SVG en SVG Repo e imagenes
+  editoriales en Pexels, Unsplash, Pixabay o fuentes similares cuando ayuden a
+  explicar, ambientar o jerarquizar una idea.
+- Descargar esos assets al deck, no referenciarlos en remoto. Mantener una nota
+  de fuente, autor y licencia en un README o metadata del deck.
 - No meter assets generados en `public/` hasta que sean necesarios.
 
 ## Duracion y ritmo
@@ -86,6 +91,9 @@ Documentos relacionados:
   y borde sutil para separarse de fondos claros o oscuros.
 - Para imagen, video o GIF, usar `MediaFrame` y assets locales cuando sean parte
   esencial de la charla.
+- Los iconos SVG externos deben optimizarse o revisarse antes de usarlos. Evitar
+  SVGs rotos, con scripts, dimensiones inestables o estilos que no puedan
+  adaptarse a la paleta del deck.
 - En portadas o slides con una visual nueva, agregar sin reemplazar lo que ya
   comunica la slide, salvo que el usuario pida explicitamente sustituirlo.
 - Para 3D, usar `Shape3DStage`/Three.js y validar con screenshot que el canvas

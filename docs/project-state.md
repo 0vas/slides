@@ -19,6 +19,8 @@ reutilizables, validacion local y despliegue por GitHub Pages.
   bordes cromaticos, mockups HTML/CSS y animaciones fluidas con `v-motion`.
 - Deploy: GitHub Actions con selector manual de deck y soporte para `all` o
   `custom`.
+- Home de Pages: `scripts/deck.mjs` genera `dist/index.html` como galeria de
+  decks con preview embebido, titulo y descripcion desde frontmatter.
 - Datos personales compartidos: `data/speaker/speaker.json`.
 - Assets personales compartidos: `data/speaker/`.
 - Componentes visuales compartidos: `shared/components/`.
@@ -188,6 +190,10 @@ El workflow `.github/workflows/deploy.yml` publica en GitHub Pages.
 GitHub Pages debe estar habilitado una vez en **Settings > Pages** con origen
 **GitHub Actions**. El workflow no intenta crear el sitio automaticamente porque
 algunas politicas bloquean esa llamada para `GITHUB_TOKEN`.
+
+El archivo `dist/index.html` se genera automaticamente en cada build. Cuando se
+publica `all`, muestra todos los decks disponibles; cuando se publica un deck
+especifico, muestra solo ese deck con su preview.
 
 Targets manuales:
 

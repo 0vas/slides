@@ -71,16 +71,19 @@ suposicion en el resumen final.
 10. Elegir visuales del catalogo por necesidad narrativa: mockup, metrica,
     tabla, matriz, jerarquia, grafo, secuencia, timeline, swimlane, media,
     cita, capas o 3D.
-11. Usar `TypingTitle` solo en portada o secciones clave.
-12. Mantener ritmo de 24-32 slides para 30 minutos.
-13. Validar con `make check DECK=<slug>`.
-14. Revisar capturas de portada, slide densa, slide con mockup/media y
+11. Buscar proactivamente iconos SVG en SVG Repo e imagenes editoriales en
+    Pexels o fuentes similares cuando eleven la comprension visual. Descargar
+    todo a `decks/<slug>/public/media/` y documentar fuente/licencia.
+12. Usar `TypingTitle` solo en portada o secciones clave.
+13. Mantener ritmo de 24-32 slides para 30 minutos.
+14. Validar con `make check DECK=<slug>`.
+15. Revisar capturas de portada, slide densa, slide con mockup/media y
     navegacion.
-15. Si el deck queda estable, agregar su slug al workflow `Deploy Slides`.
-16. Actualizar `README.md` y `docs/component-catalog.md` si nace o cambia un
+16. Si el deck queda estable, agregar su slug al workflow `Deploy Slides`.
+17. Actualizar `README.md` y `docs/component-catalog.md` si nace o cambia un
     componente.
-17. Actualizar `docs/style-catalog.md` si nace o cambia una paleta.
-18. Crear checkpoint si el usuario pide pausar o cerrar version.
+18. Actualizar `docs/style-catalog.md` si nace o cambia una paleta.
+19. Crear checkpoint si el usuario pide pausar o cerrar version.
 
 ## Prompt Base Para Un Nuevo Deck
 
@@ -118,6 +121,9 @@ Restricciones:
 
 Assets disponibles:
 <imagenes, QR, capturas, logos, ninguno>
+
+Assets sugeridos:
+<iconos SVG Repo, imagenes Pexels/Unsplash/Pixabay, screenshots propios, ninguno>
 
 Slug sugerido:
 <slug>

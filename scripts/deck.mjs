@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, readdirSync, existsSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, mkdirSync, readdirSync, existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawnSync } from 'node:child_process'
@@ -205,9 +205,77 @@ function build(requestedSlug) {
   return slug
 }
 
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
+function plainText(value) {
+  return String(value ?? '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function frontmatterValue(frontmatter, key) {
+  const lines = frontmatter.split('\n')
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index]
+    const inlineMatch = line.match(new RegExp(`^${key}:\\s*(.*)$`))
+
+    if (!inlineMatch) continue
+
+    const inlineValue = inlineMatch[1].trim()
+
+    if (inlineValue === '|') {
+      const block = []
+
+      for (let offset = index + 1; offset < lines.length; offset += 1) {
+        const blockLine = lines[offset]
+        if (!/^\s+/.test(blockLine)) break
+        block.push(blockLine.trim())
+      }
+
+      return block.join(' ')
+    }
+
+    return inlineValue.replace(/^["']|["']$/g, '')
+  }
+
+  return ''
+}
+
+function deckMeta(slug) {
+  const markdown = readFileSync(deckSlides(slug), 'utf8')
+  const match = markdown.match(/^---\n([\s\S]*?)\n---/)
+  const frontmatter = match?.[1] ?? ''
+  const title = frontmatterValue(frontmatter, 'title') || slug
+  const description = frontmatterValue(frontmatter, 'info') || 'Presentacion Slidev disponible en este workspace.'
+
+  return {
+    slug,
+    title: plainText(title),
+    description: plainText(description)
+  }
+}
+
 function writeIndex(slugs) {
-  const links = slugs
-    .map((slug) => `<li><a href="./${slug}/">${slug}</a></li>`)
+  const cards = slugs
+    .map(deckMeta)
+    .map((meta) => `<article class="deck-card">
+        <div class="deck-preview" aria-label="Preview de ${escapeHtml(meta.title)}">
+          <iframe src="./${escapeHtml(meta.slug)}/#/1" title="Preview de ${escapeHtml(meta.title)}" loading="lazy" tabindex="-1"></iframe>
+        </div>
+        <div class="deck-copy">
+          <span>${escapeHtml(meta.slug)}</span>
+          <h2>${escapeHtml(meta.title)}</h2>
+          <p>${escapeHtml(meta.description)}</p>
+          <a class="deck-link" href="./${escapeHtml(meta.slug)}/">Abrir deck</a>
+        </div>
+      </article>`)
     .join('\n')
 
   mkdirSync(join(root, 'dist'), { recursive: true })
@@ -220,50 +288,191 @@ function writeIndex(slugs) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Slides</title>
     <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        color: #101418;
+        background:
+          radial-gradient(circle at 16% 10%, rgba(88, 166, 255, 0.24), transparent 30%),
+          radial-gradient(circle at 82% 4%, rgba(255, 122, 200, 0.18), transparent 26%),
+          radial-gradient(circle at 74% 84%, rgba(46, 160, 67, 0.18), transparent 30%),
+          #080b10;
+        color: #f8fbff;
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         margin: 0;
-        padding: 48px;
+        min-height: 100vh;
       }
+
       main {
+        margin: 0 auto;
+        max-width: 1180px;
+        padding: 56px 28px 64px;
+      }
+
+      header {
+        align-items: end;
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: minmax(0, 1fr) auto;
+        margin-bottom: 28px;
+      }
+
+      .kicker {
+        color: #3ddc84;
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        margin-bottom: 0.8rem;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 7vw, 5.8rem);
+        line-height: 0.94;
+        letter-spacing: 0;
+        margin: 0;
         max-width: 760px;
       }
-      h1 {
-        font-size: 2.4rem;
-        letter-spacing: 0;
-        margin: 0 0 16px;
+
+      .accent {
+        background: linear-gradient(90deg, #e6f0ff, #58a6ff 38%, #2ee6a6 72%, #ff7ac8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
+
       p {
-        color: #667085;
+        color: rgba(226, 232, 240, 0.76);
       }
-      ul {
-        display: grid;
-        gap: 12px;
-        list-style: none;
-        margin: 32px 0 0;
-        padding: 0;
+
+      .intro {
+        font-size: 1.08rem;
+        line-height: 1.45;
+        margin: 1.2rem 0 0;
+        max-width: 680px;
       }
-      a {
-        border: 1px solid #d0d7de;
+
+      .count {
+        border: 1px solid rgba(88, 166, 255, 0.28);
         border-radius: 8px;
-        color: #0969da;
+        color: #dbeafe;
+        font-size: 0.86rem;
+        font-weight: 800;
+        padding: 0.72rem 0.9rem;
+        text-transform: uppercase;
+      }
+
+      .deck-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      }
+
+      .deck-card {
+        background:
+          linear-gradient(145deg, rgba(15, 23, 42, 0.88), rgba(8, 11, 16, 0.94)) padding-box,
+          linear-gradient(135deg, rgba(88, 166, 255, 0.62), rgba(255, 122, 200, 0.36), rgba(46, 160, 67, 0.42)) border-box;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        box-shadow: 0 28px 72px rgba(0, 0, 0, 0.32);
+        display: grid;
+        overflow: hidden;
+      }
+
+      .deck-preview {
+        aspect-ratio: 16 / 9;
+        background: #0d1117;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.18);
         display: block;
-        padding: 16px 18px;
+        overflow: hidden;
+      }
+
+      .deck-preview iframe {
+        border: 0;
+        height: 100%;
+        pointer-events: none;
+        transform-origin: top left;
+        width: 100%;
+      }
+
+      .deck-copy {
+        padding: 1.1rem;
+      }
+
+      .deck-copy span {
+        color: #3ddc84;
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.55rem;
+        text-transform: uppercase;
+      }
+
+      .deck-copy h2 {
+        font-size: 1.42rem;
+        line-height: 1.08;
+        margin: 0;
+      }
+
+      .deck-copy p {
+        font-size: 0.96rem;
+        line-height: 1.38;
+        margin: 0.7rem 0 1rem;
+      }
+
+      .deck-link {
+        align-items: center;
+        border: 1px solid rgba(88, 166, 255, 0.34);
+        border-radius: 8px;
+        color: #f8fbff;
+        display: inline-flex;
+        font-size: 0.92rem;
+        font-weight: 800;
+        min-height: 42px;
+        padding: 0 0.86rem;
         text-decoration: none;
       }
-      a:hover {
-        background: #f6f8fa;
+
+      .deck-link:hover {
+        background: rgba(88, 166, 255, 0.16);
+      }
+
+      @media (max-width: 760px) {
+        main {
+          padding: 36px 18px 48px;
+        }
+
+        header {
+          align-items: start;
+          grid-template-columns: 1fr;
+        }
+
+        .deck-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
   <body>
     <main>
-      <h1>Slides</h1>
-      <p>Presentaciones disponibles en este repositorio.</p>
-      <ul>
-        ${links}
-      </ul>
+      <header>
+        <div>
+          <span class="kicker">0vas decks</span>
+          <h1>Presentaciones <span class="accent">como codigo</span></h1>
+          <p class="intro">Decks Slidev listos para presentar, publicar y evolucionar con componentes reutilizables.</p>
+        </div>
+        <span class="count">${slugs.length} deck${slugs.length === 1 ? '' : 's'}</span>
+      </header>
+      <section class="deck-grid" aria-label="Decks disponibles">
+        ${cards}
+      </section>
     </main>
   </body>
 </html>

@@ -24,6 +24,10 @@ data/
     person.js
     linkedin-qr.svg
   person.js              # re-export de compatibilidad
+docs/
+  deck-generation-workflow.md
+  deck-brief-template.md
+  specs/
 shared/
   components/
   styles/
@@ -45,6 +49,10 @@ scripts/
 - `shared/styles/theme.css`: estilos compartidos por todos los decks.
 - `shared/styles/palettes.css`: paletas reutilizables para cambiar el tono del
   deck sin duplicar CSS.
+- `docs/deck-generation-workflow.md`: flujo spec-driven para crear decks desde
+  un prompt.
+- `docs/deck-brief-template.md`: plantilla del brief requerido para decks
+  nuevos.
 
 ## Multimedia Y Datos
 
@@ -75,6 +83,27 @@ scripts/
 `decks/_template/` no es una charla terminada: es una plantilla con lorem ipsum,
 wrappers locales y ejemplos minimos de componentes para iniciar presentaciones
 nuevas sin arrastrar contenido real de otro deck.
+
+## Crear Un Deck Con Un Prompt
+
+El flujo recomendado es spec-driven: Intake -> Spec -> Plan -> Tasks ->
+Implement -> Validate -> Handoff. El agente debe leer
+`docs/deck-generation-workflow.md`, crear `decks/<slug>/deck.brief.md` desde
+`docs/deck-brief-template.md` y usar ese brief como fuente de verdad.
+
+Un prompt inicial debe incluir, como minimo:
+
+- tema o titulo,
+- audiencia y nivel,
+- duracion,
+- resultado esperado,
+- puntos obligatorios,
+- tono/contexto,
+- restricciones relevantes.
+
+Si falta informacion critica, el agente debe preguntar antes de crear el deck.
+Si solo faltan datos no criticos, como slug, paleta o assets sugeridos, puede
+inferirlos y documentar la suposicion en el brief.
 
 ## Uso
 

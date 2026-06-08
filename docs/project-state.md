@@ -21,6 +21,8 @@ reutilizables, validacion local y despliegue por GitHub Pages.
   `custom`.
 - Home de Pages: `scripts/deck.mjs` genera `dist/index.html` como galeria de
   decks con preview embebido, titulo y descripcion desde frontmatter.
+- Creacion de decks: flujo spec-driven con intake, brief local, plan, tareas,
+  implementacion, validacion y handoff.
 - Datos personales compartidos: `data/speaker/speaker.json`.
 - Assets personales compartidos: `data/speaker/`.
 - Componentes visuales compartidos: `shared/components/`.
@@ -58,11 +60,15 @@ reutilizables, validacion local y despliegue por GitHub Pages.
 │       └── styles/index.css
 ├── docs/
 │   ├── component-catalog.md
+│   ├── deck-brief-template.md
+│   ├── deck-generation-workflow.md
 │   ├── new-deck-agent-guide.md
 │   ├── project-state.md
 │   ├── slide-guidelines.md
 │   ├── style-catalog.md
-│   └── checkpoints/
+│   ├── checkpoints/
+│   └── specs/
+│       └── deck-generation/spec.md
 ├── scripts/
 │   └── deck.mjs
 ├── shared/
@@ -79,6 +85,8 @@ reutilizables, validacion local y despliegue por GitHub Pages.
 ## Principios Modulares
 
 - Cada deck vive en `decks/<slug>/`.
+- Cada deck nuevo debe tener `decks/<slug>/deck.brief.md` con prompt,
+  requisitos, supuestos, plan de assets, plan de validacion y handoff.
 - Lo estable de la persona vive en `data/speaker/speaker.json`, no en cada deck.
 - Los assets personales comunes viven en `data/speaker/`.
 - La multimedia propia de cada charla vive en `decks/<slug>/public/media/`.
@@ -94,6 +102,9 @@ reutilizables, validacion local y despliegue por GitHub Pages.
   sea util para mas de un deck y no dependa de contenido demasiado especifico.
 - Las decisiones reutilizables se documentan en `docs/slide-guidelines.md` y
   `docs/component-catalog.md`.
+- Las reglas de generacion por prompt viven en
+  `docs/deck-generation-workflow.md`, `docs/deck-brief-template.md` y
+  `docs/specs/deck-generation/spec.md`.
 
 ## Datos Personales Compartidos
 

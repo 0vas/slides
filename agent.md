@@ -59,6 +59,9 @@ kill a running dev server when the requested deck cannot be resolved.
 - `docs/component-catalog.md`: reusable visual component catalog.
 - `docs/style-catalog.md`: available palette and style catalog.
 - `docs/new-deck-agent-guide.md`: prompt and workflow for new decks.
+- `docs/deck-generation-workflow.md`: spec-driven deck creation flow.
+- `docs/deck-brief-template.md`: required brief template for new decks.
+- `docs/specs/`: living specs for repository workflows.
 - `docs/slide-guidelines.md`: design and content guidelines.
 - `docs/checkpoints/`: continuation notes for future sessions.
 - `.github/workflows/deploy.yml`: GitHub Pages deployment workflow.
@@ -69,6 +72,8 @@ kill a running dev server when the requested deck cannot be resolved.
 
 - A deck slug must be URL and folder friendly, for example
   `github-enterprise-platform`.
+- Each new deck should keep `decks/<slug>/deck.brief.md` with its prompt,
+  requirements, assumptions, asset plan, validation plan, and handoff notes.
 - New decks should start from `decks/_template`.
 - Shared behavior belongs in `shared/`; deck-specific visuals belong in the
   deck folder.
@@ -96,6 +101,19 @@ kill a running dev server when the requested deck cannot be resolved.
 ## New Deck Agent Flow
 
 - Read `docs/new-deck-agent-guide.md` before scaffolding a new presentation.
+- Follow `docs/deck-generation-workflow.md`: Intake -> Spec -> Plan -> Tasks ->
+  Implement -> Validate -> Handoff.
+- Before scaffolding, create or update `decks/<slug>/deck.brief.md` from
+  `docs/deck-brief-template.md`. Treat it as the source of truth for the deck.
+- Intake fields that must be recorded are: topic/title, audience, audience
+  level, duration, desired outcome, required points, tone/context,
+  constraints, asset policy, speaker/profile use, and deliverables.
+- Critical intake fields are: topic/title, audience, audience level, duration,
+  desired outcome, required points, tone/context, and constraints.
+- If any critical field is missing or contradictory, ask the user before
+  scaffolding. Ask at most three concise grouped questions. Infer only
+  non-critical fields such as slug, palette, slide count, and component choices,
+  then document those assumptions in the brief.
 - Start from `decks/_template`.
 - Choose a palette from `docs/style-catalog.md` and apply it with a
   `palette-*` class in both `class` and `defaults.class`.

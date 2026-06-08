@@ -273,7 +273,7 @@ function writeIndex(slugs) {
           <span>${escapeHtml(meta.slug)}</span>
           <h2>${escapeHtml(meta.title)}</h2>
           <p>${escapeHtml(meta.description)}</p>
-          <a class="deck-link" href="./${escapeHtml(meta.slug)}/">Abrir deck</a>
+          <a class="deck-link" href="./${escapeHtml(meta.slug)}/" target="_blank" rel="noopener noreferrer">Abrir deck</a>
         </div>
       </article>`)
     .join('\n')

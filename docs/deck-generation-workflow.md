@@ -1,10 +1,10 @@
-# Spec-Driven Deck Generation
+# Deck Generation Workflow
 
-Este flujo adapta patrones de Spec Kit y OpenSpec al repositorio: primero se
-define que deck se necesita, luego se planea, se divide en tareas, se implementa
-y se valida. El objetivo es que un usuario pueda ingresar un prompt y que el
-agente cree un deck limpio, completo y consistente sin depender de memoria de
-chat.
+Este flujo adapta un modelo liviano inspirado en Spec Kit al repositorio:
+primero se define que deck se necesita, luego se crea un brief, se planea, se
+divide en tareas, se implementa y se valida. El objetivo es que un usuario pueda
+ingresar un prompt y que el agente cree un deck limpio, completo y consistente
+sin depender de memoria de chat.
 
 ## Principios
 
@@ -17,14 +17,15 @@ chat.
 - La implementacion debe seguir `agent.md`, `docs/slide-guidelines.md`,
   `docs/component-catalog.md` y `docs/style-catalog.md`.
 
-## Referencias De Patron
+## Patron Adoptado
 
-- [Spec Kit](https://github.github.com/spec-kit/): usa un ciclo Spec -> Plan ->
-  Tasks -> Implement, con artefactos Markdown y checkpoints humanos.
-- [OpenSpec](https://openspec.dev/): mantiene specs en el repositorio y revisa
-  cambios mediante propuesta, diseno, tareas y deltas de especificacion.
-- En este repo, esos patrones se simplifican a un brief por deck y una spec
-  viva para el flujo de generacion.
+La decision esta documentada en
+`docs/adr/0001-spec-kit-lightweight-deck-generation.md`.
+
+El repo usa un flujo liviano tipo Spec Kit porque encaja mejor con trabajo
+agentico: aclarar intencion, escribir un brief, planear, dividir en tareas,
+implementar y validar. No se mantiene un arbol separado de specs para crear
+decks, porque seria redundante para este caso.
 
 ## Flujo
 
@@ -32,7 +33,7 @@ chat.
    Leer el prompt y completar los campos requeridos. Si falta informacion
    critica, preguntar antes de crear archivos.
 
-2. Spec
+2. Brief
    Crear `decks/<slug>/deck.brief.md` usando
    `docs/deck-brief-template.md`. Registrar prompt, requisitos, criterios de
    aceptacion, restricciones, assets, supuestos y preguntas abiertas.

@@ -21,7 +21,7 @@ docs/style-catalog.md
 docs/slide-guidelines.md
 docs/deck-generation-workflow.md
 docs/deck-brief-template.md
-docs/specs/deck-generation/spec.md
+docs/adr/0001-spec-kit-lightweight-deck-generation.md
 README.md
 ```
 

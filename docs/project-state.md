@@ -21,8 +21,8 @@ reutilizables, validacion local y despliegue por GitHub Pages.
   `custom`.
 - Home de Pages: `scripts/deck.mjs` genera `dist/index.html` como galeria de
   decks con preview embebido, titulo y descripcion desde frontmatter.
-- Creacion de decks: flujo spec-driven con intake, brief local, plan, tareas,
-  implementacion, validacion y handoff.
+- Creacion de decks: flujo liviano tipo Spec Kit con intake, brief local, plan,
+  tareas, implementacion, validacion y handoff.
 - Datos personales compartidos: `data/speaker/speaker.json`.
 - Assets personales compartidos: `data/speaker/`.
 - Componentes visuales compartidos: `shared/components/`.
@@ -59,6 +59,8 @@ reutilizables, validacion local y despliegue por GitHub Pages.
 │       ├── slide-bottom.vue
 │       └── styles/index.css
 ├── docs/
+│   ├── adr/
+│   │   └── 0001-spec-kit-lightweight-deck-generation.md
 │   ├── component-catalog.md
 │   ├── deck-brief-template.md
 │   ├── deck-generation-workflow.md
@@ -66,9 +68,7 @@ reutilizables, validacion local y despliegue por GitHub Pages.
 │   ├── project-state.md
 │   ├── slide-guidelines.md
 │   ├── style-catalog.md
-│   ├── checkpoints/
-│   └── specs/
-│       └── deck-generation/spec.md
+│   └── checkpoints/
 ├── scripts/
 │   └── deck.mjs
 ├── shared/
@@ -103,8 +103,8 @@ reutilizables, validacion local y despliegue por GitHub Pages.
 - Las decisiones reutilizables se documentan en `docs/slide-guidelines.md` y
   `docs/component-catalog.md`.
 - Las reglas de generacion por prompt viven en
-  `docs/deck-generation-workflow.md`, `docs/deck-brief-template.md` y
-  `docs/specs/deck-generation/spec.md`.
+  `docs/deck-generation-workflow.md` y `docs/deck-brief-template.md`.
+- Las decisiones arquitectonicas viven en `docs/adr/`.
 
 ## Datos Personales Compartidos
 

@@ -59,9 +59,10 @@ kill a running dev server when the requested deck cannot be resolved.
 - `docs/component-catalog.md`: reusable visual component catalog.
 - `docs/style-catalog.md`: available palette and style catalog.
 - `docs/new-deck-agent-guide.md`: prompt and workflow for new decks.
-- `docs/deck-generation-workflow.md`: spec-driven deck creation flow.
+- `docs/deck-generation-workflow.md`: lightweight Spec Kit-style deck creation
+  flow.
 - `docs/deck-brief-template.md`: required brief template for new decks.
-- `docs/specs/`: living specs for repository workflows.
+- `docs/adr/`: architecture decisions for repository workflows.
 - `docs/slide-guidelines.md`: design and content guidelines.
 - `docs/checkpoints/`: continuation notes for future sessions.
 - `.github/workflows/deploy.yml`: GitHub Pages deployment workflow.
@@ -101,7 +102,7 @@ kill a running dev server when the requested deck cannot be resolved.
 ## New Deck Agent Flow
 
 - Read `docs/new-deck-agent-guide.md` before scaffolding a new presentation.
-- Follow `docs/deck-generation-workflow.md`: Intake -> Spec -> Plan -> Tasks ->
+- Follow `docs/deck-generation-workflow.md`: Intake -> Brief -> Plan -> Tasks ->
   Implement -> Validate -> Handoff.
 - Before scaffolding, create or update `decks/<slug>/deck.brief.md` from
   `docs/deck-brief-template.md`. Treat it as the source of truth for the deck.

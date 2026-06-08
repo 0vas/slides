@@ -25,9 +25,9 @@ data/
     linkedin-qr.svg
   person.js              # re-export de compatibilidad
 docs/
+  adr/
   deck-generation-workflow.md
   deck-brief-template.md
-  specs/
 shared/
   components/
   styles/
@@ -49,10 +49,11 @@ scripts/
 - `shared/styles/theme.css`: estilos compartidos por todos los decks.
 - `shared/styles/palettes.css`: paletas reutilizables para cambiar el tono del
   deck sin duplicar CSS.
-- `docs/deck-generation-workflow.md`: flujo spec-driven para crear decks desde
-  un prompt.
+- `docs/deck-generation-workflow.md`: flujo liviano tipo Spec Kit para crear
+  decks desde un prompt.
 - `docs/deck-brief-template.md`: plantilla del brief requerido para decks
   nuevos.
+- `docs/adr/`: decisiones arquitectonicas del repositorio.
 
 ## Multimedia Y Datos
 
@@ -86,10 +87,12 @@ nuevas sin arrastrar contenido real de otro deck.
 
 ## Crear Un Deck Con Un Prompt
 
-El flujo recomendado es spec-driven: Intake -> Spec -> Plan -> Tasks ->
+El flujo recomendado es liviano tipo Spec Kit: Intake -> Brief -> Plan -> Tasks ->
 Implement -> Validate -> Handoff. El agente debe leer
 `docs/deck-generation-workflow.md`, crear `decks/<slug>/deck.brief.md` desde
-`docs/deck-brief-template.md` y usar ese brief como fuente de verdad.
+`docs/deck-brief-template.md` y usar ese brief como fuente de verdad. La
+decision esta registrada en
+`docs/adr/0001-spec-kit-lightweight-deck-generation.md`.
 
 Un prompt inicial debe incluir, como minimo:
 

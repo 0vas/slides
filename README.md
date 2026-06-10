@@ -201,7 +201,9 @@ componente global, crea un wrapper liviano en `decks/<slug>/components/` que
 apunte a `shared/components/`.
 
 Los componentes 3D usan `three`; mantenerlos como slides principales o bloques
-grandes y validar que el canvas renderice antes de publicar.
+grandes y validar que el canvas renderice antes de publicar. Los componentes
+Mermaid usan `mermaid` y deben validarse visualmente porque el build solo prueba
+que el render dinamico cargue.
 
 | Componente | Uso principal | Ubicacion |
 | --- | --- | --- |
@@ -214,6 +216,12 @@ grandes y validar que el canvas renderice antes de publicar.
 | `MaturityCurve` | Curva de madurez con etapas y puntos de decision. | `shared/components/` |
 | `GraphDiagram` | Grafo SVG para relaciones entre conceptos, sistemas o decisiones. | `shared/components/` |
 | `SequenceDiagram` | Diagrama de secuencia entre actores y mensajes. | `shared/components/` |
+| `MermaidDiagram` | Wrapper visual para renderizar Mermaid custom con estilo del deck. | `shared/components/` |
+| `MermaidSyntaxCatalog` | Mapa de sintaxis Mermaid disponibles, estados y usos recomendados. | `shared/components/` |
+| `MermaidArchitecture` | Preset Mermaid flowchart para arquitectura de capacidades. | `shared/components/` |
+| `MermaidJourney` | Preset Mermaid journey para adopcion, friccion o experiencia. | `shared/components/` |
+| `MermaidRoadmap` | Preset Mermaid timeline para roadmap o fases de transformacion. | `shared/components/` |
+| `MermaidQuadrant` | Preset Mermaid quadrantChart para priorizacion y trade-offs. | `shared/components/` |
 | `MediaFrame` | Marco para imagen, video, GIF o placeholder multimedia. | `shared/components/` |
 | `StylePalette` | Visualizacion de las paletas disponibles para decks. | `shared/components/` |
 | `BrowserMockup` | Mockup generico claro para productos, dashboards o screenshots. | `shared/components/` |

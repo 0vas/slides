@@ -82,6 +82,11 @@ Documentos relacionados:
   - Jerarquias.
   - Timelines.
   - Diagramas de capas.
+- Usar componentes Mermaid cuando el DSL acelere diagramas complejos:
+  `MermaidDiagram` para Mermaid custom, `MermaidSyntaxCatalog` para elegir entre
+  las familias disponibles y presets como `MermaidArchitecture`,
+  `MermaidJourney`, `MermaidRoadmap` y `MermaidQuadrant` para patrones de alto
+  nivel.
 - Revisar `docs/component-catalog.md` antes de crear una visual nueva.
 - Usar componentes compartidos para grafos, diagramas de secuencia y media antes
   de crear visuales ad hoc.
@@ -101,6 +106,8 @@ Documentos relacionados:
   comunica la slide, salvo que el usuario pida explicitamente sustituirlo.
 - Para 3D, usar `Shape3DStage`/Three.js y validar con screenshot que el canvas
   renderiza correctamente.
+- Para Mermaid, validar con screenshot que el diagrama renderiza y que texto,
+  leyendas y nodos mantienen contraste.
 - Evitar imagenes borrosas o capturas que no aporten informacion.
 
 ## Estilo

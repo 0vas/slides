@@ -1049,7 +1049,7 @@
   background: linear-gradient(180deg, rgba(47, 129, 247, 0), rgba(47, 129, 247, 0.85));
   bottom: 1rem;
   content: "";
-  height: 72px;
+  height: 62px;
   left: 1.2rem;
   position: absolute;
   width: 3px;
@@ -1706,12 +1706,14 @@ body:not(.print) nav.flex.flex-col [class*="z-menu"] [hover\:bg-active] {
 
 .graph-diagram,
 .sequence-diagram,
+.mermaid-diagram,
 .style-palette-grid {
   margin-top: 1.35rem;
 }
 
 .graph-diagram svg,
 .sequence-diagram,
+.mermaid-diagram,
 .media-frame,
 .style-palette-card {
   background:
@@ -1720,6 +1722,256 @@ body:not(.print) nav.flex.flex-col [class*="z-menu"] [hover\:bg-active] {
   border: 1px solid transparent;
   border-radius: 8px;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
+
+.mermaid-diagram {
+  display: grid;
+  gap: 0.72rem;
+  overflow: hidden;
+  padding: 0.82rem;
+}
+
+.mermaid-diagram-header {
+  align-items: end;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.mermaid-diagram-header span {
+  color: var(--deck-green);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mermaid-diagram-header strong {
+  color: var(--deck-ink);
+  font-size: 1.18rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: right;
+}
+
+.mermaid-diagram-body {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.mermaid-diagram-body--with-insights {
+  grid-template-columns: minmax(0, 1fr) 280px;
+}
+
+.mermaid-diagram-canvas {
+  align-items: center;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(47, 129, 247, 0.14), transparent 34%),
+    radial-gradient(circle at 88% 95%, rgba(57, 197, 207, 0.12), transparent 36%),
+    rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(125, 140, 163, 0.2);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  height: 282px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+.mermaid-diagram--compact .mermaid-diagram-canvas {
+  height: 266px;
+}
+
+.mermaid-diagram-render {
+  height: 100%;
+  width: 100%;
+}
+
+.mermaid-diagram-render svg {
+  display: block;
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+}
+
+.mermaid-diagram-render .node rect,
+.mermaid-diagram-render .node circle,
+.mermaid-diagram-render .node ellipse,
+.mermaid-diagram-render .node polygon,
+.mermaid-diagram-render .cluster rect {
+  rx: 8px;
+  ry: 8px;
+}
+
+.mermaid-diagram-render text,
+.mermaid-diagram-render span {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important;
+  letter-spacing: 0 !important;
+}
+
+.mermaid-diagram-insights {
+  display: grid;
+  gap: 0.52rem;
+}
+
+.mermaid-diagram-insights article {
+  background: rgba(15, 21, 32, 0.68);
+  border: 1px solid rgba(125, 140, 163, 0.22);
+  border-radius: 8px;
+  padding: 0.58rem;
+}
+
+.mermaid-diagram-insights span {
+  color: var(--deck-cyan);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.28rem;
+  text-transform: uppercase;
+}
+
+.mermaid-diagram-insights strong {
+  color: var(--deck-ink);
+  display: block;
+  font-size: 0.88rem;
+  line-height: 1.15;
+}
+
+.mermaid-diagram-insights small,
+.mermaid-diagram-caption {
+  color: var(--deck-muted);
+  display: block;
+  font-size: 0.68rem;
+  line-height: 1.24;
+}
+
+.mermaid-diagram-insights small {
+  margin-top: 0.28rem;
+}
+
+.mermaid-diagram-caption {
+  margin: 0;
+}
+
+.mermaid-diagram-error {
+  align-self: center;
+  background: rgba(247, 120, 186, 0.12);
+  border: 1px solid rgba(247, 120, 186, 0.36);
+  border-radius: 8px;
+  color: var(--deck-ink);
+  font-size: 0.9rem;
+  line-height: 1.35;
+  padding: 1rem;
+  width: 100%;
+}
+
+.mermaid-syntax-catalog {
+  display: grid;
+  gap: 0.62rem;
+  margin-top: 0.65rem;
+}
+
+.mermaid-syntax-catalog header {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.mermaid-syntax-catalog header span {
+  color: var(--deck-green);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mermaid-syntax-catalog header strong {
+  color: var(--deck-ink);
+  font-size: 1.12rem;
+  line-height: 1.05;
+}
+
+.mermaid-syntax-catalog header small {
+  color: var(--deck-muted);
+  font-size: 0.72rem;
+  line-height: 1.25;
+  max-width: 760px;
+}
+
+.mermaid-syntax-grid {
+  display: grid;
+  gap: 0.42rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.mermaid-syntax-grid article {
+  background:
+    linear-gradient(145deg, rgba(15, 21, 32, 0.82), rgba(8, 11, 16, 0.82)) padding-box,
+    var(--border-gradient) border-box;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+  display: grid;
+  gap: 0.24rem;
+  height: 72px;
+  overflow: hidden;
+  padding: 0.48rem;
+}
+
+.mermaid-syntax-grid article > div {
+  align-items: center;
+  display: flex;
+  gap: 0.45rem;
+  justify-content: space-between;
+}
+
+.mermaid-syntax-grid article span {
+  color: var(--deck-cyan);
+  font-size: 0.54rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mermaid-syntax-grid article.is-beta span {
+  color: var(--deck-amber);
+}
+
+.mermaid-syntax-grid article.is-experimental span,
+.mermaid-syntax-grid article.is-candidate span {
+  color: var(--deck-rose);
+}
+
+.mermaid-syntax-grid article code {
+  background: rgba(47, 129, 247, 0.12);
+  border: 1px solid rgba(47, 129, 247, 0.2);
+  border-radius: 999px;
+  color: var(--deck-ink);
+  font-size: 0.5rem;
+  font-weight: 800;
+  line-height: 1;
+  max-width: 92px;
+  overflow: hidden;
+  padding: 0.22rem 0.38rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mermaid-syntax-grid article strong {
+  color: var(--deck-ink);
+  display: -webkit-box;
+  font-size: 0.68rem;
+  -webkit-line-clamp: 2;
+  line-height: 1.1;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.mermaid-syntax-grid article small {
+  display: none;
 }
 
 .graph-diagram svg {
@@ -2905,8 +3157,22 @@ body:not(.print) nav.flex.flex-col [class*="z-menu"] [hover\:bg-active] {
   }
 
   .graph-diagram svg,
+  .mermaid-diagram-canvas,
   .sequence-diagram {
     min-height: 320px;
+  }
+
+  .mermaid-diagram-body {
+    grid-template-columns: 1fr;
+  }
+
+  .mermaid-diagram-header {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .mermaid-diagram-header strong {
+    text-align: left;
   }
 
   .sequence-message {

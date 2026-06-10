@@ -39,7 +39,7 @@ transition: fade
 ## Que cubre este showroom
 
 <div class="showcase-index">
-  <div v-click><span>Shared</span><strong>26 componentes</strong><small>Base global para nuevos decks.</small></div>
+  <div v-click><span>Shared</span><strong>32 componentes</strong><small>Base global para nuevos decks.</small></div>
   <div v-click><span>Agnostico</span><strong>0 producto fijo</strong><small>El catalogo no depende de una marca o charla.</small></div>
   <div v-click><span>Style</span><strong>8 paletas</strong><small>Elegibles desde el frontmatter del deck.</small></div>
 </div>
@@ -138,6 +138,70 @@ transition: slide-left
 ## SequenceDiagram
 
 <SequenceDiagram />
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Shared component</span>
+
+## MermaidDiagram
+
+<MermaidDiagram
+  title="Diagrama custom"
+  caption="Escape hatch para usar Mermaid directo sin perder el estilo del deck."
+  diagram="flowchart LR; Prompt[Prompt]-->Brief[Brief]; Brief-->Plan[Plan]; Plan-->Build[Deck]; Build-->Validate[Validate]; Validate-->Handoff[Handoff];"
+/>
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Shared component</span>
+
+## MermaidSyntaxCatalog
+
+<MermaidSyntaxCatalog />
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Shared component</span>
+
+## MermaidArchitecture
+
+<MermaidArchitecture />
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Shared component</span>
+
+## MermaidJourney
+
+<MermaidJourney />
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Shared component</span>
+
+## MermaidRoadmap
+
+<MermaidRoadmap />
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Shared component</span>
+
+## MermaidQuadrant
+
+<MermaidQuadrant />
 
 ---
 transition: slide-up

@@ -21,6 +21,12 @@ Current shared components:
 - `MaturityCurve.vue`
 - `GraphDiagram.vue`
 - `SequenceDiagram.vue`
+- `MermaidDiagram.vue`
+- `MermaidSyntaxCatalog.vue`
+- `MermaidArchitecture.vue`
+- `MermaidJourney.vue`
+- `MermaidRoadmap.vue`
+- `MermaidQuadrant.vue`
 - `MediaFrame.vue`
 - `StylePalette.vue`
 - `BrowserMockup.vue`
@@ -47,6 +53,9 @@ make dev DECK=component-showcase
 
 `Shape3DStage.vue` uses `three`; validate it visually with Playwright because a
 passing build does not prove the WebGL canvas rendered.
+
+`MermaidDiagram.vue` and its presets use `mermaid`; validate them visually
+because the diagrams render dynamically in the browser.
 
 Decks should expose shared components through local wrappers so Slidev can
 auto-import them from `decks/<slug>/components/`:

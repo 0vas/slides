@@ -163,6 +163,12 @@ Componentes compartidos actuales en `shared/components/`:
 - `MaturityCurve`: curva de madurez.
 - `GraphDiagram`: grafo de relaciones.
 - `SequenceDiagram`: diagrama de secuencia.
+- `MermaidDiagram`: wrapper visual para Mermaid custom.
+- `MermaidSyntaxCatalog`: mapa de sintaxis Mermaid disponibles.
+- `MermaidArchitecture`: preset Mermaid flowchart para arquitectura.
+- `MermaidJourney`: preset Mermaid journey para adopcion y experiencia.
+- `MermaidRoadmap`: preset Mermaid timeline para roadmaps.
+- `MermaidQuadrant`: preset Mermaid quadrantChart para priorizacion.
 - `MediaFrame`: marco para imagen, video, GIF o placeholder.
 - `StylePalette`: catalogo visual de paletas.
 - `BrowserMockup`: mockup generico claro para producto/dashboard.

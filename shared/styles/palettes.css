@@ -226,6 +226,7 @@
 .slidev-layout.palette-crystal .security-radar svg,
 .slidev-layout.palette-crystal .radar-copy,
 .slidev-layout.palette-crystal .graph-diagram svg,
+.slidev-layout.palette-crystal .mermaid-diagram,
 .slidev-layout.palette-crystal .sequence-diagram,
 .slidev-layout.palette-crystal .media-frame,
 .slidev-layout.palette-crystal .style-palette-card,
@@ -248,6 +249,31 @@
     var(--border-gradient) border-box !important;
   border-color: transparent !important;
   box-shadow: 0 20px 54px rgba(15, 23, 42, 0.12) !important;
+}
+
+.slidev-layout.palette-crystal .mermaid-diagram-canvas {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(47, 129, 247, 0.12), transparent 34%),
+    radial-gradient(circle at 88% 95%, rgba(57, 197, 207, 0.1), transparent 36%),
+    rgba(255, 255, 255, 0.68);
+  border-color: rgba(30, 41, 59, 0.12);
+}
+
+.slidev-layout.palette-crystal .mermaid-diagram-insights article {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(30, 41, 59, 0.12);
+}
+
+.slidev-layout.palette-crystal .mermaid-syntax-grid article {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(238, 245, 255, 0.9)) padding-box,
+    var(--border-gradient) border-box;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+}
+
+.slidev-layout.palette-crystal .mermaid-syntax-grid article code {
+  background: rgba(47, 129, 247, 0.08);
+  border-color: rgba(47, 129, 247, 0.18);
 }
 
 .slidev-layout.palette-crystal .speaker-card,

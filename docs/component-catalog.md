@@ -235,6 +235,149 @@ Props:
 - `participants`: array con `id` y `label`.
 - `messages`: array con `from`, `to`, `label` y `tone`.
 
+### `MermaidDiagram`
+
+Fuente:
+
+```text
+shared/components/MermaidDiagram.vue
+```
+
+Uso: wrapper visual para renderizar Mermaid custom sin perder la estetica del
+deck. Ideal cuando el DSL de Mermaid ya resuelve mejor el diagrama que un
+componente SVG manual.
+
+Props:
+
+- `diagram`: string Mermaid requerido.
+- `title`: titulo del panel.
+- `kicker`: etiqueta superior.
+- `caption`: nota inferior.
+- `insights`: array opcional con `label`, `title` y `detail`.
+- `variant`: variante visual semantica.
+- `density`: `normal` o `compact`.
+
+Ejemplo:
+
+```md
+<MermaidDiagram
+  title="Flujo de trabajo"
+  :diagram="`flowchart LR
+    Prompt --> Brief
+    Brief --> Plan
+    Plan --> Build`"
+/>
+```
+
+Validar visualmente porque Mermaid renderiza dinamicamente en el navegador.
+
+Sintaxis cubiertas por el catalogo Mermaid:
+
+- Flowchart
+- Sequence Diagram
+- Class Diagram
+- State Diagram
+- Entity Relationship Diagram
+- User Journey
+- Gantt
+- Pie Chart
+- Quadrant Chart
+- Requirement Diagram
+- GitGraph Diagram
+- C4 Diagram
+- Mindmap
+- Timeline
+- ZenUML
+- Sankey
+- XY Chart
+- Block Diagram
+- Packet
+
+`MermaidSyntaxCatalog` indica cuales estan listas, cuales son beta o
+experimentales, y cuales requieren validacion adicional.
+
+### `MermaidSyntaxCatalog`
+
+Fuente:
+
+```text
+shared/components/MermaidSyntaxCatalog.vue
+shared/components/mermaidSyntaxCatalog.js
+```
+
+Uso: mapa de decision para elegir la sintaxis Mermaid adecuada antes de crear un
+diagrama. Debe aparecer en el showcase y puede usarse en decks de capacitacion o
+arquitectura para explicar opciones disponibles.
+
+Props:
+
+- `entries`: array opcional para filtrar o reemplazar el catalogo.
+- `title`, `kicker`, `detail`.
+
+### `MermaidArchitecture`
+
+Fuente:
+
+```text
+shared/components/MermaidArchitecture.vue
+```
+
+Uso: preset `flowchart` con subgraphs para arquitectura de capacidades,
+plataformas, dominios o operating models.
+
+Props:
+
+- `diagram`: override Mermaid opcional.
+- `title`, `kicker`, `caption`, `insights`.
+
+### `MermaidJourney`
+
+Fuente:
+
+```text
+shared/components/MermaidJourney.vue
+```
+
+Uso: preset `journey` para adopcion, friccion, experiencia de usuario o cambio
+organizacional.
+
+Props:
+
+- `diagram`: override Mermaid opcional.
+- `title`, `kicker`, `caption`, `insights`.
+
+### `MermaidRoadmap`
+
+Fuente:
+
+```text
+shared/components/MermaidRoadmap.vue
+```
+
+Uso: preset `timeline` para roadmaps, fases de transformacion o narrativa de
+madurez.
+
+Props:
+
+- `diagram`: override Mermaid opcional.
+- `title`, `kicker`, `caption`, `insights`.
+
+### `MermaidQuadrant`
+
+Fuente:
+
+```text
+shared/components/MermaidQuadrant.vue
+```
+
+Uso: preset `quadrantChart` para priorizacion, valor vs esfuerzo, riesgo vs
+impacto o trade-offs ejecutivos.
+
+Props:
+
+- `diagram`: override Mermaid opcional.
+- `title`, `kicker`, `caption`, `insights`.
+
 ### `MediaFrame`
 
 Fuente:

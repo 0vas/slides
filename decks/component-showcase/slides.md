@@ -204,6 +204,230 @@ transition: slide-up
 <MermaidQuadrant />
 
 ---
+transition: slide-left
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Sequence Diagram
+
+<MermaidDiagram
+  title="Interaccion entre actores"
+  kicker="Mermaid sequenceDiagram"
+  density="compact"
+  caption="Bueno para APIs, handoffs, aprobaciones y conversaciones entre equipos."
+  :diagram="'sequenceDiagram\nparticipant User as Usuario\nparticipant Agent as Agente\nparticipant Repo as Repositorio\nUser->>Agent: Prompt del deck\nAgent->>Repo: Lee brief y catalogo\nRepo-->>Agent: Componentes y reglas\nAgent-->>User: Preguntas criticas o deck listo'"
+/>
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Mermaid example</span>
+
+## State Diagram
+
+<MermaidDiagram
+  title="Ciclo de vida de un deck"
+  kicker="Mermaid stateDiagram-v2"
+  density="compact"
+  caption="Bueno para estados, gates, controles y workflows con transiciones claras."
+  :diagram="'stateDiagram-v2\n[*] --> Intake\nIntake --> Brief: informacion completa\nIntake --> Questions: faltan datos criticos\nQuestions --> Brief\nBrief --> Build\nBuild --> Validate\nValidate --> Publish: check limpio\nValidate --> Build: ajustes\nPublish --> [*]'"
+/>
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Entity Relationship
+
+<MermaidDiagram
+  title="Modelo de datos del deck"
+  kicker="Mermaid erDiagram"
+  density="compact"
+  caption="Bueno para dominios, metadata, ownership y relaciones persistentes."
+  :diagram="'erDiagram\nDECK ||--o{ SLIDE : contains\nDECK ||--|| BRIEF : defined_by\nSLIDE ||--o{ COMPONENT : uses\nDECK ||--o{ ASSET : references\nSPEAKER ||--o{ DECK : presents'"
+/>
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Class Diagram
+
+<MermaidDiagram
+  title="Contrato reusable"
+  kicker="Mermaid classDiagram"
+  density="compact"
+  caption="Bueno para explicar interfaces, contratos de datos y responsabilidades entre modulos."
+  :diagram="'classDiagram\nclass DeckBrief {\n  +String title\n  +String audience\n  +String outcome\n  +validate()\n}\nclass SlidePlan {\n  +String section\n  +String component\n  +render()\n}\nclass AssetPlan {\n  +String path\n  +String license\n  +verify()\n}\nDeckBrief --> SlidePlan : informs\nSlidePlan --> AssetPlan : references'"
+/>
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Gantt
+
+<MermaidDiagram
+  title="Plan de produccion"
+  kicker="Mermaid gantt"
+  density="compact"
+  caption="Bueno para fases con fechas, dependencias y ventanas de entrega."
+  :diagram="'gantt\ntitle Produccion del deck\ndateFormat YYYY-MM-DD\naxisFormat %d %b\nsection Discovery\nIntake :a1, 2026-06-10, 1d\nBrief :after a1, 1d\nsection Build\nSlides :2026-06-12, 3d\nVisual QA :after Slides, 1d\nsection Release\nDeploy :2026-06-16, 1d'"
+/>
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Mermaid example</span>
+
+## GitGraph
+
+<MermaidDiagram
+  title="Estrategia de cambios"
+  kicker="Mermaid gitGraph"
+  density="compact"
+  caption="Bueno para explicar ramas, merges, releases y checkpoints de trabajo."
+  :diagram="'gitGraph\ncommit\nbranch feature\ncheckout feature\ncommit\ncommit\ncheckout main\nmerge feature\ncommit'"
+/>
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Mindmap
+
+<MermaidDiagram
+  title="Mapa mental de narrativa"
+  kicker="Mermaid mindmap"
+  density="compact"
+  caption="Bueno para discovery, taxonomias, lluvia de ideas y estructura conceptual."
+  :diagram="'mindmap\n  root((Deck))\n    Audiencia\n      Nivel\n      Dolor\n      Resultado\n    Narrativa\n      Apertura\n      Desarrollo\n      Cierre\n    Visuales\n      Componentes\n      Assets\n      Diagramas\n    Validacion\n      Build\n      Screenshots\n      Handoff'"
+/>
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Mermaid example</span>
+
+## XY Chart
+
+<MermaidDiagram
+  title="Evolucion de calidad"
+  kicker="Mermaid xychart-beta"
+  density="compact"
+  caption="Bueno para series simples, barras y tendencias sin traer una libreria de charts."
+  :diagram="'xychart-beta\ntitle Calidad del deck\nx-axis [Brief, Draft, Visual, Final]\ny-axis Score 0 --> 100\nbar [42, 64, 82, 94]\nline [40, 58, 78, 92]'"
+/>
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Sankey
+
+<MermaidDiagram
+  title="Flujo de esfuerzo"
+  kicker="Mermaid sankey-beta"
+  density="compact"
+  caption="Bueno para volumen, conversion, presupuesto o energia entre etapas."
+  :diagram="'sankey-beta\nPrompt,Brief,10\nBrief,Slides,8\nBrief,Questions,2\nSlides,Visual QA,7\nVisual QA,Build,6\nVisual QA,Rework,1\nBuild,Publish,6'"
+/>
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Pie Chart
+
+<MermaidDiagram
+  title="Balance del contenido"
+  kicker="Mermaid pie"
+  density="compact"
+  caption="Bueno para proporciones simples con pocas categorias y una lectura inmediata."
+  :diagram="'pie title Balance del deck\n  &quot;Narrativa&quot; : 35\n  &quot;Visuales&quot; : 30\n  &quot;Diagramas&quot; : 20\n  &quot;Validacion&quot; : 15'"
+/>
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Timeline
+
+<MermaidDiagram
+  title="Evolucion de la idea"
+  kicker="Mermaid timeline"
+  density="compact"
+  caption="Bueno para contar madurez, hitos, roadmap o historia de una iniciativa."
+  :diagram="'timeline\ntitle Evolucion del deck\nPrompt : Intencion inicial\nBrief : Alcance y preguntas criticas\nStoryboard : Narrativa slide por slide\nShowcase : Componentes reutilizables\nRelease : Build y publicacion'"
+/>
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Mermaid example</span>
+
+## C4 Context
+
+<MermaidDiagram
+  title="Contexto de plataforma"
+  kicker="Mermaid C4Context"
+  density="compact"
+  caption="Bueno para explicar sistemas, usuarios y relaciones a nivel ejecutivo."
+  :diagram="'C4Context\nPerson(owner, &quot;Owner&quot;)\nSystem(deck, &quot;Deck&quot;)\nSystem_Ext(assets, &quot;Assets&quot;)\nRel(owner, deck, &quot;crea&quot;)\nRel(deck, assets, &quot;usa&quot;)'"
+/>
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Block Diagram
+
+<MermaidDiagram
+  title="Bloques de composicion"
+  kicker="Mermaid block-beta"
+  density="compact"
+  caption="Bueno para mapas modulares, arquitectura conceptual y composicion de layouts."
+  :diagram="'block-beta\ncolumns 2\nintake[&quot;Intake&quot;] brief[&quot;Brief&quot;]\nassets[&quot;Assets&quot;] deck[&quot;Deck&quot;]\nintake --> brief\nbrief --> deck\nassets --> deck'"
+/>
+
+---
+transition: slide-up
+---
+
+<span class="kicker">Mermaid example</span>
+
+## Packet Diagram
+
+<MermaidDiagram
+  title="Contrato de entrega"
+  kicker="Mermaid packet-beta"
+  density="compact"
+  caption="Bueno para protocolos, campos de payload y estructura de mensajes."
+  :diagram="'packet-beta\ntitle Deck payload\n0-7: &quot;brief&quot;\n8-15: &quot;slides&quot;\n16-23: &quot;assets&quot;\n24-31: &quot;checks&quot;'"
+/>
+
+---
 transition: slide-up
 ---
 

@@ -15,14 +15,36 @@ in this repo.
 ## Required Workflow
 
 1. Inspect the existing deck and shared theme before editing.
-2. Use the existing structure and components when possible.
-3. Make scoped changes only; avoid unrelated refactors.
-4. After meaningful changes, run `make check DECK=<slug>`.
-5. For visual changes, capture at least the cover and one internal slide at
+2. Define acceptance criteria before implementation. Treat TDD broadly:
+   tests first for code behavior, criteria/checks first for decks, docs,
+   visuals, workflows, and deployment changes.
+3. Identify the validation surface before editing: unit/integration tests,
+   build checks, screenshots, link checks, workflow syntax checks, or manual
+   inspection evidence.
+4. Use the existing structure and components when possible.
+5. Make scoped changes only; avoid unrelated refactors.
+6. After meaningful changes, run `make check DECK=<slug>`.
+7. For visual changes, capture at least the cover and one internal slide at
    1440x900 when a local server is available.
-6. Document new reusable decisions in `docs/slide-guidelines.md`.
-7. Add or update a checkpoint under `docs/checkpoints/` when the user asks to
+8. Validate the acceptance criteria before handoff and report any criterion
+   that could not be verified.
+9. Document new reusable decisions in `docs/slide-guidelines.md`.
+10. Add or update a checkpoint under `docs/checkpoints/` when the user asks to
    pause, checkpoint, or continue later.
+
+## TDD And Quality Criteria
+
+- Every implementation should start with a compact quality checklist: behavior,
+  regression safety, maintainability, visual/readability expectations when
+  relevant, and exact validation commands or inspections.
+- Prefer existing tests and repo commands over new tooling. Add a new test only
+  when it protects meaningful behavior or a reusable contract.
+- For slide and documentation work, use criteria-first validation when a classic
+  failing test is not practical: `make check`, browser screenshots, Mermaid
+  render checks, link/path checks, and focused visual inspection are acceptable
+  test surfaces.
+- Do not mark work complete merely because files changed. Completion requires
+  passing the selected checks or explicitly reporting the unverified gap.
 
 ## Commands
 

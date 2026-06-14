@@ -1,6 +1,6 @@
 ---
 name: tdd-implementation
-description: Implement code, documentation, deck, or workflow changes with a test-first or criteria-first process. Use when Codex is asked to implement, fix, refactor, build, add a feature, create a deck, update docs, change CI/deploy behavior, or make any non-trivial repository change that should define quality criteria before editing and validate them after execution.
+description: Implement code, documentation, deck, or workflow changes with a test-first or criteria-first process. Use when an AI agent is asked to implement, fix, refactor, build, add a feature, create a deck, update docs, change CI/deploy behavior, or make any non-trivial repository change that should define quality criteria before editing and validate them after execution.
 ---
 
 # TDD Implementation

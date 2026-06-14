@@ -1,6 +1,6 @@
 ---
 name: slide-deck-generator
-description: Create or substantially modify Slidev-style slide decks from a user prompt. Use when Codex is asked to build a new presentation, generate slides, scaffold a deck, turn an outline into a deck, add major deck content, choose reusable slide components, organize deck media, or prepare a deck for publishing. Pair with TDD-oriented validation by defining acceptance criteria before implementation and verifying them at the end.
+description: Create or substantially modify Slidev-style slide decks from a user prompt. Use when an AI agent is asked to build a new presentation, generate slides, scaffold a deck, turn an outline into a deck, add major deck content, choose reusable slide components, organize deck media, or prepare a deck for publishing. Pair with TDD-oriented validation by defining acceptance criteria before implementation and verifying them at the end.
 ---
 
 # Slide Deck Generator

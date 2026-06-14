@@ -1,4 +1,0 @@
-interface:
-  display_name: "Slide Visual QA"
-  short_description: "Validate slide decks visually"
-  default_prompt: "Run visual QA on this slide deck and fix issues until it builds and renders cleanly."

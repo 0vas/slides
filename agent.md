@@ -87,9 +87,12 @@ kill a running dev server when the requested deck cannot be resolved.
 - `docs/adr/`: architecture decisions for repository workflows.
 - `docs/slide-guidelines.md`: design and content guidelines.
 - `docs/checkpoints/`: continuation notes for future sessions.
-- `skills/`: reusable Codex skills that users can copy into their own
-  Codex skills directory to reproduce this repository's deck-generation,
+- `skills/`: reusable, vendor-neutral Markdown workflows that users and agents
+  can copy or read directly to reproduce this repository's deck-generation,
   visual-QA, and TDD workflows.
+- `CLAUDE.md` and `.github/copilot-instructions.md`: thin adapters for tools
+  that look for those files; they must point back to `agent.md` and `skills/`
+  instead of duplicating rules.
 - `.github/workflows/deploy.yml`: GitHub Pages deployment workflow.
 - `decks/component-showcase/`: example deck that exercises the current visual
   component catalog.
@@ -128,8 +131,8 @@ kill a running dev server when the requested deck cannot be resolved.
 
 - Prefer repo-shipped skills when available: `slide-deck-generator` for new
   decks, `slide-visual-qa` for visual review, and `tdd-implementation` for
-  criteria-first implementation. They live under `skills/` for reuse by future
-  projects and users.
+  criteria-first implementation. They live under `skills/` as vendor-neutral
+  Markdown workflows for reuse by future projects and users.
 - Read `docs/new-deck-agent-guide.md` before scaffolding a new presentation.
 - Follow `docs/deck-generation-workflow.md`: Intake -> Brief -> Plan -> Tasks ->
   Implement -> Validate -> Handoff.
@@ -269,11 +272,11 @@ kill a running dev server when the requested deck cannot be resolved.
 
 ## Content Standard
 
-- Present GitHub from a platform perspective, not only from the developer
-  workflow.
-- Connect governance, identity, repository ownership, security, automation,
-  Actions, Advanced Security, Copilot, and adoption metrics.
-- Include practical enterprise operating lessons, not only feature lists.
+- Present the requested topic from the audience's operating context, not only
+  from a feature or tool perspective.
+- Connect strategy, process, roles, risks, controls, adoption, and measurable
+  outcomes when they are relevant to the deck.
+- Include practical operating lessons, not only feature lists.
 - Prefer short phrases written for spoken delivery.
 - For a 30 minute talk, target roughly 24-32 slides.
 - Use section breaks every 5-7 slides to reset attention.
@@ -333,7 +336,11 @@ decks/<slug>/public/media/
   metadata inside Markdown slides or deck-specific data files.
 - Never use a QR screenshot that is blurry, cropped, or impossible to scan.
 
-## Current GitHub Enterprise Deck Requirements
+## Deck-Specific Legacy Context
+
+These notes apply only when editing `decks/github-enterprise-platform/`. Do not
+apply them to new decks unless the user explicitly asks for a GitHub enterprise
+topic.
 
 - Topic: GitHub as an enterprise platform.
 - Audience: intermediate, familiar with GitHub basics.

@@ -1,6 +1,6 @@
 ---
 name: slide-visual-qa
-description: Validate and fix visual quality problems in slide decks. Use when Codex is asked to review deck visuals, fix slides that do not look good, verify light/dark contrast, inspect screenshots, validate Mermaid/charts/media/3D renderers, ensure deck components are agnostic where required, or confirm a deck is ready to present or deploy.
+description: Validate and fix visual quality problems in slide decks. Use when an AI agent is asked to review deck visuals, fix slides that do not look good, verify light/dark contrast, inspect screenshots, validate Mermaid/charts/media/3D renderers, ensure deck components are agnostic where required, or confirm a deck is ready to present or deploy.
 ---
 
 # Slide Visual QA

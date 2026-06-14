@@ -1,4 +1,0 @@
-interface:
-  display_name: "Slide Deck Generator"
-  short_description: "Create complete slide decks"
-  default_prompt: "Create a new slide deck from this prompt, ask only for missing critical information, then implement and validate it."

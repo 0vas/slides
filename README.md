@@ -87,8 +87,9 @@ nuevas sin arrastrar contenido real de otro deck.
 
 ## Crear Un Deck Con Un Prompt
 
-Este repositorio incluye skills Codex reutilizables en [skills/](skills/) para
-que otros usuarios puedan llevarse el flujo a nuevos proyectos:
+Este repositorio incluye skills/workflows reutilizables en [skills/](skills/)
+para que otros usuarios puedan llevarse el flujo a nuevos proyectos sin
+depender de una marca de agente:
 
 - `slide-deck-generator`: genera decks desde prompts con brief, componentes,
   assets locales y validacion.
@@ -97,17 +98,23 @@ que otros usuarios puedan llevarse el flujo a nuevos proyectos:
 - `tdd-implementation`: fuerza criterios de calidad antes de implementar y
   validacion al final.
 
-Para instalarlos en un entorno Codex local:
+Para agentes que soportan skills instalables, copia las carpetas al directorio
+de skills de tu herramienta:
 
 ```bash
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+export AGENT_SKILLS_DIR="/ruta/a/skills/de/tu/agente"
+mkdir -p "$AGENT_SKILLS_DIR"
 cp -R skills/slide-deck-generator \
   skills/slide-visual-qa \
   skills/tdd-implementation \
-  "${CODEX_HOME:-$HOME/.codex}/skills/"
+  "$AGENT_SKILLS_DIR/"
 ```
 
-Despues reinicia o recarga la sesion de Codex para que los descubra.
+Despues reinicia o recarga la sesion del agente para que los descubra.
+
+El repositorio tambien incluye adaptadores delgados para herramientas comunes:
+`AGENTS.md`, `CLAUDE.md` y `.github/copilot-instructions.md`. Todos apuntan a
+`agent.md` y a `skills/` para evitar duplicar reglas.
 
 El flujo recomendado es liviano tipo Spec Kit: Intake -> Brief -> Plan -> Tasks ->
 Implement -> Validate -> Handoff. El agente debe leer
@@ -319,7 +326,7 @@ Documentacion operativa:
 - [Catalogo de componentes](docs/component-catalog.md)
 - [Catalogo de estilos](docs/style-catalog.md)
 - [Guia para crear decks con IA](docs/new-deck-agent-guide.md)
-- [Skills reutilizables para Codex](skills/)
+- [Skills reutilizables para agentes](skills/)
 
 Los agentes de IA deben seguir tambien [agent.md](agent.md).
 

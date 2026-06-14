@@ -17,11 +17,12 @@ sin depender de memoria de chat.
 - La implementacion debe seguir `agent.md`, `docs/slide-guidelines.md`,
   `docs/component-catalog.md` y `docs/style-catalog.md`.
 - Los skills reutilizables viven en `skills/` para que cualquier usuario pueda
-  copiarlos a su entorno Codex y recrear este flujo en nuevos proyectos.
+  copiarlos a su entorno de agente o leerlos directamente y recrear este flujo
+  en nuevos proyectos.
 
 ## Skills Reutilizables
 
-El repositorio incluye skills agnosticos al proyecto:
+El repositorio incluye skills agnosticos al proyecto y a la marca del agente:
 
 - `slide-deck-generator`: genera o modifica decks desde prompts.
 - `slide-visual-qa`: valida legibilidad, contraste, screenshots y render
@@ -29,15 +30,20 @@ El repositorio incluye skills agnosticos al proyecto:
 - `tdd-implementation`: exige criterios de calidad antes de implementar y
   validacion al final.
 
-Instalacion rapida:
+Instalacion rapida para herramientas que soportan skills instalables:
 
 ```bash
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+export AGENT_SKILLS_DIR="/ruta/a/skills/de/tu/agente"
+mkdir -p "$AGENT_SKILLS_DIR"
 cp -R skills/slide-deck-generator \
   skills/slide-visual-qa \
   skills/tdd-implementation \
-  "${CODEX_HOME:-$HOME/.codex}/skills/"
+  "$AGENT_SKILLS_DIR/"
 ```
+
+Para agentes sin soporte de skills instalables, pedirles que lean `agent.md` y
+el `SKILL.md` correspondiente. Los adaptadores `AGENTS.md`, `CLAUDE.md` y
+`.github/copilot-instructions.md` apuntan a esas fuentes sin duplicar reglas.
 
 ## Patron Adoptado
 

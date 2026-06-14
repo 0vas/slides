@@ -1,0 +1,4 @@
+interface:
+  display_name: "TDD Implementation"
+  short_description: "Implement with criteria and tests"
+  default_prompt: "Implement this change with TDD: define acceptance criteria, add or identify checks, make the change, and validate the result."

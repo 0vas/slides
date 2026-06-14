@@ -87,6 +87,9 @@ kill a running dev server when the requested deck cannot be resolved.
 - `docs/adr/`: architecture decisions for repository workflows.
 - `docs/slide-guidelines.md`: design and content guidelines.
 - `docs/checkpoints/`: continuation notes for future sessions.
+- `skills/`: reusable Codex skills that users can copy into their own
+  Codex skills directory to reproduce this repository's deck-generation,
+  visual-QA, and TDD workflows.
 - `.github/workflows/deploy.yml`: GitHub Pages deployment workflow.
 - `decks/component-showcase/`: example deck that exercises the current visual
   component catalog.
@@ -123,6 +126,10 @@ kill a running dev server when the requested deck cannot be resolved.
 
 ## New Deck Agent Flow
 
+- Prefer repo-shipped skills when available: `slide-deck-generator` for new
+  decks, `slide-visual-qa` for visual review, and `tdd-implementation` for
+  criteria-first implementation. They live under `skills/` for reuse by future
+  projects and users.
 - Read `docs/new-deck-agent-guide.md` before scaffolding a new presentation.
 - Follow `docs/deck-generation-workflow.md`: Intake -> Brief -> Plan -> Tasks ->
   Implement -> Validate -> Handoff.

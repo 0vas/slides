@@ -16,6 +16,28 @@ sin depender de memoria de chat.
   `decks/<slug>/public/media/`.
 - La implementacion debe seguir `agent.md`, `docs/slide-guidelines.md`,
   `docs/component-catalog.md` y `docs/style-catalog.md`.
+- Los skills reutilizables viven en `skills/` para que cualquier usuario pueda
+  copiarlos a su entorno Codex y recrear este flujo en nuevos proyectos.
+
+## Skills Reutilizables
+
+El repositorio incluye skills agnosticos al proyecto:
+
+- `slide-deck-generator`: genera o modifica decks desde prompts.
+- `slide-visual-qa`: valida legibilidad, contraste, screenshots y render
+  dinamico.
+- `tdd-implementation`: exige criterios de calidad antes de implementar y
+  validacion al final.
+
+Instalacion rapida:
+
+```bash
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+cp -R skills/slide-deck-generator \
+  skills/slide-visual-qa \
+  skills/tdd-implementation \
+  "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
 
 ## Patron Adoptado
 

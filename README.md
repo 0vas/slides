@@ -87,6 +87,28 @@ nuevas sin arrastrar contenido real de otro deck.
 
 ## Crear Un Deck Con Un Prompt
 
+Este repositorio incluye skills Codex reutilizables en [skills/](skills/) para
+que otros usuarios puedan llevarse el flujo a nuevos proyectos:
+
+- `slide-deck-generator`: genera decks desde prompts con brief, componentes,
+  assets locales y validacion.
+- `slide-visual-qa`: valida decks visualmente con build, screenshots,
+  contraste y render dinamico.
+- `tdd-implementation`: fuerza criterios de calidad antes de implementar y
+  validacion al final.
+
+Para instalarlos en un entorno Codex local:
+
+```bash
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+cp -R skills/slide-deck-generator \
+  skills/slide-visual-qa \
+  skills/tdd-implementation \
+  "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+Despues reinicia o recarga la sesion de Codex para que los descubra.
+
 El flujo recomendado es liviano tipo Spec Kit: Intake -> Brief -> Plan -> Tasks ->
 Implement -> Validate -> Handoff. El agente debe leer
 `docs/deck-generation-workflow.md`, crear `decks/<slug>/deck.brief.md` desde
@@ -297,6 +319,7 @@ Documentacion operativa:
 - [Catalogo de componentes](docs/component-catalog.md)
 - [Catalogo de estilos](docs/style-catalog.md)
 - [Guia para crear decks con IA](docs/new-deck-agent-guide.md)
+- [Skills reutilizables para Codex](skills/)
 
 Los agentes de IA deben seguir tambien [agent.md](agent.md).
 

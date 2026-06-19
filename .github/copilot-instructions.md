@@ -1,0 +1,12 @@
+# Slides-builder Repository Instructions
+
+Read `AGENTS.md` first and use `agent.md` as the canonical repository spec.
+
+Discover reusable workflows under `.agents/skills/`. Select the matching skill
+from its `name` and `description` frontmatter, read its complete `SKILL.md`, and
+follow it before implementing the task.
+
+Use criteria-first/TDD validation for non-trivial changes. Run
+`make check DECK=<slug>` after meaningful deck changes and inspect visual work
+in a browser at 1440x900. Ask the user when critical new-deck intake is missing
+or contradictory.

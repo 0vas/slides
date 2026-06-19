@@ -1,0 +1,148 @@
+# Slide Guidelines
+
+These guidelines are the shared design and content baseline for future
+`slides-builder` work.
+
+## Core Principles
+
+- Build real presentation decks, not landing pages.
+- Default to a light enterprise-tech visual language with strong contrast,
+  subtle grid, polished surfaces, and restrained color accents.
+- Use dark or black/keynote palettes only when the talk explicitly needs that
+  mood.
+- Keep one main idea per slide and support it with a purposeful visual.
+- Vary composition based on content load. Dense diagrams may use a large left
+  title; sections may use title plus subtitle; full-bleed visuals may use
+  minimal copy.
+- Avoid one-note palettes. Combine accents semantically.
+- Do not use decorative overlays that reduce text contrast.
+- Keep cards at 8px radius unless a component has a specific reason.
+- Avoid card-inside-card layouts unless the nested element is a real product
+  surface, modal, or repeated item.
+
+## Deck Structure
+
+- Each deck must have `decks/<slug>/slides.md`.
+- Each new deck must have `decks/<slug>/deck.brief.md`.
+- Deck CSS lives in `decks/<slug>/styles/index.css` and imports the shared
+  theme.
+- Deck media lives in `decks/<slug>/public/media/`.
+- Stable speaker data lives in `data/speaker/`.
+- Reusable components belong in `shared/components/`.
+- Deck-specific components belong in `decks/<slug>/components/`.
+
+## Typography
+
+- Use large type only for true headlines and section breaks.
+- Use smaller, stable type inside panels, mockups, cards, and dashboards.
+- Do not use negative letter spacing.
+- Do not scale font size directly with viewport width.
+- Confirm long headings fit at 1440x900.
+- Rewrite or split long headings instead of clipping them.
+- On dark slides, body copy should be white or near-white. Gray is only for
+  secondary metadata that can safely be low emphasis.
+
+## Motion
+
+- Motion should clarify order, hierarchy, or transformation.
+- Prefer `fade`, `slide-left`, and `slide-up` transitions.
+- Avoid flash-like transitions in projector decks.
+- Use `v-click` for progressive disclosure.
+- Use `v-motion` for components that enter, move, or stage information.
+- Keep most durations between 420ms and 680ms.
+- Use typewriter effects only on selected high-impact titles.
+- Typewriter effects must not leave a persistent caret, border, cursor line, or
+  fake terminal prompt.
+- Do not animate every object on a slide.
+
+## PPTX Export
+
+- Treat PPTX as a static snapshot format.
+- Do not promise native PowerPoint animations from Slidev, Vue, CSS, Mermaid,
+  or ECharts.
+- For click-driven presentation effects, use the hosted Slidev web deck.
+- For PPTX handoff, model steps as separate slides or exported click states.
+- See `docs/pptx-export-limits.md`.
+
+## ECharts
+
+- Use ECharts for magnitude, comparison, weighted flows, and state transitions.
+- Prefer entry animations that run once, finish, and leave a static readable
+  state.
+- Use `sequence` for real before/after or current/target transitions.
+- Avoid loops in readable charts, especially gauges.
+- Use `sequenceTrigger="enter"` when the chart should animate on slide entry.
+- Use `sequenceTrigger="click"` or `both` only when the talk track needs an
+  internal reveal before moving to the next slide.
+- Do not rely on `sequenceTrigger="click"` for exported PPTX; it only applies
+  to the web runtime.
+- Keep chart labels short and move explanation to `caption` or `insights`.
+- Validate ECharts visually in the browser.
+
+## Mermaid
+
+- Use Mermaid when its DSL makes a simple diagram faster and cleaner.
+- Keep Mermaid labels short.
+- Move long explanations to side insights or captions.
+- Remove Mermaid examples from the showcase if they clip text, oversize nodes,
+  or fail to fit in 16:9.
+- For fragile Mermaid layouts, use ECharts or a Vue component instead.
+
+## Mockups, Media, And Assets
+
+- Prefer HTML/CSS/Vue mockups over static screenshots when real access is not
+  available.
+- Mockups should feel like product surfaces without copying private UI.
+- Use `BrowserMockup` for brand-neutral product surfaces.
+- Keep `GitHubMockup` inside GitHub-specific decks.
+- Use local media for essential rendering.
+- Download SVG icons and editorial images into the deck media folder.
+- Record source and license notes for external assets.
+- Avoid blurry or decorative images that do not add information.
+- Use `Shape3DStage` or Three.js only when the canvas is validated as nonblank
+  and correctly framed.
+
+## Palettes
+
+- Choose a palette from `docs/style-catalog.md` before designing slides.
+- Apply palettes through `class` and `defaults.class`.
+- If a slide declares a custom class, keep the palette class too.
+- Use custom slide backgrounds when they clarify tone, context, or structure.
+- Prefer reusable background patterns such as waves, image wash, mesh gradient,
+  and blueprint grid before inventing a one-off treatment.
+- Background images must be local files with opacity or overlay controls that
+  preserve foreground contrast.
+- Update `shared/styles/palettes.css`, `StylePalette`, README, style catalog,
+  and showcase when palettes change.
+
+## Navigation
+
+- Prefer Slidev native navigation.
+- Keep native navigation visible in play mode and presenter mode.
+- Do not hide native controls to solve contrast; fix the styling.
+- The grid action should open a visual overview with slide thumbnails.
+- Keep the cursor visible over controls.
+
+## Speaker Slides
+
+- Speaker and closing slides should be data-driven.
+- Stable speaker data lives in `data/speaker/speaker.json`.
+- Decks should override only talk-specific fields.
+- Shared speaker assets live in `data/speaker/`.
+- Ambiguous handles should be set with clear typography. For `@0vas`, the first
+  character is zero, not the letter O.
+- Do not duplicate QR codes, handles, roles, or titles unless repetition adds
+  real clarity.
+
+## Visual QA
+
+- Run `make check DECK=<slug>` after meaningful deck changes.
+- Inspect at least a cover and one internal slide at 1440x900 for visual work.
+- For reusable components, inspect light and dark contexts when relevant.
+- Verify essential components do not depend on the internet.
+- Move the mouse away before screenshots to avoid accidental hover states.
+
+## GitHub-specific Claims
+
+When a slide mentions current GitHub capabilities, plans, trials, or limits,
+verify the claim with official sources if the information may have changed.

@@ -6,6 +6,8 @@ import { spawnSync } from 'node:child_process'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const decksDir = join(root, 'decks')
 const repoName = basename(root)
+const repositoryUrl = 'https://github.com/ovas04/slides'
+const sharedFavicon = join(root, 'shared', 'public', 'favicon.svg')
 
 const command = process.argv[2] || 'list'
 const deck = process.argv[3]
@@ -181,6 +183,20 @@ function basePath(slug) {
   return process.env.BASE_PATH ?? `/${repoName}/${slug}/`
 }
 
+function installFavicon(outputDir, href) {
+  const indexPath = join(outputDir, 'index.html')
+  const faviconLink = `<link rel="icon" type="image/svg+xml" href="${href}">`
+  const html = readFileSync(indexPath, 'utf8')
+  const existingFavicon = /<link\s+rel=["']icon["'][^>]*>/i
+
+  const updatedHtml = existingFavicon.test(html)
+    ? html.replace(existingFavicon, faviconLink)
+    : html.replace('</head>', `    ${faviconLink}\n  </head>`)
+
+  writeFileSync(indexPath, updatedHtml)
+  cpSync(sharedFavicon, join(outputDir, 'favicon.svg'))
+}
+
 function build(requestedSlug) {
   const slug = resolveDeckSlug(requestedSlug)
   const tempOut = join(decksDir, slug, '.slidev-dist')
@@ -197,6 +213,8 @@ function build(requestedSlug) {
     '--base',
     basePath(slug)
   ])
+
+  installFavicon(tempOut, `${basePath(slug)}favicon.svg`)
 
   mkdirSync(join(root, 'dist'), { recursive: true })
   cpSync(tempOut, finalOut, { recursive: true })
@@ -279,6 +297,7 @@ function writeIndex(slugs) {
     .join('\n')
 
   mkdirSync(join(root, 'dist'), { recursive: true })
+  cpSync(sharedFavicon, join(root, 'dist', 'favicon.svg'))
   writeFileSync(
     join(root, 'dist', 'index.html'),
     `<!doctype html>
@@ -286,6 +305,8 @@ function writeIndex(slugs) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#080b10">
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
     <title>Slides</title>
     <style>
       :root {
@@ -368,6 +389,33 @@ function writeIndex(slugs) {
         text-transform: uppercase;
       }
 
+      .header-actions {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        justify-content: flex-end;
+      }
+
+      .repo-link {
+        align-items: center;
+        background: #f8fbff;
+        border: 1px solid #f8fbff;
+        border-radius: 8px;
+        color: #080b10;
+        display: inline-flex;
+        font-size: 0.86rem;
+        font-weight: 800;
+        min-height: 42px;
+        padding: 0 0.9rem;
+        text-decoration: none;
+      }
+
+      .repo-link:hover {
+        background: #dbeafe;
+        border-color: #dbeafe;
+      }
+
       .deck-grid {
         display: grid;
         gap: 1rem;
@@ -444,6 +492,12 @@ function writeIndex(slugs) {
         background: rgba(88, 166, 255, 0.16);
       }
 
+      .repo-link:focus-visible,
+      .deck-link:focus-visible {
+        outline: 3px solid #ff7ac8;
+        outline-offset: 3px;
+      }
+
       @media (max-width: 760px) {
         main {
           padding: 36px 18px 48px;
@@ -452,6 +506,10 @@ function writeIndex(slugs) {
         header {
           align-items: start;
           grid-template-columns: 1fr;
+        }
+
+        .header-actions {
+          justify-content: flex-start;
         }
 
         .deck-grid {
@@ -468,7 +526,10 @@ function writeIndex(slugs) {
           <h1>Presentations <span class="accent">as code</span></h1>
           <p class="intro">Slidev decks ready to present, publish, and evolve with reusable components.</p>
         </div>
-        <span class="count">${slugs.length} deck${slugs.length === 1 ? '' : 's'}</span>
+        <div class="header-actions">
+          <a class="repo-link" href="${repositoryUrl}" target="_blank" rel="noopener noreferrer" aria-label="View the slides repository on GitHub in a new tab">View repository</a>
+          <span class="count">${slugs.length} deck${slugs.length === 1 ? '' : 's'}</span>
+        </div>
       </header>
       <section class="deck-grid" aria-label="Decks disponibles">
         ${cards}

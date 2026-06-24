@@ -79,6 +79,8 @@ scripts/
 - `shared/components/`: reusable data-driven Vue components.
 - `shared/styles/theme.css`: shared visual system.
 - `shared/styles/palettes.css`: reusable deck palettes.
+- `shared/public/favicon.svg`: canonical project favicon copied into every
+  generated home and deck.
 - `docs/`: human and agent documentation.
 - `.agents/skills/`: open-standard, vendor-neutral reusable workflows for
   agents.
@@ -105,6 +107,52 @@ Recommended flow:
 
 ```text
 Intake -> Brief -> Plan -> Tasks -> Implement -> Validate -> Handoff
+```
+
+### Example Prompt
+
+When the prompt is executed from this repository, `AGENTS.md` and the project
+skills already define how the agent must work. The user prompt should focus on
+the presentation itself. Copy and adapt this example:
+
+```text
+Create a presentation titled "Platform Engineering That Teams Actually Adopt".
+
+Audience: engineering managers, platform engineers, and senior developers.
+Audience level: intermediate.
+Duration: 30 minutes.
+Event context: an internal engineering conference where teams are evaluating
+whether to invest in a platform organization.
+
+Goal: attendees should leave with a practical operating model for building,
+adopting, and measuring an internal developer platform.
+
+Core message: a platform succeeds when teams choose to use it, not merely when
+the organization deploys more tools.
+
+The presentation must cover:
+- the difference between a platform and a collection of tools,
+- product thinking and developer experience,
+- golden paths and self-service workflows,
+- governance and security without unnecessary friction,
+- adoption and outcome metrics,
+- a phased implementation roadmap.
+
+Tone: practical, candid, and executive-friendly. Use concrete examples and
+delivery trade-offs. Avoid marketing language and beginner-level definitions.
+
+Presentation constraints:
+- reserve the final 5 minutes for questions,
+- do not depend on a live demo,
+- keep product references vendor-neutral,
+- include a concise closing takeaway and recommended next steps.
+
+Available material: I do not have images or diagrams yet. I can provide the
+event logo later if needed.
+
+Visual preference: a light, modern, editorial style with restrained motion.
+Favor diagrams, one clear data visualization, and a few strong images over
+dense text or dashboard-like slides.
 ```
 
 Every new deck must have `decks/<slug>/deck.brief.md` created from

@@ -23,13 +23,13 @@
 
 <script setup>
 defineProps({
-  ariaLabel: { type: String, default: 'Flujo por carriles' },
+  ariaLabel: { type: String, default: 'Swimlane flow' },
   lanes: {
     type: Array,
     default: () => [
-      { label: 'Equipo', steps: ['Idea', 'Cambio', 'Feedback'] },
-      { label: 'Plataforma', steps: ['Politica', 'Pipeline', 'Release'] },
-      { label: 'Riesgo', steps: ['Control', 'Revision', 'Evidencia'] }
+      { label: 'Team', steps: ['Idea', 'Change', 'Feedback'] },
+      { label: 'Platform', steps: ['Policy', 'Pipeline', 'Release'] },
+      { label: 'Risk', steps: ['Control', 'Review', 'Evidence'] }
     ]
   }
 })

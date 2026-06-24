@@ -47,9 +47,9 @@ defineProps({
   cards: {
     type: Array,
     default: () => [
-      { kicker: 'Status', title: 'Lorem ipsum', detail: 'Dolor sit amet consectetur.' },
-      { kicker: 'Signal', title: 'Consectetur', detail: 'Integer posuere erat a ante.' },
-      { kicker: 'Action', title: 'Adipiscing', detail: 'Donec ullamcorper nulla non.' }
+      { kicker: 'Status', title: 'System ready', detail: 'All primary checks are passing.' },
+      { kicker: 'Signal', title: 'Usage growing', detail: 'Teams are adopting the shared workflow.' },
+      { kicker: 'Action', title: 'Review evidence', detail: 'Open the latest validation report.' }
     ]
   }
 })

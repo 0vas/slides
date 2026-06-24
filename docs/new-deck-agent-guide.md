@@ -20,7 +20,7 @@ or visual mode are missing, the agent must ask before scaffolding.
 ## Context To Read First
 
 ```text
-agent.md
+AGENTS.md
 docs/project-state.md
 docs/component-catalog.md
 docs/style-catalog.md

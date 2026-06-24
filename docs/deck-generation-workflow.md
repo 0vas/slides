@@ -11,7 +11,7 @@ complete, validated deck without relying on chat memory.
 - Ask when critical information is missing.
 - Record assumptions in the brief.
 - Store deck-owned media locally under `decks/<slug>/public/media/`.
-- Follow `agent.md`, `docs/slide-guidelines.md`,
+- Follow `AGENTS.md`, `docs/slide-guidelines.md`,
   `docs/component-catalog.md`, and `docs/style-catalog.md`.
 - Use repo-shipped skills from `.agents/skills/` when available.
 

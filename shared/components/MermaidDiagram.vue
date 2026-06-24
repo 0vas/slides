@@ -30,7 +30,7 @@
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
-  ariaLabel: { type: String, default: 'Diagrama Mermaid' },
+  ariaLabel: { type: String, default: 'Mermaid diagram' },
   caption: { type: String, default: '' },
   density: { type: String, default: 'normal' },
   diagram: { type: String, required: true },
@@ -113,7 +113,7 @@ const renderDiagram = async () => {
   } catch (err) {
     if (!active || !container.value) return
     container.value.innerHTML = ''
-    error.value = err instanceof Error ? err.message : 'No se pudo renderizar el diagrama.'
+    error.value = err instanceof Error ? err.message : 'The diagram could not be rendered.'
   }
 }
 

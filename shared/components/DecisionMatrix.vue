@@ -22,12 +22,12 @@
 
 <script setup>
 defineProps({
-  ariaLabel: { type: String, default: 'Matriz de decision' },
-  xLabel: { type: String, default: 'Impacto' },
-  yLabel: { type: String, default: 'Esfuerzo' },
+  ariaLabel: { type: String, default: 'Decision matrix' },
+  xLabel: { type: String, default: 'Impact' },
+  yLabel: { type: String, default: 'Effort' },
   quadrants: {
     type: Array,
-    default: () => ['Planear', 'Invertir', 'Delegar', 'Automatizar']
+    default: () => ['Plan', 'Invest', 'Delegate', 'Automate']
   },
   items: {
     type: Array,

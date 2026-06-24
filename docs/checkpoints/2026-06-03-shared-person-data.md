@@ -35,7 +35,7 @@ Date: 2026-06-03
 - `shared/components/SpeakerProfile.vue`
 - `decks/github-enterprise-platform/data/speaker.js`
 - `shared/styles/theme.css`
-- `agent.md`
+- `AGENTS.md`
 - `docs/slide-guidelines.md`
 - `README.md`
 

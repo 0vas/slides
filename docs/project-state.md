@@ -77,7 +77,7 @@ packaging, and GitHub Pages deployment.
 ├── CONTRIBUTING.md
 ├── Makefile
 ├── README.md
-└── agent.md
+└── AGENTS.md
 ```
 
 ## Modular Principles

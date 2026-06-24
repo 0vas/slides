@@ -31,7 +31,7 @@ becomes a consumable CLI or library with a stable public API.
 ## Consequences
 
 - Humans should start with `README.md`.
-- Agents should start with `AGENTS.md`, `agent.md`, and `.agents/skills/`.
+- Agents should start with `AGENTS.md` and `.agents/skills/`.
 - New deck work should refer to the `slides-builder` role instead of a
   vendor-specific agent name.
 - Releases require a package version update in `package.json` and

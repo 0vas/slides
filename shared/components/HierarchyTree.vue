@@ -22,17 +22,17 @@
 
 <script setup>
 defineProps({
-  ariaLabel: { type: String, default: 'Arbol jerarquico' },
+  ariaLabel: { type: String, default: 'Hierarchy tree' },
   root: {
     type: Object,
-    default: () => ({ label: 'Root', title: 'Lorem ipsum' })
+    default: () => ({ label: 'Root', title: 'Experience system' })
   },
   branches: {
     type: Array,
     default: () => [
-      { label: 'Nivel 1', title: 'Consectetur', detail: 'Dominio principal' },
-      { label: 'Nivel 2', title: 'Adipiscing', detail: 'Equipo o capability' },
-      { label: 'Nivel 3', title: 'Vestibulum', detail: 'Servicio o artefacto' }
+      { label: 'Level 1', title: 'Narrative', detail: 'Primary domain' },
+      { label: 'Level 2', title: 'Components', detail: 'Team or capability' },
+      { label: 'Level 3', title: 'Assets', detail: 'Service or artifact' }
     ]
   }
 })

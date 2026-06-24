@@ -1,6 +1,6 @@
 # Slides-builder Repository Instructions
 
-Read `AGENTS.md` first and use `agent.md` as the canonical repository spec.
+Read `AGENTS.md` as the canonical repository specification.
 
 Discover reusable workflows under `.agents/skills/`. Select the matching skill
 from its `name` and `description` frontmatter, read its complete `SKILL.md`, and

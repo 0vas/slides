@@ -8,7 +8,7 @@ components, local assets, documented decisions, and validation evidence.
 
 ## Before Opening A Pull Request
 
-1. Read `README.md`, `agent.md`, and the relevant docs under `docs/`.
+1. Read `README.md`, `AGENTS.md`, and the relevant docs under `docs/`.
 2. Keep changes scoped. Avoid unrelated rewrites.
 3. Use the existing deck/component/style patterns before adding new ones.
 4. Keep all repository documentation and reusable component defaults in English.

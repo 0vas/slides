@@ -24,7 +24,7 @@ deploy, or release.
   workflows across decks.
 
 Human entry point: this README.
-Agent entry point: [AGENTS.md](AGENTS.md), [agent.md](agent.md), and
+Agent entry point: [AGENTS.md](AGENTS.md) and
 [.agents/skills/](.agents/skills/).
 
 Pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the
@@ -118,8 +118,8 @@ validation.
   directly by Agent Skills-compatible tools, including GitHub Copilot.
 - `.github/agents/slides-builder.agent.md` exposes the `slides-builder` custom
   agent to GitHub Copilot CLI and supported Copilot surfaces.
-- `.github/copilot-instructions.md` is a thin Copilot entry point; `agent.md`
-  remains the canonical repository specification.
+- `.github/copilot-instructions.md` is a thin Copilot entry point;
+  `AGENTS.md` remains the canonical repository specification.
 - Run `npm run check:agent` to validate all discovery assets.
 - Restart Copilot CLI after pulling changes so it reloads project agents and
   skills, then select `slides-builder` with `/agent` or `--agent slides-builder`.

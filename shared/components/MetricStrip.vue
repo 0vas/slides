@@ -20,10 +20,10 @@ defineProps({
   metrics: {
     type: Array,
     default: () => [
-      { label: 'Alcance', value: '42k', delta: '+18% lorem', tone: 'blue' },
-      { label: 'Calidad', value: '98%', delta: 'Stable ipsum', tone: 'green' },
-      { label: 'Riesgo', value: '7', delta: 'Baja prioridad', tone: 'amber' },
-      { label: 'Adopcion', value: '3.4x', delta: 'Dolor sit', tone: 'rose' }
+      { label: 'Reach', value: '42k', delta: '+18% this quarter', tone: 'blue' },
+      { label: 'Quality', value: '98%', delta: 'Stable trend', tone: 'green' },
+      { label: 'Risk', value: '7', delta: 'Low priority', tone: 'amber' },
+      { label: 'Adoption', value: '3.4x', delta: 'Growing usage', tone: 'rose' }
     ]
   }
 })

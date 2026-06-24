@@ -38,6 +38,10 @@ if (existsSync(join(root, 'skills'))) {
   fail('root skills/ is not an agent discovery path; use .agents/skills/')
 }
 
+if (existsSync(join(root, 'agent.md'))) {
+  fail('root agent.md is redundant; keep canonical instructions in AGENTS.md')
+}
+
 for (const skillName of skillNames) {
   const relativePath = `.agents/skills/${skillName}/SKILL.md`
   const content = readRequired(join(root, relativePath))
@@ -62,11 +66,26 @@ if (!frontmatterValue(agent, 'description')) {
   fail(`${agentPath} must declare a description`)
 }
 
-readRequired(join(root, '.github/copilot-instructions.md'))
+const copilotInstructionsPath = '.github/copilot-instructions.md'
+const copilotInstructions = readRequired(join(root, copilotInstructionsPath))
 
 const entrypoint = readRequired(join(root, 'AGENTS.md'))
 if (!entrypoint.includes('.agents/skills/')) {
   fail('AGENTS.md must point to .agents/skills/')
+}
+
+if (!entrypoint.includes('slides-builder')) {
+  fail('AGENTS.md must define the slides-builder role')
+}
+
+const legacyAgentReference = /(?:^|[^.\w/-])agent\.md(?:$|[^\w/-])/m
+for (const [path, content] of [
+  [agentPath, agent],
+  [copilotInstructionsPath, copilotInstructions]
+]) {
+  if (legacyAgentReference.test(content)) {
+    fail(`${path} must point to AGENTS.md, not the removed root agent.md`)
+  }
 }
 
 if (!process.exitCode) {

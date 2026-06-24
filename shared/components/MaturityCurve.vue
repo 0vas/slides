@@ -16,10 +16,10 @@ const props = defineProps({
   points: {
     type: Array,
     default: () => [
-      { x: 110, y: 230, title: 'Caos', detail: 'Repos sueltos' },
-      { x: 350, y: 172, title: 'Orden', detail: 'Estandares' },
-      { x: 610, y: 88, title: 'Escala', detail: 'Self-service' },
-      { x: 790, y: 58, title: 'Plataforma', detail: 'Medicion' }
+      { x: 110, y: 230, title: 'Chaos', detail: 'Loose repos' },
+      { x: 350, y: 172, title: 'Order', detail: 'Standards' },
+      { x: 610, y: 88, title: 'Scale', detail: 'Self-service' },
+      { x: 790, y: 58, title: 'Platform', detail: 'Measurement' }
     ]
   }
 })

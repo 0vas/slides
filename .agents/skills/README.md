@@ -36,13 +36,14 @@ Restart or reload the agent session so the skills are discovered.
 
 ## Agent Entry Point
 
-The repo uses one vendor-neutral entry point:
+The repo uses one vendor-neutral instruction source:
 
-- `AGENTS.md` points agents to `agent.md` and this workflow catalog.
+- `AGENTS.md` contains the canonical rules and points agents to this workflow
+  catalog.
 - `.github/agents/slides-builder.agent.md` exposes the role to Copilot without
   duplicating the canonical instructions.
 
-Keep `agent.md` and `.agents/skills/` as the source of truth. Tool-specific
+Keep `AGENTS.md` and `.agents/skills/` as the source of truth. Tool-specific
 files should remain thin discovery adapters only.
 
 ## Use
@@ -53,4 +54,4 @@ Ask naturally. Examples:
 - "Run visual QA on this deck..."
 - "Implement this change with TDD..."
 
-The skills complement `agent.md`; they do not replace repository rules.
+The skills complement `AGENTS.md`; they do not replace repository rules.

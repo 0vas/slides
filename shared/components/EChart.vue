@@ -62,7 +62,7 @@ echarts.use([
 ])
 
 const props = defineProps({
-  ariaLabel: { type: String, default: 'Grafico ECharts' },
+  ariaLabel: { type: String, default: 'ECharts chart' },
   caption: { type: String, default: '' },
   density: { type: String, default: 'normal' },
   height: { type: String, default: '320px' },
@@ -196,7 +196,7 @@ const renderChart = async ({ play = shouldPlayOnEnter() } = {}) => {
     if (play) startSequence()
     else clearSequence()
   } catch (err) {
-    error.value = err instanceof Error ? err.message : 'No se pudo renderizar el grafico.'
+    error.value = err instanceof Error ? err.message : 'The chart could not be rendered.'
   }
 }
 

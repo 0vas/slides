@@ -27,7 +27,7 @@ Date: 2026-06-06
 - `data/speaker/person.js`
 - `data/speaker/linkedin-qr.svg`
 - `README.md`
-- `agent.md`
+- `AGENTS.md`
 - `docs/slide-guidelines.md`
 - `docs/project-state.md`
 

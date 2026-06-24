@@ -21,14 +21,14 @@
 
 <script setup>
 const props = defineProps({
-  ariaLabel: { type: String, default: 'Mapa de transformacion de plataforma' },
+  ariaLabel: { type: String, default: 'Platform transformation map' },
   nodes: {
     type: Array,
     default: () => [
-      { label: '01', title: 'Codigo', detail: 'Repos, ramas, PRs', tone: 'blue' },
-      { label: '02', title: 'Equipos', detail: 'Owners, permisos, reglas', tone: 'green' },
-      { label: '03', title: 'Empresa', detail: 'Gobierno, auditoria, escala', tone: 'amber' },
-      { label: '04', title: 'Plataforma', detail: 'Seguridad, automatizacion, metricas', tone: 'rose' }
+      { label: '01', title: 'Code', detail: 'Repos, branches, PRs', tone: 'blue' },
+      { label: '02', title: 'Teams', detail: 'Owners, access, rules', tone: 'green' },
+      { label: '03', title: 'Enterprise', detail: 'Governance, audit, scale', tone: 'amber' },
+      { label: '04', title: 'Platform', detail: 'Security, automation, metrics', tone: 'rose' }
     ]
   }
 })

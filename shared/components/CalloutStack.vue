@@ -20,9 +20,9 @@ defineProps({
   items: {
     type: Array,
     default: () => [
-      { label: 'Insight', title: 'Lorem ipsum dolor sit amet.', detail: 'Consectetur adipiscing elit.', tone: 'blue' },
-      { label: 'Riesgo', title: 'Integer posuere erat a ante.', detail: 'Donec id elit non mi porta.', tone: 'amber' },
-      { label: 'Decision', title: 'Cras mattis consectetur purus.', detail: 'Aenean lacinia bibendum.', tone: 'green' }
+      { label: 'Insight', title: 'The pattern is already visible.', detail: 'Make the signal easy to scan.', tone: 'blue' },
+      { label: 'Risk', title: 'Complexity can hide the message.', detail: 'Remove details that do not earn their space.', tone: 'amber' },
+      { label: 'Decision', title: 'Reuse the strongest visual.', detail: 'Validate it in the final slide context.', tone: 'green' }
     ]
   }
 })

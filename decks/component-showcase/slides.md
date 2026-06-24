@@ -2,7 +2,7 @@
 theme: default
 title: Component Showcase
 info: |
-  Deck de referencia para validar y reutilizar el catalogo visual del repositorio.
+  Reference deck for validating and reusing the repository visual catalog.
 transition: slide-left
 background: "#f8fbff"
 class: component-showcase palette-crystal
@@ -15,36 +15,36 @@ drawings:
   enabled: false
 ---
 
-<span class="kicker">Deck de referencia</span>
+<span class="kicker">Reference deck</span>
 
 <h1 class="cover-title">
   <TypingTitle as="span" text="Component" />
   <TypingTitle as="span" text="Showcase" :delay="760" class="cover-title-accent" />
 </h1>
 
-<p class="lead">Un deck vivo para probar, copiar y combinar los componentes visuales del repositorio.</p>
+<p class="lead">A living deck for testing, copying, and combining the repository visual components.</p>
 
 ---
 transition: slide-up
 ---
 
-<SpeakerProfile kicker="Datos compartidos" />
+<SpeakerProfile kicker="Shared profile data" organization-connector="at" />
 
 ---
 transition: fade
 ---
 
-<span class="kicker">Indice visual</span>
+<span class="kicker">Visual index</span>
 
-## Que cubre este showroom
+## What this showroom covers
 
 <div class="showcase-index">
-  <div v-click><span>Shared</span><strong>32 componentes</strong><small>Base global para nuevos decks.</small></div>
-  <div v-click><span>Agnostico</span><strong>0 producto fijo</strong><small>El catalogo no depende de una marca o charla.</small></div>
-  <div v-click><span>Style</span><strong>8 paletas</strong><small>Elegibles desde el frontmatter del deck.</small></div>
+  <div v-click><span>Shared</span><strong>32 components</strong><small>Global foundation for new decks.</small></div>
+  <div v-click><span>Agnostic</span><strong>0 fixed products</strong><small>The catalog is independent of any brand or talk.</small></div>
+  <div v-click><span>Style</span><strong>8 palettes</strong><small>Selectable from the deck frontmatter.</small></div>
 </div>
 
-<p class="showcase-note">La idea es simple: si una visual ya existe, el agente debe reutilizarla, pasarle datos y validar que respire en 16:9.</p>
+<p class="showcase-note">The idea is simple: if a visual already exists, the agent should reuse it, provide data, and validate that it breathes in 16:9.</p>
 
 ---
 transition: slide-up
@@ -52,7 +52,7 @@ transition: slide-up
 
 <span class="kicker">Asset sourcing</span>
 
-## Iconos SVG e imagenes editoriales
+## SVG icons and editorial images
 
 <AssetSourcingShowcase />
 
@@ -162,7 +162,7 @@ transition: slide-left
 
 ## PlatformMap
 
-<PlatformMap aria-label="Mapa de transformacion reusable" />
+<PlatformMap aria-label="Reusable transformation map" />
 
 ---
 transition: slide-left
@@ -193,8 +193,8 @@ transition: slide-left
 ## SecurityRadar
 
 <SecurityRadar
-  title="Calidad visual"
-  detail="Un deck pulido necesita legibilidad, movimiento con intencion, componentes reutilizables y despliegue confiable."
+  title="Visual quality"
+  detail="A polished deck needs legibility, intentional motion, reusable components, and reliable delivery."
 />
 
 ---
@@ -216,16 +216,16 @@ transition: slide-left
 ## EChart
 
 <EChart
-  title="Tendencia interactiva"
+  title="Interactive trend"
   kicker="ECharts combo"
   height="306px"
   :sequence-delay="1100"
   :sequence-interval="1500"
-  caption="Bueno para series, animaciones y comparativas que necesitan mas control que Mermaid."
+  caption="Best for series, animation, and comparisons that need more control than Mermaid."
   :insights="[
-    { label: 'Series', title: 'Dos lecturas', detail: 'Barras para volumen y linea para calidad en el mismo canvas.' },
-    { label: 'Motion', title: 'Transicion de estado', detail: 'El chart actualiza valores y conserva interpolacion nativa.' },
-    { label: 'Deck', title: 'Reusable', detail: 'El componente recibe option y conserva el estilo del repositorio.' }
+    { label: 'Series', title: 'Two readings', detail: 'Bars show volume while the line shows quality on one canvas.' },
+    { label: 'Motion', title: 'State transition', detail: 'The chart updates values with native interpolation.' },
+    { label: 'Deck', title: 'Reusable', detail: 'The component accepts options and preserves repository styling.' }
   ]"
   :option="{
     grid: { top: 28, right: 18, bottom: 34, left: 42 },
@@ -244,14 +244,14 @@ transition: slide-left
     },
     series: [
       {
-        name: 'Cobertura',
+        name: 'Coverage',
         type: 'bar',
         data: [28, 42, 56, 64],
         barWidth: 34,
         itemStyle: { borderRadius: [8, 8, 0, 0] }
       },
       {
-        name: 'Confianza',
+        name: 'Confidence',
         type: 'line',
         data: [32, 44, 58, 68],
         smooth: true,
@@ -264,8 +264,8 @@ transition: slide-left
   :sequence="[
     {
       series: [
-        { name: 'Cobertura', data: [42, 64, 82, 94] },
-        { name: 'Confianza', data: [38, 58, 80, 96] }
+        { name: 'Coverage', data: [42, 64, 82, 94] },
+        { name: 'Confidence', data: [38, 58, 80, 96] }
       ]
     }
   ]"
@@ -280,16 +280,16 @@ transition: slide-up
 ## EChart Sankey
 
 <EChart
-  title="Flujo de composicion"
+  title="Composition flow"
   kicker="ECharts sankey"
   height="306px"
   :sequence-delay="1100"
   :sequence-interval="1600"
-  caption="Bueno para mostrar transferencia, dependencia o distribucion entre capas."
+  caption="Best for showing transfer, dependency, or distribution across layers."
   :insights="[
-    { label: 'Flow', title: 'Peso visual', detail: 'El ancho de cada enlace comunica magnitud sin explicar de mas.' },
-    { label: 'Layers', title: 'Lectura izquierda a derecha', detail: 'Ideal para datos que pasan por etapas o capacidades.' },
-    { label: 'Use', title: 'Cuando usarlo', detail: 'Procesos, costos, adopcion, funnel, dependencias o energia de trabajo.' }
+    { label: 'Flow', title: 'Visual weight', detail: 'Link width communicates magnitude without extra explanation.' },
+    { label: 'Layers', title: 'Left-to-right reading', detail: 'Ideal for data moving through stages or capabilities.' },
+    { label: 'Use', title: 'When to use it', detail: 'Processes, costs, adoption, funnels, dependencies, or work energy.' }
   ]"
   :option="{
     series: [
@@ -308,15 +308,15 @@ transition: slide-up
           { name: 'Idea' },
           { name: 'Brief' },
           { name: 'Assets' },
-          { name: 'Narrativa' },
+          { name: 'Narrative' },
           { name: 'Deck' },
           { name: 'QA' }
         ],
         links: [
           { source: 'Idea', target: 'Brief', value: 5 },
-          { source: 'Brief', target: 'Narrativa', value: 4 },
-          { source: 'Assets', target: 'Narrativa', value: 2 },
-          { source: 'Narrativa', target: 'Deck', value: 5 },
+          { source: 'Brief', target: 'Narrative', value: 4 },
+          { source: 'Assets', target: 'Narrative', value: 2 },
+          { source: 'Narrative', target: 'Deck', value: 5 },
           { source: 'Brief', target: 'QA', value: 1 },
           { source: 'Deck', target: 'QA', value: 3 }
         ]
@@ -329,9 +329,9 @@ transition: slide-up
         {
           links: [
             { source: 'Idea', target: 'Brief', value: 8 },
-            { source: 'Brief', target: 'Narrativa', value: 6 },
-            { source: 'Assets', target: 'Narrativa', value: 4 },
-            { source: 'Narrativa', target: 'Deck', value: 9 },
+            { source: 'Brief', target: 'Narrative', value: 6 },
+            { source: 'Assets', target: 'Narrative', value: 4 },
+            { source: 'Narrative', target: 'Deck', value: 9 },
             { source: 'Brief', target: 'QA', value: 2 },
             { source: 'Deck', target: 'QA', value: 7 }
           ]
@@ -350,16 +350,16 @@ transition: slide-up
 ## EChart Funnel
 
 <EChart
-  title="Conversion por etapa"
+  title="Stage conversion"
   kicker="ECharts funnel"
   height="306px"
   :sequence-delay="1100"
   :sequence-interval="1450"
-  caption="Bueno para explicar perdida, avance o seleccion por etapas sin depender de cajas Mermaid."
+  caption="Best for explaining loss, progress, or selection by stage without Mermaid boxes."
   :insights="[
-    { label: 'Uso', title: 'Embudo real', detail: 'Conviene cuando cada etapa tiene una magnitud distinta.' },
-    { label: 'Motion', title: 'Entrada escalonada', detail: 'Cada bloque aparece con delay para marcar progresion.' },
-    { label: 'Slide', title: 'Pocos pasos', detail: 'Mantener cinco o seis etapas para que la lectura sea inmediata.' }
+    { label: 'Use', title: 'Real funnel', detail: 'Use it when each stage has a different magnitude.' },
+    { label: 'Motion', title: 'Staggered entrance', detail: 'Each block enters with a delay to signal progression.' },
+    { label: 'Slide', title: 'Few steps', detail: 'Keep five or six stages so the reading stays immediate.' }
   ]"
   :option="{
     animationDuration: 780,
@@ -416,16 +416,16 @@ transition: slide-left
 ## EChart Radar
 
 <EChart
-  title="Brecha de capacidades"
+  title="Capability gap"
   kicker="ECharts radar"
   height="306px"
   :sequence-delay="1100"
   :sequence-interval="1550"
-  caption="Bueno para comparar estado actual contra objetivo en una sola lectura ejecutiva."
+  caption="Best for comparing the current state with a target in one executive view."
   :insights="[
-    { label: 'Compare', title: 'Actual vs objetivo', detail: 'Dos poligonos comunican brecha sin tabla larga.' },
-    { label: 'Motion', title: 'Area animada', detail: 'La forma crece y hace visible el cambio de postura.' },
-    { label: 'Limit', title: 'Maximo seis ejes', detail: 'Mas ejes vuelve la slide dificil de presentar.' }
+    { label: 'Compare', title: 'Current vs target', detail: 'Two polygons communicate the gap without a long table.' },
+    { label: 'Motion', title: 'Animated area', detail: 'The shape grows to make the posture change visible.' },
+    { label: 'Limit', title: 'Six axes maximum', detail: 'More axes make the slide difficult to present.' }
   ]"
   :option="{
     legend: { right: 2, top: 0, textStyle: { color: '#334155', fontWeight: 800 } },
@@ -438,9 +438,9 @@ transition: slide-left
       splitArea: { areaStyle: { color: ['rgba(47,129,247,0.04)', 'rgba(63,185,80,0.04)'] } },
       axisLine: { lineStyle: { color: 'rgba(100,116,139,0.28)' } },
       indicator: [
-        { name: 'Narrativa', max: 100 },
+        { name: 'Narrative', max: 100 },
         { name: 'Visual', max: 100 },
-        { name: 'Datos', max: 100 },
+        { name: 'Data', max: 100 },
         { name: 'QA', max: 100 },
         { name: 'Assets', max: 100 }
       ]
@@ -453,8 +453,8 @@ transition: slide-left
         areaStyle: { opacity: 0.18 },
         animationDelay: (idx) => idx * 180,
         data: [
-          { name: 'Actual', value: [42, 50, 36, 44, 32] },
-          { name: 'Objetivo', value: [66, 62, 54, 70, 50] }
+          { name: 'Current', value: [42, 50, 36, 44, 32] },
+          { name: 'Target', value: [66, 62, 54, 70, 50] }
         ]
       }
     ]
@@ -464,8 +464,8 @@ transition: slide-left
       series: [
         {
           data: [
-            { name: 'Actual', value: [62, 70, 54, 66, 48] },
-            { name: 'Objetivo', value: [88, 86, 76, 92, 72] }
+            { name: 'Current', value: [62, 70, 54, 66, 48] },
+            { name: 'Target', value: [88, 86, 76, 92, 72] }
           ]
         }
       ]
@@ -482,29 +482,29 @@ transition: slide-up
 ## EChart Heatmap
 
 <EChart
-  title="Mapa de esfuerzo e impacto"
+  title="Effort and impact map"
   kicker="ECharts heatmap"
   height="306px"
   :sequence-delay="1100"
   :sequence-interval="1500"
-  caption="Bueno para priorizacion, riesgo, cobertura o intensidad por dos dimensiones."
+  caption="Best for prioritization, risk, coverage, or intensity across two dimensions."
   :insights="[
-    { label: 'Matrix', title: 'Dos dimensiones', detail: 'El color reemplaza texto repetido y acelera decisiones.' },
-    { label: 'Motion', title: 'Celdas por oleada', detail: 'El delay por celda da sensacion de carga analitica.' },
-    { label: 'Tip', title: 'Etiquetas cortas', detail: 'Usar siglas o palabras breves y explicar con insights.' }
+    { label: 'Matrix', title: 'Two dimensions', detail: 'Color replaces repeated text and accelerates decisions.' },
+    { label: 'Motion', title: 'Wave of cells', detail: 'Per-cell delay creates a sense of analytical loading.' },
+    { label: 'Tip', title: 'Short labels', detail: 'Use acronyms or brief words, then explain with insights.' }
   ]"
   :option="{
     grid: { top: 28, right: 18, bottom: 32, left: 82 },
     xAxis: {
       type: 'category',
-      data: ['Bajo', 'Medio', 'Alto', 'Critico'],
+      data: ['Low', 'Medium', 'High', 'Critical'],
       axisLabel: { color: '#334155', fontWeight: 800 },
       axisLine: { show: false },
       axisTick: { show: false }
     },
     yAxis: {
       type: 'category',
-      data: ['Discovery', 'Contenido', 'Visual', 'Release'],
+      data: ['Discovery', 'Content', 'Visual', 'Release'],
       axisLabel: { color: '#334155', fontWeight: 800 },
       axisLine: { show: false },
       axisTick: { show: false }
@@ -544,16 +544,16 @@ transition: slide-left
 ## EChart Treemap
 
 <EChart
-  title="Mapa de arquitectura"
+  title="Architecture map"
   kicker="ECharts treemap"
   height="306px"
   :sequence-delay="1100"
   :sequence-interval="1600"
-  caption="Bueno para jerarquias ponderadas: capacidades, presupuesto, incidentes, ownership o cobertura."
+  caption="Best for weighted hierarchies: capabilities, budget, incidents, ownership, or coverage."
   :insights="[
-    { label: 'Hierarchy', title: 'Tamano con sentido', detail: 'El area comunica importancia relativa de cada bloque.' },
-    { label: 'Motion', title: 'Zoom mental', detail: 'La entrada por niveles da estructura sin animar cada texto.' },
-    { label: 'Rule', title: 'Nombres breves', detail: 'Si el label es largo, mover la explicacion fuera del chart.' }
+    { label: 'Hierarchy', title: 'Meaningful size', detail: 'Area communicates the relative importance of each block.' },
+    { label: 'Motion', title: 'Mental zoom', detail: 'Level-by-level entrance adds structure without animating every label.' },
+    { label: 'Rule', title: 'Brief names', detail: 'Move explanations outside the chart when labels become long.' }
   ]"
   :option="{
     tooltip: { formatter: '{b}: {c}' },
@@ -582,7 +582,7 @@ transition: slide-left
             value: 34,
             children: [
               { name: 'Brief', value: 12 },
-              { name: 'Narrativa', value: 10 },
+              { name: 'Narrative', value: 10 },
               { name: 'Secs', value: 6 }
             ]
           },
@@ -596,7 +596,7 @@ transition: slide-left
             ]
           },
           {
-            name: 'Entrega',
+            name: 'Delivery',
             value: 16,
             children: [
               { name: 'Build', value: 8 },
@@ -617,7 +617,7 @@ transition: slide-left
               value: 34,
               children: [
                 { name: 'Brief', value: 12 },
-                { name: 'Narrativa', value: 14 },
+                { name: 'Narrative', value: 14 },
                 { name: 'Secs', value: 8 }
               ]
             },
@@ -631,7 +631,7 @@ transition: slide-left
               ]
             },
             {
-              name: 'Entrega',
+              name: 'Delivery',
               value: 20,
               children: [
                 { name: 'Build', value: 9 },
@@ -654,16 +654,16 @@ transition: slide-up
 ## EChart Gauge
 
 <EChart
-  title="Indicador de preparacion"
+  title="Readiness indicator"
   kicker="ECharts gauge"
   height="306px"
   :sequence-delay="1100"
   :sequence-interval="1500"
-  caption="Bueno para comunicar estado unico con movimiento claro y lectura de alto contraste."
+  caption="Best for communicating one status with clear motion and high-contrast reading."
   :insights="[
-    { label: 'One', title: 'Una metrica principal', detail: 'Usarlo cuando el slide necesita un veredicto visual.' },
-    { label: 'Motion', title: 'Indicador animado', detail: 'El gauge refuerza progreso o readiness sin explicar el eje.' },
-    { label: 'Avoid', title: 'No llenar dashboards', detail: 'Si hay muchas metricas, usar bar/heatmap en vez de gauges.' }
+    { label: 'One', title: 'One primary metric', detail: 'Use it when the slide needs a visual verdict.' },
+    { label: 'Motion', title: 'Animated indicator', detail: 'The gauge reinforces progress or readiness without explaining the axis.' },
+    { label: 'Avoid', title: 'Do not fill dashboards', detail: 'For many metrics, use bars or a heatmap instead of gauges.' }
   ]"
   :option="{
     series: [
@@ -871,11 +871,11 @@ transition: slide-left
 ## Sequence Diagram
 
 <MermaidDiagram
-  title="Interaccion entre actores"
+  title="Actor interaction"
   kicker="Mermaid sequenceDiagram"
   density="compact"
-  caption="Bueno para APIs, handoffs, aprobaciones y conversaciones entre equipos."
-  :diagram="'sequenceDiagram\nparticipant User as Usuario\nparticipant Agent as Agente\nparticipant Repo as Repositorio\nUser->>Agent: Prompt del deck\nAgent->>Repo: Lee brief y catalogo\nRepo-->>Agent: Componentes y reglas\nAgent-->>User: Preguntas criticas o deck listo'"
+  caption="Best for APIs, handoffs, approvals, and conversations between teams."
+  :diagram="'sequenceDiagram\nparticipant User\nparticipant Agent\nparticipant Repo\nUser->>Agent: Deck prompt\nAgent->>Repo: Read brief and catalog\nRepo-->>Agent: Components and rules\nAgent-->>User: Critical questions or finished deck'"
 />
 
 ---
@@ -887,11 +887,11 @@ transition: slide-left
 ## Gantt
 
 <MermaidDiagram
-  title="Plan de produccion"
+  title="Production plan"
   kicker="Mermaid gantt"
   density="compact"
-  caption="Bueno para fases con fechas, dependencias y ventanas de entrega."
-  :diagram="'gantt\ntitle Produccion del deck\ndateFormat YYYY-MM-DD\naxisFormat %d %b\nsection Discovery\nIntake :a1, 2026-06-10, 1d\nBrief :after a1, 1d\nsection Build\nSlides :2026-06-12, 3d\nVisual QA :after Slides, 1d\nsection Release\nDeploy :2026-06-16, 1d'"
+  caption="Best for phases with dates, dependencies, and delivery windows."
+  :diagram="'gantt\ntitle Deck production\ndateFormat YYYY-MM-DD\naxisFormat %d %b\nsection Discovery\nIntake :a1, 2026-06-10, 1d\nBrief :after a1, 1d\nsection Build\nSlides :2026-06-12, 3d\nVisual QA :after Slides, 1d\nsection Release\nDeploy :2026-06-16, 1d'"
 />
 
 ---
@@ -903,10 +903,10 @@ transition: slide-left
 ## GitGraph
 
 <MermaidDiagram
-  title="Estrategia de cambios"
+  title="Change strategy"
   kicker="Mermaid gitGraph"
   density="compact"
-  caption="Bueno para explicar ramas, merges, releases y checkpoints de trabajo."
+  caption="Best for explaining branches, merges, releases, and work checkpoints."
   :diagram="'gitGraph\ncommit\nbranch feature\ncheckout feature\ncommit\ncommit\ncheckout main\nmerge feature\ncommit'"
 />
 
@@ -919,10 +919,10 @@ transition: slide-left
 ## Mindmap
 
 <MermaidDiagram
-  title="Narrativa del deck"
+  title="Deck narrative"
   kicker="Mermaid mindmap"
   density="compact"
-  caption="Bueno para discovery, taxonomias, lluvia de ideas y estructura conceptual."
+  caption="Best for discovery, taxonomies, brainstorming, and conceptual structure."
   :diagram="'mindmap\n  root((Deck))\n    AUD\n      NIV\n      DOL\n      META\n    STO\n      IN\n      DEV\n      FIN\n    VIS\n      CMP\n      AST\n      DIA\n    QA\n      BLD\n      CAP\n      HND'"
 />
 
@@ -935,11 +935,11 @@ transition: slide-left
 ## Pie Chart
 
 <MermaidDiagram
-  title="Balance del contenido"
+  title="Content balance"
   kicker="Mermaid pie"
   density="compact"
-  caption="Bueno para proporciones simples con pocas categorias y una lectura inmediata."
-  :diagram="'pie title Balance del deck\n  &quot;Narrativa&quot; : 35\n  &quot;Visuales&quot; : 30\n  &quot;Diagramas&quot; : 20\n  &quot;Validacion&quot; : 15'"
+  caption="Best for simple proportions with a few categories and immediate reading."
+  :diagram="'pie title Deck balance\n  &quot;Narrative&quot; : 35\n  &quot;Visuals&quot; : 30\n  &quot;Diagrams&quot; : 20\n  &quot;Validation&quot; : 15'"
 />
 
 ---
@@ -951,11 +951,11 @@ transition: slide-left
 ## Timeline
 
 <MermaidDiagram
-  title="Evolucion de la idea"
+  title="Idea evolution"
   kicker="Mermaid timeline"
   density="compact"
-  caption="Bueno para contar madurez, hitos, roadmap o historia de una iniciativa."
-  :diagram="'timeline\ntitle Evolucion del deck\nPrompt : Intencion inicial\nBrief : Alcance y preguntas criticas\nStoryboard : Narrativa slide por slide\nShowcase : Componentes reutilizables\nRelease : Build y publicacion'"
+  caption="Best for showing maturity, milestones, a roadmap, or an initiative history."
+  :diagram="'timeline\ntitle Deck evolution\nPrompt : Initial intent\nBrief : Scope and critical questions\nStoryboard : Slide-by-slide narrative\nShowcase : Reusable components\nRelease : Build and publication'"
 />
 
 ---
@@ -967,10 +967,10 @@ transition: slide-up
 ## Packet Diagram
 
 <MermaidDiagram
-  title="Contrato de entrega"
+  title="Delivery contract"
   kicker="Mermaid packet-beta"
   density="compact"
-  caption="Bueno para protocolos, campos de payload y estructura de mensajes."
+  caption="Best for protocols, payload fields, and message structure."
   :diagram="'packet-beta\ntitle Deck payload\n0-7: &quot;brief&quot;\n8-15: &quot;slides&quot;\n16-23: &quot;assets&quot;\n24-31: &quot;checks&quot;'"
 />
 
@@ -983,9 +983,9 @@ transition: slide-up
 ## MediaFrame
 
 <div class="media-showcase-grid">
-  <MediaFrame kind="image" title="Image placeholder" caption="Imagen o screenshot legible" />
-  <MediaFrame kind="video" title="Video placeholder" caption="Video local o asset del deck" />
-  <MediaFrame kind="gif" title="GIF placeholder" caption="Animacion corta o demo loop" />
+  <MediaFrame kind="image" title="Image placeholder" caption="Readable image or screenshot" />
+  <MediaFrame kind="video" title="Video placeholder" caption="Local video or deck asset" />
+  <MediaFrame kind="gif" title="GIF placeholder" caption="Short animation or looped demo" />
 </div>
 
 ---
@@ -1142,29 +1142,29 @@ transition: slide-left
 transition: fade
 ---
 
-<span class="kicker">Reglas de uso</span>
+<span class="kicker">Usage rules</span>
 
-## Como decidir donde vive un componente
+## How to decide where a component belongs
 
 <div class="showcase-usage">
   <div v-click>
     <span>Shared</span>
-    <strong>Generico, data-driven y reusable.</strong>
-    <small>Va en `shared/components/` y se importa explicitamente.</small>
+    <strong>Generic, data-driven, and reusable.</strong>
+    <small>Place it in `shared/components/` and import it explicitly.</small>
   </div>
   <div v-click>
     <span>Deck local</span>
-    <strong>Depende de producto, charla o CTA.</strong>
-    <small>Vive en `decks/&lt;slug&gt;/components/` hasta generalizarse.</small>
+    <strong>Depends on a product, talk, or CTA.</strong>
+    <small>Keep it in `decks/&lt;slug&gt;/components/` until it becomes generic.</small>
   </div>
   <div v-click>
-    <span>Documentacion</span>
-    <strong>El catalogo se actualiza con el cambio.</strong>
-    <small>README y `docs/component-catalog.md` deben viajar en el mismo commit.</small>
+    <span>Documentation</span>
+    <strong>Update the catalog with the change.</strong>
+    <small>README and `docs/component-catalog.md` belong in the same commit.</small>
   </div>
   <div v-click>
-    <span>Validacion</span>
-    <strong>Si compila, aun falta mirar.</strong>
-    <small>Revisar portada, slide densa, componente visual y navegacion.</small>
+    <span>Validation</span>
+    <strong>A successful build still needs inspection.</strong>
+    <small>Review the cover, dense slide, visual component, and navigation.</small>
   </div>
 </div>

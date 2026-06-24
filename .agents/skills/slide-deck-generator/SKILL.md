@@ -34,7 +34,7 @@ Before editing, write a short checklist in the working notes:
 
 Look for these files first and follow them when present:
 
-- `agent.md` or `AGENTS.md`
+- `AGENTS.md`
 - `docs/deck-generation-workflow.md`
 - `docs/deck-brief-template.md`
 - `docs/component-catalog.md`

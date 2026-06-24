@@ -20,10 +20,10 @@ defineProps({
   items: {
     type: Array,
     default: () => [
-      { when: 'T0', title: 'Descubrir', detail: 'Lorem ipsum dolor.', tone: 'blue' },
-      { when: 'T1', title: 'Disenar', detail: 'Consectetur adipiscing.', tone: 'green' },
-      { when: 'T2', title: 'Operar', detail: 'Integer posuere erat.', tone: 'amber' },
-      { when: 'T3', title: 'Escalar', detail: 'Cras mattis consectetur.', tone: 'rose' }
+      { when: 'T0', title: 'Discover', detail: 'Frame the problem.', tone: 'blue' },
+      { when: 'T1', title: 'Design', detail: 'Shape the experience.', tone: 'green' },
+      { when: 'T2', title: 'Operate', detail: 'Deliver with confidence.', tone: 'amber' },
+      { when: 'T3', title: 'Scale', detail: 'Expand proven patterns.', tone: 'rose' }
     ]
   }
 })

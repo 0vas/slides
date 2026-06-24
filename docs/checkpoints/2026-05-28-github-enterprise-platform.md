@@ -19,7 +19,6 @@ Date: 2026-05-28
 - `decks/github-enterprise-platform/public/media/`
 - `shared/styles/theme.css`
 - `docs/slide-guidelines.md`
-- `agent.md`
 - `AGENTS.md`
 - `Makefile`
 

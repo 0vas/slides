@@ -1,5 +1,10 @@
 <template>
-  <SharedSpeakerProfile :speaker="speaker" v-bind="$attrs" />
+  <SharedSpeakerProfile
+    :speaker="speaker"
+    kicker="Quien les habla"
+    organization-connector="en"
+    v-bind="$attrs"
+  />
 </template>
 
 <script setup>

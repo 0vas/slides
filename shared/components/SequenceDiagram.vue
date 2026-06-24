@@ -30,7 +30,7 @@
 
 <script setup>
 const props = defineProps({
-  ariaLabel: { type: String, default: 'Diagrama de secuencia' },
+  ariaLabel: { type: String, default: 'Sequence diagram' },
   participants: {
     type: Array,
     default: () => [
@@ -42,10 +42,10 @@ const props = defineProps({
   messages: {
     type: Array,
     default: () => [
-      { from: 'speaker', to: 'deck', label: 'Define historia', tone: 'blue' },
-      { from: 'deck', to: 'audience', label: 'Muestra visual', tone: 'green' },
-      { from: 'speaker', to: 'audience', label: 'Responde pregunta', tone: 'rose' },
-      { from: 'deck', to: 'audience', label: 'Cierra idea', tone: 'amber' }
+      { from: 'speaker', to: 'deck', label: 'Define story', tone: 'blue' },
+      { from: 'deck', to: 'audience', label: 'Show visual', tone: 'green' },
+      { from: 'speaker', to: 'audience', label: 'Answer question', tone: 'rose' },
+      { from: 'deck', to: 'audience', label: 'Close idea', tone: 'amber' }
     ]
   }
 })

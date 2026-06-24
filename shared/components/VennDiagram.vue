@@ -21,7 +21,7 @@
 
 <script setup>
 defineProps({
-  ariaLabel: { type: String, default: 'Diagrama de Venn' },
+  ariaLabel: { type: String, default: 'Venn diagram' },
   center: {
     type: Object,
     default: () => ({ label: 'Fit', title: 'Decision' })
@@ -29,9 +29,9 @@ defineProps({
   circles: {
     type: Array,
     default: () => [
-      { title: 'Deseable', detail: 'Usuario', tone: 'blue' },
-      { title: 'Viable', detail: 'Negocio', tone: 'green' },
-      { title: 'Factible', detail: 'Tecnologia', tone: 'rose' }
+      { title: 'Desirable', detail: 'User', tone: 'blue' },
+      { title: 'Viable', detail: 'Business', tone: 'green' },
+      { title: 'Feasible', detail: 'Technology', tone: 'rose' }
     ]
   }
 })

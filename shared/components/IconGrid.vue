@@ -20,10 +20,10 @@ defineProps({
   items: {
     type: Array,
     default: () => [
-      { icon: 'API', title: 'Lorem', detail: 'Punto de integracion.', tone: 'blue' },
-      { icon: 'SEC', title: 'Ipsum', detail: 'Control reusable.', tone: 'green' },
-      { icon: 'OPS', title: 'Dolor', detail: 'Operacion continua.', tone: 'amber' },
-      { icon: 'AI', title: 'Amet', detail: 'Asistencia contextual.', tone: 'rose' }
+      { icon: 'API', title: 'Connect', detail: 'Integration point.', tone: 'blue' },
+      { icon: 'SEC', title: 'Protect', detail: 'Reusable control.', tone: 'green' },
+      { icon: 'OPS', title: 'Operate', detail: 'Continuous operation.', tone: 'amber' },
+      { icon: 'AI', title: 'Assist', detail: 'Contextual assistance.', tone: 'rose' }
     ]
   }
 })

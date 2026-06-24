@@ -37,14 +37,14 @@
 import { useId } from 'vue'
 
 const props = defineProps({
-  ariaLabel: { type: String, default: 'Grafo de relaciones' },
+  ariaLabel: { type: String, default: 'Relationship graph' },
   nodes: {
     type: Array,
     default: () => [
-      { id: 'idea', label: 'Idea', detail: 'Narrativa', x: 150, y: 210, tone: 'blue' },
-      { id: 'data', label: 'Data', detail: 'Entradas', x: 360, y: 110, tone: 'green' },
-      { id: 'visual', label: 'Visual', detail: 'Modelo', x: 560, y: 210, tone: 'amber' },
-      { id: 'outcome', label: 'Salida', detail: 'Decision', x: 760, y: 310, tone: 'rose' }
+      { id: 'idea', label: 'Idea', detail: 'Narrative', x: 150, y: 210, tone: 'blue' },
+      { id: 'data', label: 'Data', detail: 'Inputs', x: 360, y: 110, tone: 'green' },
+      { id: 'visual', label: 'Visual', detail: 'Model', x: 560, y: 210, tone: 'amber' },
+      { id: 'outcome', label: 'Outcome', detail: 'Decision', x: 760, y: 310, tone: 'rose' }
     ]
   },
   edges: {

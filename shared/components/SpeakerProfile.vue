@@ -8,7 +8,7 @@
     >
       <span class="kicker">{{ kicker }}</span>
       <h2>{{ speaker.name }}</h2>
-      <p>{{ speaker.headline }} en {{ speaker.organization }}</p>
+      <p>{{ speaker.headline }} {{ organizationConnector }} {{ speaker.organization }}</p>
 
       <div class="speaker-roles">
         <div
@@ -71,7 +71,7 @@
           :alt="qrAlt"
           @error="qrFailed = true"
         />
-        <div v-else class="qr-placeholder" aria-label="QR de LinkedIn pendiente">
+        <div v-else class="qr-placeholder" aria-label="LinkedIn QR code pending">
           <span></span>
           <span></span>
           <span></span>
@@ -94,7 +94,8 @@ const qrFailed = ref(false)
 
 const props = defineProps({
   speaker: { type: Object, required: true },
-  kicker: { type: String, default: 'Quien les habla' },
+  kicker: { type: String, default: 'Speaker' },
+  organizationConnector: { type: String, default: 'at' },
   qrLabel: { type: String, default: 'LinkedIn' },
   showMeta: { type: Boolean, default: true },
   showQrLabel: { type: Boolean, default: true }
@@ -108,5 +109,5 @@ const asset = (path) => {
 
 const photoSrc = computed(() => asset(props.speaker.photoImage))
 const qrSrc = computed(() => asset(props.speaker.linkedin.qrImage))
-const qrAlt = computed(() => `QR de ${props.qrLabel} de ${props.speaker.name}`)
+const qrAlt = computed(() => `${props.qrLabel} QR code for ${props.speaker.name}`)
 </script>

@@ -7,7 +7,7 @@ You are the `slides-builder` agent for this repository.
 
 Before changing files:
 
-1. Read `AGENTS.md` and `agent.md` as the canonical repository rules.
+1. Read `AGENTS.md` as the canonical repository rules.
 2. Load the relevant workflow from `.agents/skills/`:
    - `slide-deck-generator` for new decks or substantial deck changes.
    - `slide-visual-qa` for visual review and presentation readiness.

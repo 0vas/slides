@@ -6,10 +6,10 @@
       :enter="{ opacity: 1, y: 0, transition: { duration: 520 } }"
       class="asset-photo"
     >
-      <img :src="photoSrc" alt="Personas colaborando con laptops">
+      <img :src="photoSrc" alt="People collaborating with laptops">
       <figcaption>
         <span>Pexels</span>
-        <strong>Foto editorial descargada al deck</strong>
+        <strong>Editorial photo downloaded into the deck</strong>
       </figcaption>
     </figure>
 
@@ -20,11 +20,11 @@
         :enter="{ opacity: 1, x: 0, transition: { delay: 120, duration: 520 } }"
         class="asset-icon-card"
       >
-        <img :src="iconSrc" alt="Icono DevOps de SVG Repo">
+        <img :src="iconSrc" alt="DevOps icon from SVG Repo">
         <div>
           <span>SVG Repo</span>
-          <strong>Iconos SVG locales</strong>
-          <small>Buscar por dominio, validar licencia y guardar en `public/media/icons/`.</small>
+          <strong>Local SVG icons</strong>
+          <small>Search by domain, validate the license, and save under `public/media/icons/`.</small>
         </div>
       </div>
 
@@ -48,18 +48,18 @@ const iconSrc = `${base}/media/icons/svgrepo-devops-deploy.svg`
 const rules = [
   {
     label: '01',
-    title: 'Organico',
-    copy: 'La imagen debe ampliar la idea del slide, no decorar por costumbre.'
+    title: 'Purposeful',
+    copy: 'The image should expand the slide idea, not decorate by habit.'
   },
   {
     label: '02',
     title: 'Local',
-    copy: 'Descargar assets aprobados al deck para que Pages funcione sin internet.'
+    copy: 'Download approved assets into the deck so Pages works without internet access.'
   },
   {
     label: '03',
-    title: 'Trazable',
-    copy: 'Conservar fuente, autor y licencia en docs o metadatos del deck.'
+    title: 'Traceable',
+    copy: 'Keep the source, author, and license in deck documentation or metadata.'
   }
 ]
 </script>

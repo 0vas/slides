@@ -27,12 +27,12 @@ const props = defineProps({
   nodes: {
     type: Array,
     default: () => [
-      { code: 'SSO', title: 'Identidad', detail: 'SAML · SCIM', tone: 'blue' },
-      { code: 'ORG', title: 'Organizaciones', detail: 'Equipos y dominios', tone: 'green' },
-      { code: 'SEC', title: 'Seguridad', detail: 'Controles · reglas', tone: 'amber' },
-      { code: 'AUTO', title: 'Automatizacion', detail: 'Pipelines · APIs', tone: 'rose' },
-      { code: 'OBS', title: 'Auditoria', detail: 'Logs · metricas', tone: 'blue' },
-      { code: 'AI', title: 'Asistencia', detail: 'Adopcion guiada', tone: 'green' }
+      { code: 'SSO', title: 'Identity', detail: 'SAML · SCIM', tone: 'blue' },
+      { code: 'ORG', title: 'Organizations', detail: 'Teams and domains', tone: 'green' },
+      { code: 'SEC', title: 'Security', detail: 'Controls · rules', tone: 'amber' },
+      { code: 'AUTO', title: 'Automation', detail: 'Pipelines · APIs', tone: 'rose' },
+      { code: 'OBS', title: 'Audit', detail: 'Logs · metrics', tone: 'blue' },
+      { code: 'AI', title: 'Assistance', detail: 'Guided adoption', tone: 'green' }
     ]
   }
 })

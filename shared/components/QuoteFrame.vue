@@ -13,9 +13,9 @@
 defineProps({
   quote: {
     type: String,
-    default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. La claridad tambien es una arquitectura.'
+    default: 'Clarity is not decoration. It is part of the architecture.'
   },
   author: { type: String, default: 'Speaker' },
-  role: { type: String, default: 'Contexto de la sesion' }
+  role: { type: String, default: 'Session context' }
 })
 </script>

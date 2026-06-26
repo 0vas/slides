@@ -57,11 +57,13 @@ normal deck creation. A local `deck.brief.md` is enough for this use case.
    components only when the catalog does not cover the need.
 
 7. **Validate**
-   Run `make check DECK=<slug>`. For visual changes, inspect the cover, a dense
-   slide, a media/mockup/chart slide, and navigation.
+   Run `make check DECK=<slug>`. For new decks or substantial visual changes,
+   inspect every slide and visible click/state at 1440x900. For small isolated
+   visual edits, inspect every changed slide plus adjacent/risky slides.
 
 8. **Handoff**
-   Summarize changes, commands run, assumptions, pending work, and key paths.
+   Summarize changes, commands run, screenshot scope, assumptions, pending
+   work, reusable lessons captured, and key paths.
 
 ## Required Intake
 
@@ -96,6 +98,7 @@ A generated deck satisfies this workflow when:
 - it includes enough frontmatter for the home page;
 - it includes title/cover, speaker profile, and final close/Q&A slides;
 - it passes `make check DECK=<slug>`;
+- new decks have every slide and visible click/state inspected at 1440x900;
 - essential rendering does not depend on the internet;
 - it records background mode and palette;
 - inferred information and open gaps are documented.

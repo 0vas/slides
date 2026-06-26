@@ -20,6 +20,9 @@ this repo.
 
 - Use `.agents/skills/slide-spec-triage/SKILL.md` before creating or
   substantially changing a deck when the user specification may be incomplete.
+- Use `.agents/skills/slide-continuous-learning/SKILL.md` whenever a deck,
+  visual, workflow, approval, asset, or validation defect reveals a reusable
+  process lesson that should update repository specs.
 - Use `.agents/skills/tdd-implementation/SKILL.md` for non-trivial
   implementation work.
 - Use `.agents/skills/slide-deck-generator/SKILL.md` for new decks or
@@ -39,12 +42,16 @@ this repo.
 4. Use the existing structure and components when possible.
 5. Make scoped changes only; avoid unrelated refactors.
 6. After meaningful changes, run `make check DECK=<slug>`.
-7. For visual changes, capture at least the cover and one internal slide at
-   1440x900 when a local server is available.
+7. For new decks or substantial visual changes, inspect every slide and visible
+   click/state at 1440x900 when a local server is available. For small isolated
+   visual edits, inspect every changed slide plus adjacent/risky slides.
 8. Validate the acceptance criteria before handoff and report any criterion
    that could not be verified.
-9. Document new reusable decisions in `docs/slide-guidelines.md`.
-10. Add or update a checkpoint under `docs/checkpoints/` when the user asks to
+9. Use `slide-continuous-learning` to update the narrowest durable spec, skill,
+   doc, template, or validator whenever a fixed issue should prevent future
+   decks from repeating the same failure.
+10. Document new reusable decisions in `docs/slide-guidelines.md`.
+11. Add or update a checkpoint under `docs/checkpoints/` when the user asks to
    pause, checkpoint, or continue later.
 
 For routine local edits, validation, screenshots, and asset organization, keep
@@ -164,9 +171,10 @@ kill a running dev server when the requested deck cannot be resolved.
   `.agents/skills/`, and the docs listed in this section.
 - Prefer repo-shipped skills when available: `slide-spec-triage` before
   scaffolding when a deck prompt may be incomplete, `slide-deck-generator` for
-  new decks, `slide-visual-qa` for visual review, and `tdd-implementation` for
-  criteria-first implementation. They live under `.agents/skills/` using the
-  open Agent Skills structure for reuse by future projects and users.
+  new decks, `slide-visual-qa` for visual review, `slide-continuous-learning`
+  after fixing reusable defects, and `tdd-implementation` for criteria-first
+  implementation. They live under `.agents/skills/` using the open Agent Skills
+  structure for reuse by future projects and users.
 - Read `docs/new-deck-agent-guide.md` before scaffolding a new presentation.
 - Follow `docs/deck-generation-workflow.md`: Triage -> Intake -> Brief -> Plan
   -> Tasks -> Implement -> Validate -> Handoff.
@@ -339,6 +347,9 @@ kill a running dev server when the requested deck cannot be resolved.
 - For a 30 minute talk, target roughly 24-32 slides.
 - Use section breaks every 5-7 slides to reset attention.
 - Include a clear final takeaway or operating model.
+- Section markers should read as intentional navigation, not decorative
+  watermarks that compete with titles. Keep section numbers outside headline
+  text flow and validate long section titles at 1440x900.
 
 ## Speaker Profile Slides
 
@@ -416,15 +427,17 @@ topic.
 - Treat build warnings from dependencies as non-blocking only when the build
   exits successfully and the warning is unrelated to authored code.
 - Validate at least:
-  - cover slide,
-  - one dense content slide,
-  - one animated/mockup slide,
+  - every slide and visible click/state for a new deck or major visual change,
+  - every changed slide plus adjacent/risky slides for a small isolated edit,
+  - cover, speaker, dense content, section, chart/media/mockup, closing, and
+    Q&A slides,
   - navigation visibility.
 - Check for:
   - text overlap,
   - text clipping,
   - unreadable contrast,
   - badges colliding with titles,
+  - section numbers, labels, or decorative marks looking like rendering errors,
   - native Slidev UI leaking into the deck,
   - mouse pointer artifacts,
   - excessive or distracting transitions.

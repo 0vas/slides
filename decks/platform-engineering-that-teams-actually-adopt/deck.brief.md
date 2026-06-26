@@ -123,18 +123,17 @@ it, not merely when the organization deploys more tools.
 ## Validation Plan
 
 - `make check DECK=platform-engineering-that-teams-actually-adopt`
-- Cover screenshot at 1440x900
-- Speaker profile screenshot at 1440x900
-- Dense operating-model or metrics slide screenshot at 1440x900
-- Golden-path/self-service workflow screenshot at 1440x900
+- Full-deck screenshot review at 1440x900 for every slide and visible state
+- Cover, speaker profile, section breaks, dense operating-model, golden-path,
+  governance, photo, ECharts, closing, and Q&A slides explicitly checked
 - ECharts screenshot at 1440x900 after entry animation settles
 - Navigation visible in play mode
 - No remote dependency for essential rendering
 
 ## Handoff Notes
 
-- Commands run: `make check DECK=platform-engineering-that-teams-actually-adopt`, local Slidev server on port 4100, and Playwright screenshots at 1440x900.
+- Commands run: `make check DECK=platform-engineering-that-teams-actually-adopt`, local Slidev server on port 4100, and full-deck Playwright screenshots at 1440x900.
 - Files changed: deck brief, 28-slide narrative, deck-local CSS, shared-component wrappers, deck-local speaker data, distinct local editorial photos, and the manual deploy workflow selector.
-- Visual evidence: cover, operating-model layers, progressive-disclosure model, ECharts adoption funnel, and phased roadmap inspected at 1440x900. Native Slidev navigation remains unmodified.
+- Visual evidence: every slide inspected at 1440x900, including cover, speaker profile, section breaks, discovery loop, photo section, ECharts adoption funnel, closing, and Q&A. Native Slidev navigation remains unmodified.
 - Known limitations: event logo is intentionally deferred. The build emits the repository-known non-blocking Rolldown `#__PURE__` warning from `@vueuse/core`.
 - Follow-up ideas: add event branding, then export PDF/PPTX if requested.

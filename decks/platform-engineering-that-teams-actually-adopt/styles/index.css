@@ -239,6 +239,7 @@
   align-content: center;
   display: grid;
   overflow: hidden;
+  position: relative;
 }
 
 .section-slide::after {
@@ -253,17 +254,36 @@
 }
 
 .section-number {
-  color: color-mix(in srgb, var(--deck-blue) 24%, transparent);
-  font-size: 8rem;
+  align-items: center;
+  background: color-mix(in srgb, var(--deck-blue) 8%, #fff);
+  border: 1px solid color-mix(in srgb, var(--deck-blue) 22%, var(--deck-line));
+  border-radius: 999px;
+  color: var(--deck-blue);
+  display: inline-flex;
+  font-size: 0.82rem;
   font-weight: 900;
-  line-height: 0.75;
-  position: absolute;
-  right: 58px;
-  top: 58px;
+  gap: 0.42rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  margin-bottom: 1rem;
+  margin-right: 0.55rem;
+  padding: 0.5rem 0.72rem;
+  position: relative;
+  width: max-content;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.section-number::before {
+  color: var(--deck-muted);
+  content: "Section";
+  font-size: 0.62rem;
+  font-weight: 800;
 }
 
 .section-slide h1 {
   font-size: 4.1rem;
+  max-width: 1080px;
 }
 
 .customer-jobs,
@@ -342,10 +362,10 @@
 
 .discovery-loop {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 1.1rem auto 0;
-  max-width: 760px;
+  max-width: 1080px;
   position: relative;
 }
 
@@ -354,7 +374,8 @@
   border: 1px solid var(--deck-line);
   border-radius: 8px;
   display: grid;
-  min-height: 120px;
+  gap: 0.45rem;
+  min-height: 145px;
   padding: 1rem;
 }
 
@@ -376,21 +397,17 @@
 .loop-center {
   align-items: center;
   background: var(--deck-ink);
-  border: 5px solid var(--deck-bg);
-  border-radius: 50%;
+  border-radius: 999px;
   color: #fff;
-  display: flex;
+  display: inline-flex;
   font-size: 0.82rem;
   font-weight: 800;
-  height: 110px;
+  grid-column: 1 / -1;
   justify-content: center;
-  left: 50%;
   line-height: 1.2;
-  position: absolute;
+  justify-self: center;
+  padding: 0.5rem 1rem;
   text-align: center;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 110px;
 }
 
 .governance-grid {
@@ -667,9 +684,7 @@
 }
 
 .photo-section-copy .section-number {
-  left: 58px;
-  right: auto;
-  top: -106px;
+  margin-bottom: 0;
 }
 
 .photo-section-copy h1 {

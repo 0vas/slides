@@ -41,6 +41,9 @@ These guidelines are the shared design and content baseline for future
 - Do not scale font size directly with viewport width.
 - Confirm long headings fit at 1440x900.
 - Rewrite or split long headings instead of clipping them.
+- Treat section numbers as navigation, not hero artwork. They must not overlap,
+  sit behind, or visually compete with headline text; prefer small badges or
+  clearly separated labels over translucent giant numerals.
 - On dark slides, body copy should be white or near-white. Gray is only for
   secondary metadata that can safely be low emphasis.
 
@@ -145,7 +148,10 @@ These guidelines are the shared design and content baseline for future
 ## Visual QA
 
 - Run `make check DECK=<slug>` after meaningful deck changes.
-- Inspect at least a cover and one internal slide at 1440x900 for visual work.
+- For new decks or substantial visual changes, inspect every slide and visible
+  click/state at 1440x900 before handoff.
+- For small isolated visual edits, inspect every changed slide plus adjacent or
+  risky slides at 1440x900.
 - For reusable components, inspect light and dark contexts when relevant.
 - Verify essential components do not depend on the internet.
 - Move the mouse away before screenshots to avoid accidental hover states.

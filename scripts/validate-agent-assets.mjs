@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const skillNames = [
   'slide-spec-triage',
+  'slide-continuous-learning',
   'slide-deck-generator',
   'slide-visual-qa',
   'tdd-implementation'

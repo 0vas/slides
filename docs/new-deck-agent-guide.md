@@ -100,8 +100,11 @@ Non-critical fields that may be inferred and documented:
 17. Use `TypingTitle` only on covers or key section breaks.
 18. Aim for 24-32 slides for a 30-minute talk unless the brief says otherwise.
 19. Validate with `make check DECK=<slug>`.
-20. Inspect screenshots of the cover, speaker profile, a dense slide, a
-    media/mockup/chart slide, and navigation.
+20. Inspect screenshots of every slide and visible click/state at 1440x900.
+    Confirm at least the cover, speaker profile, section breaks, dense slides,
+    media/mockup/chart slides, closing, Q&A, and navigation have no overlap,
+    clipping, unreadable contrast, or section markers that look like render
+    artifacts.
 21. Update `deck.brief.md` with final handoff notes.
 22. Add the stable deck slug to the **Deploy Slides** workflow dropdown.
 23. Update README and catalogs when reusable components, styles, or workflows

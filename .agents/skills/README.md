@@ -9,6 +9,8 @@ the open Agent Skills structure.
 
 - `slide-spec-triage`: validate a user deck specification before generation,
   identify missing critical intake, and ask concise clarification questions.
+- `slide-continuous-learning`: turn defects found during deck work into durable
+  repo rules in the right spec, skill, template, or validator.
 - `slide-deck-generator`: create or substantially modify Slidev-style decks
   from prompts using briefs, reusable components, local assets, and validation.
 - `slide-visual-qa`: validate slide decks visually with builds, screenshots,
@@ -30,6 +32,7 @@ export AGENT_SKILLS_DIR="/path/to/your/agent/skills"
 mkdir -p "$AGENT_SKILLS_DIR"
 cp -R .agents/skills/slide-deck-generator \
   .agents/skills/slide-spec-triage \
+  .agents/skills/slide-continuous-learning \
   .agents/skills/slide-visual-qa \
   .agents/skills/tdd-implementation \
   "$AGENT_SKILLS_DIR/"

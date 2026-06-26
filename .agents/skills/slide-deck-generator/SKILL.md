@@ -16,7 +16,7 @@ description: Create or substantially modify Slidev-style slide decks from a user
 7. Implement in small slices. Keep generic reusable components shared; keep event/product-specific visuals deck-local.
 8. For animated analytical visuals, prefer the repo's chart wrapper or equivalent ECharts pattern when the slide needs magnitude, comparison, weighted flow, heatmap, funnel, radar, hierarchy, custom graphic animation, or value transitions. Keep labels short, put explanation in captions/insights, declare useful entry animation in the chart option, and use the chart wrapper's sequence/update mechanism for before/after or baseline/target transitions. Prefer one-shot `enter` playback that finishes static; use click-capable triggers only for intentional in-slide steps in the Slidev web runtime.
 9. Do not promise native PowerPoint animations in PPTX export. Slidev PPTX output is static snapshots; use hosted Slidev for live motion or model PPTX progression as separate slides/click states.
-10. Validate every acceptance criterion. Run the repo's deck check/build command, and for visual changes capture screenshots of the cover plus representative internal slides.
+10. Validate every acceptance criterion. Run the repo's deck check/build command, and for new decks capture/review every slide and visible click/state at 1440x900 before handoff. For smaller visual edits, capture every changed slide plus adjacent/risky slides.
 11. Handoff with changed files, validation results, known warnings, and any follow-up deployment step.
 
 ## Quality Criteria Template
@@ -29,7 +29,7 @@ Before editing, write a short checklist in the working notes:
 - Style: palette is chosen from the local style catalog and background mode is recorded as light, dark, or black/keynote.
 - Visuals: slides are readable at 16:9, no overflow, no low-contrast text, no accidental product specificity in generic showcases.
 - Assets: any image-bearing slide uses a searched or user-supplied asset selected for that slide role; media is local, organized, licensed/source-noted, and referenced with stable paths.
-- Validation: build/check command passes; screenshots verify dynamic renderers such as Mermaid, ECharts/charts, iframes, videos, or 3D scenes.
+- Validation: build/check command passes; screenshots verify every slide for new decks and verify dynamic renderers such as Mermaid, ECharts/charts, iframes, videos, or 3D scenes.
 
 ## Required Structural Slides
 

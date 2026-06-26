@@ -131,9 +131,12 @@ Acceptance:
 ## Validation Plan
 
 - `make check DECK=<slug>`
-- Cover screenshot at 1440x900
-- Dense slide screenshot at 1440x900
-- Media/mockup/chart screenshot at 1440x900
+- Full-deck screenshot review at 1440x900 for every slide and visible
+  click/state on new decks or substantial visual changes
+- Changed-slide plus adjacent/risky screenshot review at 1440x900 for small
+  isolated visual edits
+- Cover, speaker, section break, dense, media/mockup/chart, closing, Q&A, and
+  navigation states explicitly checked
 - Navigation visible in play mode
 - No remote dependency for essential rendering
 

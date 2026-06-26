@@ -15,6 +15,9 @@ This repository is designed for an agent role called `slides-builder`.
 critical context, writes a local brief, reuses the component catalog, searches
 for appropriate image assets when a slide needs them, validates the result, and
 leaves the deck ready to build, export, deploy, or release.
+When a defect is found and fixed, the agent records the reusable lesson in the
+narrowest durable spec, skill, doc, template, or validator so future decks do
+not repeat it.
 
 ## Who This Is For
 
@@ -107,7 +110,7 @@ If critical information is missing, the agent must ask before scaffolding.
 Recommended flow:
 
 ```text
-Triage -> Intake -> Brief -> Plan -> Tasks -> Implement -> Validate -> Handoff
+Triage -> Intake -> Brief -> Plan -> Tasks -> Implement -> Validate -> Learn -> Handoff
 ```
 
 ### Example Prompt
@@ -192,6 +195,10 @@ assets, the agent may infer them and record the assumption in the brief.
 
 Every deck must include a title/cover slide, a data-driven speaker profile
 slide, and a final close/Q&A slide.
+
+For new decks or substantial visual changes, visual validation must inspect
+every slide and visible click/state at 1440x900. Small isolated edits must
+inspect every changed slide plus adjacent or risky slides.
 
 ## Install
 

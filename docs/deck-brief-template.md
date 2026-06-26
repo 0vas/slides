@@ -76,6 +76,17 @@ Acceptance:
 - When the deck is reviewed
 - Then every point is represented by at least one slide or visual block
 
+### Required Structure
+
+The deck shall include the required structural slides.
+
+Acceptance:
+
+- Given the rendered deck
+- When it is reviewed
+- Then it includes a title/cover slide, a data-driven speaker profile slide,
+  and a final close/Q&A slide
+
 ### Visual Quality
 
 The deck shall use the repository visual system, record palette/background mode,
@@ -109,7 +120,7 @@ Acceptance:
 
 | Asset | Source | Local Path | License/Notes |
 | --- | --- | --- | --- |
-| <asset> | <source> | `decks/<slug>/public/media/...` | <notes> |
+| <asset> | <search/source> | `decks/<slug>/public/media/...` | <license/notes> |
 
 ## Component Plan
 

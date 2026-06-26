@@ -7,6 +7,8 @@ the open Agent Skills structure.
 
 ## Skills
 
+- `slide-spec-triage`: validate a user deck specification before generation,
+  identify missing critical intake, and ask concise clarification questions.
 - `slide-deck-generator`: create or substantially modify Slidev-style decks
   from prompts using briefs, reusable components, local assets, and validation.
 - `slide-visual-qa`: validate slide decks visually with builds, screenshots,
@@ -27,6 +29,7 @@ Example local install:
 export AGENT_SKILLS_DIR="/path/to/your/agent/skills"
 mkdir -p "$AGENT_SKILLS_DIR"
 cp -R .agents/skills/slide-deck-generator \
+  .agents/skills/slide-spec-triage \
   .agents/skills/slide-visual-qa \
   .agents/skills/tdd-implementation \
   "$AGENT_SKILLS_DIR/"
@@ -51,6 +54,7 @@ files should remain thin discovery adapters only.
 Ask naturally. Examples:
 
 - "Create a new deck from this prompt..."
+- "Validate this deck specification before creating slides..."
 - "Run visual QA on this deck..."
 - "Implement this change with TDD..."
 

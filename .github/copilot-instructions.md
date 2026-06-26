@@ -9,4 +9,4 @@ follow it before implementing the task.
 Use criteria-first/TDD validation for non-trivial changes. Run
 `make check DECK=<slug>` after meaningful deck changes and inspect visual work
 in a browser at 1440x900. Ask the user when critical new-deck intake is missing
-or contradictory.
+or contradictory; otherwise batch local edits and report validation at handoff.

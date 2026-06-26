@@ -12,6 +12,7 @@ on:
           - all
           - component-showcase
           - github-enterprise-platform
+          - platform-engineering-that-teams-actually-adopt
           - custom
       custom_deck:
         description: Deck slug when target is custom

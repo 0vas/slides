@@ -12,9 +12,9 @@ publishing reusable presentation decks.
 
 This repository is designed for an agent role called `slides-builder`.
 `slides-builder` turns a user prompt into a clean deck: it asks for missing
-critical context, writes a local brief, reuses the component catalog, organizes
-media assets, validates the result, and leaves the deck ready to build, export,
-deploy, or release.
+critical context, writes a local brief, reuses the component catalog, searches
+for appropriate image assets when a slide needs them, validates the result, and
+leaves the deck ready to build, export, deploy, or release.
 
 ## Who This Is For
 
@@ -92,6 +92,7 @@ scripts/
 | Deck | Purpose | Command |
 | --- | --- | --- |
 | `github-enterprise-platform` | Main talk about GitHub as an enterprise platform. | `make dev DECK=github-enterprise-platform` |
+| `platform-engineering-that-teams-actually-adopt` | Internal platform engineering adoption and operating-model talk. | `make dev DECK=platform-engineering-that-teams-actually-adopt` |
 | `component-showcase` | Reference deck for the current component and style catalog. | `make dev DECK=component-showcase` |
 
 `decks/_template/` is not a finished talk. It is a clean starting point with
@@ -106,7 +107,7 @@ If critical information is missing, the agent must ask before scaffolding.
 Recommended flow:
 
 ```text
-Intake -> Brief -> Plan -> Tasks -> Implement -> Validate -> Handoff
+Triage -> Intake -> Brief -> Plan -> Tasks -> Implement -> Validate -> Handoff
 ```
 
 ### Example Prompt
@@ -188,6 +189,9 @@ A useful prompt should include:
 
 If only non-critical details are missing, such as slug, palette, or suggested
 assets, the agent may infer them and record the assumption in the brief.
+
+Every deck must include a title/cover slide, a data-driven speaker profile
+slide, and a final close/Q&A slide.
 
 ## Install
 
@@ -280,9 +284,10 @@ and description from each deck frontmatter.
 - From Vue components, build public asset paths with `import.meta.env.BASE_URL`.
 - Stable speaker data and shared personal assets live in `data/speaker/`.
 - Deck-specific speaker overrides live in `decks/<slug>/data/speaker.js`.
-- Future decks may use SVG Repo icons and editorial images from Pexels,
-  Unsplash, Pixabay, or similar sources when they improve comprehension. Always
-  download assets locally and record source/license notes.
+- When a slide needs an image, search SVG Repo, Pexels, Unsplash, Pixabay, or
+  similar reputable free-media sources as part of the slide implementation.
+  Download assets locally, choose distinct images for distinct slide roles, and
+  record source/license notes.
 
 ## Components
 

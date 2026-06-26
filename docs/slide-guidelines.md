@@ -24,6 +24,8 @@ These guidelines are the shared design and content baseline for future
 
 - Each deck must have `decks/<slug>/slides.md`.
 - Each new deck must have `decks/<slug>/deck.brief.md`.
+- Every deck must include a title/cover slide, a data-driven speaker profile
+  slide, and a final close/Q&A slide.
 - Deck CSS lives in `decks/<slug>/styles/index.css` and imports the shared
   theme.
 - Deck media lives in `decks/<slug>/public/media/`.
@@ -98,6 +100,11 @@ These guidelines are the shared design and content baseline for future
 - Use local media for essential rendering.
 - Download SVG icons and editorial images into the deck media folder.
 - Record source and license notes for external assets.
+- Treat image search as part of creating any image-bearing slide: choose the
+  asset for the slide's semantic role, not as generic decoration.
+- Select each editorial image for a specific slide purpose. Do not duplicate
+  one source image across multiple roles merely by cropping or renaming it
+  unless the deck intentionally uses it as a repeated motif.
 - Avoid blurry or decorative images that do not add information.
 - Use `Shape3DStage` or Three.js only when the canvas is validated as nonblank
   and correctly framed.
@@ -125,7 +132,8 @@ These guidelines are the shared design and content baseline for future
 
 ## Speaker Slides
 
-- Speaker and closing slides should be data-driven.
+- Speaker and closing slides are required in every deck; speaker slides must be
+  data-driven.
 - Stable speaker data lives in `data/speaker/speaker.json`.
 - Decks should override only talk-specific fields.
 - Shared speaker assets live in `data/speaker/`.

@@ -20,7 +20,7 @@ Adopt a lightweight Spec Kit-style flow as the single operating model for new
 deck generation:
 
 ```text
-Intake -> Brief -> Plan -> Tasks -> Implement -> Validate -> Handoff
+Triage -> Intake -> Brief -> Plan -> Tasks -> Implement -> Validate -> Handoff
 ```
 
 Use `decks/<slug>/deck.brief.md` as the deck-specific source of truth.
@@ -43,6 +43,8 @@ OpenSpec-style change-spec tree for normal deck creation.
 - New decks must create `decks/<slug>/deck.brief.md` before implementation.
 - Agents must ask before scaffolding when critical intake information is
   missing.
+- New decks must include title/cover, data-driven speaker profile, and final
+  close/Q&A slides.
 - The workflow documentation lives in `docs/deck-generation-workflow.md`.
 - The reusable brief template lives in `docs/deck-brief-template.md`.
 - Architectural decisions live in `docs/adr/`.

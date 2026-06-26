@@ -62,7 +62,6 @@ Non-critical fields that may be inferred and documented:
 
 - available assets,
 - suggested asset policy,
-- whether to use speaker data,
 - expected deliverables,
 - deployment expectation,
 - slug,
@@ -71,35 +70,41 @@ Non-critical fields that may be inferred and documented:
 ## Workflow
 
 1. Read `docs/deck-generation-workflow.md`.
-2. Complete intake and ask for missing critical fields.
-3. Define a URL-friendly slug.
-4. Create `decks/<slug>/deck.brief.md` from
+2. Use `.agents/skills/slide-spec-triage/SKILL.md` to validate the user's
+   specification before creating files.
+3. Complete intake and ask for missing critical fields.
+4. Define a URL-friendly slug.
+5. Create `decks/<slug>/deck.brief.md` from
    `docs/deck-brief-template.md`.
-5. Record requirements, assumptions, narrative plan, asset plan, and validation
+6. Record requirements, assumptions, narrative plan, asset plan, and validation
    plan in the brief.
-6. Copy or adapt `decks/_template/`.
-7. Replace lorem ipsum with real deck narrative.
-8. Create or adjust `decks/<slug>/styles/index.css` importing the shared theme.
-9. Choose a palette from `docs/style-catalog.md` and apply it in `class` and
+7. Copy or adapt `decks/_template/`.
+8. Replace lorem ipsum with real deck narrative.
+9. Create or adjust `decks/<slug>/styles/index.css` importing the shared theme.
+10. Choose a palette from `docs/style-catalog.md` and apply it in `class` and
    `defaults.class`.
-10. Create `decks/<slug>/data/speaker.js` only when talk-specific speaker
-    overrides are needed.
-11. Reuse `shared/components/` before creating new components.
-12. Create wrappers for shared components used from Markdown.
-13. Choose visuals from the catalog: mockup, metric, table, matrix, hierarchy,
+11. Include the required structural slides: title/cover, data-driven speaker
+    profile, and final close/Q&A.
+12. Create `decks/<slug>/data/speaker.js` for talk-specific speaker roles or
+    tags, importing `person` from `data/speaker/person.js`.
+13. Reuse `shared/components/` before creating new components.
+14. Create wrappers for shared components used from Markdown.
+15. Choose visuals from the catalog: mockup, metric, table, matrix, hierarchy,
     graph, sequence, timeline, swimlane, media, quote, layers, 3D, Mermaid, or
     ECharts.
-14. Search proactively for SVG Repo icons and editorial images from Pexels or
-    similar sources when they improve comprehension. Download everything into
+16. Whenever a slide needs an image, search proactively for SVG Repo icons and
+    editorial images from Pexels, Unsplash, Pixabay, or similar sources.
+    Choose a distinct source image for each distinct slide role unless the
+    brief intentionally calls for a repeated motif. Download everything into
     `decks/<slug>/public/media/` and record source/license notes.
-15. Use `TypingTitle` only on covers or key section breaks.
-16. Aim for 24-32 slides for a 30-minute talk unless the brief says otherwise.
-17. Validate with `make check DECK=<slug>`.
-18. Inspect screenshots of the cover, a dense slide, a media/mockup/chart
-    slide, and navigation.
-19. Update `deck.brief.md` with final handoff notes.
-20. Add the stable deck slug to the **Deploy Slides** workflow dropdown.
-21. Update README and catalogs when reusable components, styles, or workflows
+17. Use `TypingTitle` only on covers or key section breaks.
+18. Aim for 24-32 slides for a 30-minute talk unless the brief says otherwise.
+19. Validate with `make check DECK=<slug>`.
+20. Inspect screenshots of the cover, speaker profile, a dense slide, a
+    media/mockup/chart slide, and navigation.
+21. Update `deck.brief.md` with final handoff notes.
+22. Add the stable deck slug to the **Deploy Slides** workflow dropdown.
+23. Update README and catalogs when reusable components, styles, or workflows
     change.
 
 ## ECharts Criteria
@@ -189,7 +194,8 @@ A new deck is ready when:
 - it has `deck.brief.md` with requirements, assumptions, and validation;
 - it runs with `make dev DECK=<slug>`;
 - it passes `make check DECK=<slug>`;
-- speaker profile is data-driven when used;
+- it includes title/cover, data-driven speaker profile, and final close/Q&A
+  slides;
 - it uses catalog components or documented patterns;
 - it has no clipped text at 1440x900;
 - essential rendering works offline;

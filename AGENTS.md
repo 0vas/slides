@@ -18,6 +18,8 @@ this repo.
 
 ## Reusable Skills
 
+- Use `.agents/skills/slide-spec-triage/SKILL.md` before creating or
+  substantially changing a deck when the user specification may be incomplete.
 - Use `.agents/skills/tdd-implementation/SKILL.md` for non-trivial
   implementation work.
 - Use `.agents/skills/slide-deck-generator/SKILL.md` for new decks or
@@ -44,6 +46,12 @@ this repo.
 9. Document new reusable decisions in `docs/slide-guidelines.md`.
 10. Add or update a checkpoint under `docs/checkpoints/` when the user asks to
    pause, checkpoint, or continue later.
+
+For routine local edits, validation, screenshots, and asset organization, keep
+working and report the final diff and validation evidence at handoff. Avoid
+interrupting the user for file-by-file approvals; only stop for user input when
+a critical deck requirement is missing, a destructive action is needed, or an
+external policy/tool boundary genuinely requires approval.
 
 ## TDD And Quality Criteria
 
@@ -129,11 +137,14 @@ kill a running dev server when the requested deck cannot be resolved.
   art, and mascots belong in `decks/<slug>/public/media/`. Reference them as
   `media/<file>` in Markdown/props, or with `import.meta.env.BASE_URL` from
   Vue components.
-- For future decks, proactively search for relevant SVG icons from SVG Repo and
-  editorial images from Pexels or similar reputable free-media sites when they
-  improve comprehension, mood, or visual hierarchy. Download approved assets
-  into the deck `public/media/` tree, keep source/license notes, and render them
-  locally.
+- For any slide that uses an image, make asset search part of implementation:
+  proactively search for relevant SVG icons from SVG Repo and editorial images
+  from Pexels or similar reputable free-media sites when they improve
+  comprehension, mood, or visual hierarchy. Download selected assets into the
+  deck `public/media/` tree, keep source/license notes, and render them
+  locally. Do not reuse one editorial image as multiple different assets merely
+  by cropping or renaming it unless the brief intentionally defines that image
+  as a repeated motif.
 - Before creating a component, inspect `docs/component-catalog.md`.
 - Put generic, data-driven components in `shared/components/` when they can be
   reused across decks through props or slots.
@@ -151,13 +162,14 @@ kill a running dev server when the requested deck cannot be resolved.
 - `slides-builder` is a vendor-neutral agent role, not a tool-specific brand.
   Any capable coding agent can perform the role by reading `AGENTS.md`,
   `.agents/skills/`, and the docs listed in this section.
-- Prefer repo-shipped skills when available: `slide-deck-generator` for new
-  decks, `slide-visual-qa` for visual review, and `tdd-implementation` for
+- Prefer repo-shipped skills when available: `slide-spec-triage` before
+  scaffolding when a deck prompt may be incomplete, `slide-deck-generator` for
+  new decks, `slide-visual-qa` for visual review, and `tdd-implementation` for
   criteria-first implementation. They live under `.agents/skills/` using the
   open Agent Skills structure for reuse by future projects and users.
 - Read `docs/new-deck-agent-guide.md` before scaffolding a new presentation.
-- Follow `docs/deck-generation-workflow.md`: Intake -> Brief -> Plan -> Tasks ->
-  Implement -> Validate -> Handoff.
+- Follow `docs/deck-generation-workflow.md`: Triage -> Intake -> Brief -> Plan
+  -> Tasks -> Implement -> Validate -> Handoff.
 - Before scaffolding, create or update `decks/<slug>/deck.brief.md` from
   `docs/deck-brief-template.md`. Treat it as the source of truth for the deck.
 - Intake fields that must be recorded are: topic/title, audience, audience
@@ -178,6 +190,8 @@ kill a running dev server when the requested deck cannot be resolved.
   near-black modes only when requested or clearly justified.
 - Reuse `data/speaker/person.js` and create a deck-level `data/speaker.js` only
   for talk-specific overrides.
+- Include title/cover, data-driven speaker profile, and final close/Q&A slides
+  in every deck.
 - Store deck-specific images, videos, GIFs, screenshots, and event graphics
   under `decks/<slug>/public/media/`.
 - Use the component catalog before inventing new visuals.
@@ -328,7 +342,8 @@ kill a running dev server when the requested deck cannot be resolved.
 
 ## Speaker Profile Slides
 
-- Speaker/profile slides must be data-driven, not hardcoded only in Markdown.
+- Speaker/profile slides are required in every deck and must be data-driven,
+  not hardcoded only in Markdown.
 - Root personal data is canonical in `data/speaker/speaker.json`, with
   `data/speaker/person.js` as the Vite-facing wrapper. These files are for
   stable owner metadata shared by all decks: name, email, role/headline,

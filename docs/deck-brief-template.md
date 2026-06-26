@@ -42,6 +42,7 @@ identified earlier.
 | Palette rationale | <why it fits the audience, tone, and topic> |
 | Motion level | <low, medium, high> |
 | Media style | <screenshots, generated images, diagrams, ECharts, Mermaid, 3D> |
+| Visual rhythm | <mix of title, section, diagram, chart, mockup/media, comparison, text> |
 
 If the user does not provide a visual direction and allows the agent to infer,
 use `palette-crystal` and `light` mode. Use `black/keynote` only when the user
@@ -93,7 +94,7 @@ Acceptance:
 ### Visual Quality
 
 The deck shall use the repository visual system, record palette/background mode,
-and remain readable at 1440x900.
+remain readable at 1440x900, and use enough visual variety to support the talk.
 
 Acceptance:
 
@@ -101,6 +102,8 @@ Acceptance:
   substantial visual changes
 - When they are inspected at 1440x900
 - Then there is no clipped text or unreadable essential content
+- And the deck does not rely on long runs of same-looking text slides when
+  catalog components, diagrams, media, or staged reveals would clarify the idea
 
 ### Build
 
@@ -132,6 +135,9 @@ Acceptance:
 | --- | --- | --- |
 | <need> | <component> | <shared or local> |
 
+The component plan should name existing catalog modules first. Create a local
+component only when the catalog does not already support the slide's job.
+
 ## Validation Plan
 
 - `make check DECK=<slug>`
@@ -141,6 +147,8 @@ Acceptance:
   isolated visual edits
 - Cover, speaker, section break, dense, media/mockup/chart, closing, Q&A, and
   navigation states explicitly checked
+- Visual rhythm checked: repeated layouts, underused existing components,
+  missing media/diagrams, and motion/reveal choices reviewed against the brief
 - Navigation visible in play mode
 - No remote dependency for essential rendering
 

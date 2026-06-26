@@ -52,8 +52,9 @@ normal deck creation. A local `deck.brief.md` is enough for this use case.
 
 5. **Plan**
    Define narrative, approximate slide count, background mode, palette,
-   components, asset strategy, validation surface, and assumptions that will
-   govern execution.
+   components, visual rhythm, asset strategy, validation surface, and
+   assumptions that will govern execution. Map the story to existing component
+   catalog modules before deciding that custom layouts are needed.
 
 6. **Tasks**
    Break the plan into concrete tasks: scaffold, content, components, media,
@@ -111,6 +112,8 @@ A generated deck satisfies this workflow when:
 - it starts from `decks/_template`;
 - deck media lives in `public/media/`;
 - it reuses the catalog before creating new components;
+- it uses varied slide compositions, suitable media/diagrams, and purposeful
+  staging or motion instead of long static text runs;
 - it includes enough frontmatter for the home page;
 - it includes title/cover, speaker profile, and final close/Q&A slides;
 - it passes `make check DECK=<slug>`;

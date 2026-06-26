@@ -35,7 +35,9 @@ this repo.
 1. Inspect the existing deck and shared theme before editing.
 2. Define acceptance criteria before implementation. Treat TDD broadly:
    tests first for code behavior, criteria/checks first for decks, docs,
-   visuals, workflows, and deployment changes.
+   visuals, workflows, and deployment changes. For decks, include visual
+   ambition as a quality gate: composition variety, meaningful use of existing
+   components, suitable assets/diagrams, and restrained motion.
 3. Complete the question window during triage/plan. Ask every known
    clarification question before execution starts, grouped into at most three
    concise questions when user input is required. Once implementation begins,
@@ -45,7 +47,9 @@ this repo.
 4. Identify the validation surface before editing: unit/integration tests,
    build checks, screenshots, link checks, workflow syntax checks, or manual
    inspection evidence.
-5. Use the existing structure and components when possible.
+5. Use the existing structure and components when possible. For new or major
+   deck work, inspect the component catalog during planning and intentionally
+   map the story to reusable modules before creating custom layouts.
 6. Make scoped changes only; avoid unrelated refactors.
 7. After meaningful changes, run `make check DECK=<slug>`.
 8. For new decks or substantial visual changes, inspect every slide and visible
@@ -72,6 +76,9 @@ needed, or an external policy/tool boundary genuinely requires approval.
 - Every implementation should start with a compact quality checklist: behavior,
   regression safety, maintainability, visual/readability expectations when
   relevant, and exact validation commands or inspections.
+- For deck work, the checklist must cover aesthetics and dynamism, not only
+  absence of defects: varied slide compositions, purposeful component reuse,
+  effective media/diagrams, and motion that supports the talk track.
 - Prefer existing tests and repo commands over new tooling. Add a new test only
   when it protects meaningful behavior or a reusable contract.
 - For slide and documentation work, use criteria-first validation when a classic
@@ -80,6 +87,9 @@ needed, or an external policy/tool boundary genuinely requires approval.
   test surfaces.
 - Do not mark work complete merely because files changed. Completion requires
   passing the selected checks or explicitly reporting the unverified gap.
+- Do not treat a deck as ready when it merely builds and avoids overlap. New or
+  substantially changed decks should feel intentionally composed and should not
+  leave obvious catalog modules unused where they would improve comprehension.
 
 ## Commands
 

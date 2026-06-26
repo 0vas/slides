@@ -14,6 +14,9 @@ These guidelines are the shared design and content baseline for future
 - Vary composition based on content load. Dense diagrams may use a large left
   title; sections may use title plus subtitle; full-bleed visuals may use
   minimal copy.
+- Plan visual rhythm across the deck. A strong deck should mix title/section
+  slides, data visuals, diagrams, mockups/media, comparison or decision
+  surfaces, and short text slides when the topic supports them.
 - Avoid one-note palettes. Combine accents semantically.
 - Do not use decorative overlays that reduce text contrast.
 - Keep cards at 8px radius unless a component has a specific reason.
@@ -32,6 +35,8 @@ These guidelines are the shared design and content baseline for future
 - Stable speaker data lives in `data/speaker/`.
 - Reusable components belong in `shared/components/`.
 - Deck-specific components belong in `decks/<slug>/components/`.
+- Before creating a new slide pattern, check `docs/component-catalog.md` and
+  reuse an existing module when it can carry the idea cleanly.
 
 ## Typography
 
@@ -62,6 +67,9 @@ These guidelines are the shared design and content baseline for future
 - Typewriter effects must not leave a persistent caret, border, cursor line, or
   fake terminal prompt.
 - Do not animate every object on a slide.
+- Use restrained staging to add life to dense or strategic slides: progressive
+  reveals, component entry, ECharts transitions, or separate click states are
+  preferable to static walls of text.
 
 ## PPTX Export
 
@@ -158,6 +166,9 @@ These guidelines are the shared design and content baseline for future
 - For reusable components, inspect light and dark contexts when relevant.
 - Check dark chips/code pills specifically; dark blue or muted text on navy or
   black panels is a contrast failure.
+- Check visual rhythm on new or major decks: repeated layouts, missed component
+  opportunities, missing diagrams/media, and lifeless text-heavy sequences are
+  quality defects even when there is no clipping.
 - Verify essential components do not depend on the internet.
 - Move the mouse away before screenshots to avoid accidental hover states.
 

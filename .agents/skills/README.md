@@ -5,6 +5,16 @@ and related implementation work. `.agents/skills/` is the canonical,
 vendor-neutral project location; each workflow is defined by `SKILL.md` using
 the open Agent Skills structure.
 
+Each project skill must include:
+
+- `SKILL.md` with `name` and `description` frontmatter.
+- `agents/openai.yaml` with `interface.display_name`,
+  `interface.short_description`, and a `default_prompt` that names the skill
+  with `$skill-name`.
+
+Run `npm run check:agent` after adding or changing skills; it validates this
+minimum structure for every repo-shipped skill.
+
 ## Skills
 
 - `slide-spec-triage`: validate a user deck specification before generation,

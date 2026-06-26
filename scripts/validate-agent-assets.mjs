@@ -1,15 +1,14 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const skillNames = [
-  'slide-spec-triage',
-  'slide-continuous-learning',
-  'slide-deck-generator',
-  'slide-visual-qa',
-  'tdd-implementation'
-]
+const skillsRoot = join(root, '.agents/skills')
+const skillNames = existsSync(skillsRoot)
+  ? readdirSync(skillsRoot)
+      .filter((name) => statSync(join(skillsRoot, name)).isDirectory())
+      .sort()
+  : []
 
 function fail(message) {
   console.error(`Agent asset validation failed: ${message}`)
@@ -36,12 +35,21 @@ function frontmatterValue(content, key) {
   return value?.slice(key.length + 1).trim()
 }
 
+function yamlStringValue(content, key) {
+  const value = content.match(new RegExp(`^\\s*${key}:\\s*"(.*)"\\s*$`, 'm'))
+  return value?.[1]
+}
+
 if (existsSync(join(root, 'skills'))) {
   fail('root skills/ is not an agent discovery path; use .agents/skills/')
 }
 
 if (existsSync(join(root, 'agent.md'))) {
   fail('root agent.md is redundant; keep canonical instructions in AGENTS.md')
+}
+
+if (skillNames.length === 0) {
+  fail('.agents/skills/ must contain at least one skill folder')
 }
 
 for (const skillName of skillNames) {
@@ -54,6 +62,30 @@ for (const skillName of skillNames) {
 
   if (!frontmatterValue(content, 'description')) {
     fail(`${relativePath} must declare a description`)
+  }
+
+  const metadataPath = `.agents/skills/${skillName}/agents/openai.yaml`
+  const metadata = readRequired(join(root, metadataPath))
+  const displayName = yamlStringValue(metadata, 'display_name')
+  const shortDescription = yamlStringValue(metadata, 'short_description')
+  const defaultPrompt = yamlStringValue(metadata, 'default_prompt')
+
+  if (!metadata.includes('interface:\n')) {
+    fail(`${metadataPath} must declare an interface block`)
+  }
+
+  if (!displayName) {
+    fail(`${metadataPath} must declare interface.display_name`)
+  }
+
+  if (!shortDescription) {
+    fail(`${metadataPath} must declare interface.short_description`)
+  }
+
+  if (!defaultPrompt) {
+    fail(`${metadataPath} must declare interface.default_prompt`)
+  } else if (!defaultPrompt.includes(`$${skillName}`)) {
+    fail(`${metadataPath} default_prompt must mention $${skillName}`)
   }
 }
 

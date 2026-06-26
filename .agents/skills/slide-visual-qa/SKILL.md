@@ -20,7 +20,10 @@ description: Validate and fix visual quality problems in slide decks. Use when a
 ## Visual Gates
 
 - Text must be readable from a projector and must not overlap or clip.
-- Buttons, cards, labels, Mermaid nodes, and SVG text must maintain contrast on the active palette.
+- Buttons, cards, labels, code pills, Mermaid nodes, and SVG text must maintain contrast on the active palette.
+- Dark surfaces must use light text. Do not place dark blue, muted gray, or
+  low-luminance accent text on black/navy panels even when the hue matches the
+  palette.
 - Generic component showcases must avoid product-specific flows, names, CTAs, or branding unless the component is explicitly a branded example.
 - External assets must render locally; broken image icons are failures.
 - Mermaid and other dynamic diagrams must be checked in a browser, not only by static build.

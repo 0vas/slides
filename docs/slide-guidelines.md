@@ -46,6 +46,9 @@ These guidelines are the shared design and content baseline for future
   clearly separated labels over translucent giant numerals.
 - On dark slides, body copy should be white or near-white. Gray is only for
   secondary metadata that can safely be low emphasis.
+- On dark chips, code pills, badges, and product surfaces, use light text
+  rather than dark accent colors. Palette hue consistency does not matter if
+  projector contrast is weak.
 
 ## Motion
 
@@ -153,6 +156,8 @@ These guidelines are the shared design and content baseline for future
 - For small isolated visual edits, inspect every changed slide plus adjacent or
   risky slides at 1440x900.
 - For reusable components, inspect light and dark contexts when relevant.
+- Check dark chips/code pills specifically; dark blue or muted text on navy or
+  black panels is a contrast failure.
 - Verify essential components do not depend on the internet.
 - Move the mouse away before screenshots to avoid accidental hover states.
 

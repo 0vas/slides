@@ -120,6 +120,11 @@ These guidelines are the shared design and content baseline for future
 - Use local media for essential rendering.
 - Download SVG icons and editorial images into the deck media folder.
 - Record source and license notes for external assets.
+- Resolve deck-owned `public/media` assets through `import.meta.env.BASE_URL`
+  inside wrappers or components when the deck will be built under a non-root
+  base path.
+- Before handoff, verify every referenced local media path through the running
+  dev server or built artifact; an existing file on disk is not enough.
 - Treat image search as part of creating any image-bearing slide: choose the
   asset for the slide's semantic role, not as generic decoration.
 - Do not ship a new image-friendly deck with zero image-bearing slides unless

@@ -34,8 +34,8 @@
 }
 
 .media-split .lead {
-  font-size: 1.34rem;
-  line-height: 1.34;
+  font-size: 1.14rem;
+  line-height: 1.24;
 }
 
 .media-split .media-frame {
@@ -43,7 +43,7 @@
 }
 
 .media-split .media-surface {
-  min-height: 300px;
+  min-height: 250px;
 }
 
 .compact-media {
@@ -55,11 +55,25 @@
 }
 
 .intro-devops-es .media-frame figcaption {
-  padding: 0.62rem 0.8rem;
+  padding: 0.5rem 0.72rem;
 }
 
 .intro-devops-es .media-frame figcaption strong {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
+}
+
+.media-split .callout-stack article {
+  min-height: 50px;
+  padding: 0.4rem 0.58rem;
+}
+
+.media-split .callout-stack article strong {
+  font-size: 0.88rem;
+}
+
+.media-split .callout-stack article small {
+  font-size: 0.68rem;
+  line-height: 1.1;
 }
 
 .concept-grid {
@@ -275,6 +289,22 @@
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 10px;
   margin-top: 34px;
+}
+
+.cicd-spine-hero {
+  display: grid;
+  justify-items: center;
+  margin-top: 14px;
+}
+
+.cicd-spine-hero .media-frame {
+  margin-top: 0;
+  max-width: 620px;
+  width: 100%;
+}
+
+.cicd-spine-media .media-surface {
+  min-height: 0;
 }
 
 .cicd-spine {

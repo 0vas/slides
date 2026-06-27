@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">CI/CD pipeline loop</title>
+  <desc id="desc">A dark editorial diagram showing code, build, test, secure, package, release, deploy, operate, and feedback as a continuous delivery loop.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.52" stop-color="#08111f"/>
+      <stop offset="1" stop-color="#07140f"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#58a6ff"/>
+      <stop offset="0.45" stop-color="#22d3ee"/>
+      <stop offset="0.75" stop-color="#3ddc84"/>
+      <stop offset="1" stop-color="#ffb86b"/>
+    </linearGradient>
+    <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#58a6ff" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#58a6ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#3ddc84" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#3ddc84" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="720" rx="36" fill="url(#bg)"/>
+  <g opacity="0.24">
+    <path d="M0 118H1200M0 244H1200M0 370H1200M0 496H1200M0 622H1200M154 0V720M308 0V720M462 0V720M616 0V720M770 0V720M924 0V720M1078 0V720" stroke="#94a3b8" stroke-width="1"/>
+  </g>
+  <circle cx="228" cy="152" r="168" fill="url(#glowBlue)"/>
+  <circle cx="996" cy="548" r="188" fill="url(#glowGreen)"/>
+
+  <text x="64" y="76" fill="#f8fbff" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">CI/CD como sistema de aprendizaje</text>
+  <text x="64" y="114" fill="#b7c2d0" font-family="Inter, Arial, sans-serif" font-size="20">Cada cambio atraviesa controles, produce evidencia y vuelve como feedback.</text>
+
+  <path d="M218 360 C218 220 374 154 602 154 C830 154 982 224 982 360 C982 496 830 566 602 566 C374 566 218 500 218 360Z" fill="none" stroke="url(#line)" stroke-width="12" stroke-linecap="round" marker-end="url(#arrow)" opacity="0.96"/>
+  <path d="M602 566 C520 622 406 620 320 566" fill="none" stroke="#3ddc84" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12" opacity="0.72"/>
+  <text x="430" y="652" fill="#3ddc84" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800">feedback operativo</text>
+
+  <g filter="url(#softShadow)" font-family="Inter, Arial, sans-serif">
+    <g transform="translate(132 302)">
+      <rect width="150" height="116" rx="18" fill="#111827" stroke="#58a6ff" stroke-width="2"/>
+      <text x="22" y="38" fill="#58a6ff" font-size="18" font-weight="900">01</text>
+      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Code</text>
+    </g>
+    <g transform="translate(284 162)">
+      <rect width="150" height="116" rx="18" fill="#111827" stroke="#3ddc84" stroke-width="2"/>
+      <text x="22" y="38" fill="#3ddc84" font-size="18" font-weight="900">02</text>
+      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Build</text>
+    </g>
+    <g transform="translate(522 104)">
+      <rect width="150" height="116" rx="18" fill="#111827" stroke="#ffb86b" stroke-width="2"/>
+      <text x="22" y="38" fill="#ffb86b" font-size="18" font-weight="900">03</text>
+      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Test</text>
+    </g>
+    <g transform="translate(760 162)">
+      <rect width="150" height="116" rx="18" fill="#111827" stroke="#ff7ac8" stroke-width="2"/>
+      <text x="22" y="38" fill="#ff7ac8" font-size="18" font-weight="900">04</text>
+      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Secure</text>
+    </g>
+    <g transform="translate(918 302)">
+      <rect width="150" height="116" rx="18" fill="#111827" stroke="#58a6ff" stroke-width="2"/>
+      <text x="22" y="38" fill="#58a6ff" font-size="18" font-weight="900">05</text>
+      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Package</text>
+    </g>
+    <g transform="translate(760 442)">
+      <rect width="150" height="116" rx="18" fill="#111827" stroke="#3ddc84" stroke-width="2"/>
+      <text x="22" y="38" fill="#3ddc84" font-size="18" font-weight="900">06</text>
+      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Release</text>
+    </g>
+    <g transform="translate(522 500)">
+      <rect width="150" height="116" rx="18" fill="#111827" stroke="#ffb86b" stroke-width="2"/>
+      <text x="22" y="38" fill="#ffb86b" font-size="18" font-weight="900">07</text>
+      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Deploy</text>
+    </g>
+    <g transform="translate(284 442)">
+      <rect width="150" height="116" rx="18" fill="#111827" stroke="#ff7ac8" stroke-width="2"/>
+      <text x="22" y="38" fill="#ff7ac8" font-size="18" font-weight="900">08</text>
+      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Operate</text>
+    </g>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <rect x="440" y="302" width="320" height="116" rx="22" fill="#f8fbff" fill-opacity="0.06" stroke="#dbeafe" stroke-opacity="0.2"/>
+    <text x="600" y="344" fill="#f8fbff" text-anchor="middle" font-size="24" font-weight="900">Evidencia repetible</text>
+    <text x="600" y="380" fill="#b7c2d0" text-anchor="middle" font-size="18">versiones, controles, trazas</text>
+  </g>
+</svg>

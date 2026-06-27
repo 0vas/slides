@@ -282,15 +282,13 @@ transition: slide-left
 
 ## CI/CD como columna vertebral
 
-<div class="cicd-spine">
-  <article v-click class="cicd-stage blue"><span>01</span><strong>Código</strong><small>Cambio pequeño, revisable y trazable.</small></article>
-  <article v-click class="cicd-stage green"><span>02</span><strong>Build</strong><small>Compilar una vez y producir artefacto.</small></article>
-  <article v-click class="cicd-stage amber"><span>03</span><strong>Test</strong><small>Feedback temprano sobre calidad.</small></article>
-  <article v-click class="cicd-stage rose"><span>04</span><strong>Secure</strong><small>Riesgo visible antes de producción.</small></article>
-  <article v-click class="cicd-stage blue"><span>05</span><strong>Package</strong><small>Imagen, paquete o binario versionado.</small></article>
-  <article v-click class="cicd-stage green"><span>06</span><strong>Release</strong><small>Promoción entre ambientes.</small></article>
-  <article v-click class="cicd-stage amber"><span>07</span><strong>Deploy</strong><small>Cambio controlado y reversible.</small></article>
-  <article v-click class="cicd-stage rose"><span>08</span><strong>Operate</strong><small>Observabilidad y aprendizaje.</small></article>
+<div class="cicd-spine-hero">
+  <MediaFrame
+    class="cicd-spine-media"
+    src="media/cicd-pipeline.svg"
+    fit="contain"
+    alt="Diagrama de CI/CD con las etapas code, build, test, secure, package, release, deploy, operate y feedback operativo"
+  />
 </div>
 
 <!--

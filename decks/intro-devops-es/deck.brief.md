@@ -145,6 +145,7 @@ Acceptance:
 | DevOps culture image | Wikimedia Commons | `decks/intro-devops-es/public/media/devops-culture.png` | Source-noted in `public/media/README.md` |
 | Software delivery image | Wikimedia Commons | `decks/intro-devops-es/public/media/software-delivery.jpg` | Source-noted in `public/media/README.md` |
 | Cloud operations image | Wikimedia Commons | `decks/intro-devops-es/public/media/cloud-operations.jpg` | Source-noted in `public/media/README.md` |
+| CI/CD spine diagram | Deck-local SVG | `decks/intro-devops-es/public/media/cicd-pipeline.svg` | Original local SVG, source-noted in `public/media/README.md` |
 
 ## Component Plan
 

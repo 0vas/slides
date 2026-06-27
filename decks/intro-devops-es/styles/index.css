@@ -151,29 +151,8 @@
   line-height: 1.35;
 }
 
-.cert-placeholder {
-  margin-top: 26px;
-  padding: 22px;
-  border: 1px dashed color-mix(in srgb, var(--deck-blue) 48%, white);
-  border-radius: 8px;
-  background: rgba(239, 248, 255, 0.76);
-}
-
-.cert-placeholder strong {
-  display: block;
-  font-size: 1.22rem;
-}
-
-.cert-placeholder span {
-  display: inline-flex;
-  margin: 14px 10px 0 0;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: white;
-  color: var(--deck-muted);
-  border: 1px solid var(--deck-line);
-  font-size: 0.84rem;
-  font-weight: 700;
+.two-column-visual > div > .cert-badges {
+  margin-top: 18px;
 }
 
 .final-model {

@@ -55,7 +55,7 @@ transition: fade
 />
 
 <!--
-Notas: Usar esta slide para establecer credibilidad sin convertirla en una lista de trofeos. Aclarar que DevSecOps Village queda con el nombre entregado y debe validarse si el speaker desea otra formulación exacta. Mencionar que las certificaciones quedan preparadas, pero no se inventan.
+Notas: Usar esta slide para establecer credibilidad sin convertirla en una lista de trofeos. Aclarar que DevSecOps Village queda con el nombre entregado y debe validarse si el speaker desea otra formulación exacta. Las certificaciones se muestran como badges visuales compactos, priorizando las más relevantes para DevOps, DevSecOps y Platform Engineering.
 -->
 
 ---
@@ -578,14 +578,7 @@ transition: slide-left
 <div class="two-column-visual">
   <div>
     <p class="lead">Las certificaciones no reemplazan experiencia, pero pueden acelerar confianza cuando todavía estás construyendo portafolio.</p>
-    <div class="cert-placeholder">
-      <strong>Certificaciones técnicas</strong>
-      <span>Cloud fundamentals</span>
-      <span>Linux / Git</span>
-      <span>Containers</span>
-      <span>Kubernetes básico</span>
-      <span>Security basics</span>
-    </div>
+    <CertificationBadges variant="showcase" :limit="10" />
   </div>
   <CalloutStack
     :items="[
@@ -597,7 +590,7 @@ transition: slide-left
 </div>
 
 <!--
-Notas: No prometer que una certificación consigue trabajo. Presentarla como acelerador de credibilidad, especialmente si la persona todavía no tiene experiencia formal.
+Notas: No prometer que una certificación consigue trabajo. Presentarla como acelerador de credibilidad, especialmente si la persona todavía no tiene experiencia formal. Aquí se muestran las credenciales más alineadas con la charla: Azure, GitHub, Terraform, contenedores/Kubernetes, Ansible, AWS, GCP y seguridad.
 -->
 
 ---

@@ -28,7 +28,7 @@ make check DECK=intro-devops-es.
 | Required points | Personal intro iceberg, problema que resuelve DevOps, silos previos, práctica real, mitos, DevOps/DevSecOps/Platform Engineering, desarrollo de software, ciclo de vida, CI/CD, workflows, contenedores, Kubernetes/OpenShift, IaC, artefactos, calidad, shift-left security, observabilidad, cloud, gobierno, platform engineering, ruta de aprendizaje y certificaciones |
 | Tone and context | Práctico, claro, humano, inspirador y profesional; charla educativa sin marketing excesivo |
 | Constraints | Sin demo en vivo; vendor-neutral cuando sea posible; todo en español; no inventar certificaciones; crear brief antes de slides; validar con `make check DECK=intro-devops-es`; desplegar localmente antes de push |
-| Available assets | Shared speaker data and QR in `data/speaker/`; no reliable certification list found |
+| Available assets | Shared speaker data and QR in `data/speaker/`; user-provided certification list in chat |
 | Suggested assets policy | Use repo-native Vue/SVG for iceberg; use local components; no required external image dependency |
 | Speaker profile | Use shared speaker data with deck-specific talk role/tags |
 | Deliverables | Slidev HTML deck, local validation, local preview before push |
@@ -50,7 +50,7 @@ make check DECK=intro-devops-es.
 ## Assumptions
 
 - The exact organization name "DevSecOps Village" is kept as provided by the prompt and marked for speaker validation in the slide note.
-- No reliable certification list was found in repository speaker data, so the certification area remains a structured placeholder.
+- The user later provided a certification list. The deck highlights the most relevant credentials for a DevOps/DevSecOps/Platform Engineering session as compact visual badges instead of a full text list.
 - The two iceberg slides use a deck-local Vue/SVG illustration instead of an external image so both states stay aligned and render offline.
 - The deck includes both the requested personal introduction slides and the repository-required data-driven speaker profile slide.
 - The deck targets 28 slides with the final 10-15 minutes reserved for Q&A.
@@ -58,7 +58,7 @@ make check DECK=intro-devops-es.
 ## Questions Resolved Before Execution
 
 - Critical context is complete in the user-provided prompt; no blocking clarification questions were required.
-- Certifications are not inferred; a placeholder is used as requested.
+- Certifications are based on the user-provided list and curated for relevance to the talk.
 - Local deployment before push is required by the latest user instruction.
 
 ## Acceptance Criteria
@@ -138,6 +138,7 @@ Acceptance:
 | --- | --- | --- |
 | Animated cover title | `TypingTitle` | shared wrapper copied from template |
 | Personal iceberg sequence | `IcebergJourney` | deck-local |
+| Certification badges | `CertificationBadges` | deck-local |
 | Data-driven speaker profile | `SpeakerProfile` | shared wrapper copied from template |
 | Agenda and takeaway stacks | `.agenda-grid`, `CalloutStack` | shared theme/components |
 | Evolution timeline | `TimelineFlow` | shared wrapper copied from template |
@@ -160,5 +161,5 @@ Acceptance:
 
 - Commands run: `make check DECK=intro-devops-es`; `make dev DECK=intro-devops-es PORT=4100`; Playwright screenshot pass at 1440x900 across 52 visible states.
 - Files changed: `decks/intro-devops-es/`, `README.md`, `.github/workflows/deploy.yml`.
-- Known limitations: certification names were not available in repository speaker data, so the deck keeps a structured placeholder instead of inventing credentials.
-- Follow-up ideas: replace the certification placeholder with verified CV/profile data; validate the exact public organization label for DevSecOps Village before public delivery.
+- Known limitations: certification badges are deck-local visual badges using compact code/issuer marks, not official third-party badge artwork.
+- Follow-up ideas: replace visual marks with official certification badge artwork if the speaker provides approved image assets; validate the exact public organization label for DevSecOps Village before public delivery.

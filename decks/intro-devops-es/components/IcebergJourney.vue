@@ -19,7 +19,7 @@
 
       <div v-if="certifications" class="iceberg-certs">
         <strong>Certificaciones técnicas</strong>
-        <span>Placeholder para validar con CV / perfil actualizado</span>
+        <CertificationBadges variant="compact" :limit="8" />
       </div>
     </div>
 
@@ -71,6 +71,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import CertificationBadges from './CertificationBadges.vue'
 
 const props = defineProps({
   mode: { type: String, default: 'visible' },
@@ -133,10 +134,10 @@ const underwaterOpacity = computed(() => (props.mode === 'hidden' ? 0.96 : 0.24)
 .iceberg-certs {
   position: absolute;
   right: 18px;
-  bottom: 0;
-  width: min(420px, 34%);
+  bottom: 4px;
+  width: min(500px, 39%);
   margin-top: 0;
-  padding: 10px 12px;
+  padding: 10px 12px 12px;
   border-radius: 8px;
   border: 1px dashed color-mix(in srgb, var(--deck-blue) 48%, white);
   background: rgba(255, 255, 255, 0.86);
@@ -148,10 +149,10 @@ const underwaterOpacity = computed(() => (props.mode === 'hidden' ? 0.96 : 0.24)
   display: block;
 }
 
-.iceberg-certs span {
-  margin-top: 4px;
-  color: var(--deck-muted);
-  font-size: 0.72rem;
+.iceberg-certs strong {
+  margin: 0 0 8px;
+  color: var(--deck-ink);
+  font-size: 0.82rem;
 }
 
 .iceberg-visual svg {

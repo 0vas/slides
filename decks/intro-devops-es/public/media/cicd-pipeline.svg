@@ -1,94 +1,108 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
-  <title id="title">CI/CD pipeline loop</title>
-  <desc id="desc">A dark editorial diagram showing code, build, test, secure, package, release, deploy, operate, and feedback as a continuous delivery loop.</desc>
+  <title id="title">CI/CD infinity loop</title>
+  <desc id="desc">A dark editorial CI/CD infinity diagram showing CI and CD as a continuous system with plan, code, build, continuous testing, release, deploy, operate, and feedback.</desc>
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
       <stop offset="0" stop-color="#0f172a"/>
-      <stop offset="0.52" stop-color="#08111f"/>
-      <stop offset="1" stop-color="#07140f"/>
+      <stop offset="0.5" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#07130f"/>
     </linearGradient>
-    <linearGradient id="line" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0" stop-color="#58a6ff"/>
-      <stop offset="0.45" stop-color="#22d3ee"/>
-      <stop offset="0.75" stop-color="#3ddc84"/>
-      <stop offset="1" stop-color="#ffb86b"/>
+    <linearGradient id="loopGradient" x1="125" x2="1075" y1="180" y2="540" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a855f7"/>
+      <stop offset="0.25" stop-color="#60a5fa"/>
+      <stop offset="0.52" stop-color="#38bdf8"/>
+      <stop offset="0.78" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#86efac"/>
+    </linearGradient>
+    <linearGradient id="loopHighlight" x1="180" x2="1020" y1="150" y2="570" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f5d0fe" stop-opacity="0.85"/>
+      <stop offset="0.38" stop-color="#bfdbfe" stop-opacity="0.74"/>
+      <stop offset="0.68" stop-color="#67e8f9" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#bbf7d0" stop-opacity="0.72"/>
     </linearGradient>
     <radialGradient id="glowBlue" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#58a6ff" stop-opacity="0.5"/>
-      <stop offset="1" stop-color="#58a6ff" stop-opacity="0"/>
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.46"/>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#3ddc84" stop-opacity="0.42"/>
-      <stop offset="1" stop-color="#3ddc84" stop-opacity="0"/>
+      <stop offset="0" stop-color="#22c55e" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#22c55e" stop-opacity="0"/>
     </radialGradient>
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity="0.35"/>
+    <filter id="softShadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#000000" flood-opacity="0.45"/>
     </filter>
-    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
-      <path d="M2 2 L10 6 L2 10 Z" fill="#22d3ee"/>
-    </marker>
+    <filter id="labelShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+    <path id="infinityPath" d="M190 360 C286 132 496 132 600 360 C704 588 914 588 1010 360 C914 132 704 132 600 360 C496 588 286 588 190 360"/>
   </defs>
 
   <rect width="1200" height="720" rx="36" fill="url(#bg)"/>
-  <g opacity="0.24">
-    <path d="M0 118H1200M0 244H1200M0 370H1200M0 496H1200M0 622H1200M154 0V720M308 0V720M462 0V720M616 0V720M770 0V720M924 0V720M1078 0V720" stroke="#94a3b8" stroke-width="1"/>
+  <g opacity="0.22">
+    <path d="M0 116H1200M0 232H1200M0 348H1200M0 464H1200M0 580H1200M120 0V720M240 0V720M360 0V720M480 0V720M600 0V720M720 0V720M840 0V720M960 0V720M1080 0V720" stroke="#94a3b8" stroke-width="1"/>
   </g>
-  <circle cx="228" cy="152" r="168" fill="url(#glowBlue)"/>
-  <circle cx="996" cy="548" r="188" fill="url(#glowGreen)"/>
+  <circle cx="258" cy="194" r="190" fill="url(#glowBlue)"/>
+  <circle cx="942" cy="526" r="210" fill="url(#glowGreen)"/>
 
-  <text x="64" y="78" fill="#f8fbff" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="800">CI/CD como sistema de aprendizaje</text>
-  <text x="64" y="114" fill="#b7c2d0" font-family="Inter, Arial, sans-serif" font-size="18">Controles, evidencia y feedback en cada cambio.</text>
+  <g filter="url(#softShadow)" transform="translate(0 48)">
+    <rect x="70" y="48" width="1060" height="620" rx="34" fill="#020817" fill-opacity="0.46" stroke="#334155" stroke-opacity="0.62"/>
+    <path d="M190 360 C286 132 496 132 600 360 C704 588 914 588 1010 360 C914 132 704 132 600 360 C496 588 286 588 190 360" fill="none" stroke="#020617" stroke-width="116" stroke-linecap="round" stroke-linejoin="round" opacity="0.82"/>
+    <path d="M190 360 C286 132 496 132 600 360 C704 588 914 588 1010 360 C914 132 704 132 600 360 C496 588 286 588 190 360" fill="none" stroke="url(#loopGradient)" stroke-width="96" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M190 360 C286 132 496 132 600 360 C704 588 914 588 1010 360 C914 132 704 132 600 360 C496 588 286 588 190 360" fill="none" stroke="url(#loopHighlight)" stroke-width="38" stroke-linecap="round" stroke-linejoin="round" opacity="0.58"/>
+    <path d="M178 340 L234 284 L292 330" fill="none" stroke="#07111f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+    <path d="M906 190 L976 266 L902 320" fill="none" stroke="#07111f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+    <path d="M938 530 L1002 462 L1070 514" fill="none" stroke="#07111f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+    <path d="M338 540 L410 586 L476 528" fill="none" stroke="#07111f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  </g>
 
-  <path d="M218 360 C218 220 374 154 602 154 C830 154 982 224 982 360 C982 496 830 566 602 566 C374 566 218 500 218 360Z" fill="none" stroke="url(#line)" stroke-width="12" stroke-linecap="round" marker-end="url(#arrow)" opacity="0.96"/>
-  <path d="M602 566 C520 622 406 620 320 566" fill="none" stroke="#3ddc84" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12" opacity="0.72"/>
-  <text x="430" y="652" fill="#3ddc84" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800">feedback operativo</text>
+  <g font-family="Inter, Arial, sans-serif" text-anchor="middle" transform="translate(0 48)">
+    <circle cx="382" cy="360" r="96" fill="#020617" fill-opacity="0.86" stroke="#93c5fd" stroke-opacity="0.24"/>
+    <circle cx="818" cy="360" r="96" fill="#020617" fill-opacity="0.86" stroke="#a7f3d0" stroke-opacity="0.22"/>
+    <text x="382" y="386" fill="#f8fafc" font-size="84" font-weight="800">CI</text>
+    <text x="818" y="386" fill="#f8fafc" font-size="84" font-weight="800">CD</text>
+  </g>
 
-  <g filter="url(#softShadow)" font-family="Inter, Arial, sans-serif">
-    <g transform="translate(132 302)">
-      <rect width="150" height="116" rx="18" fill="#111827" stroke="#58a6ff" stroke-width="2"/>
-      <text x="22" y="38" fill="#58a6ff" font-size="18" font-weight="900">01</text>
-      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Code</text>
+  <g font-family="Inter, Arial, sans-serif" filter="url(#labelShadow)" transform="translate(0 48)">
+    <g transform="translate(312 160) rotate(18 80 30)">
+      <rect width="160" height="60" rx="14" fill="#111827" stroke="#bfdbfe" stroke-opacity="0.42"/>
+      <text x="80" y="39" fill="#f8fafc" text-anchor="middle" font-size="24" font-weight="850">Plan</text>
     </g>
-    <g transform="translate(284 162)">
-      <rect width="150" height="116" rx="18" fill="#111827" stroke="#3ddc84" stroke-width="2"/>
-      <text x="22" y="38" fill="#3ddc84" font-size="18" font-weight="900">02</text>
-      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Build</text>
+    <g transform="translate(180 332) rotate(-37 78 30)">
+      <rect width="156" height="60" rx="14" fill="#111827" stroke="#c084fc" stroke-opacity="0.48"/>
+      <text x="78" y="39" fill="#f8fafc" text-anchor="middle" font-size="24" font-weight="850">Code</text>
     </g>
-    <g transform="translate(522 104)">
-      <rect width="150" height="116" rx="18" fill="#111827" stroke="#ffb86b" stroke-width="2"/>
-      <text x="22" y="38" fill="#ffb86b" font-size="18" font-weight="900">03</text>
-      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Test</text>
+    <g transform="translate(286 500) rotate(31 82 30)">
+      <rect width="164" height="60" rx="14" fill="#111827" stroke="#60a5fa" stroke-opacity="0.52"/>
+      <text x="82" y="39" fill="#f8fafc" text-anchor="middle" font-size="24" font-weight="850">Build</text>
     </g>
-    <g transform="translate(760 162)">
-      <rect width="150" height="116" rx="18" fill="#111827" stroke="#ff7ac8" stroke-width="2"/>
-      <text x="22" y="38" fill="#ff7ac8" font-size="18" font-weight="900">04</text>
-      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Secure</text>
+    <g transform="translate(494 308)">
+      <rect width="212" height="104" rx="20" fill="#0f172a" fill-opacity="0.94" stroke="#67e8f9" stroke-opacity="0.56"/>
+      <text x="106" y="43" fill="#f8fafc" text-anchor="middle" font-size="25" font-weight="900">Test</text>
+      <text x="106" y="74" fill="#bfdbfe" text-anchor="middle" font-size="17" font-weight="700">Continuous testing</text>
     </g>
-    <g transform="translate(918 302)">
-      <rect width="150" height="116" rx="18" fill="#111827" stroke="#58a6ff" stroke-width="2"/>
-      <text x="22" y="38" fill="#58a6ff" font-size="18" font-weight="900">05</text>
-      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Package</text>
+    <g transform="translate(698 160) rotate(-18 88 30)">
+      <rect width="176" height="60" rx="14" fill="#111827" stroke="#7dd3fc" stroke-opacity="0.48"/>
+      <text x="88" y="39" fill="#f8fafc" text-anchor="middle" font-size="24" font-weight="850">Release</text>
     </g>
-    <g transform="translate(760 442)">
-      <rect width="150" height="116" rx="18" fill="#111827" stroke="#3ddc84" stroke-width="2"/>
-      <text x="22" y="38" fill="#3ddc84" font-size="18" font-weight="900">06</text>
-      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Release</text>
+    <g transform="translate(892 322) rotate(37 84 30)">
+      <rect width="168" height="60" rx="14" fill="#111827" stroke="#86efac" stroke-opacity="0.5"/>
+      <text x="84" y="39" fill="#f8fafc" text-anchor="middle" font-size="24" font-weight="850">Deploy</text>
     </g>
-    <g transform="translate(522 500)">
-      <rect width="150" height="116" rx="18" fill="#111827" stroke="#ffb86b" stroke-width="2"/>
-      <text x="22" y="38" fill="#ffb86b" font-size="18" font-weight="900">07</text>
-      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Deploy</text>
+    <g transform="translate(762 502) rotate(-30 92 30)">
+      <rect width="184" height="60" rx="14" fill="#111827" stroke="#5eead4" stroke-opacity="0.52"/>
+      <text x="92" y="39" fill="#f8fafc" text-anchor="middle" font-size="24" font-weight="850">Operate</text>
     </g>
-    <g transform="translate(284 442)">
-      <rect width="150" height="116" rx="18" fill="#111827" stroke="#ff7ac8" stroke-width="2"/>
-      <text x="22" y="38" fill="#ff7ac8" font-size="18" font-weight="900">08</text>
-      <text x="22" y="72" fill="#f8fbff" font-size="26" font-weight="900">Operate</text>
+    <g transform="translate(612 500) rotate(30 82 30)">
+      <rect width="164" height="60" rx="14" fill="#111827" stroke="#38bdf8" stroke-opacity="0.52"/>
+      <text x="82" y="39" fill="#f8fafc" text-anchor="middle" font-size="24" font-weight="850">Build</text>
     </g>
   </g>
 
   <g font-family="Inter, Arial, sans-serif">
-    <rect x="440" y="302" width="320" height="116" rx="22" fill="#f8fbff" fill-opacity="0.06" stroke="#dbeafe" stroke-opacity="0.2"/>
-    <text x="600" y="344" fill="#f8fbff" text-anchor="middle" font-size="24" font-weight="900">Evidencia repetible</text>
-    <text x="600" y="380" fill="#b7c2d0" text-anchor="middle" font-size="18">versiones, controles, trazas</text>
+    <text x="94" y="112" fill="#4ade80" font-size="22" font-weight="900" letter-spacing="4">ESQUELETO</text>
+    <text x="94" y="152" fill="#f8fafc" font-size="34" font-weight="900">CI/CD como sistema de aprendizaje</text>
+    <text x="94" y="188" fill="#cbd5e1" font-size="18">Cada cambio deja controles, evidencia y feedback.</text>
+    <path d="M410 636 C474 674 536 674 600 636 C664 674 726 674 790 636" fill="none" stroke="#4ade80" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 14" opacity="0.84"/>
+    <text x="600" y="694" fill="#4ade80" text-anchor="middle" font-size="24" font-weight="900">feedback operativo</text>
   </g>
 </svg>

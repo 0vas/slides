@@ -3,8 +3,8 @@
 - `devops-culture.png`: Wikimedia Commons, "Wikimedia Developer Summit 2017 Group Photo", downloaded via Commons redirect. Used as an editorial image for DevOps culture and collaboration. Source: <https://commons.wikimedia.org/wiki/File:Wikimedia_Developer_Summit_2017_Group_Photo.png>
 - `cloud-operations.jpg`: Wikimedia Commons, "Datacenter Server Racks (22370909788)", downloaded via Commons redirect. Used as an editorial image for cloud and operations. Source: <https://commons.wikimedia.org/wiki/File:Datacenter_Server_Racks_(22370909788).jpg>
 - `software-lifecycle.svg`: deck-local SVG diagram created for this presentation. Used as the modern software lifecycle visual on slide 12. No external artwork is embedded.
-- `cicd-pipeline.svg`: deck-local SVG diagram created for this presentation after evaluating external CI/CD image options. Used as the core visual for the CI/CD spine slide. No external artwork is embedded.
-- `cicd-pipeline.png`: raster export of `cicd-pipeline.svg`. Used on slide 13 so the CI/CD spine appears as a concrete local image asset.
+- `cicd-pipeline.svg`: deck-local SVG infinity-loop diagram created for this presentation after evaluating external CI/CD image options. Used as the core visual for the CI/CD spine slide. No external artwork is embedded.
+- `cicd-pipeline.png`: raster export of `cicd-pipeline.svg`. Used on slide 13 so the CI/CD spine appears as a concrete local image asset with CI/CD as an infinity loop.
 - `certifications-strip.png`: user-provided real certification badge strip. Used on slide 2; do not recreate or infer individual badges from it.
 
 Images are stored locally so the deck renders offline. Replace them with

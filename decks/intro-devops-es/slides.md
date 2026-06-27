@@ -289,7 +289,7 @@ transition: slide-left
     src="media/cicd-pipeline.png"
     fit="contain"
     title=""
-    alt="Diagrama de CI/CD con las etapas code, build, test, secure, package, release, deploy, operate y feedback operativo"
+    alt="Diagrama de CI/CD en forma de infinito con CI, CD, plan, code, build, test, release, deploy, operate y feedback operativo"
   />
 </div>
 

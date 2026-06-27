@@ -32,7 +32,7 @@ slide.
 | Required points | Personal intro iceberg, problema que resuelve DevOps, silos previos, práctica real, mitos, DevOps/DevSecOps/Platform Engineering, desarrollo de software, ciclo de vida, CI/CD, workflows, contenedores, Kubernetes/OpenShift, IaC, artefactos, calidad, shift-left security, observabilidad, cloud, gobierno, platform engineering, ruta de aprendizaje y certificaciones |
 | Tone and context | Práctico, claro, humano, inspirador y profesional; charla educativa sin marketing excesivo |
 | Constraints | Sin demo en vivo; vendor-neutral cuando sea posible; todo en español; no inventar certificaciones; crear brief antes de slides; validar con `make check DECK=intro-devops-es`; desplegar localmente antes de push |
-| Available assets | Shared speaker data and QR in `data/speaker/`; Wikimedia Commons editorial images downloaded locally; certification badge image pending as `decks/intro-devops-es/public/media/certifications-strip.png` |
+| Available assets | Shared speaker data and QR in `data/speaker/`; Wikimedia Commons editorial images downloaded locally; user-provided certification badge image at `decks/intro-devops-es/public/media/certifications-strip.png` |
 | Suggested assets policy | Use repo-native Vue/SVG for iceberg; use local components; use local source-noted editorial images where they clarify culture, lifecycle, and cloud operations |
 | Speaker profile | Use shared speaker data with deck-specific talk role/tags |
 | Deliverables | Slidev HTML deck, local validation, local preview before push |
@@ -147,7 +147,7 @@ Acceptance:
 | Cloud operations image | Wikimedia Commons | `decks/intro-devops-es/public/media/cloud-operations.jpg` | Source-noted in `public/media/README.md` |
 | CI/CD spine diagram | Deck-local SVG | `decks/intro-devops-es/public/media/cicd-pipeline.svg` | Original local SVG, source-noted in `public/media/README.md` |
 | CI/CD spine image | Deck-local PNG | `decks/intro-devops-es/public/media/cicd-pipeline.png` | Raster export used on slide 13 |
-| Certification badge strip | User-provided PNG | `decks/intro-devops-es/public/media/certifications-strip.png` | Pending; use only after the speaker provides the real image |
+| Certification badge strip | User-provided PNG | `decks/intro-devops-es/public/media/certifications-strip.png` | Real speaker-provided badge image used on slide 2 |
 
 ## Component Plan
 
@@ -180,5 +180,5 @@ Acceptance:
 
 - Commands run: `git diff --check`; `make check DECK=intro-devops-es`; `make dev DECK=intro-devops-es PORT=4100`; Playwright screenshot pass at 1440x900 across 71 visible states; Slidev overview screenshot capture; targeted screenshot recheck for deployment matrix, credentials, closing, and questions slides.
 - Files changed: `decks/intro-devops-es/`, `AGENTS.md`, `.agents/skills/slide-deck-generator/SKILL.md`, `docs/deck-generation-workflow.md`, `docs/deck-brief-template.md`, and `docs/slide-guidelines.md`.
-- Known limitations: official certification badge artwork is not embedded yet; the deck uses learning tiers until the speaker provides an approved image file or exact public credential list.
-- Follow-up ideas: place `decks/intro-devops-es/public/media/certifications-strip.png` on the visible iceberg slide after the speaker adds the real badge image; validate the exact public organization label for DevSecOps Village before public delivery.
+- Known limitations: named certification badges are represented only through the user-provided badge image; the deck does not infer or list individual credential claims.
+- Follow-up ideas: validate the exact public organization label for DevSecOps Village before public delivery.

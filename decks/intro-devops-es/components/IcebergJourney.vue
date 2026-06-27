@@ -61,6 +61,10 @@
           <circle cx="232" cy="452" r="3" fill="#ffffff" />
         </g>
       </svg>
+      <figure v-if="certificationImage" class="certification-strip">
+        <strong>Certificaciones técnicas</strong>
+        <img :src="resolvedCertificationImage" alt="" />
+      </figure>
     </div>
   </section>
 </template>
@@ -73,10 +77,19 @@ const props = defineProps({
   label: { type: String, default: 'Trayectoria' },
   title: { type: String, required: true },
   subtitle: { type: String, required: true },
-  callouts: { type: Array, default: () => [] }
+  callouts: { type: Array, default: () => [] },
+  certificationImage: { type: String, default: '' }
 })
 
 const underwaterOpacity = computed(() => (props.mode === 'hidden' ? 0.96 : 0.24))
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+
+const resolvedCertificationImage = computed(() => {
+  if (!props.certificationImage) return ''
+  if (/^(?:https?:|data:|\/)/.test(props.certificationImage)) return props.certificationImage
+  return `${base}/${props.certificationImage.replace(/^\.\//, '')}`
+})
 </script>
 
 <style scoped>
@@ -129,6 +142,40 @@ const underwaterOpacity = computed(() => (props.mode === 'hidden' ? 0.96 : 0.24)
   width: 100%;
   height: auto;
   display: block;
+}
+
+.iceberg-visual {
+  position: relative;
+}
+
+.certification-strip {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  left: 18px;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid rgba(88, 166, 255, 0.48);
+  border-radius: 8px;
+  background: rgba(8, 11, 16, 0.86);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+}
+
+.certification-strip strong {
+  display: block;
+  color: var(--deck-ink);
+  font-size: 0.78rem;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.certification-strip img {
+  display: block;
+  height: auto;
+  max-height: 68px;
+  object-fit: contain;
+  object-position: left center;
+  width: 100%;
 }
 
 .state-hidden .iceberg-visual {

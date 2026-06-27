@@ -5,7 +5,7 @@
 - `software-lifecycle.svg`: deck-local SVG diagram created for this presentation. Used as the modern software lifecycle visual on slide 12. No external artwork is embedded.
 - `cicd-pipeline.svg`: deck-local SVG diagram created for this presentation after evaluating external CI/CD image options. Used as the core visual for the CI/CD spine slide. No external artwork is embedded.
 - `cicd-pipeline.png`: raster export of `cicd-pipeline.svg`. Used on slide 13 so the CI/CD spine appears as a concrete local image asset.
-- Expected user-provided asset: `certifications-strip.png`, a real certification badge strip for slide 2. Do not recreate or infer this asset.
+- `certifications-strip.png`: user-provided real certification badge strip. Used on slide 2; do not recreate or infer individual badges from it.
 
 Images are stored locally so the deck renders offline. Replace them with
 approved event or speaker-owned images if stronger assets become available.

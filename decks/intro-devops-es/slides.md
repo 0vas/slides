@@ -39,6 +39,7 @@ transition: fade
   label="Introducción personal"
   title="Mi trayectoria: lo visible del iceberg"
   subtitle="Lo visible ayuda a dar contexto, pero no cuenta toda la historia."
+  certification-image="media/certifications-strip.png"
   :callouts="[
     'Actualmente Platform Product Lead en Credicorp',
     'DevSecOps Ambassador - DevOps Institute',

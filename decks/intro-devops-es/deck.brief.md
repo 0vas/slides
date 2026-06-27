@@ -55,7 +55,7 @@ slide.
 ## Assumptions
 
 - The exact organization name "DevSecOps Village" is kept as provided by the prompt and marked for speaker validation in the slide note.
-- The user later provided a certification list. The deck highlights the most relevant credentials for a DevOps/DevSecOps/Platform Engineering session as compact visual badges instead of a full text list.
+- The user later provided a certification list. The deck highlights the most relevant credentials for a DevOps/DevSecOps/Platform Engineering session as compact text abbreviations.
 - The two iceberg slides use a deck-local Vue/SVG illustration instead of an external image so both states stay aligned and render offline.
 - The deck includes both the requested personal introduction slides and the repository-required data-driven speaker profile slide.
 - After visual QA feedback, the opening explicitly frames DevOps as a mindset and cultural change that unites development and operations before introducing tools.
@@ -152,7 +152,7 @@ Acceptance:
 | --- | --- | --- |
 | Animated cover title | `TypingTitle` | shared wrapper copied from template |
 | Personal iceberg sequence | `IcebergJourney` | deck-local |
-| Certification badges | `CertificationBadges` | deck-local |
+| Certification abbreviations | `CertificationBadges` | deck-local |
 | Data-driven speaker profile | `SpeakerProfile` | shared wrapper copied from template |
 | Agenda and takeaway stacks | `.agenda-grid`, `CalloutStack` | shared theme/components |
 | Evolution timeline | `TimelineFlow` | shared wrapper copied from template |
@@ -177,5 +177,5 @@ Acceptance:
 
 - Commands run: `git diff --check`; `make check DECK=intro-devops-es`; `make dev DECK=intro-devops-es PORT=4100`; Playwright screenshot pass at 1440x900 across 71 visible states; Slidev overview screenshot capture; targeted screenshot recheck for deployment matrix, credentials, closing, and questions slides.
 - Files changed: `decks/intro-devops-es/`, `AGENTS.md`, `.agents/skills/slide-deck-generator/SKILL.md`, `docs/deck-generation-workflow.md`, `docs/deck-brief-template.md`, and `docs/slide-guidelines.md`.
-- Known limitations: certification badges are deck-local visual badges using compact code/issuer marks, not official third-party badge artwork.
+- Known limitations: certifications are shown as compact text abbreviations, not official third-party badge artwork.
 - Follow-up ideas: replace visual marks with official certification badge artwork if the speaker provides approved image assets; validate the exact public organization label for DevSecOps Village before public delivery.

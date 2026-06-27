@@ -828,7 +828,7 @@ transition: slide-left
 <div class="two-column-visual">
   <div>
     <p class="lead">Las certificaciones no reemplazan experiencia, pero pueden acelerar confianza cuando todavía estás construyendo portafolio.</p>
-    <CertificationBadges variant="showcase" :limit="10" />
+    <CertificationBadges variant="showcase" :limit="12" />
   </div>
   <CalloutStack
     :items="[

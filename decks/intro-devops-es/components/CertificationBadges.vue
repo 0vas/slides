@@ -13,7 +13,7 @@
     >
       <span class="cert-mark">{{ cert.mark }}</span>
       <strong>{{ cert.code }}</strong>
-      <small>{{ cert.issuer }}</small>
+      <small>{{ cert.short }}</small>
     </article>
   </div>
 </template>
@@ -27,18 +27,18 @@ const props = defineProps({
 })
 
 const certs = [
-  { mark: '400', code: 'AZ-400', issuer: 'Microsoft', title: 'Azure DevOps Engineer Expert - AZ400 | Microsoft', tone: 'azure' },
-  { mark: '300', code: 'AZ-300', issuer: 'Microsoft', title: 'Azure Solutions Architect Expert AZ300 | Microsoft', tone: 'azure' },
-  { mark: 'SEC', code: 'GHAS', issuer: 'GitHub', title: 'GitHub Advanced Security | GitHub', tone: 'github' },
-  { mark: 'ACT', code: 'Actions', issuer: 'GitHub', title: 'GitHub Actions | GitHub', tone: 'github' },
-  { mark: 'AI', code: 'Copilot', issuer: 'GitHub', title: 'GitHub Copilot | GitHub', tone: 'github' },
-  { mark: 'TF', code: 'Terraform', issuer: 'HashiCorp', title: 'Terraform Associate | HashiCorp', tone: 'terraform' },
-  { mark: 'K8s', code: 'K8s', issuer: 'IBM', title: 'Containers & Kubernetes Essentials | IBM', tone: 'kubernetes' },
-  { mark: 'RH', code: 'Ansible', issuer: 'Red Hat', title: 'Ansible for Red Hat Enterprise Linux | Red Hat', tone: 'redhat' },
-  { mark: 'AWS', code: 'AWS TE', issuer: 'AWS', title: 'AWS Technical Essentials | Amazon Web Services', tone: 'aws' },
-  { mark: 'GCP', code: 'Leader', issuer: 'Google', title: 'Google Cloud Platform Leader | Google', tone: 'gcp' },
-  { mark: 'AZ', code: 'AZ-204', issuer: 'Microsoft', title: 'Azure Developer Associate - AZ204 | Microsoft', tone: 'azure' },
-  { mark: 'SEC', code: 'CCNA Ops', issuer: 'Cisco', title: 'CCNA Cybersecurity Operations | CISCO', tone: 'cisco' }
+  { mark: '400', code: 'AZ-400', short: 'Azure DevOps', title: 'Azure DevOps Engineer Expert - AZ400 | Microsoft', tone: 'azure' },
+  { mark: '300', code: 'AZ-300', short: 'Azure Architect', title: 'Azure Solutions Architect Expert AZ300 | Microsoft', tone: 'azure' },
+  { mark: '204', code: 'AZ-204', short: 'Azure Dev', title: 'Azure Developer Associate - AZ204 | Microsoft', tone: 'azure' },
+  { mark: 'SEC', code: 'GHAS', short: 'GitHub Sec', title: 'GitHub Advanced Security | GitHub', tone: 'github' },
+  { mark: 'ACT', code: 'GHA', short: 'GitHub Actions', title: 'GitHub Actions | GitHub', tone: 'github' },
+  { mark: 'AI', code: 'GHCP', short: 'GitHub Copilot', title: 'GitHub Copilot | GitHub', tone: 'github' },
+  { mark: 'TF', code: 'TF', short: 'Terraform', title: 'Terraform Associate | HashiCorp', tone: 'terraform' },
+  { mark: 'K8s', code: 'K8s', short: 'Containers', title: 'Containers & Kubernetes Essentials | IBM', tone: 'kubernetes' },
+  { mark: 'RH', code: 'RH Ansible', short: 'Automation', title: 'Ansible for Red Hat Enterprise Linux | Red Hat', tone: 'redhat' },
+  { mark: 'AWS', code: 'AWS TE', short: 'Cloud', title: 'AWS Technical Essentials | Amazon Web Services', tone: 'aws' },
+  { mark: 'GCP', code: 'GCP CL', short: 'Cloud Leader', title: 'Google Cloud Platform Leader | Google', tone: 'gcp' },
+  { mark: 'SEC', code: 'CCNA CyberOps', short: 'Security', title: 'CCNA Cybersecurity Operations | CISCO', tone: 'cisco' }
 ]
 
 const visibleCerts = computed(() => certs.slice(0, props.limit))
@@ -56,8 +56,8 @@ const visibleCerts = computed(() => certs.slice(0, props.limit))
 }
 
 .cert-badges.showcase {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .cert-badge {
@@ -109,22 +109,23 @@ const visibleCerts = computed(() => certs.slice(0, props.limit))
 }
 
 .showcase .cert-badge {
-  min-height: 76px;
-  padding: 10px 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
+  min-height: 42px;
+  padding: 8px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+  align-items: center;
+  justify-items: center;
 }
 
 .showcase .cert-mark {
-  width: 48px;
-  height: 48px;
-  font-size: 0.72rem;
+  display: none;
 }
 
 .showcase .cert-badge strong {
-  display: none;
+  display: block;
+  font-size: 0.86rem;
+  line-height: 1.05;
+  text-align: center;
 }
 
 .showcase .cert-badge small {
@@ -140,12 +141,15 @@ const visibleCerts = computed(() => certs.slice(0, props.limit))
 }
 
 .compact .cert-mark {
-  width: 32px;
-  height: 32px;
-  font-size: 0.54rem;
+  display: none;
 }
 
-.compact .cert-badge strong,
+.compact .cert-badge strong {
+  display: block;
+  font-size: 0.62rem;
+  text-align: center;
+}
+
 .compact .cert-badge small {
   display: none;
 }

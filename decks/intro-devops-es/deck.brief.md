@@ -32,7 +32,7 @@ slide.
 | Required points | Personal intro iceberg, problema que resuelve DevOps, silos previos, práctica real, mitos, DevOps/DevSecOps/Platform Engineering, desarrollo de software, ciclo de vida, CI/CD, workflows, contenedores, Kubernetes/OpenShift, IaC, artefactos, calidad, shift-left security, observabilidad, cloud, gobierno, platform engineering, ruta de aprendizaje y certificaciones |
 | Tone and context | Práctico, claro, humano, inspirador y profesional; charla educativa sin marketing excesivo |
 | Constraints | Sin demo en vivo; vendor-neutral cuando sea posible; todo en español; no inventar certificaciones; crear brief antes de slides; validar con `make check DECK=intro-devops-es`; desplegar localmente antes de push |
-| Available assets | Shared speaker data and QR in `data/speaker/`; user-provided certification list in chat; Wikimedia Commons editorial images downloaded locally |
+| Available assets | Shared speaker data and QR in `data/speaker/`; Wikimedia Commons editorial images downloaded locally; certification badge image pending as user-provided file |
 | Suggested assets policy | Use repo-native Vue/SVG for iceberg; use local components; use local source-noted editorial images where they clarify culture, lifecycle, and cloud operations |
 | Speaker profile | Use shared speaker data with deck-specific talk role/tags |
 | Deliverables | Slidev HTML deck, local validation, local preview before push |
@@ -55,7 +55,7 @@ slide.
 ## Assumptions
 
 - The exact organization name "DevSecOps Village" is kept as provided by the prompt and marked for speaker validation in the slide note.
-- The user later provided a certification list. The deck highlights the most relevant credentials for a DevOps/DevSecOps/Platform Engineering session as compact text abbreviations.
+- Certification claims must not be inferred. Until the speaker provides an approved badge image or exact public credential list, the deck uses learning tiers instead of named certifications.
 - The two iceberg slides use a deck-local Vue/SVG illustration instead of an external image so both states stay aligned and render offline.
 - The deck includes both the requested personal introduction slides and the repository-required data-driven speaker profile slide.
 - After visual QA feedback, the opening explicitly frames DevOps as a mindset and cultural change that unites development and operations before introducing tools.
@@ -143,7 +143,7 @@ Acceptance:
 | Iceberg visual | Deck-local Vue/SVG component | `decks/intro-devops-es/components/IcebergJourney.vue` | Generated as source code; no external license |
 | Speaker QR | Shared speaker data | `data/speaker/linkedin-qr.svg` | Existing repository asset |
 | DevOps culture image | Wikimedia Commons | `decks/intro-devops-es/public/media/devops-culture.png` | Source-noted in `public/media/README.md` |
-| Software delivery image | Wikimedia Commons | `decks/intro-devops-es/public/media/software-delivery.jpg` | Source-noted in `public/media/README.md` |
+| Software lifecycle image | Deck-local SVG | `decks/intro-devops-es/public/media/software-lifecycle.svg` | Original local SVG, source-noted in `public/media/README.md` |
 | Cloud operations image | Wikimedia Commons | `decks/intro-devops-es/public/media/cloud-operations.jpg` | Source-noted in `public/media/README.md` |
 | CI/CD spine diagram | Deck-local SVG | `decks/intro-devops-es/public/media/cicd-pipeline.svg` | Original local SVG, source-noted in `public/media/README.md` |
 
@@ -153,7 +153,7 @@ Acceptance:
 | --- | --- | --- |
 | Animated cover title | `TypingTitle` | shared wrapper copied from template |
 | Personal iceberg sequence | `IcebergJourney` | deck-local |
-| Certification abbreviations | `CertificationBadges` | deck-local |
+| Certification learning tiers | `CertificationTiers` | deck-local |
 | Data-driven speaker profile | `SpeakerProfile` | shared wrapper copied from template |
 | Agenda and takeaway stacks | `.agenda-grid`, `CalloutStack` | shared theme/components |
 | Evolution timeline | `TimelineFlow` | shared wrapper copied from template |
@@ -178,5 +178,5 @@ Acceptance:
 
 - Commands run: `git diff --check`; `make check DECK=intro-devops-es`; `make dev DECK=intro-devops-es PORT=4100`; Playwright screenshot pass at 1440x900 across 71 visible states; Slidev overview screenshot capture; targeted screenshot recheck for deployment matrix, credentials, closing, and questions slides.
 - Files changed: `decks/intro-devops-es/`, `AGENTS.md`, `.agents/skills/slide-deck-generator/SKILL.md`, `docs/deck-generation-workflow.md`, `docs/deck-brief-template.md`, and `docs/slide-guidelines.md`.
-- Known limitations: certifications are shown as compact text abbreviations, not official third-party badge artwork.
-- Follow-up ideas: replace visual marks with official certification badge artwork if the speaker provides approved image assets; validate the exact public organization label for DevSecOps Village before public delivery.
+- Known limitations: official certification badge artwork is not embedded yet; the deck uses learning tiers until the speaker provides an approved image file or exact public credential list.
+- Follow-up ideas: place the speaker-provided certification badge image on the visible iceberg slide if supplied as an approved local asset; validate the exact public organization label for DevSecOps Village before public delivery.

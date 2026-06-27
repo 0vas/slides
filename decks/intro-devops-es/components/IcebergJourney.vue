@@ -17,10 +17,6 @@
         </article>
       </div>
 
-      <div v-if="certifications" class="iceberg-certs">
-        <strong>Certificaciones técnicas</strong>
-        <CertificationBadges variant="compact" :limit="8" />
-      </div>
     </div>
 
     <div class="iceberg-visual" aria-hidden="true">
@@ -71,15 +67,13 @@
 
 <script setup>
 import { computed } from 'vue'
-import CertificationBadges from './CertificationBadges.vue'
 
 const props = defineProps({
   mode: { type: String, default: 'visible' },
   label: { type: String, default: 'Trayectoria' },
   title: { type: String, required: true },
   subtitle: { type: String, required: true },
-  callouts: { type: Array, default: () => [] },
-  certifications: { type: Boolean, default: false }
+  callouts: { type: Array, default: () => [] }
 })
 
 const underwaterOpacity = computed(() => (props.mode === 'hidden' ? 0.96 : 0.24))
@@ -129,30 +123,6 @@ const underwaterOpacity = computed(() => (props.mode === 'hidden' ? 0.96 : 0.24)
   font-weight: 750;
   line-height: 1.18;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
-}
-
-.iceberg-certs {
-  position: absolute;
-  right: 18px;
-  bottom: 4px;
-  width: min(500px, 39%);
-  margin-top: 0;
-  padding: 10px 12px 12px;
-  border-radius: 8px;
-  border: 1px dashed color-mix(in srgb, var(--deck-blue) 58%, white);
-  background: rgba(15, 21, 32, 0.9);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
-}
-
-.iceberg-certs strong,
-.iceberg-certs span {
-  display: block;
-}
-
-.iceberg-certs strong {
-  margin: 0 0 8px;
-  color: var(--deck-ink);
-  font-size: 0.82rem;
 }
 
 .iceberg-visual svg {

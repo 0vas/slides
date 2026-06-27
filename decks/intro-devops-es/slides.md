@@ -39,7 +39,6 @@ transition: fade
   label="Introducción personal"
   title="Mi trayectoria: lo visible del iceberg"
   subtitle="Lo visible ayuda a dar contexto, pero no cuenta toda la historia."
-  :certifications="true"
   :callouts="[
     'Actualmente Platform Product Lead en Credicorp',
     'DevSecOps Ambassador - DevOps Institute',
@@ -55,7 +54,7 @@ transition: fade
 />
 
 <!--
-Notas: Usar esta slide para establecer credibilidad sin convertirla en una lista de trofeos. Aclarar que DevSecOps Village queda con el nombre entregado y debe validarse si el speaker desea otra formulación exacta. Las certificaciones se muestran como badges visuales compactos, priorizando las más relevantes para DevOps, DevSecOps y Platform Engineering.
+Notas: Usar esta slide para establecer credibilidad sin convertirla en una lista de trofeos. Aclarar que DevSecOps Village queda con el nombre entregado y debe validarse si el speaker desea otra formulación exacta. Si el speaker entrega una imagen oficial de certificaciones, ubicarla en esta slide como asset real, no como lista inferida.
 -->
 
 ---
@@ -263,10 +262,11 @@ transition: slide-up
     ]"
   />
   <MediaFrame
-    src="media/software-delivery.jpg"
-    title="Infraestructura de entrega"
-    caption="El software vive en un sistema técnico y operativo."
-    alt="Sala de servidores que representa el recorrido del software hasta producción"
+    src="media/software-lifecycle.svg"
+    fit="contain"
+    title="Ciclo de vida de software"
+    caption="La entrega conecta producto, código, ambientes, operación y aprendizaje."
+    alt="Diagrama del ciclo de vida moderno del software desde backlog hasta operación y feedback"
   />
 </div>
 
@@ -287,6 +287,7 @@ transition: slide-left
     class="cicd-spine-media"
     src="media/cicd-pipeline.svg"
     fit="contain"
+    title=""
     alt="Diagrama de CI/CD con las etapas code, build, test, secure, package, release, deploy, operate y feedback operativo"
   />
 </div>
@@ -823,22 +824,12 @@ transition: slide-left
 
 ## Certificaciones y siguientes pasos
 
-<div class="two-column-visual">
-  <div>
-    <p class="lead">Las certificaciones no reemplazan experiencia, pero pueden acelerar confianza cuando todavía estás construyendo portafolio.</p>
-    <CertificationBadges variant="showcase" :limit="12" />
-  </div>
-  <CalloutStack
-    :items="[
-      { label: '1', title: 'Aprende una base', detail: 'Linux, redes, Git y scripting.', tone: 'blue' },
-      { label: '2', title: 'Construye evidencia', detail: 'Proyectos pequeños, README claros y pipelines reales.', tone: 'green' },
-      { label: '3', title: 'Certifica con intención', detail: 'Elige credenciales que refuercen la ruta que estás siguiendo.', tone: 'amber' }
-    ]"
-  />
-</div>
+<p class="lead certification-lead">Las certificaciones no reemplazan experiencia. Úsalas para ordenar una ruta: primero base, luego capacidad práctica y después especialización.</p>
+
+<CertificationTiers />
 
 <!--
-Notas: No prometer que una certificación consigue trabajo. Presentarla como acelerador de credibilidad, especialmente si la persona todavía no tiene experiencia formal. Aquí se muestran las credenciales más alineadas con la charla: Azure, GitHub, Terraform, contenedores/Kubernetes, Ansible, AWS, GCP y seguridad.
+Notas: No prometer que una certificación consigue trabajo. Presentarlas como una forma de ordenar aprendizaje y credibilidad. Evitar listar credenciales específicas si no están validadas con evidencia del speaker.
 -->
 
 ---

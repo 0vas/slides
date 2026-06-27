@@ -43,7 +43,7 @@
 }
 
 .media-split .media-surface {
-  min-height: 250px;
+  min-height: 0;
 }
 
 .compact-media {
@@ -51,7 +51,7 @@
 }
 
 .compact-media .media-surface {
-  min-height: 260px;
+  min-height: 0;
 }
 
 .intro-devops-es .media-frame figcaption {
@@ -299,7 +299,7 @@
 
 .cicd-spine-hero .media-frame {
   margin-top: 0;
-  max-width: 620px;
+  max-width: 580px;
   width: 100%;
 }
 
@@ -432,6 +432,10 @@
 
 .two-column-visual > div > .cert-badges {
   margin-top: 18px;
+}
+
+.certification-lead {
+  max-width: 980px;
 }
 
 .final-model {

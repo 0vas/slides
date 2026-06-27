@@ -36,8 +36,8 @@
   <circle cx="228" cy="152" r="168" fill="url(#glowBlue)"/>
   <circle cx="996" cy="548" r="188" fill="url(#glowGreen)"/>
 
-  <text x="64" y="76" fill="#f8fbff" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">CI/CD como sistema de aprendizaje</text>
-  <text x="64" y="114" fill="#b7c2d0" font-family="Inter, Arial, sans-serif" font-size="20">Cada cambio atraviesa controles, produce evidencia y vuelve como feedback.</text>
+  <text x="64" y="78" fill="#f8fbff" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="800">CI/CD como sistema de aprendizaje</text>
+  <text x="64" y="114" fill="#b7c2d0" font-family="Inter, Arial, sans-serif" font-size="18">Controles, evidencia y feedback en cada cambio.</text>
 
   <path d="M218 360 C218 220 374 154 602 154 C830 154 982 224 982 360 C982 496 830 566 602 566 C374 566 218 500 218 360Z" fill="none" stroke="url(#line)" stroke-width="12" stroke-linecap="round" marker-end="url(#arrow)" opacity="0.96"/>
   <path d="M602 566 C520 622 406 620 320 566" fill="none" stroke="#3ddc84" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 12" opacity="0.72"/>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Modern software lifecycle</title>
+  <desc id="desc">An editorial dark diagram showing idea, code, pipeline, environments, production, and feedback as a connected software lifecycle.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#101a2c"/>
+      <stop offset="0.55" stop-color="#07111d"/>
+      <stop offset="1" stop-color="#0a1710"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#58a6ff"/>
+      <stop offset="0.45" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#3ddc84"/>
+    </linearGradient>
+    <filter id="shadow" x="-18%" y="-18%" width="136%" height="136%">
+      <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#000000" flood-opacity="0.36"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="720" rx="34" fill="url(#bg)"/>
+  <g opacity="0.18" stroke="#94a3b8">
+    <path d="M0 112H1200M0 244H1200M0 376H1200M0 508H1200M0 640H1200M150 0V720M300 0V720M450 0V720M600 0V720M750 0V720M900 0V720M1050 0V720"/>
+  </g>
+  <circle cx="180" cy="150" r="150" fill="#58a6ff" opacity="0.16"/>
+  <circle cx="980" cy="550" r="190" fill="#3ddc84" opacity="0.14"/>
+
+  <text x="66" y="82" fill="#f8fbff" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="850">El software vive en un sistema</text>
+  <text x="66" y="120" fill="#b7c2d0" font-family="Inter, Arial, sans-serif" font-size="20">La entrega conecta producto, código, ambientes, operación y aprendizaje.</text>
+
+  <path d="M156 372 C270 230 418 230 520 342 C638 470 744 468 858 314" fill="none" stroke="url(#flow)" stroke-width="12" stroke-linecap="round"/>
+  <path d="M866 448 C732 566 540 572 360 476" fill="none" stroke="#ffb86b" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 13"/>
+  <text x="520" y="612" fill="#ffb86b" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="850">feedback y mejora continua</text>
+
+  <g filter="url(#shadow)" font-family="Inter, Arial, sans-serif">
+    <g transform="translate(82 302)">
+      <rect width="160" height="116" rx="18" fill="#111827" stroke="#58a6ff" stroke-width="2"/>
+      <text x="22" y="38" fill="#58a6ff" font-size="16" font-weight="900">IDEA</text>
+      <text x="22" y="74" fill="#f8fbff" font-size="25" font-weight="900">Backlog</text>
+    </g>
+    <g transform="translate(268 214)">
+      <rect width="160" height="116" rx="18" fill="#111827" stroke="#3ddc84" stroke-width="2"/>
+      <text x="22" y="38" fill="#3ddc84" font-size="16" font-weight="900">CODE</text>
+      <text x="22" y="74" fill="#f8fbff" font-size="25" font-weight="900">Repo</text>
+    </g>
+    <g transform="translate(492 274)">
+      <rect width="190" height="126" rx="20" fill="#111827" stroke="#ffb86b" stroke-width="2"/>
+      <text x="24" y="40" fill="#ffb86b" font-size="16" font-weight="900">PIPELINE</text>
+      <text x="24" y="78" fill="#f8fbff" font-size="25" font-weight="900">Build + test</text>
+    </g>
+    <g transform="translate(706 346)">
+      <rect width="180" height="116" rx="18" fill="#111827" stroke="#22d3ee" stroke-width="2"/>
+      <text x="22" y="38" fill="#22d3ee" font-size="16" font-weight="900">ENV</text>
+      <text x="22" y="74" fill="#f8fbff" font-size="25" font-weight="900">Ambientes</text>
+    </g>
+    <g transform="translate(914 216)">
+      <rect width="178" height="132" rx="20" fill="#111827" stroke="#3ddc84" stroke-width="2"/>
+      <text x="22" y="40" fill="#3ddc84" font-size="16" font-weight="900">PROD</text>
+      <text x="22" y="78" fill="#f8fbff" font-size="25" font-weight="900">Operación</text>
+      <text x="22" y="106" fill="#b7c2d0" font-size="16" font-weight="700">SLO + señales</text>
+    </g>
+  </g>
+</svg>

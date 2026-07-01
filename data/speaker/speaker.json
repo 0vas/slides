@@ -1,32 +1,32 @@
 {
-  "name": "Example Speaker",
-  "shortName": "Example Speaker",
-  "initials": "ES",
-  "headline": "Engineering Leader",
-  "organization": "Example Organization",
-  "location": "Remote",
+  "name": "Oscar Lobaton Salas",
+  "shortName": "Oscar Lobaton",
+  "initials": "OL",
+  "headline": "Platform Product Lead",
+  "organization": "Credicorp",
+  "location": "LatAm",
   "email": "",
   "website": "",
   "photoImage": "",
   "linkedin": {
-    "label": "Profile",
-    "handle": "example.com",
-    "url": "https://example.com",
+    "label": "LinkedIn",
+    "handle": "in/oscarlobatons",
+    "url": "https://www.linkedin.com/in/oscarlobatons/",
     "qrAsset": "linkedin-qr.svg"
   },
   "profiles": [
-    { "label": "GitHub", "value": "@example", "url": "https://github.com/example" },
-    { "label": "Website", "value": "example.com", "url": "https://example.com" }
+    { "label": "GitHub", "value": "@0vas", "url": "https://github.com/0vas" },
+    { "label": "X", "value": "@0vas", "url": "https://x.com/0vas" }
   ],
   "roles": [
-    "Platform engineering practitioner",
-    "Developer experience advocate",
-    "Presentation-as-code maintainer"
+    "Investigador colaborador en LABIAR-UNI",
+    "DevOps Ambassador de PeopleCert",
+    "DevSecOps Space Ambassador"
   ],
   "tags": [
     "Platform engineering",
-    "Developer experience",
-    "Reusable slide systems",
-    "AI-assisted content"
+    "GitHub governance",
+    "DevSecOps",
+    "AI adoption"
   ]
 }

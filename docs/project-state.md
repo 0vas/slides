@@ -1,6 +1,6 @@
 # Project State
 
-Last updated: 2026-06-30
+Last updated: 2026-07-01
 
 ## Purpose
 
@@ -14,8 +14,8 @@ packaging, and GitHub Pages deployment.
 
 - Engine: Slidev.
 - Authoring: Markdown with Vue components.
-- Decks: `platform-engineering-that-teams-actually-adopt` and
-  `component-showcase`.
+- Decks: `component-showcase`, `github-enterprise-platform`, `intro-devops-es`,
+  and `platform-engineering-that-teams-actually-adopt`.
 - Default visual language: light enterprise-tech, subtle grid, gradients,
   product-like surfaces, and intentional motion.
 - Home page: `scripts/deck.mjs` generates `dist/index.html` as a deck gallery
@@ -47,7 +47,8 @@ packaging, and GitHub Pages deployment.
 ├── decks/
 │   ├── _template/
 │   ├── component-showcase/
-│   ├── component-showcase/
+│   ├── github-enterprise-platform/
+│   ├── intro-devops-es/
 │   └── platform-engineering-that-teams-actually-adopt/
 ├── docs/
 │   ├── adr/
@@ -153,6 +154,8 @@ Manual targets:
 
 - `all`: publish every deck.
 - `component-showcase`: publish the catalog reference deck.
+- `github-enterprise-platform`: publish the GitHub enterprise platform talk.
+- `intro-devops-es`: publish the Spanish DevOps introduction talk.
 - `platform-engineering-that-teams-actually-adopt`: publish the platform
   engineering example talk.
 - `custom`: provide a slug through `custom_deck`.

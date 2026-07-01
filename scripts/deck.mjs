@@ -8,7 +8,7 @@ import { chromium } from 'playwright-chromium'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const decksDir = join(root, 'decks')
 const repoName = basename(root)
-const repositoryUrl = 'https://github.com/ovasorg/slides-builder'
+const repositoryUrl = 'https://github.com/0vas/slides'
 const sharedFavicon = join(root, 'shared', 'public', 'favicon.svg')
 const previewViewport = { width: 1440, height: 900 }
 

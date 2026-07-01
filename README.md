@@ -1,88 +1,52 @@
-# Slides Builder
+# Slides
 
-[![Deploy Slides](https://github.com/ovasorg/slides-builder/actions/workflows/deploy.yml/badge.svg)](https://github.com/ovasorg/slides-builder/actions/workflows/deploy.yml)
-[![Release Package](https://github.com/ovasorg/slides-builder/actions/workflows/release.yml/badge.svg)](https://github.com/ovasorg/slides-builder/actions/workflows/release.yml)
+[![Deploy Slides](https://github.com/0vas/slides/actions/workflows/deploy.yml/badge.svg)](https://github.com/0vas/slides/actions/workflows/deploy.yml)
+[![Release Package](https://github.com/0vas/slides/actions/workflows/release.yml/badge.svg)](https://github.com/0vas/slides/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Slidev](https://img.shields.io/badge/Slidev-52.15.2-2B90B6.svg)](https://sli.dev)
 
-Open-source Slidev workspace for building presentation decks as code with
-reusable components, agent-friendly specs, local assets, and GitHub Pages
-deployment.
+Personal fork of
+[`ovasorg/slides-builder`](https://github.com/ovasorg/slides-builder), used for
+my talks, speaker data, private delivery context, and deck-specific assets.
 
-Use this repository as the master template. Fork it for personal or team decks;
-keep this upstream generic.
+The upstream template stays generic. This fork can carry personal decks and
+content without contaminating the reusable starter.
 
-## What's Included
+## Decks
 
-- `decks/_template`: starting point for new talks.
-- `decks/component-showcase`: visual catalog and component reference.
-- `decks/platform-engineering-that-teams-actually-adopt`: example talk.
-- `shared/components`: reusable Vue/Slidev components.
-- `.agents/skills`: reusable agent workflows for triage, generation, QA, and TDD.
-- `.github/workflows`: deploy and release automation.
+- `component-showcase`: reusable component and style catalog.
+- `github-enterprise-platform`: GitHub as an enterprise platform.
+- `intro-devops-es`: Spanish DevOps, CI/CD, DevSecOps, and platform engineering talk.
+- `platform-engineering-that-teams-actually-adopt`: platform engineering operating model.
 
 ## Quick Start
 
 ```bash
-npm install
+make install
 make list
-make dev DECK=platform-engineering-that-teams-actually-adopt
-make check DECK=platform-engineering-that-teams-actually-adopt
-make build-all
+make dev DECK=intro-devops-es PORT=4100
 ```
 
-Common exports:
+Build or validate:
 
 ```bash
-make pdf DECK=<slug>
-make pptx DECK=<slug>
+make check DECK=intro-devops-es
+make build-all
+npm run check:agent
 ```
 
-PPTX exports are static snapshots; use hosted Slidev for live motion.
+## Structure
 
-## Create A Deck
+- `decks/<slug>/slides.md`: deck content.
+- `decks/<slug>/components/`: deck-owned Vue components.
+- `decks/<slug>/public/media/`: local images and media.
+- `data/speaker/`: shared speaker metadata and assets.
+- `shared/components/`: reusable visual components.
+- `shared/styles/`: shared theme and palettes.
+- `.agents/skills/`: reusable slide-generation, TDD, triage, and visual-QA workflows.
+- `docs/`: deeper operating and design documentation.
 
-1. Start from `decks/_template`.
-2. Record the brief in `decks/<slug>/deck.brief.md`.
-3. Store deck media in `decks/<slug>/public/media/`.
-4. Reuse shared components before creating deck-local ones.
-5. Run `make check DECK=<slug>` before handoff.
+## Working Rule
 
-Required prompt inputs for agent-assisted decks:
-
-- title/topic
-- audience and level
-- duration
-- desired outcome
-- required points
-- tone/context
-- constraints
-- available assets
-- visual mode: light, dark, or black/keynote
-
-## Repository Map
-
-```text
-decks/                 Slidev decks
-shared/components/     reusable visual components
-shared/styles/         theme and palettes
-data/speaker/          generic speaker data placeholder
-docs/                  workflow, style, release, and component guidance
-scripts/deck.mjs       multi-deck dev/build/export wrapper
-AGENTS.md              canonical agent instructions
-```
-
-## Documentation
-
-- [Agent specification](AGENTS.md)
-- [New deck guide](docs/new-deck-agent-guide.md)
-- [Deck workflow](docs/deck-generation-workflow.md)
-- [Component catalog](docs/component-catalog.md)
-- [Style catalog](docs/style-catalog.md)
-- [Slide guidelines](docs/slide-guidelines.md)
-- [Release workflow](docs/release-workflow.md)
-
-## Template Rule
-
-Keep this repository reusable. Personal talks, private assets, speaker CV
-details, and organization-specific content belong in downstream forks.
+For reusable improvements, update the upstream template first. For personal
+talks, assets, and speaker-specific content, keep the work in this fork.

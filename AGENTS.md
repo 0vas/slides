@@ -436,19 +436,18 @@ decks/<slug>/public/media/
   metadata inside Markdown slides or deck-specific data files.
 - Never use a QR screenshot that is blurry, cropped, or impossible to scan.
 
-## Template Repository Context
+## Personal Fork Context
 
-This repository is the public `slides-builder` template. Keep it reusable and
-safe to fork:
+This repository is the personal `slides` fork. Keep the upstream relationship
+clean:
 
-- Keep reusable infrastructure, `decks/_template`, `component-showcase`, and the
-  platform-engineering example deck.
-- Do not add personal talks, private client material, personal CV details, or
-  organization-specific assets to this template.
-- Personal decks belong in a fork or downstream repository, commonly named
-  `slides`, with this repository configured as upstream.
-- Speaker data in the template must stay generic. Downstream forks can replace
-  `data/speaker/speaker.json` with personal metadata.
+- Keep `ovasorg/slides-builder` as upstream for reusable framework and template
+  improvements.
+- Personal talks, speaker metadata, and delivery assets belong in this fork.
+- Generic improvements that benefit other users should be isolated and proposed
+  back to upstream.
+- Do not accidentally push personal decks or speaker metadata to the upstream
+  template repository.
 
 ## Validation
 

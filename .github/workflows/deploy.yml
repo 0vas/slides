@@ -11,6 +11,8 @@ on:
         options:
           - all
           - component-showcase
+          - github-enterprise-platform
+          - intro-devops-es
           - platform-engineering-that-teams-actually-adopt
           - custom
       custom_deck:

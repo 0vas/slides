@@ -836,6 +836,12 @@ Notas: Recomendar práctica progresiva: construir una app simple, ponerla en Git
 -->
 
 ---
+transition: fade
+---
+
+<DevSecOpsSpaceInvite image-path="media/devsecops-space.jpeg" />
+
+---
 transition: slide-left
 ---
 

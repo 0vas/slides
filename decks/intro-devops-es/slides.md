@@ -31,6 +31,16 @@ Notas: Abrir con la promesa de la sesión. No vender DevOps como una moda; prese
 -->
 
 ---
+transition: slide-up
+---
+
+<SpeakerProfile kicker="Speaker" organization-connector="en" qr-label="LinkedIn" />
+
+<!--
+Notas: Esta es la slide data-driven del perfil. Reforzar la conexión del rol actual con DevOps, DevSecOps y Platform Engineering. No repetir toda la trayectoria; dejar que la slide anterior haya contado la parte narrativa.
+-->
+
+---
 transition: fade
 ---
 
@@ -83,16 +93,6 @@ transition: fade
 
 <!--
 Notas: Conectar la metáfora: lo visible es importante, pero la base real suele estar debajo. Hacerlo humano y sobrio. La intención es que la audiencia principiante sienta que una ruta técnica sólida se construye con persistencia, no con ventaja inicial perfecta.
--->
-
----
-transition: slide-up
----
-
-<SpeakerProfile kicker="Speaker" organization-connector="en" qr-label="LinkedIn" />
-
-<!--
-Notas: Esta es la slide data-driven del perfil. Reforzar la conexión del rol actual con DevOps, DevSecOps y Platform Engineering. No repetir toda la trayectoria; dejar que la slide anterior haya contado la parte narrativa.
 -->
 
 ---

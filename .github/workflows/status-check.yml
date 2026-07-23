@@ -33,8 +33,12 @@ jobs:
       - name: Validate scripts
         run: |
           node --check scripts/deck.mjs
+          node --check scripts/deployment-paths.mjs
           node --check scripts/release.mjs
           node --check scripts/validate-agent-assets.mjs
+
+      - name: Test deployment paths
+        run: npm run test:deployment
 
       - name: Validate agent assets
         run: npm run check:agent

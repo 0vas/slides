@@ -6,6 +6,7 @@
 - `cicd-pipeline.svg`: deck-local SVG infinity-loop diagram created for this presentation after evaluating external CI/CD image options. Used as the core visual for the CI/CD spine slide. No external artwork is embedded.
 - `cicd-pipeline.png`: raster export of `cicd-pipeline.svg`. Used on slide 13 so the CI/CD spine appears as a concrete local image asset with CI/CD as an infinity loop.
 - `certifications-strip.png`: user-provided real certification badge strip. Used on slide 2; do not recreate or infer individual badges from it.
+- `devsecops-space.jpeg`: deck-local copy of the DevSecOps Space community image from `github-enterprise-platform`. Used near the closing section as the community invitation slide.
 
 Images are stored locally so the deck renders offline. Replace them with
 approved event or speaker-owned images if stronger assets become available.

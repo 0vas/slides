@@ -2869,7 +2869,7 @@ body:not(.print) nav.flex.flex-col [class*="z-menu"] [hover\:bg-active] {
 .swimlane-row {
   display: grid;
   gap: 0;
-  grid-template-columns: 180px repeat(3, minmax(0, 1fr));
+  grid-template-columns: 180px repeat(var(--swimlane-steps, 3), minmax(0, 1fr));
 }
 
 .swimlane-row > * {

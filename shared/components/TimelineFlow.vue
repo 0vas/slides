@@ -1,14 +1,14 @@
 <template>
-  <div class="timeline-flow">
+  <div class="timeline-flow" :aria-label="ariaLabel">
     <article
       v-for="(item, index) in items"
-      :key="item.title"
+      :key="`${item.when || item.label || index}-${item.title}`"
       v-motion
-      :initial="{ opacity: 0, y: 18 }"
+      :initial="{ opacity: 0, y: 14 }"
       :enter="{ opacity: 1, y: 0, transition: { delay: index * 90, duration: 420 } }"
       :class="item.tone"
     >
-      <span>{{ item.when }}</span>
+      <span>{{ item.when || item.label }}</span>
       <strong>{{ item.title }}</strong>
       <small>{{ item.detail }}</small>
     </article>
@@ -17,13 +17,14 @@
 
 <script setup>
 defineProps({
+  ariaLabel: { type: String, default: 'Timeline flow' },
   items: {
     type: Array,
     default: () => [
-      { when: 'T0', title: 'Discover', detail: 'Frame the problem.', tone: 'blue' },
-      { when: 'T1', title: 'Design', detail: 'Shape the experience.', tone: 'green' },
-      { when: 'T2', title: 'Operate', detail: 'Deliver with confidence.', tone: 'amber' },
-      { when: 'T3', title: 'Scale', detail: 'Expand proven patterns.', tone: 'rose' }
+      { when: '01', title: 'Start', detail: 'Define the first meaningful step.', tone: 'blue' },
+      { when: '02', title: 'Build', detail: 'Create the reusable capability.', tone: 'green' },
+      { when: '03', title: 'Validate', detail: 'Prove the outcome with evidence.', tone: 'amber' },
+      { when: '04', title: 'Improve', detail: 'Feed learning into the next cycle.', tone: 'rose' }
     ]
   }
 })

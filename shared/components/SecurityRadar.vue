@@ -1,21 +1,26 @@
 <template>
   <div class="security-radar" :aria-label="ariaLabel">
-    <svg viewBox="0 0 520 360" role="img">
+    <svg viewBox="0 0 520 360" role="img" aria-hidden="true">
       <defs>
         <linearGradient id="radarSweep" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0%" stop-color="#2f81f7" stop-opacity="0.9" />
-          <stop offset="100%" stop-color="#3fb950" stop-opacity="0.05" />
+          <stop offset="0" stop-color="#2f81f7" stop-opacity="0.38"/>
+          <stop offset="1" stop-color="#3fb950" stop-opacity="0.03"/>
         </linearGradient>
       </defs>
-      <circle cx="260" cy="180" r="128" class="radar-ring" />
-      <circle cx="260" cy="180" r="86" class="radar-ring" />
-      <circle cx="260" cy="180" r="44" class="radar-ring" />
-      <path d="M260 180 L380 134 A128 128 0 0 1 348 274 Z" class="radar-sweep" />
-      <line x1="132" y1="180" x2="388" y2="180" class="radar-axis" />
-      <line x1="260" y1="52" x2="260" y2="308" class="radar-axis" />
-      <g v-for="point in props.points" :key="point.label">
-        <circle :cx="point.x" :cy="point.y" r="7" :class="['radar-dot', point.tone]" />
-        <text :x="point.x + 14" :y="point.y + 5">{{ point.label }}</text>
+      <circle class="radar-ring" cx="260" cy="180" r="48"/>
+      <circle class="radar-ring" cx="260" cy="180" r="96"/>
+      <circle class="radar-ring" cx="260" cy="180" r="144"/>
+      <path class="radar-axis" d="M260 36V324M116 180H404M158 78L362 282M362 78L158 282"/>
+      <path class="radar-sweep" d="M260 180 L260 36 A144 144 0 0 1 374 92 Z"/>
+      <g v-for="(point, index) in points" :key="point.label">
+        <circle
+          class="radar-dot"
+          :class="point.tone"
+          :cx="point.x"
+          :cy="point.y"
+          r="8"
+        />
+        <text :x="point.x + 14" :y="point.y + (index % 2 === 0 ? -10 : 22)">{{ point.label }}</text>
       </g>
     </svg>
     <div class="radar-copy">
@@ -26,20 +31,17 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  ariaLabel: { type: String, default: 'Capability radar' },
-  title: { type: String, default: 'Shift-left real' },
-  detail: {
-    type: String,
-    default: 'Signals, controls, and dependencies appear inside the flow, not after the incident.'
-  },
+defineProps({
+  ariaLabel: { type: String, default: 'Security radar' },
+  title: { type: String, default: 'Riesgo visible antes del despliegue' },
+  detail: { type: String, default: 'Combina señales de código, dependencias, configuración y runtime para tomar decisiones con evidencia.' },
   points: {
     type: Array,
     default: () => [
-      { label: 'Signals', x: 332, y: 118, tone: 'blue' },
-      { label: 'Controls', x: 186, y: 146, tone: 'green' },
-      { label: 'Deps', x: 306, y: 246, tone: 'amber' },
-      { label: 'Policy', x: 226, y: 220, tone: 'rose' }
+      { label: 'SAST', x: 220, y: 114, tone: 'blue' },
+      { label: 'SCA', x: 326, y: 132, tone: 'green' },
+      { label: 'Secrets', x: 190, y: 226, tone: 'rose' },
+      { label: 'IaC', x: 336, y: 246, tone: 'amber' }
     ]
   }
 })

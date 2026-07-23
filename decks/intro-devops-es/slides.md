@@ -31,6 +31,16 @@ Notas: Abrir con la promesa de la sesión. No vender DevOps como una moda; prese
 -->
 
 ---
+transition: slide-up
+---
+
+<SpeakerProfile kicker="Speaker" organization-connector="en" qr-label="LinkedIn" />
+
+<!--
+Notas: Esta es la slide data-driven del perfil. Reforzar la conexión del rol actual con DevOps, DevSecOps y Platform Engineering. No repetir toda la trayectoria; dejar que la slide anterior haya contado la parte narrativa.
+-->
+
+---
 transition: fade
 ---
 
@@ -83,16 +93,6 @@ transition: fade
 
 <!--
 Notas: Conectar la metáfora: lo visible es importante, pero la base real suele estar debajo. Hacerlo humano y sobrio. La intención es que la audiencia principiante sienta que una ruta técnica sólida se construye con persistencia, no con ventaja inicial perfecta.
--->
-
----
-transition: slide-up
----
-
-<SpeakerProfile kicker="Speaker" organization-connector="en" qr-label="LinkedIn" />
-
-<!--
-Notas: Esta es la slide data-driven del perfil. Reforzar la conexión del rol actual con DevOps, DevSecOps y Platform Engineering. No repetir toda la trayectoria; dejar que la slide anterior haya contado la parte narrativa.
 -->
 
 ---
@@ -283,15 +283,7 @@ transition: slide-left
 
 ## CI/CD como columna vertebral
 
-<div class="cicd-spine-hero">
-  <MediaFrame
-    class="cicd-spine-media"
-    src="media/cicd-pipeline.png"
-    fit="contain"
-    title=""
-    alt="Diagrama de CI/CD en forma de infinito con CI, CD, plan, code, build, test, release, deploy, operate y feedback operativo"
-  />
-</div>
+<CicdInfinity />
 
 <!--
 Notas: Presentar CI/CD como el esqueleto pedagógico de la charla. Todo lo demás se engancha a esta línea: Git, pruebas, artefactos, contenedores, seguridad, cloud, observabilidad y platform engineering.
@@ -367,6 +359,32 @@ transition: slide-up
 
 <!--
 Notas: Reforzar que el PR no es burocracia si trae señales útiles. Un buen PR debe ser pequeño, entendible, revisable y acompañado por checks automáticos.
+-->
+
+---
+transition: slide-left
+---
+
+<span class="kicker">Git workflow</span>
+
+## GitFlow: ramas claras, riesgo menor
+
+<div class="gitflow-board">
+  <section class="gitflow-lanes" aria-label="Flujo de ramas con Git">
+    <div class="git-lane main"><span>main</span><strong>Siempre integrable</strong></div>
+    <div class="git-lane feature"><span>feature/*</span><strong>Cambios pequeños → PR</strong></div>
+    <div class="git-lane release"><span>release/*</span><strong>Congela cuando hay ventana</strong></div>
+    <div class="git-lane hotfix"><span>hotfix/*</span><strong>Corrige producción y vuelve a main</strong></div>
+  </section>
+  <aside class="gitflow-rules">
+    <article><span>01</span><strong>Ramas cortas</strong><small>Menos conflicto, feedback más rápido.</small></article>
+    <article><span>02</span><strong>PR con evidencia</strong><small>Revisión humana + checks automáticos.</small></article>
+    <article><span>03</span><strong>Release explícito</strong><small>Usa release branch solo si necesitas estabilizar.</small></article>
+  </aside>
+</div>
+
+<!--
+Notas: Explicar que GitFlow clásico ayuda cuando hay releases por ventana o soporte de versiones; para equipos con entrega continua, ramas cortas o trunk-based suelen reducir inventario y conflictos. La regla no es el nombre del modelo, sino el flujo que mantiene main integrable, PRs pequeños y evidencia automática.
 -->
 
 ---
@@ -816,6 +834,12 @@ transition: slide-up
 <!--
 Notas: Recomendar práctica progresiva: construir una app simple, ponerla en Git, probarla, containerizarla, desplegarla, observarla y luego automatizar infraestructura.
 -->
+
+---
+transition: fade
+---
+
+<DevSecOpsSpaceInvite image-path="media/devsecops-space.jpeg" />
 
 ---
 transition: slide-left

@@ -94,6 +94,7 @@ scripts/
 
 | Deck | Purpose | Command |
 | --- | --- | --- |
+| `abstraccion-o-friccion-f13` | Original standalone HTML talk, Abstracción o fricción · F13 2026. | `make dev DECK=abstraccion-o-friccion-f13` |
 | `github-enterprise-platform` | Main talk about GitHub as an enterprise platform. | `make dev DECK=github-enterprise-platform` |
 | `intro-devops-es` | Spanish introduction to DevOps, DevSecOps, Platform Engineering, and learning path. | `make dev DECK=intro-devops-es` |
 | `platform-engineering-that-teams-actually-adopt` | Internal platform engineering adoption and operating-model talk. | `make dev DECK=platform-engineering-that-teams-actually-adopt` |
@@ -101,6 +102,14 @@ scripts/
 
 `decks/_template/` is not a finished talk. It is a clean starting point with
 lorem ipsum, local wrappers, and minimal examples.
+
+Existing standalone HTML presentations can live in `decks/<slug>/index.html`
+with gallery `title`, `description`, and optional `preview` in `deck.json`.
+The build copies the HTML byte for byte and copies `public/` beside it, without
+injecting Slidev, styles or a favicon. `make list`, `make dev`, `make build`,
+`make check` and `make build-all` support both formats. Capture an actual cover
+into `public/media/cover.png` and set `preview` to `media/cover.png` for the home.
+Slidev PDF/PPTX export requires a `slides.md` source.
 
 ## Work With Slides-builder
 

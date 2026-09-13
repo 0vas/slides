@@ -10,6 +10,7 @@ on:
         default: all
         options:
           - all
+          - abstraccion-o-friccion-f13
           - component-showcase
           - github-enterprise-platform
           - intro-devops-es

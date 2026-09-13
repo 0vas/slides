@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { spawnSync } from 'node:child_process'
 
 import { deckBasePath } from './deployment-paths.mjs'
+import { buildStaticDeck, serveStaticDeck, staticDeckMeta } from './static-decks.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const decksDir = join(root, 'decks')
@@ -24,6 +25,14 @@ function decks() {
 
 function deckSlides(slug) {
   return join(decksDir, slug, 'slides.md')
+}
+
+function isStaticDeck(slug) {
+  return existsSync(join(decksDir, slug, 'index.html')) && !existsSync(deckSlides(slug))
+}
+
+function hasDeckEntry(slug) {
+  return existsSync(deckSlides(slug)) || isStaticDeck(slug)
 }
 
 function usage() {
@@ -85,13 +94,13 @@ function resolveDeckSlug(slug) {
 
   const availableDecks = decks()
 
-  if (availableDecks.includes(slug) && existsSync(deckSlides(slug))) {
+  if (availableDecks.includes(slug) && hasDeckEntry(slug)) {
     return slug
   }
 
   const match = closestDeck(slug, availableDecks)
 
-  if (match && existsSync(deckSlides(match))) {
+  if (match && hasDeckEntry(match)) {
     console.log(`Deck not found: ${slug}. Using closest match: ${match}`)
     return match
   }
@@ -212,6 +221,11 @@ function build(requestedSlug) {
   rmSync(tempOut, { recursive: true, force: true })
   rmSync(finalOut, { recursive: true, force: true })
 
+  if (isStaticDeck(slug)) {
+    buildStaticDeck(join(decksDir, slug), finalOut)
+    return slug
+  }
+
   run([
     'build',
     deckSlides(slug),
@@ -274,6 +288,10 @@ function frontmatterValue(frontmatter, key) {
 }
 
 function deckMeta(slug) {
+  if (isStaticDeck(slug)) {
+    const meta = staticDeckMeta(join(decksDir, slug))
+    return { slug, title: plainText(meta.title), description: plainText(meta.description), preview: meta.preview }
+  }
   const markdown = readFileSync(deckSlides(slug), 'utf8')
   const match = markdown.match(/^---\n([\s\S]*?)\n---/)
   const frontmatter = match?.[1] ?? ''
@@ -292,7 +310,9 @@ function writeIndex(slugs) {
     .map(deckMeta)
     .map((meta) => `<article class="deck-card">
         <div class="deck-preview" aria-label="Preview de ${escapeHtml(meta.title)}">
-          <iframe src="./${escapeHtml(meta.slug)}/#/1" title="Preview de ${escapeHtml(meta.title)}" loading="lazy" tabindex="-1"></iframe>
+          ${meta.preview
+            ? `<img src="./${escapeHtml(meta.slug)}/${escapeHtml(meta.preview)}" alt="Portada de ${escapeHtml(meta.title)}" loading="lazy" decoding="async">`
+            : `<iframe src="./${escapeHtml(meta.slug)}/#/1" title="Preview de ${escapeHtml(meta.title)}" loading="lazy" tabindex="-1"></iframe>`}
         </div>
         <div class="deck-copy">
           <span>${escapeHtml(meta.slug)}</span>
@@ -461,6 +481,13 @@ function writeIndex(slugs) {
         width: 100%;
       }
 
+      .deck-preview img {
+        display: block;
+        height: 100%;
+        object-fit: contain;
+        width: 100%;
+      }
+
       .deck-copy {
         padding: 1.1rem;
       }
@@ -536,7 +563,7 @@ function writeIndex(slugs) {
         <div>
           <span class="kicker">0vas decks</span>
           <h1>Presentations <span class="accent">as code</span></h1>
-          <p class="intro">Slidev decks ready to present, publish, and evolve with reusable components.</p>
+          <p class="intro">Presentations ready to present, publish, and explore.</p>
         </div>
         <div class="header-actions">
           <a class="repo-link" href="${repositoryUrl}" target="_blank" rel="noopener noreferrer" aria-label="View the slides repository on GitHub in a new tab" title="View repository on GitHub">
@@ -566,6 +593,12 @@ switch (command) {
     const port = process.env.PORT ?? '4100'
     const slug = resolveDeckSlug(deck)
     freePort(port)
+    if (isStaticDeck(slug)) {
+      const output = join(decksDir, slug, '.slidev-dist')
+      buildStaticDeck(join(decksDir, slug), output)
+      serveStaticDeck(output, Number(port))
+      break
+    }
     run([deckSlides(slug), '--port', port])
     break
   }
@@ -584,11 +617,13 @@ switch (command) {
   }
   case 'export-pdf': {
     const slug = resolveDeckSlug(deck)
+    if (isStaticDeck(slug)) throw new Error('Slidev PDF export requires slides.md; open this HTML deck in a browser.')
     run(['export', deckSlides(slug), '--format', 'pdf', '--output', `${slug}.pdf`])
     break
   }
   case 'export-pptx': {
     const slug = resolveDeckSlug(deck)
+    if (isStaticDeck(slug)) throw new Error('Slidev PPTX export requires slides.md; open this HTML deck in a browser.')
     console.warn('Note: PPTX export creates static slide snapshots. Native PowerPoint click animations are not preserved.')
     run(['export', deckSlides(slug), '--format', 'pptx', '--output', `${slug}.pptx`])
     break

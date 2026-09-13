@@ -191,3 +191,11 @@ These guidelines are the shared design and content baseline for future
 
 When a slide mentions current GitHub capabilities, plans, trials, or limits,
 verify the claim with official sources if the information may have changed.
+
+## Importing existing HTML presentations
+
+When a supplied HTML deck must remain unchanged, publish it as
+`decks/<slug>/index.html` with separate `deck.json` gallery metadata. Never run
+it through Slidev or inject theme, favicon or navigation markup. Compare the
+source and published SHA-256 to prove preservation. Use a screenshot of its
+actual first slide for the home preview, and validate its own URL/hash navigation.

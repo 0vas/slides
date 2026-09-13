@@ -192,6 +192,16 @@ These guidelines are the shared design and content baseline for future
 When a slide mentions current GitHub capabilities, plans, trials, or limits,
 verify the claim with official sources if the information may have changed.
 
+## Palette contrast regression checks
+
+Shared panels must change their surfaces and text together: use `--deck-panel`
+and `--deck-panel-2` with the palette's ink and muted text. Hardcoded dark
+surfaces under a light palette made topology, radar and catalog labels nearly
+invisible. Keep intentionally fixed renderer canvases paired with explicit text
+colors, and test both light and dark palettes with `npm run test:contrast`.
+Inspect every affected component in the showcase, including SVG labels and
+nested panels; a passing build does not establish contrast.
+
 ## Importing existing HTML presentations
 
 When a supplied HTML deck must remain unchanged, publish it as

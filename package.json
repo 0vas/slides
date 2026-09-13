@@ -10,6 +10,7 @@
     "build": "node scripts/deck.mjs build",
     "build:all": "node scripts/deck.mjs build-all",
     "test:deployment": "node --test scripts/deployment-paths.test.mjs",
+    "test:contrast": "node --test scripts/theme-contrast.test.mjs",
     "export:pdf": "node scripts/deck.mjs export-pdf",
     "export:pptx": "node scripts/deck.mjs export-pptx",
     "check:agent": "node scripts/validate-agent-assets.mjs",

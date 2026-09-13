@@ -35,6 +35,11 @@ own deck.
 - Use `decks/<slug>/components/` for talk-specific mockups, CTAs, and visuals.
 - Keep props simple and data arrays readable.
 - Do not rely on remote assets, scripts, or fonts for core rendering.
+- Pair `--deck-panel` / `--deck-panel-2` surfaces with `--deck-ink` and
+  `--deck-muted`. Shared panels must not hardcode dark backgrounds while
+  inheriting text from a light palette. Mermaid and ECharts use light inner
+  canvases because their renderer defaults use dark text; outer panels follow
+  the deck palette. `npm run test:contrast` covers representative shared panels.
 - Update this catalog, the README, and the showcase when a reusable component
   changes.
 

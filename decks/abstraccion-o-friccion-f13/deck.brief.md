@@ -33,4 +33,5 @@ in the existing home, then push to the personal fork for GitHub Pages deployment
   cover loads, imported deck opens in a new tab, no horizontal mobile overflow.
 - Source, built output and local HTTP responses match the original SHA-256.
 - Local evidence: `tmp/import-qa/` (ignored); portal at `http://127.0.0.1:4173/`.
-- GitHub push and production verification require a valid authenticated session.
+- Initial handoff: GitHub push awaited authentication; the user subsequently
+  authenticated and authorized publication together with the showcase contrast fix.

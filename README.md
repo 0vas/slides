@@ -371,6 +371,12 @@ Current shared components include:
 
 See [docs/component-catalog.md](docs/component-catalog.md) for usage rules.
 
+Shared panels pair palette-based backgrounds with palette-based text, including
+topology, radar, graph, sequence, metric and hierarchy components. Mermaid and
+ECharts retain light inner canvases to match their renderer text colors. Run
+`npm run test:contrast` to check representative panel copy across all eight
+palettes in Chromium (`npx playwright install chromium` if needed).
+
 ## Styles And Palettes
 
 Decks choose a palette through `class` and `defaults.class`:

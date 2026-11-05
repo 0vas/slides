@@ -209,3 +209,20 @@ When a supplied HTML deck must remain unchanged, publish it as
 it through Slidev or inject theme, favicon or navigation markup. Compare the
 source and published SHA-256 to prove preservation. Use a screenshot of its
 actual first slide for the home preview, and validate its own URL/hash navigation.
+
+## Variable item counts and layout wrappers
+
+When reusing a timeline, check its grid against the actual number of items:
+a four-column grid can silently push a fifth agenda item outside the slide.
+Use a deck-scoped responsive grid or split the content, then inspect the full
+slide at 1440×900. For custom covers with absolute footers, choose the layout
+explicitly and inspect the generated wrapper: the default cover can introduce
+a positioned inner container and anchor the footer to the wrong box. Recheck
+subtitle contrast after changing layouts; inherited opacity may still apply.
+
+
+### Explicit introductory-slide exclusions
+When a user excludes introductory or speaker slides, start with the first substantive problem and omit the profile. Record this override in the brief and assert its absence in the deck QA; do not let the default template reintroduce it.
+
+### Interactive workshop result states
+Validate the final state of each simulation as well as its initial state: longer output text and completion footers must stay within the slide. Test reset, keyboard input, and reduced motion. A checklist completion acknowledges participant input; it must not claim that an external application executed successfully. Keep decorative chapter numerals in standalone HTML blocks so Markdown does not position them relative to an inline paragraph.

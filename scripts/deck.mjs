@@ -199,9 +199,10 @@ function basePath(slug) {
   })
 }
 
-function installFavicon(outputDir, href) {
+function installFavicon(outputDir, href, source = sharedFavicon) {
   const indexPath = join(outputDir, 'index.html')
-  const faviconLink = `<link rel="icon" type="image/svg+xml" href="${href}">`
+  const mime = source.endsWith('.png') ? 'image/png' : 'image/svg+xml'
+  const faviconLink = `<link rel="icon" type="${mime}" href="${href}">`
   const html = readFileSync(indexPath, 'utf8')
   const existingFavicon = /<link\s+rel=["']icon["'][^>]*>/i
 
@@ -210,7 +211,7 @@ function installFavicon(outputDir, href) {
     : html.replace('</head>', `    ${faviconLink}\n  </head>`)
 
   writeFileSync(indexPath, updatedHtml)
-  cpSync(sharedFavicon, join(outputDir, 'favicon.svg'))
+  cpSync(source, join(outputDir, source.endsWith('.png') ? 'favicon.png' : 'favicon.svg'))
 }
 
 function build(requestedSlug) {
@@ -235,7 +236,9 @@ function build(requestedSlug) {
     basePath(slug)
   ])
 
-  installFavicon(tempOut, `${basePath(slug)}favicon.svg`)
+  const customFavicon = join(decksDir, slug, 'public', 'favicon.png')
+  const faviconSource = existsSync(customFavicon) ? customFavicon : sharedFavicon
+  installFavicon(tempOut, `${basePath(slug)}${existsSync(customFavicon) ? 'favicon.png' : 'favicon.svg'}`, faviconSource)
 
   mkdirSync(join(root, 'dist'), { recursive: true })
   cpSync(tempOut, finalOut, { recursive: true })

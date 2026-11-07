@@ -179,8 +179,9 @@ body.ambient-paused .pixel{animation-play-state:paused!important}
 .diff .spark{margin-left:10px;color:var(--violet);font-size:12px;letter-spacing:.08em}
 
 
-/* Anatomy scene — keep takeaway clear of the stack art */
-.anatomy-scene{display:flex;flex-direction:column}
+/* Anatomy scene — keep takeaway clear of the stack art.
+   Never set display here: .slide defaults to display:none and only .slide.active is flex.
+   A bare .anatomy-scene{display:flex} keeps slide 16 painted on top of every other slide. */
 .anatomy-scene .art-wrap{align-items:flex-start;flex:1 1 auto;min-height:0;max-height:none;padding-bottom:8px}
 .anatomy-scene .scene-grid{align-items:start;height:auto;max-height:100%}
 .anatomy-scene .scene-grid > svg.art{max-height:300px;overflow:visible}
@@ -1485,6 +1486,7 @@ function toggleAmbient(){ambientStopped=!ambientStopped;syncAmbientPause();}
 
 /* Neural cover — clone into block openers + particle bolts */
 (function(){
+  try{
   const source=document.querySelector('.key-cover .neural-stage');
   if(!source) return;
 
@@ -1533,7 +1535,7 @@ function toggleAmbient(){ambientStopped=!ambientStopped;syncAmbientPause();}
     resize(); addEventListener('resize', resize);
     const vb=svg.viewBox.baseVal;
     const nodes=[...svg.querySelectorAll('.neuron')].map(g=>{
-      const t=(g.getAttribute('transform')||'').match(/translate\(([-d.]+)[ ,]([-d.]+)\)/);
+      const t=(g.getAttribute('transform')||'').match(/translate\(([-\d.]+)[ ,]([-\d.]+)\)/);
       return t?{x:+t[1], y:+t[2], hub:g.classList.contains('hub')}:null;
     }).filter(Boolean);
     // account for brain-body transform roughly via SVG CTM when drawing? use raw coords + viewBox scale
@@ -1603,6 +1605,7 @@ function toggleAmbient(){ambientStopped=!ambientStopped;syncAmbientPause();}
   }
 
   document.querySelectorAll('.neural-stage').forEach(bootStage);
+  }catch(err){ console.warn('neural ambient failed', err); }
 })();
 
 /* Talk carousel — stacked peek like F13 bio */

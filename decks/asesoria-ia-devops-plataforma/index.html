@@ -178,6 +178,35 @@ body.ambient-paused .pixel{animation-play-state:paused!important}
 .diff .add{background:color-mix(in srgb,var(--mint) 14%,transparent)}
 .diff .spark{margin-left:10px;color:var(--violet);font-size:12px;letter-spacing:.08em}
 
+
+/* Anatomy scene — keep takeaway clear of the stack art */
+.anatomy-scene{display:flex;flex-direction:column}
+.anatomy-scene .art-wrap{align-items:flex-start;flex:1 1 auto;min-height:0;max-height:none;padding-bottom:8px}
+.anatomy-scene .scene-grid{align-items:start;height:auto;max-height:100%}
+.anatomy-scene .scene-grid > svg.art{max-height:300px;overflow:visible}
+.anatomy-scene .scene-takeaway{position:relative;z-index:3;margin-top:10px;flex:0 0 auto;max-width:70ch;padding-right:24px}
+.layer-notes{list-style:none;padding:0;margin:0;display:grid;gap:16px;align-content:start}
+.layer-notes li{display:grid;grid-template-columns:132px minmax(0,1fr);column-gap:16px;row-gap:4px;align-items:start;border-top:1px solid var(--line);padding-top:12px}
+.layer-notes b{font:13px/1.25 var(--mono);letter-spacing:.12em;font-weight:650;padding-top:3px}
+.layer-notes span{font-size:20px;line-height:1.35;color:var(--muted)}
+.layer-notes span strong{color:var(--fg);font-weight:600}
+.layer-notes li.hl{border-color:color-mix(in srgb,var(--violet) 45%,var(--line))}
+
+/* Block divider openings reuse the cover neural brain */
+.block-divider{isolation:isolate}
+.block-divider .block-copy{position:relative;z-index:2;max-width:980px;padding-top:40px}
+.block-divider .neural-stage{right:-30px;top:20px;width:560px;height:760px;opacity:.92;z-index:1}
+.block-divider .neural-stage::before{inset:70px 60px 100px 80px}
+.block-divider .neural-net{width:100%;height:100%}
+.block-divider .brain-labels{display:none}
+.block-divider .block-num{position:absolute;right:92px;top:110px;font:700 180px/1 var(--sans);letter-spacing:-.06em;color:rgba(255,255,255,.1);z-index:0;pointer-events:none}
+.block-divider .divider-pixels{opacity:.35;z-index:0}
+.block-divider h2{position:relative;z-index:2;max-width:16ch}
+.block-divider .lede{position:relative;z-index:2;max-width:28ch}
+.block-divider .chapter-chain{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:10px 0;align-items:center;margin-top:36px;font:13px var(--mono);letter-spacing:.14em;color:rgba(255,255,255,.72)}
+.block-divider .chapter-chain i{width:28px;height:1px;background:rgba(255,255,255,.35);margin:0 12px;display:inline-block}
+.block-divider .eyebrow{position:relative;z-index:2}
+
 /* Cover neural net */
 
 /* Cover neural field — organic brain of neurons */
@@ -569,12 +598,15 @@ Bloque 1, unos 15 minutos: IA dentro del flujo DevOps. Bloque 2, unos 17 minutos
 
 <section class="slide keynote accent-scene block-divider" data-block="1" data-title="1. IA en los flujos de DevOps" data-secs="30">
 <header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 1 / 3</span></span><span>FLUJOS DEVOPS</span></header>
+<div class="block-copy">
 <span class="block-num enter-deco" style="--d:120ms" aria-hidden="true">01</span>
 <div class="pixel-grid divider-pixels" data-pattern="101101/011011/110110/011101" aria-hidden="true"></div>
 <p class="eyebrow enter-deco">Bloque 1 de 3</p>
 <h2 class="enter-lead">IA en los flujos<br>de DevOps<span class="period">.</span></h2>
 <p class="lede enter-support" style="--d:280ms">El flujo no es el pipeline. Es la cadena de decisiones que la IA puede <strong style="color:#fff">acelerar — o ensuciar.</strong></p>
 <div class="chapter-chain enter-support" style="--d:420ms"><span>MAPA</span><i></i><span>MODOS</span><i></i><span>PR</span><i></i><span>CI/CD</span><i></i><span>INCIDENTES</span><i></i><span>FALLAS</span></div>
+</div>
+<div class="neural-mount" aria-hidden="true"></div>
 <div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
 <aside class="notes">Apertura bloque 1. Pregunta guía: en cada paso del flujo, ¿la IA sugiere, ejecuta o decide?</aside>
 </section>
@@ -787,12 +819,15 @@ Ninguna de estas fallas dispara una alerta. Contexto filtrado: datos que salen p
 
 <section class="slide keynote accent-scene block-divider" data-block="2" data-title="2. IA en la plataforma de ingeniería" data-secs="30">
 <header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 / 3</span></span><span>PLATAFORMA</span></header>
+<div class="block-copy">
 <span class="block-num enter-deco" style="--d:120ms" aria-hidden="true">02</span>
 <div class="pixel-grid divider-pixels" data-pattern="011011/110101/101110/010111" aria-hidden="true"></div>
 <p class="eyebrow enter-deco">Bloque 2 de 3</p>
 <h2 class="enter-lead">IA en la plataforma<br>de ingeniería<span class="period">.</span></h2>
 <p class="lede enter-support" style="--d:280ms">La plataforma decide si la IA es un <strong style="color:#fff">atajo individual o una capacidad</strong> de la organización.</p>
 <div class="chapter-chain enter-support" style="--d:420ms"><span>ANATOMÍA</span><i></i><span>JOURNEY</span><i></i><span>PUERTAS</span><i></i><span>CONTEXTO</span><i></i><span>GUARDRAILS</span><i></i><span>MEDICIÓN</span></div>
+</div>
+<div class="neural-mount" aria-hidden="true"></div>
 <div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
 <aside class="notes">Apertura bloque 2. Pasamos de cómo usa IA una persona a cómo la ofrece la organización.</aside>
 </section>
@@ -803,13 +838,13 @@ Ninguna de estas fallas dispara una alerta. Contexto filtrado: datos que salen p
 <h2 class="enter-lead">La IA es una interfaz más.<br><em>El core sigue siendo el core.</em></h2>
 <div class="art-wrap">
 <div class="scene-grid">
-  <svg class="art" viewBox="0 0 600 420" role="img" aria-label="Capas de plataforma: interfaces, contrato, core, infraestructura">
-    <g class="beat" data-beat="2"><polygon points="80,340 300,280 520,340 300,400" class="f-bg2 s-mu" stroke-width="2"/><text x="300" y="347" text-anchor="middle" class="t-mono t-mu" font-size="16" font-weight="600">INFRA</text></g>
-    <g class="beat" data-beat="2"><polygon points="80,250 300,190 520,250 300,310" class="f-tint s-v" stroke-width="2.5"/><text x="300" y="257" text-anchor="middle" class="t-mono t-v" font-size="17" font-weight="600">CORE</text></g>
-    <g class="beat" data-beat="1"><polygon points="80,160 300,100 520,160 300,220" class="f-bg s-a" stroke-width="2.5"/><text x="300" y="167" text-anchor="middle" class="t-mono t-a" font-size="17" font-weight="600">CONTRATO</text></g>
-    <g class="beat" data-beat="0"><polygon points="80,70 300,10 520,70 300,130" class="f-bg s-fg" stroke-width="2.5"/>
-      <g font-size="15" class="t-mono" text-anchor="middle"><text x="200" y="76">IDE</text><text x="260" y="58">CLI</text><text x="340" y="58">PORTAL</text><text x="410" y="80">CHAT</text></g>
-      <use href="#spark" x="398" y="22" width="26" height="26" class="f-v"/></g>
+  <svg class="art" viewBox="0 0 600 360" role="img" aria-label="Capas de plataforma: interfaces, contrato, core, infraestructura">
+    <g class="beat" data-beat="2"><polygon points="80,290 300,240 520,290 300,340" class="f-bg2 s-mu" stroke-width="2"/><text x="300" y="297" text-anchor="middle" class="t-mono t-mu" font-size="16" font-weight="600">INFRA</text></g>
+    <g class="beat" data-beat="2"><polygon points="80,215 300,165 520,215 300,265" class="f-tint s-v" stroke-width="2.5"/><text x="300" y="222" text-anchor="middle" class="t-mono t-v" font-size="17" font-weight="600">CORE</text></g>
+    <g class="beat" data-beat="1"><polygon points="80,140 300,90 520,140 300,190" class="f-bg s-a" stroke-width="2.5"/><text x="300" y="147" text-anchor="middle" class="t-mono t-a" font-size="17" font-weight="600">CONTRATO</text></g>
+    <g class="beat" data-beat="0"><polygon points="80,65 300,15 520,65 300,115" class="f-bg s-fg" stroke-width="2.5"/>
+      <g font-size="15" class="t-mono" text-anchor="middle"><text x="200" y="72">IDE</text><text x="260" y="54">CLI</text><text x="340" y="54">PORTAL</text><text x="410" y="76">CHAT</text></g>
+      <use href="#spark" x="398" y="18" width="26" height="26" class="f-v"/></g>
   </svg>
   <ul class="layer-notes">
     <li class="beat hl" data-beat="0"><b class="t-fg">INTERFACES</b><span>IDE, CLI, portal, chat y agentes. <strong>Aquí entra la IA</strong>: una puerta nueva.</span></li>
@@ -1029,12 +1064,15 @@ Cuatro patrones que vemos con frecuencia. Un chatbot que promete desplegar sin c
 
 <section class="slide keynote accent-scene block-divider" data-block="3" data-title="3. Roles críticos para los puntos 1 y 2" data-secs="30">
 <header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 / 3</span></span><span>ROLES</span></header>
+<div class="block-copy">
 <span class="block-num enter-deco" style="--d:120ms" aria-hidden="true">03</span>
 <div class="pixel-grid divider-pixels" data-pattern="110110/011101/101011/110110" aria-hidden="true"></div>
 <p class="eyebrow enter-deco">Bloque 3 de 3</p>
 <h2 class="enter-lead">Roles críticos para<br>los puntos 1 y 2<span class="period">.</span></h2>
 <p class="lede enter-support" style="--d:280ms">La IA no elimina roles. Mueve responsabilidades. <strong style="color:#fff">Si nadie las toma, las toma el azar.</strong></p>
 <div class="chapter-chain enter-support" style="--d:420ms"><span>MAPA</span><i></i><span>TU ROL</span><i></i><span>QUÉ / CÓMO</span><i></i><span>CONFIANZA</span><i></i><span>ADOPCIÓN</span><i></i><span>RACI</span></div>
+</div>
+<div class="neural-mount" aria-hidden="true"></div>
 <div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
 <aside class="notes">Apertura bloque 3. Los bloques 1 y 2 generan decisiones; este bloque asigna quién las toma.</aside>
 </section>
@@ -1445,94 +1483,126 @@ function syncAmbientPause(){
 function toggleAmbient(){ambientStopped=!ambientStopped;syncAmbientPause();}
 
 
-/* Neural cover — particle bolts + traveling charges */
+/* Neural cover — clone into block openers + particle bolts */
 (function(){
-  const stage=document.querySelector('.neural-stage');
-  if(!stage) return;
-  const canvas=stage.querySelector('.neural-canvas');
-  const svg=stage.querySelector('.neural-net');
-  if(!canvas||!svg) return;
-  const ctx=canvas.getContext('2d');
-  const dpr=Math.min(2, window.devicePixelRatio||1);
-  function resize(){
-    const r=canvas.getBoundingClientRect();
-    canvas.width=Math.round(r.width*dpr); canvas.height=Math.round(r.height*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
+  const source=document.querySelector('.key-cover .neural-stage');
+  if(!source) return;
+
+  function uniquify(root, suffix){
+    const map=new Map();
+    root.querySelectorAll('[id]').forEach(el=>{
+      const old=el.id; const neu=old+'-'+suffix; map.set(old,neu); el.id=neu;
+    });
+    const attrs=['fill','stroke','filter','href','xlink:href'];
+    root.querySelectorAll('*').forEach(el=>{
+      for(const attr of attrs){
+        const v=el.getAttribute(attr); if(!v) continue;
+        let next=v;
+        const m=v.match(/^url\(#([^)]+)\)$/);
+        if(m && map.has(m[1])) next='url(#'+map.get(m[1])+')';
+        else if(v.startsWith('#') && map.has(v.slice(1))) next='#'+map.get(v.slice(1));
+        if(next!==v) el.setAttribute(attr,next);
+      }
+      const st=el.getAttribute('style');
+      if(st && st.includes('url(#')){
+        el.setAttribute('style', st.replace(/url\(#([^)]+)\)/g,(_,id)=> map.has(id)? 'url(#'+map.get(id)+')' : 'url(#'+id+')'));
+      }
+    });
   }
-  resize(); addEventListener('resize', resize);
-  const vb=svg.viewBox.baseVal;
-  const nodes=[...svg.querySelectorAll('.neuron')].map(g=>{
-    const t=g.getAttribute('transform').match(/translate\(([-\d.]+) ([-\d.]+)\)/);
-    return {x:+t[1], y:+t[2], hub:g.classList.contains('hub')};
+
+  document.querySelectorAll('.block-divider .neural-mount').forEach((mount, idx)=>{
+    if(mount.querySelector('.neural-stage')) return;
+    const clone=source.cloneNode(true);
+    clone.classList.add('neural-stage--block');
+    uniquify(clone, 'b'+(idx+1));
+    mount.replaceWith(clone);
   });
-  const charges=[];
-  const bolts=[];
-  let last=0;
-  function spawnCharge(){
-    if(nodes.length<2) return;
-    const a=nodes[(Math.random()*nodes.length)|0];
-    let b=nodes[(Math.random()*nodes.length)|0];
-    if(b===a) b=nodes[(a===nodes[0]?1:0)];
-    charges.push({a,b,t:0,speed:.55+Math.random()*.85,hue:180+Math.random()*160,w:1.8+Math.random()*3.2});
-  }
-  function spawnBolt(){
-    const hubs=nodes.filter(n=>n.hub);
-    const origin=hubs[(Math.random()*hubs.length)|0]||nodes[0];
-    const target=nodes[(Math.random()*nodes.length)|0];
-    const segs=[];
-    let x=origin.x,y=origin.y;
-    const steps=5+(Math.random()*4)|0;
-    for(let i=1;i<=steps;i++){
-      const t=i/steps;
-      const nx=origin.x+(target.x-origin.x)*t+(Math.random()-.5)*28;
-      const ny=origin.y+(target.y-origin.y)*t+(Math.random()-.5)*28;
-      segs.push({x,y,nx,ny}); x=nx; y=ny;
+
+  function bootStage(stage){
+    const canvas=stage.querySelector('.neural-canvas');
+    const svg=stage.querySelector('.neural-net');
+    if(!canvas||!svg) return;
+    const ctx=canvas.getContext('2d');
+    const dpr=Math.min(2, window.devicePixelRatio||1);
+    function resize(){
+      const r=canvas.getBoundingClientRect();
+      canvas.width=Math.max(1,Math.round(r.width*dpr));
+      canvas.height=Math.max(1,Math.round(r.height*dpr));
+      ctx.setTransform(dpr,0,0,dpr,0,0);
     }
-    bolts.push({segs, life:1, hue:260+Math.random()*80});
-  }
-  for(let i=0;i<18;i++) spawnCharge();
-  function tick(now){
-    const dt=Math.min(40, now-(last||now))/1000; last=now;
-    const cover=document.querySelector('.key-cover');
-    const active=cover?.classList.contains('active');
-    const paused=document.body.classList.contains('ambient-paused')||matchMedia('(prefers-reduced-motion: reduce)').matches||document.hidden||!active;
-    const r=canvas.getBoundingClientRect();
-    const sx=r.width/vb.width, sy=r.height/vb.height;
-    ctx.clearRect(0,0,r.width,r.height);
-    if(!paused){
-      if(Math.random()<.22) spawnCharge();
-      if(Math.random()<.12) spawnBolt();
-      if(Math.random()<.06){spawnBolt();spawnBolt();}
-      for(const c of charges){
-        c.t+=dt*c.speed;
-        const t=c.t%1;
-        const x=(c.a.x+(c.b.x-c.a.x)*t)*sx;
-        const y=(c.a.y+(c.b.y-c.a.y)*t)*sy;
-        const g=ctx.createRadialGradient(x,y,0,x,y,10*c.w);
-        g.addColorStop(0,`hsla(${c.hue},100%,85%,1)`);
-        g.addColorStop(.35,`hsla(${c.hue},100%,65%,.55)`);
-        g.addColorStop(1,'transparent');
-        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,16*c.w,0,Math.PI*2); ctx.fill();
-        ctx.strokeStyle=`hsla(${c.hue},100%,78%,.85)`; ctx.lineWidth=c.w*1.4; ctx.shadowColor=`hsla(${c.hue},100%,70%,.9)`; ctx.shadowBlur=12;
-        ctx.beginPath();
-        ctx.moveTo((c.a.x+(c.b.x-c.a.x)*Math.max(0,t-.12))*sx,(c.a.y+(c.b.y-c.a.y)*Math.max(0,t-.12))*sy);
-        ctx.lineTo(x,y); ctx.stroke(); ctx.shadowBlur=0;
+    resize(); addEventListener('resize', resize);
+    const vb=svg.viewBox.baseVal;
+    const nodes=[...svg.querySelectorAll('.neuron')].map(g=>{
+      const t=(g.getAttribute('transform')||'').match(/translate\(([-d.]+)[ ,]([-d.]+)\)/);
+      return t?{x:+t[1], y:+t[2], hub:g.classList.contains('hub')}:null;
+    }).filter(Boolean);
+    // account for brain-body transform roughly via SVG CTM when drawing? use raw coords + viewBox scale
+    const charges=[]; const bolts=[]; let last=0;
+    function spawnCharge(){
+      if(nodes.length<2) return;
+      const a=nodes[(Math.random()*nodes.length)|0];
+      let b=nodes[(Math.random()*nodes.length)|0];
+      if(b===a) b=nodes[(a===nodes[0]?1:0)];
+      charges.push({a,b,t:0,speed:.55+Math.random()*.85,hue:180+Math.random()*160,w:1.8+Math.random()*3.2});
+    }
+    function spawnBolt(){
+      const hubs=nodes.filter(n=>n.hub);
+      const origin=hubs[(Math.random()*hubs.length)|0]||nodes[0];
+      const target=nodes[(Math.random()*nodes.length)|0];
+      const segs=[]; let x=origin.x,y=origin.y;
+      const steps=5+(Math.random()*4)|0;
+      for(let i=1;i<=steps;i++){
+        const t=i/steps;
+        const nx=origin.x+(target.x-origin.x)*t+(Math.random()-.5)*28;
+        const ny=origin.y+(target.y-origin.y)*t+(Math.random()-.5)*28;
+        segs.push({x,y,nx,ny}); x=nx; y=ny;
       }
-      if(charges.length>28) charges.splice(0, charges.length-22);
-      for(let i=bolts.length-1;i>=0;i--){
-        const b=bolts[i]; b.life-=dt*1.8;
-        if(b.life<=0){bolts.splice(i,1); continue;}
-        ctx.strokeStyle=`hsla(${b.hue},100%,88%,${Math.min(1,b.life*1.2)})`;
-        ctx.shadowColor=`hsla(${b.hue},100%,75%,1)`; ctx.shadowBlur=22;
-        ctx.lineWidth=3.4*b.life+1;
-        ctx.beginPath();
-        for(const s of b.segs){ ctx.moveTo(s.x*sx,s.y*sy); ctx.lineTo(s.nx*sx,s.ny*sy); }
-        ctx.stroke(); ctx.shadowBlur=0;
+      bolts.push({segs, life:1, hue:260+Math.random()*80});
+    }
+    for(let i=0;i<14;i++) spawnCharge();
+    function tick(now){
+      const dt=Math.min(40, now-(last||now))/1000; last=now;
+      const slide=stage.closest('.slide');
+      const active=slide?.classList.contains('active');
+      const paused=document.body.classList.contains('ambient-paused')||matchMedia('(prefers-reduced-motion: reduce)').matches||document.hidden||!active;
+      const r=canvas.getBoundingClientRect();
+      const sx=r.width/vb.width, sy=r.height/vb.height;
+      ctx.clearRect(0,0,r.width,r.height);
+      if(!paused){
+        if(Math.random()<.2) spawnCharge();
+        if(Math.random()<.1) spawnBolt();
+        for(const c of charges){
+          c.t+=dt*c.speed; const t=c.t%1;
+          const x=(c.a.x+(c.b.x-c.a.x)*t)*sx;
+          const y=(c.a.y+(c.b.y-c.a.y)*t)*sy;
+          const g=ctx.createRadialGradient(x,y,0,x,y,10*c.w);
+          g.addColorStop(0,`hsla(${c.hue},100%,85%,1)`);
+          g.addColorStop(.35,`hsla(${c.hue},100%,65%,.55)`);
+          g.addColorStop(1,'transparent');
+          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,16*c.w,0,Math.PI*2); ctx.fill();
+          ctx.strokeStyle=`hsla(${c.hue},100%,78%,.85)`; ctx.lineWidth=c.w*1.4;
+          ctx.shadowColor=`hsla(${c.hue},100%,70%,.9)`; ctx.shadowBlur=12;
+          ctx.beginPath();
+          ctx.moveTo((c.a.x+(c.b.x-c.a.x)*Math.max(0,t-.12))*sx,(c.a.y+(c.b.y-c.a.y)*Math.max(0,t-.12))*sy);
+          ctx.lineTo(x,y); ctx.stroke(); ctx.shadowBlur=0;
+        }
+        if(charges.length>24) charges.splice(0, charges.length-18);
+        for(let i=bolts.length-1;i>=0;i--){
+          const b=bolts[i]; b.life-=dt*1.8;
+          if(b.life<=0){bolts.splice(i,1); continue;}
+          ctx.strokeStyle=`hsla(${b.hue},100%,88%,${Math.min(1,b.life*1.2)})`;
+          ctx.shadowColor=`hsla(${b.hue},100%,75%,1)`; ctx.shadowBlur=22;
+          ctx.lineWidth=3.4*b.life+1; ctx.beginPath();
+          for(const s of b.segs){ ctx.moveTo(s.x*sx,s.y*sy); ctx.lineTo(s.nx*sx,s.ny*sy); }
+          ctx.stroke(); ctx.shadowBlur=0;
+        }
       }
+      requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
   }
-  requestAnimationFrame(tick);
+
+  document.querySelectorAll('.neural-stage').forEach(bootStage);
 })();
 
 /* Talk carousel — stacked peek like F13 bio */

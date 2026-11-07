@@ -2,8 +2,8 @@
   "name": "Oscar Lobaton Salas",
   "shortName": "Oscar Lobaton",
   "initials": "OL",
-  "headline": "Platform Product Lead",
-  "organization": "Credicorp",
+  "headline": "SRE FDE",
+  "organization": "Cobre",
   "location": "LatAm",
   "email": "",
   "website": "",
@@ -15,10 +15,19 @@
     "qrAsset": "linkedin-qr.svg"
   },
   "profiles": [
-    { "label": "GitHub", "value": "@0vas", "url": "https://github.com/0vas" },
-    { "label": "X", "value": "@0vas", "url": "https://x.com/0vas" }
+    {
+      "label": "GitHub",
+      "value": "@0vas",
+      "url": "https://github.com/0vas"
+    },
+    {
+      "label": "X",
+      "value": "@0vas",
+      "url": "https://x.com/0vas"
+    }
   ],
   "roles": [
+    "Technology Enthusiast",
     "Investigador colaborador en LABIAR-UNI",
     "DevOps Ambassador de PeopleCert",
     "DevSecOps Space Ambassador"

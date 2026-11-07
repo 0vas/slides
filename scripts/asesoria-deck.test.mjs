@@ -53,3 +53,15 @@ test('uses Kowalski-grade entrance choreography and strong easing', () => {
   assert.match(html, /enter-lead|enter-support|choreograph/)
   assert.match(html, /--ease-out:\s*cubic-bezier/)
 })
+
+test('opens each block with the neural brain mount and keeps anatomy takeaway readable', () => {
+  const dividers = slides.filter((s) => /\bblock-divider\b/.test(s.classes))
+  assert.equal(dividers.length, 3)
+  for (const d of dividers) {
+    assert.match(d.body, /neural-mount|neural-stage/)
+    assert.match(d.body, /block-copy/)
+  }
+  assert.match(html, /anatomy-scene[\s\S]*scene-takeaway/)
+  assert.match(html, /\.anatomy-scene \.scene-takeaway/)
+  assert.match(html, /\.layer-notes li\{[^}]*grid-template-columns/)
+})

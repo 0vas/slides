@@ -71,3 +71,12 @@ test('never forces display:flex on inactive slides via scene class overrides', (
   assert.doesNotMatch(html, /^\s*\.(anatomy-scene|block-divider|key-cover|bio-keynote)\s*\{[^}]*\bdisplay\s*:\s*flex\b/m)
   assert.match(html, /\.slide\.active\s*\{\s*display\s*:\s*flex\s*\}/)
 })
+
+test('balance scene tips via CSS data-step and adoption keeps narrative stages', () => {
+  assert.match(html, /\.balance-scene\[data-step="0"\][^{]*\{[^}]*rotate\(-8deg\)/)
+  assert.match(html, /\.balance-scene\[data-step="2"\][^{]*\{[^}]*rotate\(0deg\)/)
+  assert.match(html, /class="balance-arm"/)
+  assert.match(html, /class="adopt-stages"/)
+  assert.match(html, /class="champion-call beat"/)
+  assert.match(html, /animation-duration:\s*820ms/)
+})

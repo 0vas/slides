@@ -9,7 +9,7 @@ import { buildStaticDeck, serveStaticDeck, staticDeckMeta } from './static-decks
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const decksDir = join(root, 'decks')
 const repoName = basename(root)
-const repositoryUrl = 'https://github.com/ovas04/slides'
+const repositoryUrl = 'https://github.com/0vas/slides-personal'
 const sharedFavicon = join(root, 'shared', 'public', 'favicon.svg')
 
 const command = process.argv[2] || 'list'
@@ -611,7 +611,11 @@ switch (command) {
     break
   }
   case 'build-all': {
-    const slugs = decks()
+    const slugs = decks().filter((slug) => hasDeckEntry(slug))
+    const skipped = decks().filter((slug) => !hasDeckEntry(slug))
+    if (skipped.length) {
+      console.warn(`Skipping incomplete deck folders: ${skipped.join(', ')}`)
+    }
     for (const slug of slugs) {
       build(slug)
     }

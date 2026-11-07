@@ -65,3 +65,9 @@ test('opens each block with the neural brain mount and keeps anatomy takeaway re
   assert.match(html, /\.anatomy-scene \.scene-takeaway/)
   assert.match(html, /\.layer-notes li\{[^}]*grid-template-columns/)
 })
+
+test('never forces display:flex on inactive slides via scene class overrides', () => {
+  // A bare `.anatomy-scene{display:flex}` (or similar) keeps that slide painted above every other slide.
+  assert.doesNotMatch(html, /^\s*\.(anatomy-scene|block-divider|key-cover|bio-keynote)\s*\{[^}]*\bdisplay\s*:\s*flex\b/m)
+  assert.match(html, /\.slide\.active\s*\{\s*display\s*:\s*flex\s*\}/)
+})

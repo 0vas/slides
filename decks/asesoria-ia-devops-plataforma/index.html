@@ -87,11 +87,11 @@ svg .t-b{font-weight:640}
 @keyframes draw-in{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 
 /* Beats are interruptible transitions, not keyframes: they retarget when the presenter steps back. */
-.beat{opacity:0;transform:translateY(16px);filter:blur(3px);transition:opacity 380ms var(--ease-out),transform 560ms var(--ease-out),filter 380ms var(--ease-out);pointer-events:none}
+.beat{opacity:0;transform:translateY(14px);filter:blur(2px);transition:opacity 460ms var(--ease-out),transform 640ms var(--ease-out),filter 460ms var(--ease-out);pointer-events:none}
 svg .beat{transform-box:fill-box}
 .beat.fade{transform:none}
 .beat.shown{opacity:1;transform:none;filter:none;pointer-events:auto}
-.beat .lag{transition:opacity 420ms var(--ease-out) 110ms,transform 560ms var(--ease-out) 110ms}
+.beat .lag{transition:opacity 480ms var(--ease-out) 140ms,transform 640ms var(--ease-out) 140ms}
 .beat:not(.shown) .lag{opacity:0;transform:translateY(8px)}
 .trace{transition:stroke-dashoffset 950ms var(--ease-in-out) 140ms}
 .beat:not(.shown) .trace{stroke-dashoffset:1;transition-duration:0s;transition-delay:0s}
@@ -100,15 +100,15 @@ svg .beat{transform-box:fill-box}
 html.native-deck-transitions{view-transition-name:none}
 html.native-deck-transitions #stage{view-transition-name:deck}
 html.native-deck-transitions #stage .slide{transition:none!important}
-::view-transition-group(deck){animation-duration:400ms}
+::view-transition-group(deck){animation-duration:820ms}
 ::view-transition-image-pair(deck){isolation:isolate}
-::view-transition-old(deck){animation:deck-exit 140ms ease-out both;mix-blend-mode:normal}
-::view-transition-new(deck){animation:deck-reveal-forward 260ms cubic-bezier(.23,1,.32,1) 140ms both;mix-blend-mode:normal}
+::view-transition-old(deck){animation:deck-exit 360ms cubic-bezier(.4,0,.2,1) both;mix-blend-mode:normal}
+::view-transition-new(deck){animation:deck-reveal-forward 560ms cubic-bezier(.23,1,.32,1) 160ms both;mix-blend-mode:normal}
 html.deck-backward::view-transition-new(deck){animation-name:deck-reveal-backward}
 ::view-transition{pointer-events:none}
-@keyframes deck-exit{from{opacity:1}to{opacity:0}}
-@keyframes deck-reveal-forward{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
-@keyframes deck-reveal-backward{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes deck-exit{from{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}to{opacity:0;transform:translateX(-16px) scale(.99);filter:blur(1.5px)}}
+@keyframes deck-reveal-forward{from{opacity:0;transform:translateX(28px) scale(.99);filter:blur(2px)}to{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}}
+@keyframes deck-reveal-backward{from{opacity:0;transform:translateX(-28px) scale(.99);filter:blur(2px)}to{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}}
 
 /* ── Accent scenes (cover, block dividers, statements, close) ─────────── */
 .slide.accent-scene{--fg:#ffffff;--muted:rgba(255,255,255,.82);--line:rgba(255,255,255,.3);--grid:rgba(13,10,23,.16);--aqua:#d9f6ff;--violet:#ffffff;--on-violet:#2a1670;
@@ -159,6 +159,74 @@ body.ambient-paused .pixel{animation-play-state:paused!important}
 .dial-scene[data-step="0"] .needle{transform:rotate(-48deg)}
 .dial-scene[data-step="1"] .needle,.dial-scene:not([data-step]) .needle{transform:rotate(0deg)}
 .dial-scene[data-step="2"] .needle{transform:rotate(48deg)}
+
+/* Balance scale — tips to velocidad, then balances as controls land */
+.balance-scene .art-wrap{gap:14px}
+.balance-scene svg.art{overflow:visible;max-height:236px}
+.balance-scene .balance-arm{
+  transform-box:view-box;transform-origin:704px 58px;
+  transition:transform 780ms cubic-bezier(.23,1,.32,1);
+}
+.balance-scene .pan-l,.balance-scene .pan-r{
+  transform-box:view-box;
+  transition:transform 780ms cubic-bezier(.23,1,.32,1);
+}
+.balance-scene .pan-l{transform-origin:360px 58px}
+.balance-scene .pan-r{transform-origin:1048px 58px}
+.balance-scene[data-step="0"] .balance-arm,
+.balance-scene:not([data-step]) .balance-arm{transform:rotate(-8deg)}
+.balance-scene[data-step="0"] .pan-l,
+.balance-scene[data-step="0"] .pan-r,
+.balance-scene:not([data-step]) .pan-l,
+.balance-scene:not([data-step]) .pan-r{transform:rotate(8deg)}
+.balance-scene[data-step="1"] .balance-arm{transform:rotate(-3deg)}
+.balance-scene[data-step="1"] .pan-l,
+.balance-scene[data-step="1"] .pan-r{transform:rotate(3deg)}
+.balance-scene[data-step="2"] .balance-arm{transform:rotate(0deg)}
+.balance-scene[data-step="2"] .pan-l,
+.balance-scene[data-step="2"] .pan-r{transform:rotate(0deg)}
+.balance-scene .role-cols{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px 36px;
+  width:100%;max-width:1180px;margin:8px auto 0;position:relative;z-index:2;
+}
+.balance-scene .role-cols > div{
+  border-top:2px solid var(--line);padding-top:14px;
+}
+.balance-scene .role-cols b{
+  display:block;font:13px/1.2 var(--mono);letter-spacing:.12em;margin-bottom:8px;
+}
+.balance-scene .role-cols p{
+  margin:0;font-size:20px;line-height:1.35;color:var(--muted);max-width:42ch;
+}
+.balance-scene .role-cols .beat[data-beat="0"]{border-color:color-mix(in srgb,var(--violet) 55%,var(--line))}
+.balance-scene .role-cols .beat[data-beat="1"]{border-color:color-mix(in srgb,var(--aqua) 55%,var(--line))}
+
+/* Adoption curve + champion proof points */
+.plain-list{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+.plain-list li{
+  position:relative;padding-left:22px;font-size:22px;line-height:1.35;color:var(--fg);
+}
+.plain-list li::before{
+  content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;
+  background:var(--aqua);
+}
+.adoption-scene .scene-grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:28px 40px;align-items:center}
+.adoption-scene h2{font-size:58px;max-width:12ch}
+.adoption-scene .adopt-stages{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:0}
+.adoption-scene .adopt-stages li{
+  display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;
+  border-top:1px solid var(--line);padding:12px 0;
+}
+.adoption-scene .adopt-stages .n{
+  font:13px/1.2 var(--mono);letter-spacing:.1em;color:var(--violet);padding-top:4px;font-weight:650;
+}
+.adoption-scene .adopt-stages .t{font-size:22px;line-height:1.3;color:var(--fg)}
+.adoption-scene .adopt-stages .d{grid-column:2;font-size:16px;line-height:1.35;color:var(--muted);margin-top:2px}
+.adoption-scene .champion-call{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--line);
+}
+.adoption-scene .champion-call .lede{font-size:24px;max-width:28ch;margin:0 0 8px}
+
 .modes{list-style:none;padding:0;margin:0;display:grid;gap:0;align-content:center}
 .modes li{display:grid;grid-template-columns:132px 1fr;column-gap:18px;row-gap:4px;border-top:1px solid var(--line);padding:16px 0 14px;align-items:start}
 .modes .tag{font:13px/1.2 var(--mono);letter-spacing:.14em;font-weight:650;padding-top:4px}
@@ -336,7 +404,7 @@ html[data-theme="light"] .key-cover .period{color:var(--violet)}
   .scene-running .enter-lead,.scene-running .enter-support,.scene-running .enter-art,.scene-running .speaker-portrait{animation:deco-in 200ms ease both!important}
   .scene-running .draw,.scene-running .pixel.on{animation:none!important}
   .beat{transform:none;filter:none;transition:opacity 200ms ease}
-  .trace,.needle,.beam,.pan-l,.pan-r,.ink-line::after{transition:none!important}
+  .trace,.needle,.beam,.pan-l,.pan-r,.balance-arm,.ink-line::after{transition:none!important}
 }
 
 /* ── Controls, presenter, index (unchanged runtime chrome) ────────────── */
@@ -1165,22 +1233,26 @@ El PM de plataforma decide qué journeys importan, con qué acuerdos y cómo se 
 <header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>CONFIANZA</span></header>
 <p class="eyebrow enter-deco">Confianza · Security y SRE</p>
 <h2 class="enter-lead">Los controles<br><em>también son producto.</em></h2>
-<div class="art-wrap" style="flex-direction:column;align-items:stretch;gap:8px">
-  <svg class="art enter-art" viewBox="0 0 1408 270" style="height:270px" role="img" aria-label="Balanza entre velocidad y confianza que se equilibra">
-    <path class="s-fg" stroke-width="4" stroke-linecap="round" d="M704 70V240M624 240H784"/>
-    <g class="beam"><path class="s-fg" stroke-width="5" stroke-linecap="round" d="M344 70H1064"/><circle cx="704" cy="70" r="10" class="f-v"/></g>
-    <g class="pan-l"><path class="s-mu" stroke-width="2" d="M344 70L284 160M344 70L404 160"/><path class="f-a" d="M264 160H424Q344 214 264 160Z"/><text x="344" y="250" text-anchor="middle" class="t-mono t-a" font-size="17" font-weight="600">VELOCIDAD</text></g>
-    <g class="pan-r"><path class="s-mu" stroke-width="2" d="M1064 70L1004 160M1064 70L1124 160"/><path class="f-v" d="M984 160H1144Q1064 214 984 160Z"/><text x="1064" y="250" text-anchor="middle" class="t-mono t-v" font-size="17" font-weight="600">CONFIANZA</text></g>
+<div class="art-wrap" style="flex-direction:column;align-items:stretch">
+  <svg class="art enter-art" viewBox="0 0 1408 236" style="height:236px" role="img" aria-label="Balanza entre velocidad y confianza que se equilibra">
+    <path class="s-fg" stroke-width="4" stroke-linecap="round" d="M704 58V198M630 198H778"/>
+    <g class="balance-arm">
+      <g class="beam"><path class="s-fg" stroke-width="5" stroke-linecap="round" d="M360 58H1048"/><circle cx="704" cy="58" r="10" class="f-v"/></g>
+      <g class="pan-l"><path class="s-mu" stroke-width="2" d="M360 58L304 138M360 58L416 138"/><path class="f-a" d="M284 138H436Q360 182 284 138Z"/></g>
+      <g class="pan-r"><path class="s-mu" stroke-width="2" d="M1048 58L992 138M1048 58L1104 138"/><path class="f-v" d="M972 138H1124Q1048 182 972 138Z"/></g>
+    </g>
+    <text x="360" y="218" text-anchor="middle" class="t-mono t-a" font-size="16" font-weight="600">VELOCIDAD</text>
+    <text x="1048" y="218" text-anchor="middle" class="t-mono t-v" font-size="16" font-weight="600">CONFIANZA</text>
   </svg>
   <div class="role-cols">
-    <div class="beat" data-beat="0"><b style="color:var(--violet)">SECURITY / APPSEC</b><p>Clasificación de datos, modelos y proveedores permitidos, políticas como código.</p></div>
-    <div class="beat" data-beat="1"><b style="color:var(--aqua)">SRE</b><p>SLOs para cambios asistidos, rollback probado y error budget que también aplica a la IA.</p></div>
+    <div class="beat" data-beat="0"><b style="color:var(--violet)">SECURITY / APPSEC · peso en confianza</b><p>Clasificación de datos, modelos y proveedores permitidos, políticas como código.</p></div>
+    <div class="beat" data-beat="1"><b style="color:var(--aqua)">SRE · peso en confianza</b><p>SLOs para cambios asistidos, rollback probado y error budget que también aplica a la IA.</p></div>
   </div>
 </div>
 <p class="scene-takeaway beat" data-beat="2">Un control que el equipo evita no protege. <strong>Hazlo usable.</strong></p>
 <div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
-<aside class="notes">CONTROL: 3 pasos. La balanza se equilibra en el último paso.
-La velocidad pesa más por defecto. Security aporta la mitad de la confianza: qué datos pueden ir a qué modelos y con qué proveedores, escrito como política ejecutable. SRE aporta la otra mitad: SLOs y rollback para cambios asistidos. Cuando ambos diseñan sus controles como producto, la balanza se equilibra.</aside>
+<aside class="notes">CONTROL: 3 pasos. La balanza empieza inclinada a velocidad y se equilibra al final.
+Paso 1: Security aporta peso a confianza (datos, modelos, políticas como código). Paso 2: SRE aporta el otro peso (SLOs, rollback, error budget). Paso 3: si el control no es usable, el equipo lo evita y la balanza vuelve a romperse.</aside>
 </section>
 
 <section class="slide keynote editorial adoption-scene" data-title="La adopción se diseña" data-secs="90">
@@ -1190,8 +1262,14 @@ La velocidad pesa más por defecto. Security aporta la mitad de la confianza: qu
   <div class="copy-col">
     <p class="eyebrow enter-deco">Adopción · Champions</p>
     <h2 class="enter-lead">La adopción<br><em>se diseña.</em></h2>
-    <p class="lede enter-support">Champions no son evangelizadores: son <strong>usuarios avanzados con tiempo asignado.</strong></p>
-    <ul class="plain-list beat" data-beat="2"><li>office hours semanales</li><li class="lag">ejemplos con el código propio</li><li class="lag">paths documentados con dueño</li></ul>
+    <ol class="adopt-stages">
+      <li class="beat" data-beat="0"><span class="n">01</span><span class="t">Curiosidad → piloto acompañado</span><span class="d">Nadie adopta por anuncio. Primero se prueba con ayuda.</span></li>
+      <li class="beat" data-beat="1"><span class="n">02</span><span class="t">Práctica compartida → estándar</span><span class="d">Lo que funciona en un equipo sube a path de plataforma.</span></li>
+    </ol>
+    <div class="champion-call beat" data-beat="2">
+      <p class="lede">Champions no son evangelizadores: son <strong>usuarios avanzados con tiempo asignado.</strong></p>
+      <ul class="plain-list"><li>office hours semanales</li><li class="lag">ejemplos con el código propio</li><li class="lag">paths documentados con dueño</li></ul>
+    </div>
   </div>
   <svg class="art enter-art" viewBox="0 0 760 430" role="img" aria-label="Curva de adopción con cuatro etapas">
     <path class="s-line" stroke-width="2" d="M30 400H740M30 400V20"/>
@@ -1199,14 +1277,16 @@ La velocidad pesa más por defecto. Security aporta la mitad de la confianza: qu
     <g class="beat" data-beat="0"><circle cx="110" cy="383" r="10" class="f-v"/><text x="100" y="352" font-size="22" font-weight="600">curiosidad</text>
       <circle cx="268" cy="330" r="10" class="f-v"/><text x="248" y="300" text-anchor="end" font-size="22" font-weight="600">piloto acompañado</text></g>
     <g class="beat" data-beat="1"><circle cx="420" cy="180" r="10" class="f-v"/><text x="400" y="160" text-anchor="end" font-size="22" font-weight="600">práctica compartida</text>
-      <circle cx="660" cy="62" r="10" class="f-v"/><text x="640" y="36" text-anchor="end" font-size="22" font-weight="600">estándar de plataforma</text>
-      <use href="#person" x="290" y="350" width="34" height="34" style="color:var(--aqua)"/><use href="#person" x="440" y="196" width="34" height="34" style="color:var(--aqua)"/><text x="476" y="222" class="t-mono t-a" font-size="14" font-weight="600">CHAMPION</text></g>
+      <circle cx="660" cy="62" r="10" class="f-v"/><text x="640" y="36" text-anchor="end" font-size="22" font-weight="600">estándar de plataforma</text></g>
+    <g class="beat" data-beat="2">
+      <use href="#person" x="290" y="350" width="34" height="34" style="color:var(--aqua)"/><use href="#person" x="440" y="196" width="34" height="34" style="color:var(--aqua)"/>
+      <text x="476" y="222" class="t-mono t-a" font-size="14" font-weight="600">CHAMPION</text>
+    </g>
   </svg>
 </div>
 </div>
 <div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
-<aside class="notes">CONTROL: 3 pasos.
-La adopción no ocurre por anuncio. Curiosidad y piloto acompañado; luego práctica compartida y, solo al final, estándar de plataforma. Los champions están en el tramo empinado: son usuarios avanzados con tiempo asignado para ayudar. Paso 3: los artefactos que sostienen la curva.</aside>
+<aside class="notes">CONTROL: 3 pasos. Primero la curva: curiosidad y piloto. Después práctica compartida y estándar. Al final, el champion en el tramo empinado: usuario avanzado con tiempo asignado, office hours, ejemplos con código propio y paths con dueño. La definición cierra la curva; no la reemplaza.</aside>
 </section>
 
 <section class="slide keynote editorial raci-scene" data-title="Quién decide qué" data-secs="150">

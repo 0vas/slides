@@ -1,0 +1,1651 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>IA en DevOps y la plataforma · Oscar Lobaton</title>
+<meta name="description" content="Asesoría interna de 60 minutos para DevOps Engineers: IA en los flujos de DevOps, IA en la plataforma de ingeniería y roles críticos.">
+<style>
+/* ── Tokens: 0vas.com palette, dual theme ─────────────────────────────── */
+:root{
+  --ease-out: cubic-bezier(.23,1,.32,1);
+  --ease-in-out: cubic-bezier(.77,0,.175,1);
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Inter,Arial,sans-serif;
+  --mono:"SF Mono",ui-monospace,Menlo,"Courier New",monospace;
+  --bg:#0d0a17; --bg-2:#161029; --fg:#efecf8; --muted:#b9b1cf; --line:rgba(239,236,248,.16); --grid:rgba(239,236,248,.075);
+  --violet:#9d7bff; --violet-deep:#6f4bf2; --on-violet:#0d0a17; --aqua:#54d9ff; --gold:#ecc66e; --rose:#ff7a9a; --mint:#4ade80;
+  --tint:rgba(157,123,255,.12); --frame:#07050d;
+}
+html[data-theme="light"]{
+  --bg:#f7f5fc; --bg-2:#ece8f8; --fg:#1a1528; --muted:#5a536f; --line:rgba(26,21,40,.16); --grid:rgba(26,21,40,.085);
+  --violet:#6f4bf2; --violet-deep:#6f4bf2; --on-violet:#ffffff; --aqua:#08708c; --gold:#93701c; --rose:#c43b5a; --mint:#13804c;
+  --tint:rgba(111,75,242,.09); --frame:#dcd6ee;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:var(--frame);color:var(--fg);font-family:var(--sans)}
+body{overflow:hidden}
+button,input{font:inherit}button{cursor:pointer}a{color:inherit;text-underline-offset:5px}
+button:focus-visible,a:focus-visible{outline:3px solid var(--aqua);outline-offset:5px}
+button:active{transform:scale(.97)}button:disabled{opacity:.3;cursor:default}
+h1,h2,h3,p,ol,ul,figure{margin:0}
+
+/* ── Stage & slide chrome ─────────────────────────────────────────────── */
+#stage{width:1600px;height:900px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(var(--scale,1));transform-origin:center;background:var(--bg);box-shadow:0 40px 100px #0008;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:120px 96px 92px;background:var(--bg);color:var(--fg);overflow:hidden;isolation:isolate}
+.slide.active{display:flex}
+.slide::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background-image:radial-gradient(circle at 1px 1px,var(--grid) 1.1px,transparent 1.6px);background-size:28px 28px;-webkit-mask-image:radial-gradient(1300px 760px at 82% 8%,#000 10%,transparent 72%);mask-image:radial-gradient(1300px 760px at 82% 8%,#000 10%,transparent 72%)}
+.slide::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(760px 420px at 100% 0%,var(--tint),transparent 70%)}
+.slide>header{position:absolute;top:34px;left:96px;right:96px;display:flex;justify-content:space-between;align-items:center;font:15px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);z-index:5}
+.brand{display:flex;align-items:center;gap:14px}
+.brand b{font:700 28px var(--sans);letter-spacing:-.04em;color:var(--violet);text-transform:none}
+.event{font-size:12px;line-height:1.2;border-left:1px solid var(--line);padding-left:14px}
+.foot{position:absolute;bottom:30px;left:96px;right:96px;display:flex;justify-content:space-between;font:14px var(--mono);letter-spacing:.08em;color:var(--muted);z-index:5}
+.foot .num{font-variant-numeric:tabular-nums}
+.notes{display:none}
+
+/* ── Type ─────────────────────────────────────────────────────────────── */
+.eyebrow{font:16px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--aqua);margin-bottom:20px}
+.slide h2{font-size:74px;line-height:1.03;font-weight:640;letter-spacing:-.035em;max-width:1400px;margin-bottom:22px;text-wrap:balance}
+.slide h2 em{font-style:normal;color:var(--violet)}
+.light{font-weight:300}
+.period{color:var(--violet)}
+.lede{font-size:30px;line-height:1.36;color:var(--muted);max-width:34ch}
+.lede strong{color:var(--fg);font-weight:600}
+.scene-takeaway{margin-top:14px;min-height:36px;font-size:27px;line-height:1.3;color:var(--muted);max-width:62ch}
+.scene-takeaway strong{color:var(--fg);font-weight:600}
+.mono{font-family:var(--mono);letter-spacing:.06em}
+.ink-mark{display:inline;background:var(--violet);color:var(--on-violet);padding:0 .1em .02em;margin:0 -.02em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ink-line{position:relative;display:inline-block;white-space:nowrap}
+.ink-line::after{content:"";position:absolute;left:0;right:0;bottom:-.08em;height:max(3px,.05em);background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 650ms var(--ease-out) 260ms}
+.slide.active .ink-line::after{transform:scaleX(1)}
+.beat:not(.shown) .ink-line::after{transform:scaleX(0);transition-delay:0s}
+
+/* ── Illustration primitives ──────────────────────────────────────────── */
+.art-wrap{flex:1;min-height:0;position:relative;display:flex;align-items:center}
+svg.art{display:block;width:100%;height:100%;overflow:visible}
+svg text{font-family:var(--sans);fill:var(--fg)}
+svg .t-mono{font-family:var(--mono);letter-spacing:.08em}
+svg .t-mu{fill:var(--muted)}
+svg .t-v{fill:var(--violet)}svg .t-a{fill:var(--aqua)}svg .t-g{fill:var(--gold)}svg .t-r{fill:var(--rose)}svg .t-on{fill:var(--on-violet)}
+svg .t-b{font-weight:640}
+.f-fg{fill:var(--fg)}.f-bg{fill:var(--bg)}.f-bg2{fill:var(--bg-2)}.f-v{fill:var(--violet)}.f-a{fill:var(--aqua)}.f-g{fill:var(--gold)}.f-r{fill:var(--rose)}.f-m{fill:var(--mint)}.f-mu{fill:var(--muted)}.f-tint{fill:var(--tint)}.f-none{fill:none}
+.s-fg{stroke:var(--fg)}.s-v{stroke:var(--violet)}.s-a{stroke:var(--aqua)}.s-g{stroke:var(--gold)}.s-r{stroke:var(--rose)}.s-m{stroke:var(--mint)}.s-mu{stroke:var(--muted)}.s-line{stroke:var(--line)}
+.dash{stroke-dasharray:6 9}
+.draw,.trace{stroke-dasharray:1;stroke-dashoffset:0}
+
+/* ── Choreography (Kowalski): lead → support → decoration, one entrance per container ── */
+.scene-running .enter-lead{animation:lead-in 720ms var(--ease-out) both;animation-delay:var(--d,60ms)}
+.scene-running .enter-support{animation:support-in 560ms var(--ease-out) both;animation-delay:var(--d,210ms)}
+.scene-running .enter-deco{animation:deco-in 640ms var(--ease-out) both;animation-delay:var(--d,0ms)}
+.scene-running .enter-art{animation:art-in 820ms var(--ease-out) both;animation-delay:var(--d,300ms)}
+.scene-running .draw{animation:draw-in 1150ms var(--ease-in-out) both;animation-delay:var(--d,380ms)}
+@keyframes lead-in{from{opacity:0;transform:translateY(28px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes support-in{from{opacity:0;transform:translateY(12px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+@keyframes deco-in{from{opacity:0}to{opacity:1}}
+@keyframes art-in{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes draw-in{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+
+/* Beats are interruptible transitions, not keyframes: they retarget when the presenter steps back. */
+.beat{opacity:0;transform:translateY(16px);filter:blur(3px);transition:opacity 380ms var(--ease-out),transform 560ms var(--ease-out),filter 380ms var(--ease-out);pointer-events:none}
+svg .beat{transform-box:fill-box}
+.beat.fade{transform:none}
+.beat.shown{opacity:1;transform:none;filter:none;pointer-events:auto}
+.beat .lag{transition:opacity 420ms var(--ease-out) 110ms,transform 560ms var(--ease-out) 110ms}
+.beat:not(.shown) .lag{opacity:0;transform:translateY(8px)}
+.trace{transition:stroke-dashoffset 950ms var(--ease-in-out) 140ms}
+.beat:not(.shown) .trace{stroke-dashoffset:1;transition-duration:0s;transition-delay:0s}
+
+/* ── View transitions — F13 contract ─────────────────────────────────── */
+html.native-deck-transitions{view-transition-name:none}
+html.native-deck-transitions #stage{view-transition-name:deck}
+html.native-deck-transitions #stage .slide{transition:none!important}
+::view-transition-group(deck){animation-duration:400ms}
+::view-transition-image-pair(deck){isolation:isolate}
+::view-transition-old(deck){animation:deck-exit 140ms ease-out both;mix-blend-mode:normal}
+::view-transition-new(deck){animation:deck-reveal-forward 260ms cubic-bezier(.23,1,.32,1) 140ms both;mix-blend-mode:normal}
+html.deck-backward::view-transition-new(deck){animation-name:deck-reveal-backward}
+::view-transition{pointer-events:none}
+@keyframes deck-exit{from{opacity:1}to{opacity:0}}
+@keyframes deck-reveal-forward{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes deck-reveal-backward{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── Accent scenes (cover, block dividers, statements, close) ─────────── */
+.slide.accent-scene{--fg:#ffffff;--muted:rgba(255,255,255,.82);--line:rgba(255,255,255,.3);--grid:rgba(13,10,23,.16);--aqua:#d9f6ff;--violet:#ffffff;--on-violet:#2a1670;
+  background:radial-gradient(980px 620px at 88% -12%,rgba(255,255,255,.18),transparent 60%),radial-gradient(700px 520px at -10% 110%,rgba(13,10,23,.32),transparent 70%),var(--violet-deep);color:#fff}
+.slide.accent-scene::after{display:none}
+.accent-scene .brand b{color:#fff}
+.accent-scene .ink-mark{background:#120b26;color:#fff}
+.pixel-grid{display:grid;gap:0;pointer-events:none}
+.pixel{display:block;background:#120b26}
+.pixel.off{opacity:0}
+.scene-running .pixel.on{animation:pixel-assemble 1400ms var(--ease-out) both,pattern-loop 7200ms var(--ease-in-out) infinite;animation-delay:calc(var(--n) * 32ms),calc(1600ms + var(--n) * -240ms)}
+@keyframes pixel-assemble{from{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.88)}to{opacity:1;transform:none}}
+@keyframes pattern-loop{0%,12%,100%{transform:none;opacity:1}30%,45%{transform:translate(0,18%) scale(.92);opacity:.55}64%,78%{transform:translate(-16%,0) scale(.94);opacity:.85}}
+body.ambient-paused .pixel{animation-play-state:paused!important}
+
+
+
+/* Anti / synth / agree lists (icons were unbounded → giant glyphs) */
+.anti-list,.synth,.agree{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:14px;width:100%;max-width:980px}
+.anti-list li,.synth li,.agree li{display:grid;grid-template-columns:44px 1fr;gap:16px 18px;align-items:center;border-top:1px solid var(--line);padding-top:14px}
+.anti-list svg,.agree li > svg{width:36px;height:36px;flex-shrink:0}
+.synth li{grid-template-columns:72px 1fr;gap:20px;padding-top:18px}
+.synth li > svg{width:64px;height:64px}
+.anti-list span,.synth span,.agree p{font-size:26px;line-height:1.32;margin:0}
+.agree li{grid-template-columns:48px 1fr;align-items:start}
+.agree .owner{grid-column:2;font:14px var(--mono);letter-spacing:.1em;color:var(--muted)}
+.agree .owner b{color:var(--violet);font-weight:650}
+.anti-scene .scene-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center}
+.anti-scene .anti-list{margin:0;max-width:none}
+.anti-scene svg.art{max-height:420px}
+.synth-scene .synth{margin-top:28px}
+.agree-scene .agree{margin-top:28px;max-width:900px}
+
+/* ── Two-column scene layouts (were missing → overlaps / empty right) ── */
+.scene-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:28px 44px;width:100%;height:100%;min-height:0;align-items:center}
+.scene-grid .copy-col{display:flex;flex-direction:column;justify-content:center;min-width:0;max-width:640px}
+.scene-grid > .art,.scene-grid > svg.art{max-height:520px;width:100%;height:auto;justify-self:stretch}
+.promise-list{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:14px}
+.promise-list li{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:baseline;font-size:24px;line-height:1.3;border-top:1px solid var(--line);padding-top:12px}
+.promise-list b{font:15px var(--mono);letter-spacing:.12em;color:var(--violet)}
+
+/* Dial */
+.dial-scene h2{font-size:58px;line-height:1.05;margin-bottom:8px;max-width:18ch}
+.dial-scene .art-wrap{align-items:flex-start;padding-top:8px}
+.dial-scene .scene-grid{grid-template-columns:minmax(380px,460px) minmax(0,1fr);gap:24px 48px;align-items:center}
+.dial-scene svg.art.dial{max-height:340px;overflow:visible}
+.dial-scene .needle{transform-box:fill-box;transform-origin:center bottom;transition:transform 620ms var(--ease-out)}
+.dial-scene[data-step="0"] .needle{transform:rotate(-48deg)}
+.dial-scene[data-step="1"] .needle,.dial-scene:not([data-step]) .needle{transform:rotate(0deg)}
+.dial-scene[data-step="2"] .needle{transform:rotate(48deg)}
+.modes{list-style:none;padding:0;margin:0;display:grid;gap:0;align-content:center}
+.modes li{display:grid;grid-template-columns:132px 1fr;column-gap:18px;row-gap:4px;border-top:1px solid var(--line);padding:16px 0 14px;align-items:start}
+.modes .tag{font:13px/1.2 var(--mono);letter-spacing:.14em;font-weight:650;padding-top:4px}
+.modes .say{font-size:23px;line-height:1.3;color:var(--fg)}
+.modes .proof{grid-column:2;font-size:17px;line-height:1.35;color:var(--muted)}
+
+/* PR diff panel */
+.pr-scene .scene-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:28px 40px;align-items:start}
+.pr-scene h2{font-size:58px;max-width:16ch}
+.diff{border:1px solid var(--line);border-radius:10px;background:var(--bg-2);overflow:hidden;font-family:var(--mono);min-height:0}
+.diff-bar{display:flex;justify-content:space-between;gap:16px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:13px;letter-spacing:.08em;color:var(--muted);background:color-mix(in srgb,var(--bg) 55%,var(--bg-2))}
+.diff-body{padding:10px 0 14px;font-size:15px;line-height:1.55}
+.diff .ln{display:grid;grid-template-columns:28px 1fr;gap:8px;padding:1px 16px;white-space:pre-wrap;word-break:break-word}
+.diff .g{opacity:.55;text-align:center}
+.diff .hunk{color:var(--aqua)}
+.diff .del{background:color-mix(in srgb,var(--rose) 14%,transparent);color:color-mix(in srgb,var(--fg) 88%,var(--rose))}
+.diff .add{background:color-mix(in srgb,var(--mint) 14%,transparent)}
+.diff .spark{margin-left:10px;color:var(--violet);font-size:12px;letter-spacing:.08em}
+
+/* Cover neural net */
+
+/* Cover neural field — dense, kinetic */
+.neural-stage{position:absolute;right:-50px;top:20px;width:620px;height:820px;z-index:1;pointer-events:none;isolation:isolate;filter:contrast(1.15) saturate(1.35) brightness(1.12)}
+.neural-stage::before{content:"";position:absolute;inset:40px 30px 80px;border-radius:40%;background:radial-gradient(circle at 50% 42%,rgba(8,4,24,.55),transparent 68%);z-index:0}
+.neural-net{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:1}
+.neural-canvas{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen;opacity:1;z-index:2}
+.neural-net .field{opacity:1;animation:field-breathe 6s var(--ease-in-out) infinite}
+.neural-net .synapse{fill:none;stroke-linecap:round;stroke-width:1.8;opacity:.72;stroke-dasharray:4 11;animation:synapse-flow var(--dur,3.8s) linear infinite;animation-delay:var(--d,0s)}
+.neural-net .synapse.k2{stroke-width:2.2;opacity:.85;stroke-dasharray:7 8}
+.neural-net .synapse.k3{stroke-width:2.8;opacity:.95;stroke-dasharray:2 7}
+.neural-net .synapse.skip{stroke-width:1.4;opacity:.45;stroke-dasharray:1 14;animation-duration:6.2s}
+.neural-net .synapse.bolt-line{stroke-width:2.4;opacity:.65;stroke-dasharray:2 14;animation-duration:2.1s}
+.neural-net .neuron{transform-box:fill-box;transform-origin:center;animation:neuron-bob 2.8s var(--ease-in-out) infinite;animation-delay:var(--d,0s)}
+.neural-net .neuron .core{filter:drop-shadow(0 0 8px currentColor) drop-shadow(0 0 16px currentColor)}
+.neural-net .neuron .ring{stroke-width:1.6;animation:ring-spin 5s linear infinite;transform-origin:center;transform-box:fill-box}
+.neural-net .neuron.hub .core{animation:hub-flash 1.8s var(--ease-in-out) infinite}
+.neural-net .halo{opacity:.55;animation:halo-breathe 3.2s var(--ease-in-out) infinite;animation-delay:var(--d,0s);transform-origin:center;transform-box:fill-box}
+.neural-net .ray{stroke:#fff;stroke-width:2;stroke-linecap:round;opacity:0;animation:ray-burst 2.4s var(--ease-out) infinite;animation-delay:var(--d,0s)}
+.neural-net .spark{fill:#fff;opacity:0;animation:spark-drift 3.8s var(--ease-in-out) infinite;animation-delay:var(--d,0s)}
+.neural-net .bolt{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:3;opacity:0;filter:url(#rayGlow)}
+@keyframes synapse-flow{to{stroke-dashoffset:-180}}
+@keyframes neuron-bob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.16)}}
+@keyframes hub-flash{0%,100%{opacity:.9;filter:drop-shadow(0 0 10px #fff)}35%{opacity:1;filter:drop-shadow(0 0 22px #fff) drop-shadow(0 0 40px #c4b5ff)}55%{opacity:.65}}
+@keyframes ring-spin{to{transform:rotate(360deg)}}
+@keyframes halo-breathe{0%,100%{opacity:.28;transform:scale(.85)}50%{opacity:.75;transform:scale(1.35)}}
+@keyframes ray-burst{0%,55%,100%{opacity:0;stroke-width:1.2}62%{opacity:1;stroke-width:3.4}74%{opacity:.35;stroke-width:1.6}}
+@keyframes spark-drift{0%{opacity:0;transform:translate(0,0) scale(.5)}15%{opacity:1}50%{opacity:.7;transform:translate(var(--x),var(--y)) scale(1.4)}100%{opacity:0;transform:translate(calc(var(--x)*1.6),calc(var(--y)*1.7)) scale(.3)}}
+@keyframes field-breathe{0%,100%{opacity:.85;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+body.ambient-paused .neural-net .synapse,
+body.ambient-paused .neural-net .neuron,
+body.ambient-paused .neural-net .halo,
+body.ambient-paused .neural-net .ray,
+body.ambient-paused .neural-net .spark,
+body.ambient-paused .neural-net .field,
+body.ambient-paused .neural-net .ring,
+body.ambient-paused .neural-net .hub .core{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+  .neural-net .synapse,.neural-net .neuron,.neural-net .halo,.neural-net .ray,.neural-net .spark,.neural-net .field,.neural-net .ring,.neural-net .hub .core{animation:none!important}
+  .neural-net .synapse{stroke-dasharray:none;opacity:.55}
+  .neural-canvas{display:none}
+}
+
+html[data-theme="light"] .key-cover .period{color:var(--violet)}
+
+/* Cover */
+.key-cover{padding-top:118px}
+.cover-type{position:relative;z-index:2;max-width:1040px}
+.key-cover h1{font-size:128px;line-height:.96;font-weight:650;letter-spacing:-.05em;margin:26px 0 34px}
+.key-cover h1 .ln{display:block}
+.key-cover h1 .light{font-weight:280}
+.key-cover .period{color:#120b26}
+.cover-deck{font-size:34px;line-height:1.25;letter-spacing:-.01em;color:rgba(255,255,255,.9);max-width:30ch}
+.cover-person{margin-top:44px;display:flex;gap:18px;align-items:center;font-size:23px}
+.cover-person span{opacity:.55}.cover-person a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.5)}
+.cover-pixels{position:absolute;right:-40px;top:96px;width:470px;height:690px;z-index:0}
+
+
+/* Speaker bio — F13 detail, 0vas palette */
+.bio-keynote{padding:130px 90px 90px;isolation:isolate}
+.bio-contact-surface{position:absolute;right:0;top:0;bottom:0;width:490px;background:var(--violet);z-index:-1}
+#stage .bio-keynote header>span:last-child,#stage .bio-keynote .foot{color:var(--on-violet)}
+#stage .bio-keynote>.eyebrow{margin:0 0 36px;font-size:14px;letter-spacing:2px;color:var(--aqua)}
+.bio-identity{display:flex;gap:30px;align-items:center;max-width:950px}
+.bio-headshot{width:160px;height:180px;object-fit:cover;object-position:center 26%;border-radius:8px 8px 36px 8px;flex-shrink:0}
+#stage .bio-keynote .bio-identity h2{font-size:72px;line-height:1.02;letter-spacing:-.04em;margin:0 0 20px;font-weight:580;max-width:730px}
+.bio-identity h2>span{color:var(--violet)}
+#stage .bio-keynote .bio-identity p{font-size:24px;line-height:1.3;margin:0;color:var(--muted)}
+.bio-identity p>strong{font-weight:550;color:var(--aqua)}
+.bio-columns{display:grid;grid-template-columns:470px 400px;gap:50px;margin-top:52px;max-width:940px}
+.bio-section-label{display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:17px;margin-bottom:25px;font:13px var(--mono);letter-spacing:2px;color:var(--muted)}
+.bio-section-label svg{width:22px;height:22px;color:var(--aqua)}
+.bio-school{margin-bottom:23px}
+.bio-school>strong{font-size:22px;font-weight:530;color:var(--fg);letter-spacing:-.35px}
+#stage .bio-keynote .bio-school p{font-size:19px;line-height:1.35;margin:6px 0 0;color:var(--muted)}
+.bio-school small{font:15px/1.3 var(--sans);color:var(--muted);display:inline-block;margin-top:5px}
+.bio-home{position:absolute;bottom:50px;left:90px;color:var(--violet);font-size:23px;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--violet) 50%,transparent);padding-bottom:6px;z-index:2}
+.bio-contact-heading{position:absolute;left:1160px;top:171px;font-size:41px;line-height:1.05;letter-spacing:-.03em;color:var(--on-violet);font-weight:550;z-index:2}
+.bio-contact-heading>span{opacity:.55}
+#stage .bio-keynote .profile-qr{left:1160px;right:auto;top:300px;width:350px;gap:18px;flex-direction:column;align-items:flex-start;border:0;padding:0;z-index:2}
+#stage .bio-keynote .profile-qr img{width:350px;height:350px;padding:0;border:0;border-radius:10px;background:#fff;box-shadow:0 15px 30px rgba(0,0,0,.18)}
+#stage .bio-keynote .profile-qr b{display:none}
+#stage .bio-keynote .profile-qr small{display:block;color:var(--on-violet);font:15px var(--mono);letter-spacing:1px;opacity:.75}
+#stage .bio-keynote .profile-qr strong{font-size:22px;color:var(--on-violet)}
+#stage .bio-keynote .profile-qr>span{gap:6px;color:var(--on-violet);width:100%}
+#stage .bio-keynote .bio-learning.beat{transform:translateY(25px);transition:transform 800ms var(--ease-out),opacity 500ms var(--ease-out)}
+#stage .bio-keynote .bio-speaking.beat{transform:translateX(-35px);transition:transform 900ms var(--ease-out),opacity 550ms var(--ease-out)}
+#stage .bio-keynote .beat.shown{transform:translate(0)}
+.talk-carousel{position:relative;height:250px;overflow:hidden;isolation:isolate}
+.talk-cylinder{position:relative;height:100%}
+.talk-card{position:absolute;left:0;right:18px;top:0;height:168px;padding:18px 20px;opacity:0;transform:translateY(28px) scale(.96);pointer-events:none;background:linear-gradient(135deg,var(--bg-2),color-mix(in srgb,var(--bg) 70%,var(--violet-deep)));border:1px solid color-mix(in srgb,var(--aqua) 40%,transparent);border-left:3px solid var(--aqua);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.35);transition:transform 600ms var(--ease-out),opacity 320ms var(--ease-out),top 600ms var(--ease-out)}
+.talk-card.current{opacity:1;transform:none;top:0;z-index:3;pointer-events:auto}
+.talk-card.is-next{opacity:.55;transform:translateY(18px) scale(.97);top:78px;z-index:2}
+.talk-card.is-prev{opacity:0;transform:translateY(-24px) scale(.94);top:-20px;z-index:1}
+.talk-date{font:13px var(--mono);letter-spacing:1px;color:var(--violet)}
+#stage .bio-keynote .talk-card h3{font-size:26px;line-height:1.08;font-weight:550;letter-spacing:-.02em;margin:10px 0 10px;color:var(--fg)}
+#stage .bio-keynote .talk-card p{font-size:17px;line-height:1.3;margin:0;color:var(--muted)}
+.talk-flag{float:right;margin:0 0 5px 9px;font-size:22px;line-height:1.2;letter-spacing:0;font-family:"Apple Color Emoji","Segoe UI Emoji",sans-serif}
+@media(prefers-reduced-motion:reduce){
+  #stage .bio-keynote .beat,.talk-card{transform:none!important;transition:none!important}
+  .talk-card:not(.current):not(.is-next){opacity:0!important}
+}
+@media print{
+  .talk-card:not(.current){display:none}
+  .talk-card.current{position:relative;top:0}
+}
+
+.profile-qr{position:absolute;right:96px;top:640px;width:400px;display:flex;gap:20px;align-items:center;text-decoration:none;border-top:1px solid var(--line);padding-top:18px}
+.profile-qr img{width:118px;height:118px;border-radius:6px;background:#fff;padding:6px}
+.profile-qr span{display:flex;flex-direction:column;gap:4px;font-size:18px;color:var(--muted)}
+.profile-qr b{font-size:24px;color:var(--fg)}
+.profile-qr strong{font:15px var(--mono);color:var(--violet)}
+.thanks-links .profile-qr{position:static;width:auto;border:0;padding:0}
+.thanks-links .profile-qr span,.thanks-links .profile-qr strong{color:rgba(255,255,255,.9)}
+.thanks-links .profile-qr b{color:#fff}
+.thanks-site{font-size:26px;display:grid;gap:10px}
+.thanks-site a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.5);width:fit-content}
+.thanks-pixels{position:absolute;right:-30px;bottom:-20px;width:560px;height:560px}
+.annex-cols{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-top:6px}
+.annex-cols b{display:flex;gap:12px;align-items:center;font:600 15px var(--mono);letter-spacing:.14em;color:var(--aqua);margin-bottom:14px}
+.annex-cols b svg{width:26px;height:26px}
+.annex-cols ol{padding-left:28px;display:grid;gap:12px;font-size:23px;line-height:1.35;color:var(--muted)}
+.annex-cols li::marker{font-family:var(--mono);color:var(--violet)}
+.annex-cols a{color:var(--fg)}
+
+/* Ambient SVG loops pause with M, blackout or hidden tab (handled in JS via pauseAnimations). */
+
+@media(prefers-reduced-motion:reduce){
+  ::view-transition-old(deck),::view-transition-new(deck){animation:none!important}
+  .scene-running .enter-lead,.scene-running .enter-support,.scene-running .enter-art,.scene-running .speaker-portrait{animation:deco-in 200ms ease both!important}
+  .scene-running .draw,.scene-running .pixel.on{animation:none!important}
+  .beat{transform:none;filter:none;transition:opacity 200ms ease}
+  .trace,.needle,.beam,.pan-l,.pan-r,.ink-line::after{transition:none!important}
+}
+
+/* ── Controls, presenter, index (unchanged runtime chrome) ────────────── */
+.controls{position:fixed;z-index:10;bottom:10px;left:50%;transform:translateX(-50%);background:#18141fed;backdrop-filter:blur(18px);color:#edf0e8;display:flex;gap:4px;align-items:center;border:1px solid #ffffff25;border-radius:14px;padding:6px;box-shadow:0 8px 25px #0003;opacity:0;transition:opacity 180ms var(--ease-out)}
+.controls.show,.controls:hover,.controls:focus-within{opacity:1}
+.controls button{background:none;border:0;color:inherit;padding:7px 10px;border-radius:6px;font-size:14px;min-height:36px}
+.controls output{font:13px var(--mono);padding:0 8px;min-width:67px;text-align:center;font-variant-numeric:tabular-nums}
+.controls #build-counter{color:#b9a3ff;font-size:12px}
+.controls #build-counter:empty{display:none}
+.controls .divider{width:1px;height:22px;background:#ffffff25}
+.progress{position:fixed;bottom:0;left:0;height:3px;background:var(--violet);width:100%;transform:scaleX(0);transform-origin:left;z-index:10;transition:transform 240ms var(--ease-out)}
+.help{position:fixed;right:18px;bottom:15px;color:var(--muted);font:11px var(--mono);opacity:.45}
+.blackout{position:fixed;inset:0;background:black;z-index:50;display:none}.blackout.on{display:block}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.index-dialog{background:#17122a;color:#efecf8;border:1px solid #9995;border-radius:18px;width:min(1100px,92vw);max-height:82vh;padding:32px}
+.index-dialog::backdrop{background:#000b}
+.index-dialog h2{font-size:28px;margin:0 0 25px}
+.index-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.index-grid button{text-align:left;background:#ffffff08;color:#efecf8;border:1px solid #ffffff25;border-radius:8px;padding:14px;font-size:16px;min-height:72px}
+.index-grid button[aria-current=true]{border-color:#9d7bff;color:#b9a3ff}
+.index-dialog>button{float:right;background:none;border:0;color:#efecf8;font-size:26px}
+.speaker{display:none}
+.presenter-mode{overflow:auto;background:#120e1c;color:#eef1e8}
+.presenter-mode #stage,.presenter-mode .controls,.presenter-mode .progress,.presenter-mode .help{display:none}
+.presenter-mode .speaker{display:block;max-width:1100px;margin:0 auto;padding:40px}
+.speaker h1{font-size:36px;margin:18px 0}
+.speaker p{font-size:24px;line-height:1.6;white-space:pre-line}
+.speaker header{position:static;font:18px var(--mono);display:flex;justify-content:space-between}
+.speaker button{background:#9d7bff;color:#140f24;border:0;padding:12px 18px;border-radius:7px;font-size:18px;margin:8px}
+.speaker .speaker-meta{color:#54d9ff;font:20px var(--mono)}
+.speaker .next-title{border-top:1px solid #ffffff30;padding-top:25px;color:#bbc2b5;font-size:22px}
+.speaker #clock{font-size:32px;font-variant-numeric:tabular-nums}
+.speaker .instruction{font-size:16px;color:#a8b39e;margin:25px 0}
+.speaker .speaker-content{background:#1c1730;padding:25px 30px;border-radius:12px;margin-top:24px}
+.speaker-preview{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid #ffffff22;aspect-ratio:16/9;background:#000}
+.speaker-preview iframe{width:100%;height:100%;border:0;pointer-events:none}
+@media(hover:hover) and (pointer:fine){.controls button:hover{background:#ffffff14}}
+@media(max-width:640px){.help{display:none}.index-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="arr-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-r"/></marker>
+    <marker id="arr-v" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-v"/></marker>
+    <marker id="arr-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-a"/></marker>
+    <marker id="arr-mu" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-mu"/></marker>
+    <symbol id="spark" viewBox="-20 -20 40 40"><path d="M0-18C2-6 6-2 18 0C6 2 2 6 0 18C-2 6-6 2-18 0C-6-2-2-6 0-18Z"/></symbol>
+    <symbol id="person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div id="stage">
+
+<!-- ═══════════════════════════ INTRODUCCIÓN ═══════════════════════════ -->
+
+<section class="slide key-cover accent-scene" data-title="IA en DevOps y la plataforma" data-secs="30">
+<header><span class="brand"><b>0VAS</b><span class="event">ASESORÍA INTERNA<br>DEVOPS ENGINEERS · 60 MIN</span></span><span>IA × DEVOPS × PLATAFORMA</span></header>
+<div class="cover-type">
+  <p class="eyebrow enter-deco" style="--d:0ms">Platform engineering / DevSecOps / IA</p>
+  <h1><span class="ln enter-lead" style="--d:80ms">IA en DevOps</span><span class="ln light enter-lead" style="--d:180ms">y en la</span><span class="ln enter-lead" style="--d:250ms">plataforma<span class="period">.</span></span></h1>
+  <p class="cover-deck enter-support" style="--d:420ms">Dónde acelera el flujo, dónde pertenece a la plataforma y quién la sostiene.</p>
+  <div class="cover-person enter-support" style="--d:500ms">Oscar Lobaton Salas <span>·</span> <a href="https://0vas.com" target="_blank" rel="noopener">0vas.com ↗</a></div>
+</div>
+<div class="neural-stage" aria-hidden="true">
+<svg class="neural-net" viewBox="0 0 560 760" width="620" height="820">
+  <defs>
+    <linearGradient id="synA" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e9dfff"/><stop offset="40%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#54d9ff"/></linearGradient>
+    <linearGradient id="synB" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffb3c5"/><stop offset="50%" stop-color="#9d7bff"/><stop offset="100%" stop-color="#ffe08a"/></linearGradient>
+    <linearGradient id="synC" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#54d9ff"/><stop offset="100%" stop-color="#ff7a9a"/></linearGradient>
+    <linearGradient id="synD" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffe08a"/><stop offset="100%" stop-color="#c4b5ff"/></linearGradient>
+    <linearGradient id="synE" x1="100%" y1="50%" x2="0%" y2="50%"><stop offset="0%" stop-color="#7dffa8"/><stop offset="100%" stop-color="#54d9ff"/></linearGradient>
+    <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff" stop-opacity="1"/><stop offset="40%" stop-color="#c4b5ff" stop-opacity=".55"/><stop offset="100%" stop-color="#9d7bff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="fieldGlow" cx="48%" cy="42%" r="58%"><stop offset="0%" stop-color="#1a0f3d" stop-opacity=".72"/><stop offset="45%" stop-color="#12082c" stop-opacity=".35"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="rayGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect class="field" width="560" height="760" fill="url(#fieldGlow)"/>
+  <g class="rays" filter="url(#rayGlow)"><line class="ray" x1="280" y1="355" x2="350" y2="355" style="--d:0.00s"/><line class="ray" x1="280" y1="355" x2="377.9" y2="395.6" style="--d:0.12s"/><line class="ray" x1="280" y1="355" x2="380.4" y2="455.4" style="--d:0.24s"/><line class="ray" x1="280" y1="355" x2="348.1" y2="519.5" style="--d:0.36s"/><line class="ray" x1="280" y1="355" x2="280" y2="425" style="--d:0.48s"/><line class="ray" x1="280" y1="355" x2="239.4" y2="452.9" style="--d:0.60s"/><line class="ray" x1="280" y1="355" x2="179.6" y2="455.4" style="--d:0.72s"/><line class="ray" x1="280" y1="355" x2="115.5" y2="423.1" style="--d:0.84s"/><line class="ray" x1="280" y1="355" x2="210" y2="355" style="--d:0.96s"/><line class="ray" x1="280" y1="355" x2="182.1" y2="314.4" style="--d:1.08s"/><line class="ray" x1="280" y1="355" x2="179.6" y2="254.6" style="--d:1.20s"/><line class="ray" x1="280" y1="355" x2="211.9" y2="190.5" style="--d:1.32s"/><line class="ray" x1="280" y1="355" x2="280" y2="285" style="--d:1.44s"/><line class="ray" x1="280" y1="355" x2="320.6" y2="257.1" style="--d:1.56s"/><line class="ray" x1="280" y1="355" x2="380.4" y2="254.6" style="--d:1.68s"/><line class="ray" x1="280" y1="355" x2="444.5" y2="286.9" style="--d:1.80s"/><line class="ray" x1="210" y1="470" x2="280" y2="470" style="--d:0.00s"/><line class="ray" x1="210" y1="470" x2="307.9" y2="510.6" style="--d:0.12s"/><line class="ray" x1="210" y1="470" x2="310.4" y2="570.4" style="--d:0.24s"/><line class="ray" x1="210" y1="470" x2="278.1" y2="634.5" style="--d:0.36s"/><line class="ray" x1="210" y1="470" x2="210" y2="540" style="--d:0.48s"/><line class="ray" x1="210" y1="470" x2="169.4" y2="567.9" style="--d:0.60s"/><line class="ray" x1="210" y1="470" x2="109.6" y2="570.4" style="--d:0.72s"/><line class="ray" x1="210" y1="470" x2="45.5" y2="538.1" style="--d:0.84s"/><line class="ray" x1="210" y1="470" x2="140" y2="470" style="--d:0.96s"/><line class="ray" x1="210" y1="470" x2="112.1" y2="429.4" style="--d:1.08s"/><line class="ray" x1="210" y1="470" x2="109.6" y2="369.6" style="--d:1.20s"/><line class="ray" x1="210" y1="470" x2="141.9" y2="305.5" style="--d:1.32s"/><line class="ray" x1="210" y1="470" x2="210" y2="400" style="--d:1.44s"/><line class="ray" x1="210" y1="470" x2="250.6" y2="372.1" style="--d:1.56s"/><line class="ray" x1="210" y1="470" x2="310.4" y2="369.6" style="--d:1.68s"/><line class="ray" x1="210" y1="470" x2="374.5" y2="401.9" style="--d:1.80s"/><line class="ray" x1="350" y1="470" x2="420" y2="470" style="--d:0.00s"/><line class="ray" x1="350" y1="470" x2="447.9" y2="510.6" style="--d:0.12s"/><line class="ray" x1="350" y1="470" x2="450.4" y2="570.4" style="--d:0.24s"/><line class="ray" x1="350" y1="470" x2="418.1" y2="634.5" style="--d:0.36s"/><line class="ray" x1="350" y1="470" x2="350" y2="540" style="--d:0.48s"/><line class="ray" x1="350" y1="470" x2="309.4" y2="567.9" style="--d:0.60s"/><line class="ray" x1="350" y1="470" x2="249.6" y2="570.4" style="--d:0.72s"/><line class="ray" x1="350" y1="470" x2="185.5" y2="538.1" style="--d:0.84s"/><line class="ray" x1="350" y1="470" x2="280" y2="470" style="--d:0.96s"/><line class="ray" x1="350" y1="470" x2="252.1" y2="429.4" style="--d:1.08s"/><line class="ray" x1="350" y1="470" x2="249.6" y2="369.6" style="--d:1.20s"/><line class="ray" x1="350" y1="470" x2="281.9" y2="305.5" style="--d:1.32s"/><line class="ray" x1="350" y1="470" x2="350" y2="400" style="--d:1.44s"/><line class="ray" x1="350" y1="470" x2="390.6" y2="372.1" style="--d:1.56s"/><line class="ray" x1="350" y1="470" x2="450.4" y2="369.6" style="--d:1.68s"/><line class="ray" x1="350" y1="470" x2="514.5" y2="401.9" style="--d:1.80s"/></g>
+  <g class="links" filter="url(#softGlow)"><path class="synapse k1" stroke="url(#synA)" d="M122.4 65Q148.2 114.1 142.6 167" style="--d:0s;--dur:2.20s"/><path class="synapse k2" stroke="url(#synB)" d="M122.4 65Q78.2 108.9 73.6 165" style="--d:0.137s;--dur:2.65s"/><path class="synapse k3" stroke="url(#synC)" d="M122.4 65Q188.3 105.3 211.6 169" style="--d:0.274s;--dur:3.10s"/><path class="synapse skip" stroke="url(#synD)" d="M122.4 65Q42.1 166 23.8 285" style="--d:0.411s;--dur:3.55s"/><path class="synapse k1" stroke="url(#synE)" d="M201.2 67Q246.2 117 211.6 169" style="--d:0.548s;--dur:4.00s"/><path class="synapse k2" stroke="url(#synA)" d="M201.2 67Q158.1 109.9 142.6 167" style="--d:0.685s;--dur:4.45s"/><path class="synapse k3" stroke="url(#synB)" d="M201.2 67Q258.4 108.1 280.6 171" style="--d:0.822s;--dur:4.90s"/><path class="synapse k1" stroke="url(#synC)" d="M280 69Q252.3 120.1 280.6 171" style="--d:0.959s;--dur:2.20s"/><path class="synapse k2" stroke="url(#synD)" d="M280 69Q273.9 124.6 211.6 169" style="--d:1.096s;--dur:2.65s"/><path class="synapse k3" stroke="url(#synE)" d="M280 69Q281.6 128.8 349.6 173" style="--d:1.233s;--dur:3.10s"/><path class="synapse k1" stroke="url(#synA)" d="M358.8 71Q370.1 123.6 349.6 173" style="--d:1.37s;--dur:3.55s"/><path class="synapse k2" stroke="url(#synB)" d="M358.8 71Q369.6 134 418.6 175" style="--d:1.507s;--dur:4.00s"/><path class="synapse k3" stroke="url(#synC)" d="M358.8 71Q341.8 127.2 280.6 171" style="--d:1.644s;--dur:4.45s"/><path class="synapse skip" stroke="url(#synD)" d="M358.8 71Q259.9 173.5 218.2 291" style="--d:1.781s;--dur:4.90s"/><path class="synapse k1" stroke="url(#synE)" d="M437.6 73Q494.3 112.4 477.4 166" style="--d:1.918s;--dur:2.20s"/><path class="synapse k2" stroke="url(#synA)" d="M437.6 73Q412.4 120 418.6 175" style="--d:2.055s;--dur:2.65s"/><path class="synapse k3" stroke="url(#synB)" d="M437.6 73Q410.1 129.6 349.6 173" style="--d:2.192s;--dur:3.10s"/><path class="synapse k1" stroke="url(#synC)" d="M73.6 165Q53.3 227.7 88.6 287" style="--d:2.329s;--dur:3.55s"/><path class="synapse k2" stroke="url(#synD)" d="M73.6 165Q80.1 231.9 23.8 285" style="--d:2.466s;--dur:4.00s"/><path class="synapse k3" stroke="url(#synE)" d="M73.6 165Q79.9 238.9 153.4 289" style="--d:2.603s;--dur:4.45s"/><path class="synapse k1" stroke="url(#synA)" d="M142.6 167Q163.9 227.1 153.4 289" style="--d:2.74s;--dur:4.90s"/><path class="synapse k2" stroke="url(#synB)" d="M142.6 167Q95.5 221.3 88.6 287" style="--d:2.877s;--dur:2.20s"/><path class="synapse k3" stroke="url(#synC)" d="M142.6 167Q204.3 219.6 218.2 291" style="--d:3.014s;--dur:2.65s"/><path class="synapse skip" stroke="url(#synD)" d="M142.6 167Q273.3 308.5 447 416" style="--d:3.151s;--dur:3.10s"/><path class="synapse k1" stroke="url(#synE)" d="M211.6 169Q254.8 229.5 218.2 291" style="--d:3.288s;--dur:3.55s"/><path class="synapse k2" stroke="url(#synA)" d="M211.6 169Q168.1 222.9 153.4 289" style="--d:3.425s;--dur:4.00s"/><path class="synapse k3" stroke="url(#synB)" d="M211.6 169Q266.4 222 283 293" style="--d:3.562s;--dur:4.45s"/><path class="synapse k1" stroke="url(#synC)" d="M280.6 171Q253.8 232.4 283 293" style="--d:3.699s;--dur:4.90s"/><path class="synapse k2" stroke="url(#synD)" d="M280.6 171Q279.6 235.6 218.2 291" style="--d:3.836s;--dur:2.20s"/><path class="synapse k3" stroke="url(#synE)" d="M280.6 171Q279 239.7 347.8 295" style="--d:3.973s;--dur:2.65s"/><path class="synapse k1" stroke="url(#synA)" d="M349.6 173Q364.7 234.3 347.8 295" style="--d:0.11s;--dur:3.10s"/><path class="synapse k2" stroke="url(#synB)" d="M349.6 173Q356.1 238.8 402.4 286" style="--d:0.247s;--dur:3.55s"/><path class="synapse k3" stroke="url(#synC)" d="M349.6 173Q340.8 237.9 283 293" style="--d:0.384s;--dur:4.00s"/><path class="synapse skip" stroke="url(#synD)" d="M349.6 173Q315.8 321.5 350 470" style="--d:0.521s;--dur:4.45s"/><path class="synapse k1" stroke="url(#synE)" d="M418.6 175Q450.1 233.1 402.4 286" style="--d:0.658s;--dur:4.90s"/><path class="synapse k2" stroke="url(#synA)" d="M418.6 175Q428.2 240.2 467.2 288" style="--d:0.795s;--dur:2.20s"/><path class="synapse k3" stroke="url(#synB)" d="M418.6 175Q402.1 240.1 347.8 295" style="--d:0.932s;--dur:2.65s"/><path class="synapse k1" stroke="url(#synC)" d="M477.4 166Q444.4 225.8 467.2 288" style="--d:1.069s;--dur:3.10s"/><path class="synapse k2" stroke="url(#synD)" d="M477.4 166Q535.8 220.7 532 290" style="--d:1.206s;--dur:3.55s"/><path class="synapse k3" stroke="url(#synE)" d="M477.4 166Q406 214.3 402.4 286" style="--d:1.343s;--dur:4.00s"/><path class="synapse k1" stroke="url(#synA)" d="M23.8 285Q53.9 347.8 52.8 415" style="--d:1.48s;--dur:4.45s"/><path class="synapse k2" stroke="url(#synB)" d="M23.8 285Q54.2 359.3 120.2 417" style="--d:1.617s;--dur:4.90s"/><path class="synapse k3" stroke="url(#synC)" d="M23.8 285Q119 338.4 177.4 419" style="--d:1.754s;--dur:2.20s"/><path class="synapse skip" stroke="url(#synD)" d="M23.8 285Q196.5 438 408.3 555" style="--d:1.891s;--dur:2.65s"/><path class="synapse k1" stroke="url(#synE)" d="M88.6 287Q109.2 353.7 52.8 415" style="--d:2.028s;--dur:3.10s"/><path class="synapse k2" stroke="url(#synA)" d="M88.6 287Q88.9 355.3 120.2 417" style="--d:2.165s;--dur:3.55s"/><path class="synapse k3" stroke="url(#synB)" d="M88.6 287Q151.3 343 177.4 419" style="--d:2.302s;--dur:4.00s"/><path class="synapse k1" stroke="url(#synC)" d="M153.4 289Q137.9 358 177.4 419" style="--d:2.439s;--dur:4.45s"/><path class="synapse k2" stroke="url(#synD)" d="M153.4 289Q169.7 355.5 120.2 417" style="--d:2.576s;--dur:4.90s"/><path class="synapse k3" stroke="url(#synE)" d="M153.4 289Q166.2 363 244.8 421" style="--d:2.713s;--dur:2.20s"/><path class="synapse k1" stroke="url(#synA)" d="M218.2 291Q247.2 352.4 244.8 421" style="--d:2.85s;--dur:2.65s"/><path class="synapse k2" stroke="url(#synB)" d="M218.2 291Q176.8 348.3 177.4 419" style="--d:2.987s;--dur:3.10s"/><path class="synapse k3" stroke="url(#synC)" d="M218.2 291Q191.3 360.1 120.2 417" style="--d:3.124s;--dur:3.55s"/><path class="synapse skip" stroke="url(#synD)" d="M218.2 291Q151.2 415.4 149.9 547" style="--d:3.261s;--dur:4.00s"/><path class="synapse k1" stroke="url(#synE)" d="M283 293Q336.6 354.1 312.2 423" style="--d:3.398s;--dur:4.45s"/><path class="synapse k2" stroke="url(#synA)" d="M283 293Q248.6 350.7 244.8 421" style="--d:3.535s;--dur:4.90s"/><path class="synapse k3" stroke="url(#synB)" d="M283 293Q349.1 353.1 379.6 425" style="--d:3.672s;--dur:2.20s"/><path class="synapse k1" stroke="url(#synC)" d="M347.8 295Q303 355.2 312.2 423" style="--d:3.809s;--dur:2.65s"/><path class="synapse k2" stroke="url(#synD)" d="M347.8 295Q396.7 355.7 379.6 425" style="--d:3.946s;--dur:3.10s"/><path class="synapse k3" stroke="url(#synE)" d="M347.8 295Q366.5 369.4 447 416" style="--d:0.083s;--dur:3.55s"/><path class="synapse k1" stroke="url(#synA)" d="M402.4 286Q439.8 347.8 447 416" style="--d:0.22s;--dur:4.00s"/><path class="synapse k2" stroke="url(#synB)" d="M402.4 286Q369.3 353.2 379.6 425" style="--d:0.357s;--dur:4.45s"/><path class="synapse k3" stroke="url(#synC)" d="M402.4 286Q380.7 364.4 312.2 423" style="--d:0.494s;--dur:4.90s"/><path class="synapse skip" stroke="url(#synD)" d="M402.4 286Q338.6 414.6 341.1 553" style="--d:0.631s;--dur:2.20s"/><path class="synapse k1" stroke="url(#synE)" d="M467.2 288Q496.6 353.6 447 416" style="--d:0.768s;--dur:2.65s"/><path class="synapse k2" stroke="url(#synA)" d="M467.2 288Q475.8 357.8 514.4 418" style="--d:0.905s;--dur:3.10s"/><path class="synapse k3" stroke="url(#synB)" d="M467.2 288Q441.9 366.2 379.6 425" style="--d:1.042s;--dur:3.55s"/><path class="synapse k1" stroke="url(#synC)" d="M532 290Q495.5 351 514.4 418" style="--d:1.179s;--dur:4.00s"/><path class="synapse k2" stroke="url(#synD)" d="M532 290Q517.7 358.6 447 416" style="--d:1.316s;--dur:4.45s"/><path class="synapse k3" stroke="url(#synE)" d="M532 290Q429.3 347 379.6 425" style="--d:1.453s;--dur:4.90s"/><path class="synapse k1" stroke="url(#synA)" d="M280 355Q276.5 396.5 244.8 421" style="--d:1.59s;--dur:2.20s"/><path class="synapse k2" stroke="url(#synB)" d="M280 355Q276.2 398.4 312.2 423" style="--d:1.727s;--dur:2.65s"/><path class="synapse k3" stroke="url(#synC)" d="M280 355Q243.5 395.5 177.4 419" style="--d:1.864s;--dur:3.10s"/><path class="synapse k1" stroke="url(#synD)" d="M52.8 415Q34.7 483.1 82.8 545" style="--d:2.001s;--dur:3.55s"/><path class="synapse k2" stroke="url(#synE)" d="M52.8 415Q133.6 470.3 149.9 547" style="--d:2.138s;--dur:4.00s"/><path class="synapse k3" stroke="url(#synA)" d="M52.8 415Q124.8 499 217.1 549" style="--d:2.275s;--dur:4.45s"/><path class="synapse skip" stroke="url(#synB)" d="M52.8 415Q145.6 541.1 200 677" style="--d:2.412s;--dur:4.90s"/><path class="synapse k1" stroke="url(#synC)" d="M120.2 417Q107.8 485.1 149.9 547" style="--d:2.549s;--dur:2.20s"/><path class="synapse k2" stroke="url(#synD)" d="M120.2 417Q134.1 486 82.8 545" style="--d:2.686s;--dur:2.65s"/><path class="synapse k3" stroke="url(#synE)" d="M120.2 417Q136.4 496 217.1 549" style="--d:2.823s;--dur:3.10s"/><path class="synapse k1" stroke="url(#synA)" d="M177.4 419Q179.3 485.1 149.9 547" style="--d:2.96s;--dur:3.55s"/><path class="synapse k2" stroke="url(#synB)" d="M177.4 419Q176.2 488.1 217.1 549" style="--d:3.097s;--dur:4.00s"/><path class="synapse k3" stroke="url(#synC)" d="M177.4 419Q152.5 492.8 82.8 545" style="--d:3.234s;--dur:4.45s"/><path class="synapse k1" stroke="url(#synD)" d="M244.8 421Q197.7 480.3 217.1 549" style="--d:3.371s;--dur:4.90s"/><path class="synapse k2" stroke="url(#synE)" d="M244.8 421Q302.8 483.1 284.2 551" style="--d:3.508s;--dur:2.20s"/><path class="synapse k3" stroke="url(#synA)" d="M244.8 421Q184.6 475.6 149.9 547" style="--d:3.645s;--dur:2.65s"/><path class="synapse skip" stroke="url(#synB)" d="M244.8 421Q358.4 541.4 436.4 683" style="--d:3.782s;--dur:3.10s"/><path class="synapse k1" stroke="url(#synC)" d="M312.2 423Q270.8 482.3 284.2 551" style="--d:3.919s;--dur:3.55s"/><path class="synapse k2" stroke="url(#synD)" d="M312.2 423Q359.8 485.8 341.1 553" style="--d:0.056s;--dur:4.00s"/><path class="synapse k3" stroke="url(#synE)" d="M312.2 423Q232.7 477.6 217.1 549" style="--d:0.193s;--dur:4.45s"/><path class="synapse k1" stroke="url(#synA)" d="M379.6 425Q409.6 486.1 408.3 555" style="--d:0.33s;--dur:4.90s"/><path class="synapse k2" stroke="url(#synB)" d="M379.6 425Q339.3 482.7 341.1 553" style="--d:0.467s;--dur:2.20s"/><path class="synapse k3" stroke="url(#synC)" d="M379.6 425Q449.5 479.3 475.4 546" style="--d:0.604s;--dur:2.65s"/><path class="synapse k1" stroke="url(#synD)" d="M447 416Q428 484 475.4 546" style="--d:0.741s;--dur:3.10s"/><path class="synapse k2" stroke="url(#synE)" d="M447 416Q466.2 490.3 408.3 555" style="--d:0.878s;--dur:3.55s"/><path class="synapse k3" stroke="url(#synA)" d="M447 416Q381.4 471 341.1 553" style="--d:1.015s;--dur:4.00s"/><path class="synapse skip" stroke="url(#synB)" d="M447 416Q381.4 552.9 278.8 679" style="--d:1.152s;--dur:4.45s"/><path class="synapse k1" stroke="url(#synC)" d="M514.4 418Q468.1 477.9 475.4 546" style="--d:1.289s;--dur:4.90s"/><path class="synapse k2" stroke="url(#synD)" d="M514.4 418Q488.2 497.5 408.3 555" style="--d:1.426s;--dur:2.20s"/><path class="synapse k3" stroke="url(#synE)" d="M514.4 418Q403.2 468.1 341.1 553" style="--d:1.563s;--dur:2.65s"/><path class="synapse k1" stroke="url(#synA)" d="M210 470Q229.5 508.6 217.1 549" style="--d:1.7s;--dur:3.10s"/><path class="synapse k2" stroke="url(#synB)" d="M210 470Q162.6 499.9 149.9 547" style="--d:1.837s;--dur:3.55s"/><path class="synapse k3" stroke="url(#synC)" d="M210 470Q267.7 498.3 284.2 551" style="--d:1.974s;--dur:4.00s"/><path class="synapse skip" stroke="url(#synD)" d="M210 470Q212.1 581.4 278.8 679" style="--d:2.111s;--dur:4.45s"/><path class="synapse k1" stroke="url(#synE)" d="M350 470Q385.3 512.6 341.1 553" style="--d:2.248s;--dur:4.90s"/><path class="synapse k2" stroke="url(#synA)" d="M350 470Q366 520.4 408.3 555" style="--d:2.385s;--dur:2.20s"/><path class="synapse k3" stroke="url(#synB)" d="M350 470Q334.2 521.8 284.2 551" style="--d:2.522s;--dur:2.65s"/><path class="synapse k1" stroke="url(#synC)" d="M82.8 545Q75.1 616.2 121.2 675" style="--d:2.659s;--dur:3.10s"/><path class="synapse k2" stroke="url(#synD)" d="M82.8 545Q166.8 604.4 200 677" style="--d:2.796s;--dur:3.55s"/><path class="synapse k3" stroke="url(#synE)" d="M82.8 545Q158.2 623.6 278.8 679" style="--d:2.933s;--dur:4.00s"/><path class="synapse k1" stroke="url(#synA)" d="M149.9 547Q151.2 614.9 121.2 675" style="--d:3.07s;--dur:4.45s"/><path class="synapse k2" stroke="url(#synB)" d="M149.9 547Q154.4 619.9 200 677" style="--d:3.207s;--dur:4.90s"/><path class="synapse k3" stroke="url(#synC)" d="M149.9 547Q234.4 606 278.8 679" style="--d:3.344s;--dur:2.20s"/><path class="synapse k1" stroke="url(#synD)" d="M217.1 549Q174.8 611.1 200 677" style="--d:3.481s;--dur:2.65s"/><path class="synapse k2" stroke="url(#synE)" d="M217.1 549Q284.1 606.3 278.8 679" style="--d:3.618s;--dur:3.10s"/><path class="synapse k3" stroke="url(#synA)" d="M217.1 549Q156.4 598.7 121.2 675" style="--d:3.755s;--dur:3.55s"/><path class="synapse k1" stroke="url(#synB)" d="M284.2 551Q303.5 615.4 278.8 679" style="--d:3.892s;--dur:4.00s"/><path class="synapse k2" stroke="url(#synC)" d="M284.2 551Q296.5 622.9 357.6 681" style="--d:0.029s;--dur:4.45s"/><path class="synapse k3" stroke="url(#synD)" d="M284.2 551Q270.4 624 200 677" style="--d:0.166s;--dur:4.90s"/><path class="synapse k1" stroke="url(#synE)" d="M341.1 553Q309.7 619.8 357.6 681" style="--d:0.303s;--dur:2.20s"/><path class="synapse k2" stroke="url(#synA)" d="M341.1 553Q324.3 620.4 278.8 679" style="--d:0.44s;--dur:2.65s"/><path class="synapse k3" stroke="url(#synB)" d="M341.1 553Q371 626.3 436.4 683" style="--d:0.577s;--dur:3.10s"/><path class="synapse k1" stroke="url(#synC)" d="M408.3 555Q449.7 615.1 436.4 683" style="--d:0.714s;--dur:3.55s"/><path class="synapse k2" stroke="url(#synD)" d="M408.3 555Q351.4 609.8 357.6 681" style="--d:0.851s;--dur:4.00s"/><path class="synapse k3" stroke="url(#synE)" d="M408.3 555Q371.2 624.2 278.8 679" style="--d:0.988s;--dur:4.45s"/><path class="synapse k1" stroke="url(#synA)" d="M475.4 546Q440.5 610.7 436.4 683" style="--d:1.125s;--dur:4.90s"/><path class="synapse k2" stroke="url(#synB)" d="M475.4 546Q433.1 625.3 357.6 681" style="--d:1.262s;--dur:2.20s"/><path class="synapse k3" stroke="url(#synC)" d="M475.4 546Q361.4 594.3 278.8 679" style="--d:1.399s;--dur:2.65s"/><path class="synapse bolt-line" stroke="url(#synD)" d="M280 355Q201 330.9 153.4 289" style="--d:1.536s;--dur:3.10s"/><path class="synapse bolt-line" stroke="url(#synE)" d="M280 355Q277.9 313.3 218.2 291" style="--d:1.673s;--dur:3.55s"/><path class="synapse bolt-line" stroke="url(#synA)" d="M280 355Q265.5 323.1 283 293" style="--d:1.81s;--dur:4.00s"/><path class="synapse bolt-line" stroke="url(#synB)" d="M280 355Q328.5 341.5 347.8 295" style="--d:1.947s;--dur:4.45s"/><path class="synapse bolt-line" stroke="url(#synC)" d="M280 355Q327.4 311.8 402.4 286" style="--d:2.084s;--dur:4.90s"/><path class="synapse bolt-line" stroke="url(#synD)" d="M280 355Q210.7 375.1 177.4 419" style="--d:2.221s;--dur:2.20s"/><path class="synapse bolt-line" stroke="url(#synE)" d="M280 355Q297.7 396.5 244.8 421" style="--d:2.358s;--dur:2.65s"/><path class="synapse bolt-line" stroke="url(#synA)" d="M280 355Q281.6 398.4 312.2 423" style="--d:2.495s;--dur:3.10s"/><path class="synapse bolt-line" stroke="url(#synB)" d="M280 355Q342.5 381.8 379.6 425" style="--d:2.632s;--dur:3.55s"/><path class="synapse bolt-line" stroke="url(#synC)" d="M280 355Q221.1 405.2 210 470" style="--d:2.769s;--dur:4.00s"/><path class="synapse bolt-line" stroke="url(#synD)" d="M280 355Q344 403.1 350 470" style="--d:2.906s;--dur:4.45s"/><path class="synapse bolt-line" stroke="url(#synE)" d="M210 470Q185.4 424.6 120.2 417" style="--d:3.043s;--dur:4.90s"/><path class="synapse bolt-line" stroke="url(#synA)" d="M210 470Q180.2 449.9 177.4 419" style="--d:3.18s;--dur:2.20s"/><path class="synapse bolt-line" stroke="url(#synB)" d="M210 470Q245.3 453.6 244.8 421" style="--d:3.317s;--dur:2.65s"/><path class="synapse bolt-line" stroke="url(#synC)" d="M210 470Q249.4 430.1 312.2 423" style="--d:3.454s;--dur:3.10s"/><path class="synapse bolt-line" stroke="url(#synD)" d="M210 470Q129.1 488.5 82.8 545" style="--d:3.591s;--dur:3.55s"/><path class="synapse bolt-line" stroke="url(#synE)" d="M210 470Q211.5 514.7 149.9 547" style="--d:3.728s;--dur:4.00s"/><path class="synapse bolt-line" stroke="url(#synA)" d="M210 470Q197.6 510.8 217.1 549" style="--d:3.865s;--dur:4.45s"/><path class="synapse bolt-line" stroke="url(#synB)" d="M210 470Q263.3 498.3 284.2 551" style="--d:0.002s;--dur:4.90s"/><path class="synapse bolt-line" stroke="url(#synC)" d="M210 470Q268.9 423.9 280 355" style="--d:0.139s;--dur:2.20s"/><path class="synapse bolt-line" stroke="url(#synD)" d="M210 470Q280 460 350 470" style="--d:0.276s;--dur:2.65s"/><path class="synapse bolt-line" stroke="url(#synE)" d="M350 470Q314.3 432.8 244.8 421" style="--d:0.413s;--dur:3.10s"/><path class="synapse bolt-line" stroke="url(#synA)" d="M350 470Q318.6 457.8 312.2 423" style="--d:0.55s;--dur:3.55s"/><path class="synapse bolt-line" stroke="url(#synB)" d="M350 470Q383.2 459.6 379.6 425" style="--d:0.687s;--dur:4.00s"/><path class="synapse bolt-line" stroke="url(#synC)" d="M350 470Q384.9 434.3 447 416" style="--d:0.824s;--dur:4.45s"/><path class="synapse bolt-line" stroke="url(#synD)" d="M350 470Q266.2 497.5 217.1 549" style="--d:0.961s;--dur:4.90s"/><path class="synapse bolt-line" stroke="url(#synE)" d="M350 470Q348.1 521.8 284.2 551" style="--d:1.098s;--dur:2.20s"/><path class="synapse bolt-line" stroke="url(#synA)" d="M350 470Q329.6 509.2 341.1 553" style="--d:1.235s;--dur:2.65s"/><path class="synapse bolt-line" stroke="url(#synB)" d="M350 470Q397.3 506.8 408.3 555" style="--d:1.372s;--dur:3.10s"/><path class="synapse bolt-line" stroke="url(#synC)" d="M350 470Q398.2 520 475.4 546" style="--d:1.509s;--dur:3.55s"/><path class="synapse bolt-line" stroke="url(#synD)" d="M350 470Q286 421.9 280 355" style="--d:1.646s;--dur:4.00s"/><path class="synapse bolt-line" stroke="url(#synE)" d="M350 470Q280 448 210 470" style="--d:1.783s;--dur:4.45s"/></g>
+  <g class="nodes"><g class="neuron" style="--d:0s" transform="translate(122.4 65)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#54d9ff"/></g><g class="neuron" style="--d:0.211s" transform="translate(201.2 67)"><circle class="halo" r="18.3" fill="url(#nodeGlow)"/><circle class="ring" r="12.3" fill="none" stroke="#c4b5ff" stroke-opacity=".5"/><circle class="core" r="6.3" fill="#c4b5ff"/></g><g class="neuron" style="--d:0.422s" transform="translate(280 69)"><circle class="halo" r="19.1" fill="url(#nodeGlow)"/><circle class="ring" r="13.1" fill="none" stroke="#4ade80" stroke-opacity=".5"/><circle class="core" r="7.1" fill="#4ade80"/></g><g class="neuron" style="--d:0.633s" transform="translate(358.8 71)"><circle class="halo" r="19.9" fill="url(#nodeGlow)"/><circle class="ring" r="13.9" fill="none" stroke="#ff7a9a" stroke-opacity=".5"/><circle class="core" r="7.9" fill="#ff7a9a"/></g><g class="neuron" style="--d:0.844s" transform="translate(437.6 73)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#ecc66e" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#ecc66e"/></g><g class="neuron" style="--d:1.055s" transform="translate(73.6 165)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#54d9ff"/></g><g class="neuron" style="--d:1.266s" transform="translate(142.6 167)"><circle class="halo" r="18.3" fill="url(#nodeGlow)"/><circle class="ring" r="12.3" fill="none" stroke="#c4b5ff" stroke-opacity=".5"/><circle class="core" r="6.3" fill="#c4b5ff"/></g><g class="neuron" style="--d:1.477s" transform="translate(211.6 169)"><circle class="halo" r="19.1" fill="url(#nodeGlow)"/><circle class="ring" r="13.1" fill="none" stroke="#4ade80" stroke-opacity=".5"/><circle class="core" r="7.1" fill="#4ade80"/></g><g class="neuron" style="--d:1.688s" transform="translate(280.6 171)"><circle class="halo" r="19.9" fill="url(#nodeGlow)"/><circle class="ring" r="13.9" fill="none" stroke="#ff7a9a" stroke-opacity=".5"/><circle class="core" r="7.9" fill="#ff7a9a"/></g><g class="neuron" style="--d:1.899s" transform="translate(349.6 173)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#ecc66e" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#ecc66e"/></g><g class="neuron" style="--d:2.11s" transform="translate(418.6 175)"><circle class="halo" r="18.3" fill="url(#nodeGlow)"/><circle class="ring" r="12.3" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="6.3" fill="#54d9ff"/></g><g class="neuron" style="--d:2.321s" transform="translate(477.4 166)"><circle class="halo" r="19.1" fill="url(#nodeGlow)"/><circle class="ring" r="13.1" fill="none" stroke="#c4b5ff" stroke-opacity=".5"/><circle class="core" r="7.1" fill="#c4b5ff"/></g><g class="neuron" style="--d:2.532s" transform="translate(23.8 285)"><circle class="halo" r="16.5" fill="url(#nodeGlow)"/><circle class="ring" r="10.5" fill="none" stroke="#4ade80" stroke-opacity=".5"/><circle class="core" r="4.5" fill="#4ade80"/></g><g class="neuron" style="--d:2.743s" transform="translate(88.6 287)"><circle class="halo" r="17" fill="url(#nodeGlow)"/><circle class="ring" r="11" fill="none" stroke="#ff7a9a" stroke-opacity=".5"/><circle class="core" r="5" fill="#ff7a9a"/></g><g class="neuron" style="--d:0.154s" transform="translate(153.4 289)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#ecc66e" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#ecc66e"/></g><g class="neuron" style="--d:0.365s" transform="translate(218.2 291)"><circle class="halo" r="16.5" fill="url(#nodeGlow)"/><circle class="ring" r="10.5" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="4.5" fill="#54d9ff"/></g><g class="neuron" style="--d:0.576s" transform="translate(283 293)"><circle class="halo" r="17" fill="url(#nodeGlow)"/><circle class="ring" r="11" fill="none" stroke="#c4b5ff" stroke-opacity=".5"/><circle class="core" r="5" fill="#c4b5ff"/></g><g class="neuron" style="--d:0.787s" transform="translate(347.8 295)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#4ade80" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#4ade80"/></g><g class="neuron" style="--d:0.998s" transform="translate(402.4 286)"><circle class="halo" r="16.5" fill="url(#nodeGlow)"/><circle class="ring" r="10.5" fill="none" stroke="#ff7a9a" stroke-opacity=".5"/><circle class="core" r="4.5" fill="#ff7a9a"/></g><g class="neuron" style="--d:1.209s" transform="translate(467.2 288)"><circle class="halo" r="17" fill="url(#nodeGlow)"/><circle class="ring" r="11" fill="none" stroke="#ecc66e" stroke-opacity=".5"/><circle class="core" r="5" fill="#ecc66e"/></g><g class="neuron" style="--d:1.42s" transform="translate(532 290)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#54d9ff"/></g><g class="neuron" style="--d:1.631s" transform="translate(52.8 415)"><circle class="halo" r="16.5" fill="url(#nodeGlow)"/><circle class="ring" r="10.5" fill="none" stroke="#c4b5ff" stroke-opacity=".5"/><circle class="core" r="4.5" fill="#c4b5ff"/></g><g class="neuron" style="--d:1.842s" transform="translate(120.2 417)"><circle class="halo" r="17" fill="url(#nodeGlow)"/><circle class="ring" r="11" fill="none" stroke="#4ade80" stroke-opacity=".5"/><circle class="core" r="5" fill="#4ade80"/></g><g class="neuron" style="--d:2.053s" transform="translate(177.4 419)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#ff7a9a" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#ff7a9a"/></g><g class="neuron" style="--d:2.264s" transform="translate(244.8 421)"><circle class="halo" r="16.5" fill="url(#nodeGlow)"/><circle class="ring" r="10.5" fill="none" stroke="#ecc66e" stroke-opacity=".5"/><circle class="core" r="4.5" fill="#ecc66e"/></g><g class="neuron" style="--d:2.475s" transform="translate(312.2 423)"><circle class="halo" r="17" fill="url(#nodeGlow)"/><circle class="ring" r="11" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="5" fill="#54d9ff"/></g><g class="neuron" style="--d:2.686s" transform="translate(379.6 425)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#c4b5ff" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#c4b5ff"/></g><g class="neuron" style="--d:0.097s" transform="translate(447 416)"><circle class="halo" r="16.5" fill="url(#nodeGlow)"/><circle class="ring" r="10.5" fill="none" stroke="#4ade80" stroke-opacity=".5"/><circle class="core" r="4.5" fill="#4ade80"/></g><g class="neuron" style="--d:0.308s" transform="translate(514.4 418)"><circle class="halo" r="17" fill="url(#nodeGlow)"/><circle class="ring" r="11" fill="none" stroke="#ff7a9a" stroke-opacity=".5"/><circle class="core" r="5" fill="#ff7a9a"/></g><g class="neuron" style="--d:0.519s" transform="translate(82.8 545)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#ecc66e" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#ecc66e"/></g><g class="neuron" style="--d:0.73s" transform="translate(149.9 547)"><circle class="halo" r="18.3" fill="url(#nodeGlow)"/><circle class="ring" r="12.3" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="6.3" fill="#54d9ff"/></g><g class="neuron" style="--d:0.941s" transform="translate(217.1 549)"><circle class="halo" r="19.1" fill="url(#nodeGlow)"/><circle class="ring" r="13.1" fill="none" stroke="#c4b5ff" stroke-opacity=".5"/><circle class="core" r="7.1" fill="#c4b5ff"/></g><g class="neuron" style="--d:1.152s" transform="translate(284.2 551)"><circle class="halo" r="19.9" fill="url(#nodeGlow)"/><circle class="ring" r="13.9" fill="none" stroke="#4ade80" stroke-opacity=".5"/><circle class="core" r="7.9" fill="#4ade80"/></g><g class="neuron" style="--d:1.363s" transform="translate(341.1 553)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#ff7a9a" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#ff7a9a"/></g><g class="neuron" style="--d:1.574s" transform="translate(408.3 555)"><circle class="halo" r="18.3" fill="url(#nodeGlow)"/><circle class="ring" r="12.3" fill="none" stroke="#ecc66e" stroke-opacity=".5"/><circle class="core" r="6.3" fill="#ecc66e"/></g><g class="neuron" style="--d:1.785s" transform="translate(475.4 546)"><circle class="halo" r="19.1" fill="url(#nodeGlow)"/><circle class="ring" r="13.1" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="7.1" fill="#54d9ff"/></g><g class="neuron" style="--d:1.996s" transform="translate(121.2 675)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#c4b5ff" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#c4b5ff"/></g><g class="neuron" style="--d:2.207s" transform="translate(200 677)"><circle class="halo" r="18.3" fill="url(#nodeGlow)"/><circle class="ring" r="12.3" fill="none" stroke="#4ade80" stroke-opacity=".5"/><circle class="core" r="6.3" fill="#4ade80"/></g><g class="neuron" style="--d:2.418s" transform="translate(278.8 679)"><circle class="halo" r="19.1" fill="url(#nodeGlow)"/><circle class="ring" r="13.1" fill="none" stroke="#ff7a9a" stroke-opacity=".5"/><circle class="core" r="7.1" fill="#ff7a9a"/></g><g class="neuron" style="--d:2.629s" transform="translate(357.6 681)"><circle class="halo" r="19.9" fill="url(#nodeGlow)"/><circle class="ring" r="13.9" fill="none" stroke="#ecc66e" stroke-opacity=".5"/><circle class="core" r="7.9" fill="#ecc66e"/></g><g class="neuron" style="--d:0.04s" transform="translate(436.4 683)"><circle class="halo" r="17.5" fill="url(#nodeGlow)"/><circle class="ring" r="11.5" fill="none" stroke="#54d9ff" stroke-opacity=".5"/><circle class="core" r="5.5" fill="#54d9ff"/></g><g class="neuron hub" style="--d:0.251s" transform="translate(280 355)"><circle class="halo" r="32" fill="url(#nodeGlow)"/><circle class="ring" r="20" fill="none" stroke="#fff" stroke-opacity=".5"/><circle class="core" r="14" fill="#fff"/></g><g class="neuron hub" style="--d:0.462s" transform="translate(210 470)"><circle class="halo" r="32" fill="url(#nodeGlow)"/><circle class="ring" r="16" fill="none" stroke="#fff" stroke-opacity=".5"/><circle class="core" r="10" fill="#fff"/></g><g class="neuron hub" style="--d:0.673s" transform="translate(350 470)"><circle class="halo" r="32" fill="url(#nodeGlow)"/><circle class="ring" r="16" fill="none" stroke="#fff" stroke-opacity=".5"/><circle class="core" r="10" fill="#fff"/></g></g>
+  <g class="sparks"><circle class="spark" cx="40" cy="30" r="1.2" style="--d:0s;--x:-66px;--y:68px"/><circle class="spark" cx="129" cy="77" r="1.9" style="--d:0.173s;--x:-44px;--y:34px"/><circle class="spark" cx="218" cy="124" r="2.5999999999999996" style="--d:0.346s;--x:-22px;--y:0px"/><circle class="spark" cx="307" cy="171" r="1.2" style="--d:0.519s;--x:0px;--y:-34px"/><circle class="spark" cx="396" cy="218" r="1.9" style="--d:0.692s;--x:22px;--y:-68px"/><circle class="spark" cx="485" cy="265" r="2.5999999999999996" style="--d:0.865s;--x:44px;--y:68px"/><circle class="spark" cx="94" cy="312" r="1.2" style="--d:1.038s;--x:66px;--y:34px"/><circle class="spark" cx="183" cy="359" r="1.9" style="--d:1.211s;--x:-66px;--y:0px"/><circle class="spark" cx="272" cy="406" r="2.5999999999999996" style="--d:1.384s;--x:-44px;--y:-34px"/><circle class="spark" cx="361" cy="453" r="1.2" style="--d:1.557s;--x:-22px;--y:-68px"/><circle class="spark" cx="450" cy="500" r="1.9" style="--d:1.73s;--x:0px;--y:68px"/><circle class="spark" cx="59" cy="547" r="2.5999999999999996" style="--d:1.903s;--x:22px;--y:34px"/><circle class="spark" cx="148" cy="594" r="1.2" style="--d:2.076s;--x:44px;--y:0px"/><circle class="spark" cx="237" cy="641" r="1.9" style="--d:2.249s;--x:66px;--y:-34px"/><circle class="spark" cx="326" cy="688" r="2.5999999999999996" style="--d:2.422s;--x:-66px;--y:-68px"/><circle class="spark" cx="415" cy="35" r="1.2" style="--d:2.595s;--x:-44px;--y:68px"/><circle class="spark" cx="504" cy="82" r="1.9" style="--d:2.768s;--x:-22px;--y:34px"/><circle class="spark" cx="113" cy="129" r="2.5999999999999996" style="--d:2.941s;--x:0px;--y:0px"/><circle class="spark" cx="202" cy="176" r="1.2" style="--d:3.114s;--x:22px;--y:-34px"/><circle class="spark" cx="291" cy="223" r="1.9" style="--d:3.287s;--x:44px;--y:-68px"/><circle class="spark" cx="380" cy="270" r="2.5999999999999996" style="--d:3.46s;--x:66px;--y:68px"/><circle class="spark" cx="469" cy="317" r="1.2" style="--d:3.633s;--x:-66px;--y:34px"/><circle class="spark" cx="78" cy="364" r="1.9" style="--d:3.806s;--x:-44px;--y:0px"/><circle class="spark" cx="167" cy="411" r="2.5999999999999996" style="--d:3.979s;--x:-22px;--y:-34px"/><circle class="spark" cx="256" cy="458" r="1.2" style="--d:4.152s;--x:0px;--y:-68px"/><circle class="spark" cx="345" cy="505" r="1.9" style="--d:4.325s;--x:22px;--y:68px"/><circle class="spark" cx="434" cy="552" r="2.5999999999999996" style="--d:4.498s;--x:44px;--y:34px"/><circle class="spark" cx="43" cy="599" r="1.2" style="--d:0.171s;--x:66px;--y:0px"/><circle class="spark" cx="132" cy="646" r="1.9" style="--d:0.344s;--x:-66px;--y:-34px"/><circle class="spark" cx="221" cy="693" r="2.5999999999999996" style="--d:0.517s;--x:-44px;--y:-68px"/><circle class="spark" cx="310" cy="40" r="1.2" style="--d:0.69s;--x:-22px;--y:68px"/><circle class="spark" cx="399" cy="87" r="1.9" style="--d:0.863s;--x:0px;--y:34px"/><circle class="spark" cx="488" cy="134" r="2.5999999999999996" style="--d:1.036s;--x:22px;--y:0px"/><circle class="spark" cx="97" cy="181" r="1.2" style="--d:1.209s;--x:44px;--y:-34px"/><circle class="spark" cx="186" cy="228" r="1.9" style="--d:1.382s;--x:66px;--y:-68px"/><circle class="spark" cx="275" cy="275" r="2.5999999999999996" style="--d:1.555s;--x:-66px;--y:68px"/><circle class="spark" cx="364" cy="322" r="1.2" style="--d:1.728s;--x:-44px;--y:34px"/><circle class="spark" cx="453" cy="369" r="1.9" style="--d:1.901s;--x:-22px;--y:0px"/><circle class="spark" cx="62" cy="416" r="2.5999999999999996" style="--d:2.074s;--x:0px;--y:-34px"/><circle class="spark" cx="151" cy="463" r="1.2" style="--d:2.247s;--x:22px;--y:-68px"/><circle class="spark" cx="240" cy="510" r="1.9" style="--d:2.42s;--x:44px;--y:68px"/><circle class="spark" cx="329" cy="557" r="2.5999999999999996" style="--d:2.593s;--x:66px;--y:34px"/><circle class="spark" cx="418" cy="604" r="1.2" style="--d:2.766s;--x:-66px;--y:0px"/><circle class="spark" cx="507" cy="651" r="1.9" style="--d:2.939s;--x:-44px;--y:-34px"/><circle class="spark" cx="116" cy="698" r="2.5999999999999996" style="--d:3.112s;--x:-22px;--y:-68px"/><circle class="spark" cx="205" cy="45" r="1.2" style="--d:3.285s;--x:0px;--y:68px"/><circle class="spark" cx="294" cy="92" r="1.9" style="--d:3.458s;--x:22px;--y:34px"/><circle class="spark" cx="383" cy="139" r="2.5999999999999996" style="--d:3.631s;--x:44px;--y:0px"/></g>
+</svg>
+<canvas class="neural-canvas" width="620" height="820" aria-hidden="true"></canvas>
+</div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">Apertura. Esta no es una charla de herramientas: es una hora para decidir dónde entra la IA en nuestro trabajo, con qué controles y con qué dueño. La red neuronal de la derecha dispara cargas, rayos y sinapsis en loop; M lo pausa.</aside>
+</section>
+
+<section class="slide keynote intro-scene bio-keynote" data-title="Soy Oscar Lobaton Salas" data-secs="60">
+<header><span class="brand"><b>0VAS</b><span class="event">QUIÉN FACILITA</span></span><span>INTRODUCCIÓN</span></header>
+<div class="bio-contact-surface" aria-hidden="true"></div>
+<p class="eyebrow enter-deco">QUIÉN ESTÁ DETRÁS DE ESTA CONVERSACIÓN</p>
+<div class="bio-identity enter-lead">
+  <img class="bio-headshot" src="media/speaker.jpg" alt="Oscar Lobaton Salas" width="160" height="180">
+  <div>
+    <h2>Oscar<br>Lobaton Salas<span>.</span></h2>
+    <p><strong>Platform Product Lead</strong> · Credicorp</p>
+  </div>
+</div>
+<div class="bio-columns">
+  <section class="bio-learning beat" data-beat="0">
+    <div class="bio-section-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/></svg><span>FORMACIÓN</span></div>
+    <div class="bio-school"><strong>UNI</strong><p>Ingeniería de Sistemas</p><small>Primer puesto</small></div>
+    <div class="bio-school"><strong>MIT Professional Education</strong><p>Programa de IA agéntica</p></div>
+    <div class="bio-school"><strong>Hanyang Cyber University</strong><p>Ingeniería de IA <small>· En curso</small></p></div>
+  </section>
+  <section class="bio-speaking beat" data-beat="1">
+    <div class="bio-section-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg><span>CHARLAS Y COMUNIDAD</span></div>
+    <div class="talk-carousel" aria-roledescription="carrusel" aria-label="Participaciones de Oscar">
+      <div class="talk-cylinder">
+        <div class="talk-card current" aria-hidden="false"><span class="talk-date">2026 / PONENCIA</span><h3><span class="talk-flag" role="img" aria-label="Colombia">🇨🇴</span>DevOpsDays Medellín</h3><p>Números Bonitos, Madurez Falsa</p></div>
+        <div class="talk-card" aria-hidden="true"><span class="talk-date">2026 / PONENCIA</span><h3><span class="talk-flag" role="img" aria-label="Argentina">🇦🇷</span>DevOpsDays Buenos Aires</h3><p>Construyendo un Framework de Platform Engineering: De silos DevSecOps a X-as-a-Service</p></div>
+        <div class="talk-card" aria-hidden="true"><span class="talk-date">2025 / PONENCIA</span><h3><span class="talk-flag" role="img" aria-label="Perú">🇵🇪</span>Agile Summit</h3><p>Más allá de DevOps: InnerSource como catalizador de la agilidad</p></div>
+        <div class="talk-card" aria-hidden="true"><span class="talk-date">2025 / PONENCIA</span><h3><span class="talk-flag" role="img" aria-label="Alemania, Estados Unidos y Japón">🇩🇪🇺🇸🇯🇵</span>InnerSource Summit</h3><p>Building Bridges: Scaling InnerSource</p></div>
+        <div class="talk-card" aria-hidden="true"><span class="talk-date">2025 / PONENCIA</span><h3><span class="talk-flag" role="img" aria-label="Chile">🇨🇱</span>DevOpsDays Santiago</h3><p>La Evolución del Open Source en la Cultura Empresarial</p></div>
+        <div class="talk-card" aria-hidden="true"><span class="talk-date">2025 / PONENCIA</span><h3><span class="talk-flag" role="img" aria-label="Perú">🇵🇪</span>DevOpsDays Lima</h3><p>Las Mentiras de las Métricas: Midiendo sin Caer en Trampas</p></div>
+        <div class="talk-card" aria-hidden="true"><span class="talk-date">2024 / PONENCIA</span><h3><span class="talk-flag" role="img" aria-label="Perú">🇵🇪</span>DevSecOps Fest</h3><p>Gestionando el conocimiento con Documentation as Code</p></div>
+        <div class="talk-card" aria-hidden="true"><span class="talk-date">2024 / PONENCIA</span><h3><span class="talk-flag" role="img" aria-label="Colombia">🇨🇴</span>DevOpsDays Medellín</h3><p>Adopción de GenAI para revolucionar el desarrollo de software</p></div>
+        <div class="talk-card" aria-hidden="true"><span class="talk-date">2024 / ENTREVISTA</span><h3><span class="talk-flag" role="img" aria-label="Global">🌐</span>GitHub · YouTube</h3><p>Impulsando la productividad del desarrollador con GitHub Copilot</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+<a class="bio-home enter-support" style="--d:480ms" href="https://0vas.com" target="_blank" rel="noopener">0vas.com ↗</a>
+<div class="bio-contact-heading enter-support" style="--d:360ms">Sigamos<br>conversando<span>.</span></div>
+<a class="profile-qr enter-support" style="--d:520ms" href="https://www.linkedin.com/in/oscarlobatons/" target="_blank" rel="noopener" aria-label="Conectar con Oscar Lobaton en LinkedIn"><img src="media/linkedin-qr.svg" alt="QR del LinkedIn de Oscar Lobaton"><span><b>Conectemos</b><small>LinkedIn</small><strong>@oscarlobatons ↗</strong></span></a>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 2 pasos. Foto, nombre y QR fijos.
+Paso 1: formación. Paso 2: carrusel de charlas. Diseño de plataformas y comunidad conectan con cómo introducimos IA en flujos y plataforma.</aside>
+</section>
+
+<section class="slide keynote intro-scene intro-promise" data-title="No es una demo de herramientas" data-secs="60">
+<header><span class="brand"><b>0VAS</b><span class="event">LA PROMESA</span></span><span>INTRODUCCIÓN</span></header>
+<div class="art-wrap">
+<div class="scene-grid">
+  <div class="copy-col">
+    <p class="eyebrow enter-deco">La promesa de esta hora</p>
+    <h2 class="enter-lead">No es una demo<br>de herramientas<span class="period">.</span></h2>
+    <p class="lede enter-support">Es un mapa para decidir. Salimos con <strong>tres decisiones con dueño.</strong></p>
+    <ul class="promise-list enter-support" style="--d:320ms"><li><b>01</b>Qué modo tiene la IA en cada paso</li><li><b>02</b>En qué journey de plataforma entra</li><li><b>03</b>Quién responde por cada decisión</li></ul>
+  </div>
+  <svg class="art enter-art" viewBox="0 0 680 460" role="img" aria-label="Mapa topográfico con tres marcas: modo, journey y dueño">
+    <g class="f-none s-line" stroke-width="1.5">
+      <ellipse cx="330" cy="230" rx="320" ry="200" transform="rotate(-10 330 230)"/>
+      <ellipse cx="330" cy="225" rx="250" ry="152" transform="rotate(-10 330 230)"/>
+      <ellipse cx="320" cy="215" rx="180" ry="106" transform="rotate(-10 330 230)"/>
+      <ellipse cx="330" cy="190" rx="110" ry="62" transform="rotate(-10 330 230)"/>
+      <ellipse cx="340" cy="178" rx="48" ry="26" transform="rotate(-10 330 230)"/>
+      <ellipse cx="545" cy="335" rx="100" ry="58"/>
+      <ellipse cx="545" cy="335" rx="52" ry="28"/>
+    </g>
+    <g class="beat fade" data-beat="1"><path class="trace s-v f-none" pathLength="1" d="M150 330C220 300 250 200 340 172C430 144 520 220 540 318" stroke-width="3" stroke-linecap="round"/></g>
+    <g class="beat" data-beat="0"><g transform="translate(150 330)"><path class="f-v" d="M0 0C-6-12-20-22-20-36A20 20 0 1 1 20-36C20-22 6-12 0 0Z"/><circle class="f-bg" cy="-36" r="7"/></g><text x="150" y="368" text-anchor="middle" class="t-mono t-v" font-size="18" font-weight="600">01 · MODO</text><text x="150" y="394" text-anchor="middle" class="t-mu" font-size="18">por paso del flujo</text></g>
+    <g class="beat" data-beat="1"><g transform="translate(340 172)"><path class="f-a" d="M0 0C-6-12-20-22-20-36A20 20 0 1 1 20-36C20-22 6-12 0 0Z"/><circle class="f-bg" cy="-36" r="7"/></g><text x="340" y="208" text-anchor="middle" class="t-mono t-a" font-size="18" font-weight="600">02 · JOURNEY</text><text x="340" y="234" text-anchor="middle" class="t-mu" font-size="18">donde entra la IA</text></g>
+    <g class="beat" data-beat="2"><g transform="translate(540 318)"><path class="f-g" d="M0 0C-6-12-20-22-20-36A20 20 0 1 1 20-36C20-22 6-12 0 0Z"/><circle class="f-bg" cy="-36" r="7"/></g><text x="540" y="356" text-anchor="middle" class="t-mono t-g" font-size="18" font-weight="600">03 · DUEÑO</text><text x="540" y="382" text-anchor="middle" class="t-mu" font-size="18">por cada decisión</text></g>
+  </svg>
+</div>
+</div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. Cada paso coloca una marca en el mapa.
+No vamos a comparar asistentes ni modelos. Vamos a construir un mapa compartido: qué modo tiene la IA en cada paso del flujo, en qué journey de plataforma entra y quién responde por cada decisión. Esas tres marcas vuelven en el cierre como acuerdos.</aside>
+</section>
+
+<section class="slide keynote intro-scene why-now" data-title="La IA ya entró al SDLC" data-secs="90">
+<header><span class="brand"><b>0VAS</b><span class="event">CONTEXTO</span></span><span>INTRODUCCIÓN</span></header>
+<p class="eyebrow enter-deco">Por qué ahora</p>
+<h2 class="enter-lead">La IA ya entró al SDLC.<br><em>¿Entró por diseño?</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 420" role="img" aria-label="Ciclo DevOps con entradas no gobernadas de IA y controles diseñados">
+    <path id="loop-sdlc" class="draw f-none s-fg" pathLength="1" stroke-width="3" opacity=".55" d="M704 210C820 70 1060 70 1060 210C1060 350 820 350 704 210C588 70 348 70 348 210C348 350 588 350 704 210Z"/>
+    <text x="526" y="224" text-anchor="middle" font-size="40" font-weight="640" class="t-mu" opacity=".55">DEV</text>
+    <text x="882" y="224" text-anchor="middle" font-size="40" font-weight="640" class="t-mu" opacity=".55">OPS</text>
+    <circle r="7" class="f-a"><animateMotion dur="9s" repeatCount="indefinite"><mpath href="#loop-sdlc"/></animateMotion></circle>
+    <g class="beat" data-beat="0">
+      <g class="s-r dash f-none" stroke-width="2.5"><path d="M210 74L440 120" marker-end="url(#arr-r)"/><path d="M200 366L420 300" marker-end="url(#arr-r)"/><path d="M1198 74L968 120" marker-end="url(#arr-r)"/><path d="M1208 366L988 300" marker-end="url(#arr-r)"/></g>
+      <g font-size="21" class="t-r"><text x="20" y="56">chat externo con código interno</text><text x="20" y="398">extensión sin política</text><text x="1388" y="56" text-anchor="end">script con token personal</text><text x="1388" y="398" text-anchor="end">logs pegados en un prompt</text></g>
+    </g>
+    <g class="beat" data-beat="1">
+      <g class="f-v"><rect x="514" y="96" width="24" height="24" transform="rotate(45 526 108)"/><rect x="870" y="96" width="24" height="24" transform="rotate(45 882 108)"/><rect x="692" y="198" width="24" height="24" transform="rotate(45 704 210)"/></g>
+      <path class="s-v f-none" stroke-width="2" d="M704 228V352"/>
+      <g font-size="20" class="t-mono t-v" font-weight="600" text-anchor="middle"><text x="526" y="160">ALLOWLIST DE MODELOS</text><text x="882" y="160">TRAZABILIDAD</text><text x="704" y="380">DATOS CLASIFICADOS</text></g>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Si no se diseña, la IA <strong>acelera el caos con mejor redacción.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+La IA ya está en el ciclo, oficial o no. Paso 1: las entradas informales — chats externos, extensiones sin política, tokens personales, logs pegados en prompts. No es mala fe: es la ruta más corta disponible. Paso 2: las mismas entradas con diseño: modelos permitidos, datos clasificados y trazabilidad. Paso 3: la frase de cierre. Pregunta a la sala: ¿cuál de estas cuatro entradas reconocen?</aside>
+</section>
+
+<section class="slide keynote intro-scene tension-scene" data-title="Misma IA, dos organizaciones" data-secs="75">
+<header><span class="brand"><b>0VAS</b><span class="event">LA TENSIÓN</span></span><span>INTRODUCCIÓN</span></header>
+<p class="eyebrow enter-deco">La tensión</p>
+<h2 class="enter-lead">Misma IA.<br><em>Dos organizaciones.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 420" role="img" aria-label="Sin contrato la IA genera enredo; con contrato genera carriles claros">
+    <path class="s-line dash" stroke-width="2" d="M704 10V410"/>
+    <g class="beat" data-beat="0">
+      <text x="40" y="40" class="t-mono t-r" font-size="18" font-weight="600">SIN CONTRATO</text>
+      <g class="s-mu f-none" stroke-width="2.5"><path d="M40 140H260"/><path d="M40 210H260"/><path d="M40 280H260"/></g>
+      <path class="s-r f-none" stroke-width="3" stroke-linecap="round" d="M270 150C420 110 400 310 320 270S450 130 420 220S290 330 360 180S480 290 400 300S300 160 450 190"/>
+      <g class="s-r f-none" stroke-width="2.5" opacity=".75"><path d="M470 200C540 120 580 90 650 80" marker-end="url(#arr-r)"/><path d="M470 220C560 230 590 260 650 250" marker-end="url(#arr-r)"/><path d="M460 250C520 320 560 340 640 350" marker-end="url(#arr-r)"/></g>
+      <text x="360" y="396" text-anchor="middle" font-size="24" class="t-mu">más volumen, <tspan class="t-r">menos claridad</tspan></text>
+    </g>
+    <g class="beat" data-beat="1">
+      <text x="760" y="40" class="t-mono t-a" font-size="18" font-weight="600">CON CONTRATO</text>
+      <g class="s-mu f-none" stroke-width="2.5"><path d="M760 140H990"/><path d="M760 210H990"/><path d="M760 280H990"/></g>
+      <rect x="1000" y="110" width="18" height="200" rx="6" class="f-v"/>
+      <g class="s-a f-none" stroke-width="3"><path class="trace" pathLength="1" d="M1030 140H1350" marker-end="url(#arr-a)"/><path class="trace" pathLength="1" d="M1030 210H1350" marker-end="url(#arr-a)"/><path class="trace" pathLength="1" d="M1030 280H1350" marker-end="url(#arr-a)"/></g>
+      <text x="1009" y="96" text-anchor="middle" class="t-mono t-v" font-size="16" font-weight="600">GATE</text>
+      <text x="1060" y="396" text-anchor="middle" font-size="24" class="t-mu">más flujo, <tspan class="t-a">misma confianza</tspan></text>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">La IA <strong>amplifica el sistema que encuentra.</strong> No lo reemplaza.</p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Misma herramienta, mismo modelo, mismo presupuesto. Izquierda: sin contrato, cada persona la usa a su manera y el volumen de cambios sube más rápido que la claridad. Derecha: el mismo flujo pasa por un gate acordado y sale en carriles claros. La diferencia no está en la IA: está en el sistema que la recibe.</aside>
+</section>
+
+<section class="slide keynote intro-scene agenda-route" data-title="Tres bloques, una hora" data-secs="60">
+<header><span class="brand"><b>0VAS</b><span class="event">LA RUTA</span></span><span>INTRODUCCIÓN</span></header>
+<p class="eyebrow enter-deco">La ruta</p>
+<h2 class="enter-lead">Tres bloques.<br><em>Una hora.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 340" role="img" aria-label="Ruta en tres estaciones">
+    <path class="f-none s-line" stroke-width="24" stroke-linecap="round" d="M40 200C220 200 260 90 470 90S700 230 900 230S1150 90 1360 90"/>
+    <path class="draw f-none s-v" pathLength="1" stroke-width="3" stroke-linecap="round" d="M40 200C220 200 260 90 470 90S700 230 900 230S1150 90 1360 90"/>
+    <g class="beat" data-beat="0"><circle cx="255" cy="152" r="34" class="f-v"/><text x="255" y="161" text-anchor="middle" class="t-on t-b" font-size="24">01</text><text x="255" y="262" text-anchor="middle" font-size="25" font-weight="600">1. IA en los flujos de DevOps</text><text x="255" y="296" text-anchor="middle" class="t-mono t-mu" font-size="16">MAPA · MODOS · GATES · OPERACIÓN</text></g>
+    <g class="beat" data-beat="1"><circle cx="685" cy="160" r="34" class="f-a"/><text x="685" y="169" text-anchor="middle" class="t-b" font-size="24" style="fill:var(--bg)">02</text><text x="685" y="262" text-anchor="middle" font-size="25" font-weight="600">2. IA en la plataforma de ingeniería</text><text x="685" y="296" text-anchor="middle" class="t-mono t-mu" font-size="16">CORE · JOURNEYS · CONTEXTO</text></g>
+    <g class="beat" data-beat="2"><circle cx="1125" cy="152" r="34" class="f-g"/><text x="1125" y="161" text-anchor="middle" class="t-b" font-size="24" style="fill:var(--bg)">03</text><text x="1125" y="262" text-anchor="middle" font-size="25" font-weight="600">3. Roles críticos para los puntos 1 y 2</text><text x="1125" y="296" text-anchor="middle" class="t-mono t-mu" font-size="16">RACI · ADOPCIÓN · 90 DÍAS</text>
+      <g transform="translate(1360 90)"><path class="s-fg" stroke-width="3" d="M0 0V-70"/><path class="f-v" d="M0-70H44L34-56L44-42H0Z"/></g></g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Llegada: <strong>tres acuerdos con dueño</strong> — modo, journey, RACI.</p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos, una estación por bloque.
+Bloque 1, unos 15 minutos: IA dentro del flujo DevOps. Bloque 2, unos 17 minutos: IA como capacidad de la plataforma de ingeniería. Bloque 3, unos 17 minutos: roles que hacen que 1 y 2 funcionen. Cerramos con acuerdos y preguntas.</aside>
+</section>
+
+<!-- ═══════════════════════════ BLOQUE 1 ═══════════════════════════ -->
+
+<section class="slide keynote accent-scene block-divider" data-block="1" data-title="1. IA en los flujos de DevOps" data-secs="30">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 1 / 3</span></span><span>FLUJOS DEVOPS</span></header>
+<span class="block-num enter-deco" style="--d:120ms" aria-hidden="true">01</span>
+<div class="pixel-grid divider-pixels" data-pattern="101101/011011/110110/011101" aria-hidden="true"></div>
+<p class="eyebrow enter-deco">Bloque 1 de 3</p>
+<h2 class="enter-lead">IA en los flujos<br>de DevOps<span class="period">.</span></h2>
+<p class="lede enter-support" style="--d:280ms">El flujo no es el pipeline. Es la cadena de decisiones que la IA puede <strong style="color:#fff">acelerar — o ensuciar.</strong></p>
+<div class="chapter-chain enter-support" style="--d:420ms"><span>MAPA</span><i></i><span>MODOS</span><i></i><span>PR</span><i></i><span>CI/CD</span><i></i><span>INCIDENTES</span><i></i><span>FALLAS</span></div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">Apertura bloque 1. Pregunta guía: en cada paso del flujo, ¿la IA sugiere, ejecuta o decide?</aside>
+</section>
+
+<section class="slide keynote editorial flow-scene" data-title="Siete puntos de contacto" data-secs="120">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 1 · FLUJOS</span></span><span>MAPA DEL FLUJO</span></header>
+<p class="eyebrow enter-deco">Mapa del flujo</p>
+<h2 class="enter-lead">Siete puntos de contacto.<br><em>Un solo flujo.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 430" role="img" aria-label="Ciclo DevOps con siete puntos donde entra la IA">
+    <path id="loop-flow" class="draw f-none s-line" pathLength="1" stroke-width="16" stroke-linecap="round" d="M704 220C820 80 1100 80 1100 220C1100 360 820 360 704 220C588 80 308 80 308 220C308 360 588 360 704 220Z"/>
+    <circle r="8" class="f-v"><animateMotion dur="11s" repeatCount="indefinite"><mpath href="#loop-flow"/></animateMotion></circle>
+    <g class="beat" data-beat="0">
+      <circle cx="308" cy="220" r="26" class="f-v"/><text x="308" y="228" text-anchor="middle" class="t-on t-b" font-size="20">1</text>
+      <text x="262" y="214" text-anchor="end" font-size="24" font-weight="640">PLAN</text><text x="262" y="242" text-anchor="end" class="t-mu" font-size="19">refinar historias</text>
+      <circle cx="470" cy="115" r="26" class="f-v"/><text x="470" y="123" text-anchor="middle" class="t-on t-b" font-size="20">2</text>
+      <text x="470" y="52" text-anchor="middle" font-size="24" font-weight="640">CODE</text><text x="470" y="78" text-anchor="middle" class="t-mu" font-size="19">pair programming</text>
+      <circle cx="704" cy="220" r="26" class="f-v"/><text x="704" y="228" text-anchor="middle" class="t-on t-b" font-size="20">3</text>
+      <path class="s-v f-none" stroke-width="2" d="M704 192V88"/><text x="704" y="52" text-anchor="middle" font-size="24" font-weight="640">REVIEW</text><text x="704" y="78" text-anchor="middle" class="t-mu" font-size="19">resumen del diff</text>
+    </g>
+    <g class="beat" data-beat="1">
+      <circle cx="938" cy="115" r="26" class="f-a"/><text x="938" y="123" text-anchor="middle" class="t-b" font-size="20" style="fill:var(--bg)">4</text>
+      <text x="938" y="52" text-anchor="middle" font-size="24" font-weight="640">BUILD · TEST</text><text x="938" y="78" text-anchor="middle" class="t-mu" font-size="19">generar y priorizar tests</text>
+      <circle cx="1100" cy="220" r="26" class="f-a"/><text x="1100" y="228" text-anchor="middle" class="t-b" font-size="20" style="fill:var(--bg)">5</text>
+      <text x="1146" y="214" font-size="24" font-weight="640">RELEASE</text><text x="1146" y="242" class="t-mu" font-size="19">notas y riesgos</text>
+      <circle cx="938" cy="325" r="26" class="f-a"/><text x="938" y="333" text-anchor="middle" class="t-b" font-size="20" style="fill:var(--bg)">6</text>
+      <text x="938" y="392" text-anchor="middle" font-size="24" font-weight="640">OPERATE</text><text x="938" y="418" text-anchor="middle" class="t-mu" font-size="19">triage de alertas</text>
+    </g>
+    <g class="beat" data-beat="2">
+      <circle cx="470" cy="325" r="26" class="f-g"/><text x="470" y="333" text-anchor="middle" class="t-b" font-size="20" style="fill:var(--bg)">7</text>
+      <text x="470" y="392" text-anchor="middle" font-size="24" font-weight="640">LEARN</text><text x="470" y="418" text-anchor="middle" class="t-mu" font-size="19">postmortem asistido</text>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">La pregunta no es dónde cabe IA. Es <strong>qué modo tiene en cada punto.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Recorre el lado dev: planificación, código y revisión. Luego el lado ops: build y test, release, operación. Por último aprendizaje, que alimenta de nuevo la planificación. En cada punto ya existe un uso razonable de IA. El riesgo no es usarla: es usarla con el mismo nivel de autonomía en todos los puntos.</aside>
+</section>
+
+<section class="slide keynote editorial dial-scene" data-title="Asistir, automatizar, decidir" data-secs="120">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 1 · FLUJOS</span></span><span>CONTRATO DE USO</span></header>
+<p class="eyebrow enter-deco">Contrato de uso</p>
+<h2 class="enter-lead">Asistir, automatizar, decidir.<br><em>Tres modos, tres contratos.</em></h2>
+<div class="art-wrap">
+<div class="scene-grid">
+  <svg class="art dial enter-art" viewBox="0 0 460 330" role="img" aria-label="Dial de autonomía con tres zonas">
+    <g class="f-none" stroke-width="30">
+      <path class="s-m" d="M50 250A180 180 0 0 1 115 112"/>
+      <path class="s-g" d="M128 101A180 180 0 0 1 332 101"/>
+      <path class="s-r" d="M345 112A180 180 0 0 1 410 250"/>
+    </g>
+    <g class="t-mono" font-size="15" font-weight="600" text-anchor="middle"><text x="70" y="278">ASISTIR</text><text x="230" y="78">AUTOMATIZAR</text><text x="390" y="278">DECIDIR</text></g>
+    <g class="needle"><path class="f-fg" d="M224 250L230 92L236 250Z"/><circle cx="230" cy="250" r="18" class="f-fg"/><circle cx="230" cy="250" r="7" class="f-bg"/></g>
+    <text x="230" y="318" text-anchor="middle" class="t-mono t-mu" font-size="14">AUTONOMÍA DE LA IA</text>
+  </svg>
+  <ol class="modes">
+    <li class="beat" data-beat="0"><span class="tag" style="color:var(--mint)">ASISTIR</span><span class="say">La IA sugiere. La persona decide y firma.</span><span class="proof lag">Evidencia: la revisión normal del cambio.</span></li>
+    <li class="beat" data-beat="1"><span class="tag" style="color:var(--gold)">AUTOMATIZAR</span><span class="say">La IA ejecuta tareas acotadas dentro de un path.</span><span class="proof lag">Evidencia: gates deterministas y reversión probada.</span></li>
+    <li class="beat" data-beat="2"><span class="tag" style="color:var(--rose)">DECIDIR</span><span class="say">La IA decide sin humano en el loop.</span><span class="proof lag">Solo con política explícita, evaluación continua y dueño nombrado.</span></li>
+  </ol>
+</div>
+</div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. La aguja se mueve con cada modo.
+Asistir: la IA propone y la persona firma; la evidencia es la revisión que ya tenemos. Automatizar: la IA ejecuta algo acotado dentro de un camino soportado; la evidencia son gates deterministas y rollback. Decidir: sin humano en el loop; casi nunca es el punto de partida y exige política, evaluación y dueño. Ejercicio: asignar un modo a cada uno de los siete puntos del mapa anterior.</aside>
+</section>
+
+<section class="slide keynote editorial pr-scene" data-title="El diff asistido hereda la misma revisión" data-secs="100">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 1 · FLUJOS</span></span><span>EL CAMBIO DIARIO</span></header>
+<p class="eyebrow enter-deco">El cambio diario</p>
+<h2 class="enter-lead">El diff asistido<br><em>hereda la misma revisión.</em></h2>
+<div class="art-wrap">
+<div class="scene-grid">
+  <div class="diff enter-art" role="img" aria-label="Diff ilustrativo con líneas sugeridas por IA">
+    <div class="diff-bar"><span>PAYMENTS-API · PR #482</span><span>EJEMPLO ILUSTRATIVO</span></div>
+    <div class="diff-body">
+      <div class="ln"><span class="g"> </span><span class="hunk">@@ retry.ts @@</span></div>
+      <div class="ln del"><span class="g">-</span>const delay = 1000</div>
+      <div class="ln add"><span class="g">+</span>const delay = backoff(attempt, { cap: 5000 })<span class="spark">✦ IA</span></div>
+      <div class="ln add"><span class="g">+</span>if (attempt &gt; MAX) throw new Exhausted(id)<span class="spark">✦ IA</span></div>
+      <div class="ln"><span class="g"> </span>log.info({ id, attempt })</div>
+      <div class="ln"><span class="g"> </span><span class="hunk">@@ retry.test.ts @@</span></div>
+      <div class="ln add"><span class="g">+</span>test('respeta el cap del backoff', …)<span class="spark">✦ IA</span></div>
+    </div>
+  </div>
+  <svg class="art" viewBox="0 0 440 360" style="max-height:380px" role="img" aria-label="Riel de verificaciones del PR">
+    <g class="beat" data-beat="0">
+      <path class="trace s-v f-none" pathLength="1" stroke-width="3" d="M30 24V306"/>
+      <g class="f-bg s-v" stroke-width="3"><circle cx="30" cy="30" r="13"/><circle cx="30" cy="122" r="13"/><circle cx="30" cy="214" r="13"/><circle cx="30" cy="306" r="13"/></g>
+      <g font-size="25" font-weight="600"><text x="64" y="38">Tests y cobertura</text><text x="64" y="130">SAST y secretos</text><text x="64" y="222">CODEOWNERS revisa</text><text x="64" y="314">Etiqueta de procedencia</text></g>
+      <g class="t-mu" font-size="18"><text x="64" y="64">las mismas reglas</text><text x="64" y="156">sin excepción por origen</text><text x="64" y="248">una persona firma</text><text x="64" y="346">se sabe qué sugirió la IA</text></g>
+    </g>
+  </svg>
+</div>
+</div>
+<p class="scene-takeaway beat" data-beat="1">Procedencia visible, mismas reglas: <strong>ni más laxas ni más duras por venir de IA.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 2 pasos.
+El código de ejemplo es ilustrativo. Las líneas marcadas con el destello las sugirió la IA. El riel de la derecha no cambia por eso: tests, SAST, revisión de CODEOWNERS. Lo único nuevo es la etiqueta de procedencia, que nos permite aprender después qué tipo de sugerencias fallan más.</aside>
+</section>
+
+<section class="slide keynote editorial gate-scene" data-title="La IA propone, el gate dispone" data-secs="110">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 1 · FLUJOS</span></span><span>CI/CD</span></header>
+<p class="eyebrow enter-deco">CI/CD</p>
+<h2 class="enter-lead">La IA propone.<br><em>El gate dispone.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 410" role="img" aria-label="Pipeline con propuestas de IA que pasan por un gate determinista">
+    <path class="s-line f-none" stroke-width="4" d="M60 320H1350"/>
+    <g class="f-bg s-fg" stroke-width="3"><circle cx="120" cy="320" r="20"/><circle cx="340" cy="320" r="20"/><circle cx="1080" cy="320" r="20"/><circle cx="1300" cy="320" r="20"/></g>
+    <g class="t-mono t-mu" font-size="16" text-anchor="middle"><text x="120" y="372">COMMIT</text><text x="340" y="372">BUILD</text><text x="1080" y="372">DEPLOY</text><text x="1300" y="372">PRODUCCIÓN</text></g>
+    <rect x="760" y="110" width="44" height="236" rx="10" class="f-v"/>
+    <text x="782" y="94" text-anchor="middle" class="t-mono t-v" font-size="16" font-weight="600">GATE</text>
+    <g class="beat" data-beat="0">
+      <g class="s-v f-tint" stroke-width="2"><rect x="400" y="110" width="310" height="44" rx="22"/><rect x="400" y="170" width="310" height="44" rx="22"/><rect x="400" y="230" width="310" height="44" rx="22"/></g>
+      <use href="#spark" x="408" y="120" width="24" height="24" class="f-v"/><use href="#spark" x="408" y="180" width="24" height="24" class="f-v"/><use href="#spark" x="408" y="240" width="24" height="24" class="f-v"/>
+      <g font-size="20"><text x="442" y="139">reintentar test inestable</text><text x="442" y="199">ajustar caché de dependencias</text><text x="442" y="259" class="lag">saltar escaneo de seguridad</text></g>
+      <g class="s-v f-none" stroke-width="2"><path d="M712 132H752" marker-end="url(#arr-v)"/><path d="M712 192H752" marker-end="url(#arr-v)"/><path d="M712 252H752" marker-end="url(#arr-v)"/></g>
+    </g>
+    <g class="beat" data-beat="1">
+      <g font-size="21"><text x="836" y="140">✓ política</text><text x="836" y="176">✓ tests</text><text x="836" y="212">✓ firma</text><text x="836" y="248">✓ aprobación</text></g>
+      <path class="s-r" stroke-width="4" stroke-linecap="round" d="M420 252H690"/>
+      <text x="555" y="300" text-anchor="middle" class="t-r t-mono" font-size="15" font-weight="600">RECHAZADO · VIOLA POLÍTICA</text>
+    </g>
+    <g class="beat" data-beat="2">
+      <path class="trace s-a f-none" pathLength="1" stroke-width="7" stroke-linecap="round" d="M806 320H1058"/>
+      <text x="930" y="300" text-anchor="middle" class="t-a" font-size="20">aplicado tras los checks</text>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Lo determinista se queda determinista. <strong>La IA vive antes del gate, no en su lugar.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Paso 1: la IA genera propuestas útiles sobre el pipeline. Paso 2: el gate evalúa con reglas que no dependen de un modelo: política, tests, firma, aprobación. La propuesta de saltar el escaneo se rechaza sin discusión. Paso 3: lo aprobado pasa al deploy. Regla práctica: nunca reemplaces un check determinista por un juicio probabilístico.</aside>
+</section>
+
+<section class="slide keynote editorial ops-scene" data-title="Incidentes con memoria" data-secs="110">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 1 · FLUJOS</span></span><span>OPERACIÓN</span></header>
+<p class="eyebrow enter-deco">Operación</p>
+<h2 class="enter-lead">Incidentes con memoria.<br><em>Hipótesis, no veredictos.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 410" role="img" aria-label="Señales correlacionadas por IA en hipótesis que decide una persona">
+    <text x="1388" y="20" text-anchor="end" class="t-mono t-mu" font-size="14">EJEMPLO ILUSTRATIVO</text>
+    <g class="beat" data-beat="0">
+      <g class="t-mono t-mu" font-size="15"><text x="20" y="96">LATENCIA</text><text x="20" y="206">ERRORES</text><text x="20" y="316">DEPLOYS</text></g>
+      <polyline class="s-r f-none" stroke-width="3" stroke-linejoin="round" points="140,100 200,96 260,102 320,94 360,98 390,40 420,52 460,46 500,50"/>
+      <polyline class="s-g f-none" stroke-width="3" stroke-linejoin="round" points="140,210 200,212 260,208 320,211 360,209 395,160 430,170 470,166 500,168"/>
+      <path class="s-line" stroke-width="2" d="M140 320H500"/><rect x="372" y="296" width="8" height="48" rx="3" class="f-a"/>
+      <text x="376" y="370" text-anchor="middle" class="t-a" font-size="17">rollout</text>
+    </g>
+    <g class="beat" data-beat="1">
+      <g class="s-mu f-none" stroke-width="2" opacity=".7"><path d="M510 50C560 60 580 180 610 200"/><path d="M510 168C560 170 580 196 610 204"/><path d="M510 320C560 310 580 220 610 210"/></g>
+      <use href="#spark" x="610" y="166" width="76" height="76" class="f-v"/>
+      <text x="648" y="282" text-anchor="middle" class="t-mono t-v" font-size="14" font-weight="600">CORRELACIÓN</text>
+      <g class="s-v f-none" stroke-width="2"><path d="M700 200C730 200 740 110 770 110"/><path d="M700 204H770"/><path d="M700 208C730 208 740 300 770 300"/></g>
+      <g class="lag"><text x="786" y="118" font-size="23" font-weight="600"><tspan class="t-v t-mono" font-size="17">H1 </tspan>rollout reciente en checkout</text><text x="826" y="146" class="t-mu" font-size="17">evidencia: deploy + latencia</text>
+      <text x="786" y="212" font-size="23" font-weight="600"><tspan class="t-v t-mono" font-size="17">H2 </tspan>dependencia de pagos lenta</text><text x="826" y="240" class="t-mu" font-size="17">evidencia: errores aguas arriba</text>
+      <text x="786" y="306" font-size="23" font-weight="600"><tspan class="t-v t-mono" font-size="17">H3 </tspan>saturación del pool</text><text x="826" y="334" class="t-mu" font-size="17">evidencia: pendiente de confirmar</text></g>
+    </g>
+    <g class="beat" data-beat="2">
+      <path class="s-fg f-none dash" stroke-width="2" d="M1180 205H1240"/>
+      <circle cx="1300" cy="205" r="52" class="f-none s-fg" stroke-width="2.5"/>
+      <use href="#person" x="1276" y="181" width="48" height="48" style="color:var(--fg)"/>
+      <text x="1300" y="292" text-anchor="middle" font-size="22" font-weight="640">on-call decide</text>
+      <text x="1300" y="320" text-anchor="middle" class="t-mu" font-size="17">rollback o runbook</text>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">La IA reduce el tiempo de búsqueda. <strong>La decisión y el rollback siguen teniendo dueño.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. El caso es ilustrativo.
+Paso 1: señales dispersas — latencia, errores y un rollout. Paso 2: la IA correlaciona y devuelve hipótesis ordenadas, cada una con su evidencia. Fíjate que la tercera dice "pendiente de confirmar": una buena salida de IA dice qué no sabe. Paso 3: la persona on-call decide. La IA acorta la búsqueda; no firma el rollback.</aside>
+</section>
+
+<section class="slide keynote editorial failure-scene" data-title="Cuatro fallas que no hacen ruido" data-secs="110">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 1 · FLUJOS</span></span><span>RIESGOS</span></header>
+<p class="eyebrow enter-deco">Riesgos</p>
+<h2 class="enter-lead">Cuatro fallas<br><em>que no hacen ruido.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 400" role="img" aria-label="Tubería con cuatro grietas silenciosas">
+    <g class="s-fg f-none" stroke-width="3" opacity=".7"><path class="draw" pathLength="1" d="M20 70H1388"/><path class="draw" pathLength="1" d="M20 120H1388"/></g>
+    <g class="s-line" stroke-width="3"><path d="M412 60V130"/><path d="M742 60V130"/><path d="M1072 60V130"/></g>
+    <g class="beat" data-beat="0"><path class="s-r f-none" stroke-width="3.5" stroke-linejoin="round" d="M222 120L232 104L242 122L252 102L262 120"/><circle cx="242" cy="160" r="6" class="f-r"/><circle cx="242" cy="186" r="4" class="f-r" opacity=".6"/>
+      <text x="242" y="246" text-anchor="middle" class="t-mono t-r" font-size="16" font-weight="600">01</text><text x="242" y="282" text-anchor="middle" font-size="28" font-weight="640">Contexto filtrado</text><text x="242" y="316" text-anchor="middle" class="t-mu" font-size="20">secretos y datos</text><text x="242" y="342" text-anchor="middle" class="t-mu" font-size="20">en prompts externos</text></g>
+    <g class="beat" data-beat="1"><path class="s-r f-none" stroke-width="3.5" stroke-linejoin="round" d="M557 120L567 104L577 122L587 102L597 120"/><circle cx="577" cy="160" r="6" class="f-r"/><circle cx="577" cy="186" r="4" class="f-r" opacity=".6"/>
+      <text x="577" y="246" text-anchor="middle" class="t-mono t-r" font-size="16" font-weight="600">02</text><text x="577" y="282" text-anchor="middle" font-size="28" font-weight="640">Aprobación automática</text><text x="577" y="316" text-anchor="middle" class="t-mu" font-size="20">se aprueba lo que</text><text x="577" y="342" text-anchor="middle" class="t-mu" font-size="20">parece plausible</text></g>
+    <g class="beat" data-beat="2"><path class="s-r f-none" stroke-width="3.5" stroke-linejoin="round" d="M887 120L897 104L907 122L917 102L927 120"/><circle cx="907" cy="160" r="6" class="f-r"/><circle cx="907" cy="186" r="4" class="f-r" opacity=".6"/>
+      <text x="907" y="246" text-anchor="middle" class="t-mono t-r" font-size="16" font-weight="600">03</text><text x="907" y="282" text-anchor="middle" font-size="28" font-weight="640">Tests complacientes</text><text x="907" y="316" text-anchor="middle" class="t-mu" font-size="20">pruebas generadas</text><text x="907" y="342" text-anchor="middle" class="t-mu" font-size="20">que validan el bug</text></g>
+    <g class="beat" data-beat="3"><path class="s-r f-none" stroke-width="3.5" stroke-linejoin="round" d="M1212 120L1222 104L1232 122L1242 102L1252 120"/><circle cx="1232" cy="160" r="6" class="f-r"/><circle cx="1232" cy="186" r="4" class="f-r" opacity=".6"/>
+      <text x="1232" y="246" text-anchor="middle" class="t-mono t-r" font-size="16" font-weight="600">04</text><text x="1232" y="282" text-anchor="middle" font-size="28" font-weight="640">Deuda invisible</text><text x="1232" y="316" text-anchor="middle" class="t-mu" font-size="20">código que nadie</text><text x="1232" y="342" text-anchor="middle" class="t-mu" font-size="20">del equipo entiende</text></g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="3">Ninguna rompe el build. <strong>Todas rompen la confianza, tarde.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 4 pasos, una grieta por paso.
+Ninguna de estas fallas dispara una alerta. Contexto filtrado: datos que salen por prompts. Aprobación automática: revisar por plausibilidad, no por comprensión. Tests complacientes: pruebas generadas a partir del código que confirman el bug. Deuda invisible: código que funciona pero que nadie del equipo puede explicar. Pregunta: ¿cuál de las cuatro ya vimos este trimestre?</aside>
+</section>
+
+<section class="slide keynote accent-scene statement-scene" data-title="La IA acelera el flujo que ya tienes" data-secs="40">
+<header><span class="brand"><b>0VAS</b><span class="event">CIERRE BLOQUE 1</span></span><span>FLUJOS DEVOPS</span></header>
+<p class="eyebrow enter-deco">Cierre del bloque 1</p>
+<h2 class="enter-lead">La IA acelera el flujo<br>que <span class="ink-mark">ya tienes</span>.</h2>
+<p class="lede enter-support" style="--d:360ms">Si es sano, gana velocidad. Si es frágil, gana velocidad para fallar.</p>
+<div class="pixel-grid statement-pixels" data-pattern="1011/0110/1101/0111" aria-hidden="true"></div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">Pausa. Deja la frase unos segundos. Puente: si el flujo individual depende de cada persona, la plataforma es donde lo volvemos capacidad compartida.</aside>
+</section>
+
+<!-- ═══════════════════════════ BLOQUE 2 ═══════════════════════════ -->
+
+<section class="slide keynote accent-scene block-divider" data-block="2" data-title="2. IA en la plataforma de ingeniería" data-secs="30">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 / 3</span></span><span>PLATAFORMA</span></header>
+<span class="block-num enter-deco" style="--d:120ms" aria-hidden="true">02</span>
+<div class="pixel-grid divider-pixels" data-pattern="011011/110101/101110/010111" aria-hidden="true"></div>
+<p class="eyebrow enter-deco">Bloque 2 de 3</p>
+<h2 class="enter-lead">IA en la plataforma<br>de ingeniería<span class="period">.</span></h2>
+<p class="lede enter-support" style="--d:280ms">La plataforma decide si la IA es un <strong style="color:#fff">atajo individual o una capacidad</strong> de la organización.</p>
+<div class="chapter-chain enter-support" style="--d:420ms"><span>ANATOMÍA</span><i></i><span>JOURNEY</span><i></i><span>PUERTAS</span><i></i><span>CONTEXTO</span><i></i><span>GUARDRAILS</span><i></i><span>MEDICIÓN</span></div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">Apertura bloque 2. Pasamos de cómo usa IA una persona a cómo la ofrece la organización.</aside>
+</section>
+
+<section class="slide keynote editorial anatomy-scene" data-title="La IA es una interfaz más" data-secs="110">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 · PLATAFORMA</span></span><span>ANATOMÍA</span></header>
+<p class="eyebrow enter-deco">Anatomía</p>
+<h2 class="enter-lead">La IA es una interfaz más.<br><em>El core sigue siendo el core.</em></h2>
+<div class="art-wrap">
+<div class="scene-grid">
+  <svg class="art" viewBox="0 0 600 420" role="img" aria-label="Capas de plataforma: interfaces, contrato, core, infraestructura">
+    <g class="beat" data-beat="2"><polygon points="80,340 300,280 520,340 300,400" class="f-bg2 s-mu" stroke-width="2"/><text x="300" y="347" text-anchor="middle" class="t-mono t-mu" font-size="16" font-weight="600">INFRA</text></g>
+    <g class="beat" data-beat="2"><polygon points="80,250 300,190 520,250 300,310" class="f-tint s-v" stroke-width="2.5"/><text x="300" y="257" text-anchor="middle" class="t-mono t-v" font-size="17" font-weight="600">CORE</text></g>
+    <g class="beat" data-beat="1"><polygon points="80,160 300,100 520,160 300,220" class="f-bg s-a" stroke-width="2.5"/><text x="300" y="167" text-anchor="middle" class="t-mono t-a" font-size="17" font-weight="600">CONTRATO</text></g>
+    <g class="beat" data-beat="0"><polygon points="80,70 300,10 520,70 300,130" class="f-bg s-fg" stroke-width="2.5"/>
+      <g font-size="15" class="t-mono" text-anchor="middle"><text x="200" y="76">IDE</text><text x="260" y="58">CLI</text><text x="340" y="58">PORTAL</text><text x="410" y="80">CHAT</text></g>
+      <use href="#spark" x="398" y="22" width="26" height="26" class="f-v"/></g>
+  </svg>
+  <ul class="layer-notes">
+    <li class="beat hl" data-beat="0"><b class="t-fg">INTERFACES</b><span>IDE, CLI, portal, chat y agentes. <strong>Aquí entra la IA</strong>: una puerta nueva.</span></li>
+    <li class="beat" data-beat="1"><b style="color:var(--aqua)">CONTRATO</b><span>Golden paths y APIs: qué se puede pedir y con qué garantías.</span></li>
+    <li class="beat" data-beat="2"><b style="color:var(--violet)">CORE</b><span>Políticas, orquestación, identidad y estado. Lo que cumple la promesa.</span></li>
+    <li class="beat" data-beat="2"><b style="color:var(--muted)">INFRA</b><span>Cloud, clusters y redes. Implementación intercambiable.</span></li>
+  </ul>
+</div>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Cambiar la puerta no cambia lo que la plataforma garantiza. <strong>Si la IA salta el core, no es plataforma.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos, de arriba hacia abajo.
+Interfaces: donde la persona expresa su intención. La IA es una interfaz más, junto al IDE, la CLI y el portal. Contrato: lo que se puede pedir y con qué garantías. Core e infraestructura: lo que cumple. El error común es conectar un asistente directamente a la infraestructura, saltando contrato y core.</aside>
+</section>
+
+<section class="slide keynote editorial journey-scene" data-title="Journey antes que botón de IA" data-secs="110">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 · PLATAFORMA</span></span><span>DISEÑO</span></header>
+<p class="eyebrow enter-deco">Diseño</p>
+<h2 class="enter-lead">Journey antes que<br><em>botón de IA.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 430" role="img" aria-label="Journey de un equipo con fricción y apoyo de IA en los puntos de dolor">
+    <path class="draw f-none s-fg" pathLength="1" stroke-width="3" opacity=".6" d="M70 300C200 300 200 190 300 190S460 300 560 300S720 190 820 190S980 300 1080 300S1240 190 1350 190"/>
+    <use href="#person" x="40" y="270" width="60" height="60" style="color:var(--fg)"/>
+    <g class="f-bg s-fg" stroke-width="3"><circle cx="300" cy="190" r="14"/><circle cx="560" cy="300" r="14"/><circle cx="820" cy="190" r="14"/><circle cx="1080" cy="300" r="14"/><circle cx="1350" cy="190" r="14"/></g>
+    <g font-size="24" font-weight="640" text-anchor="middle"><text x="300" y="140">idea</text><text x="560" y="356">repo creado</text><text x="820" y="70">primer deploy</text><text x="1080" y="356">operar</text><text x="1330" y="140">evolucionar</text></g>
+    <g class="beat" data-beat="0">
+      <g class="s-r f-none dash" stroke-width="2.5"><circle cx="560" cy="300" r="30"/><circle cx="820" cy="190" r="30"/><circle cx="1080" cy="300" r="30"/></g>
+      <g class="t-r" font-size="19" text-anchor="middle"><text x="560" y="386">permisos y plantillas</text><text x="820" y="100">pipeline y secretos</text><text x="1080" y="386">alertas sin contexto</text></g>
+    </g>
+    <g class="beat" data-beat="1">
+      <use href="#spark" x="586" y="248" width="30" height="30" class="f-v"/><use href="#spark" x="846" y="138" width="30" height="30" class="f-v"/><use href="#spark" x="1106" y="248" width="30" height="30" class="f-v"/>
+      <g class="t-v t-mono" font-size="16" font-weight="600" text-anchor="middle"><text x="560" y="414">PLANTILLA GUIADA</text><text x="820" y="128">PIPELINE EXPLICADO</text><text x="1080" y="414">RUNBOOK CONVERSACIONAL</text></g>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Pon IA <strong>donde el journey duele</strong>, no donde la demo luce.</p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Seguimos a un equipo desde la idea hasta evolucionar su servicio. Paso 1: la fricción real — permisos y plantillas, pipeline y secretos, alertas sin contexto. Paso 2: la IA aparece exactamente ahí, como ayuda dentro del camino. Paso 3: el principio. Un botón de IA en el portal que no resuelve una fricción del journey es una demo, no una capacidad.</aside>
+</section>
+
+<section class="slide keynote editorial proxy-scene" data-title="Muchas puertas, un mismo contrato" data-secs="100">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 · PLATAFORMA</span></span><span>INTERFACES</span></header>
+<p class="eyebrow enter-deco">Interfaces</p>
+<h2 class="enter-lead">Muchas puertas.<br><em>Un mismo contrato.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 420" role="img" aria-label="Seis interfaces conectadas a un único contrato y core">
+    <path id="ring-contract" class="f-none" d="M704 74A136 136 0 1 1 703.9 74"/>
+    <circle cx="704" cy="210" r="76" class="f-v"/>
+    <text x="704" y="220" text-anchor="middle" class="t-on t-b" font-size="28">CORE</text>
+    <g class="beat" data-beat="0">
+      <g class="s-mu f-none" stroke-width="2"><path d="M330 70L590 150"/><path d="M220 210H575"/><path d="M330 350L590 270"/><path d="M1078 70L818 150"/><path d="M1188 210H833"/><path d="M1078 350L818 270"/></g>
+      <g class="f-bg s-fg" stroke-width="2.5"><rect x="266" y="38" width="64" height="64" rx="14"/><rect x="156" y="178" width="64" height="64" rx="14"/><rect x="266" y="318" width="64" height="64" rx="14"/><rect x="1078" y="38" width="64" height="64" rx="14"/><rect x="1188" y="178" width="64" height="64" rx="14"/><rect x="1078" y="318" width="64" height="64" rx="14"/></g>
+      <g class="t-mono" font-size="15" font-weight="600" text-anchor="middle"><text x="298" y="75">IDE</text><text x="188" y="215">GIT</text><text x="298" y="355">CLI</text><text x="1110" y="75">WEB</text><text x="1220" y="215">CHAT</text><text x="1110" y="355">AGENT</text></g>
+      <g font-size="21" class="t-mu"><text x="250" y="76" text-anchor="end">extensión</text><text x="140" y="216" text-anchor="end">PR y bots</text><text x="250" y="356" text-anchor="end">terminal</text><text x="1158" y="76">portal</text><text x="1268" y="216">asistente</text><text x="1158" y="356">agente</text></g>
+      <use href="#spark" x="1236" y="168" width="22" height="22" class="f-v"/><use href="#spark" x="1126" y="308" width="22" height="22" class="f-v"/>
+    </g>
+    <g class="beat" data-beat="1">
+      <circle cx="704" cy="210" r="118" class="f-none s-a" stroke-width="2.5" stroke-dasharray="4 8"/>
+      <text class="t-mono t-a" font-size="15" font-weight="600" letter-spacing="3"><textPath href="#ring-contract" startOffset="2%">IDENTIDAD · POLÍTICA · TRAZABILIDAD · AUDITORÍA · CUOTAS ·</textPath></text>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Si cada puerta trae su propia lógica, <strong>tienes seis plataformas sin dueño.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Paso 1: las puertas. Un developer puede pedir lo mismo desde su IDE, un PR, la terminal, el portal, un asistente o un agente. Paso 2: el anillo es el contrato que todas comparten: identidad, política, trazabilidad, auditoría y cuotas. Un agente no merece menos controles que una persona; merece los mismos y más visibles.</aside>
+</section>
+
+<section class="slide keynote editorial context-scene" data-title="Sin catálogo, la IA alucina tu organización" data-secs="100">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 · PLATAFORMA</span></span><span>CONTEXTO</span></header>
+<p class="eyebrow enter-deco">Contexto</p>
+<h2 class="enter-lead">Sin catálogo,<br><em>la IA alucina tu organización.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 420" role="img" aria-label="Grafo de catálogo consultado por un asistente">
+    <g class="s-mu f-none" stroke-width="2"><path class="draw" pathLength="1" d="M430 210L200 90"/><path class="draw" pathLength="1" d="M430 210L200 330"/><path class="draw" pathLength="1" d="M430 210L640 80"/><path class="draw" pathLength="1" d="M430 210L690 340"/><path class="draw" pathLength="1" d="M640 80L900 110"/><path class="draw" pathLength="1" d="M200 330L690 340"/></g>
+    <circle cx="430" cy="210" r="58" class="f-v"/><text x="430" y="206" text-anchor="middle" class="t-on t-mono" font-size="14" font-weight="600">SERVICIO</text><text x="430" y="228" text-anchor="middle" class="t-on" font-size="15">payments-api</text>
+    <g class="f-bg s-fg" stroke-width="2.5"><circle cx="200" cy="90" r="34"/><circle cx="200" cy="330" r="34"/><circle cx="640" cy="80" r="34"/><circle cx="690" cy="340" r="34"/><circle cx="900" cy="110" r="30"/></g>
+    <g class="t-mono" font-size="13" font-weight="600" text-anchor="middle"><text x="200" y="95">OWNER</text><text x="200" y="335">RUNBOOK</text><text x="640" y="85">SLO</text><text x="690" y="345">DEPS</text><text x="900" y="115">ADR</text></g>
+    <g class="beat" data-beat="0">
+      <g class="s-v f-none dash" stroke-width="2.5"><path d="M1130 210H500" marker-end="url(#arr-v)"/><path d="M1140 240C1000 320 400 380 236 340" marker-end="url(#arr-v)"/></g>
+      <use href="#spark" x="1140" y="168" width="84" height="84" class="f-v"/>
+      <text x="1388" y="60" text-anchor="end" font-size="22">«¿Quién es dueño de payments-api</text><text x="1388" y="90" text-anchor="end" font-size="22">y qué runbook aplica?»</text>
+    </g>
+    <g class="beat" data-beat="1">
+      <text x="1388" y="320" text-anchor="end" font-size="22" font-weight="600" class="t-a">→ equipo-pagos · runbook de rollback</text>
+      <text x="1388" y="350" text-anchor="end" class="t-mono t-mu" font-size="15">FUENTE: CATÁLOGO + RUNBOOK VERSIONADO</text>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">El catálogo es el contexto. <strong>El contexto es producto de plataforma.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Un asistente sin catálogo responde con lo que suena probable. Con catálogo — servicio, owner, runbook, SLO, dependencias y ADRs — responde con fuente. Paso 2: la respuesta cita de dónde sale. Si el catálogo está desactualizado, la IA amplifica ese desorden; mantenerlo deja de ser burocracia y se vuelve infraestructura del asistente.</aside>
+</section>
+
+<section class="slide keynote editorial guard-scene" data-title="Guardrails como código, no como PDF" data-secs="100">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 · PLATAFORMA</span></span><span>GUARDRAILS</span></header>
+<p class="eyebrow enter-deco">Guardrails</p>
+<h2 class="enter-lead">Guardrails como código,<br><em>no como PDF.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 420" role="img" aria-label="Camino con barandas que guían a un agente">
+    <path class="f-tint" d="M690 30H718L1080 420H328Z"/>
+    <path class="s-fg f-none" stroke-width="2.5" opacity=".5" d="M690 30L328 420M718 30L1080 420"/>
+    <path class="s-fg f-none" stroke-width="3" stroke-dasharray="16 18" opacity=".55" d="M704 40V420"/>
+    <g class="s-v f-none" stroke-width="5" stroke-linecap="round"><path class="draw" pathLength="1" d="M664 30L260 420"/><path class="draw" pathLength="1" d="M744 30L1148 420"/></g>
+    <g class="f-v"><circle cx="545" cy="145" r="7"/><circle cx="415" cy="270" r="7"/><circle cx="863" cy="145" r="7"/><circle cx="993" cy="270" r="7"/></g>
+    <path class="f-v" d="M704 300L736 372L704 356L672 372Z"/>
+    <g class="beat" data-beat="0"><g transform="translate(60 30)" opacity=".7"><path class="f-none s-mu" stroke-width="2" d="M0 0H70L100 30V130H0Z"/><path class="f-none s-mu" stroke-width="2" d="M70 0V30H100"/><path class="s-mu" stroke-width="2" d="M18 60H80M18 80H80M18 100H60"/></g><path class="s-r" stroke-width="4" stroke-linecap="round" d="M46 40L176 176M176 40L46 176"/><text x="110" y="214" text-anchor="middle" class="t-mono t-mu" font-size="15">POLITICA_FINAL_V7.PDF</text></g>
+    <g class="beat" data-beat="1" font-size="23"><text x="520" y="152" text-anchor="end">datos clasificados</text><text x="390" y="277" text-anchor="end">modelos permitidos</text></g>
+    <g class="beat" data-beat="2" font-size="23"><text x="888" y="152">logs y retención</text><text x="1018" y="277">evaluaciones en CI</text></g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Un guardrail que no se ejecuta en el pipeline <strong>es solo una sugerencia.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Paso 1: la política en PDF. Todos la firmamos, nadie la ejecuta. Pasos 2 y 3: las barandas del camino, ejecutadas como código: clasificación de datos que bloquea el prompt, modelos permitidos por configuración, logs con retención definida y evaluaciones que corren en CI. El agente avanza rápido precisamente porque no puede salirse.</aside>
+</section>
+
+<section class="slide keynote editorial reuse-scene" data-title="Del prompt suelto a capacidad versionada" data-secs="100">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 · PLATAFORMA</span></span><span>REUSO</span></header>
+<p class="eyebrow enter-deco">Reuso</p>
+<h2 class="enter-lead">Del prompt suelto<br><em>a capacidad versionada.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 420" role="img" aria-label="Fragmentos sueltos convertidos en una receta versionada que usan varios equipos">
+    <g class="beat" data-beat="0" font-size="20">
+      <g class="s-mu f-none dash" stroke-width="2"><rect x="40" y="40" width="250" height="52" rx="8" transform="rotate(-4 165 66)"/><rect x="90" y="134" width="210" height="52" rx="8" transform="rotate(3 195 160)"/><rect x="30" y="232" width="250" height="52" rx="8" transform="rotate(-2 155 258)"/><rect x="80" y="328" width="260" height="52" rx="8" transform="rotate(4 210 354)"/></g>
+      <g class="t-mu"><text x="60" y="74" transform="rotate(-4 165 66)">prompt en un chat</text><text x="112" y="168" transform="rotate(3 195 160)">script local</text><text x="50" y="266" transform="rotate(-2 155 258)">snippet en la wiki</text><text x="100" y="362" transform="rotate(4 210 354)">copiado de un blog</text></g>
+    </g>
+    <g class="beat" data-beat="1">
+      <g class="s-v f-none" stroke-width="2"><path d="M330 70C440 80 470 190 540 200"/><path d="M330 160C430 170 470 200 540 206"/><path d="M320 260C430 250 470 214 540 212"/><path d="M350 350C450 340 470 230 540 218"/></g>
+      <rect x="596" y="102" width="260" height="210" rx="12" class="f-bg2 s-line" stroke-width="2"/>
+      <rect x="578" y="116" width="260" height="210" rx="12" class="f-bg2 s-line" stroke-width="2"/>
+      <rect x="560" y="130" width="260" height="210" rx="12" class="f-bg s-v" stroke-width="3"/>
+      <text x="584" y="172" class="t-mono t-v" font-size="14" font-weight="600">RECETA · v1.3</text>
+      <text x="584" y="208" font-size="23" font-weight="640">rollback asistido</text>
+      <g class="t-mu" font-size="18"><text x="584" y="248">prompt · contexto</text><text x="584" y="276">evaluaciones</text><text x="584" y="304">dueño: plataforma</text></g>
+    </g>
+    <g class="beat" data-beat="2">
+      <g class="s-a f-none" stroke-width="2.5"><path class="trace" pathLength="1" d="M860 230C980 230 1000 70 1150 70" marker-end="url(#arr-a)"/><path class="trace" pathLength="1" d="M860 232C980 232 1010 170 1150 170" marker-end="url(#arr-a)"/><path class="trace" pathLength="1" d="M860 236C980 236 1010 270 1150 270" marker-end="url(#arr-a)"/><path class="trace" pathLength="1" d="M860 240C980 240 1000 370 1150 370" marker-end="url(#arr-a)"/></g>
+      <g font-size="22"><text x="1168" y="78">equipo pagos</text><text x="1168" y="178">equipo canales</text><text x="1168" y="278">equipo datos</text><text x="1168" y="378">equipo riesgos</text></g>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Si funciona para un equipo, conviértelo en path: <strong>con versión, evaluación y dueño.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Hoy el conocimiento de IA vive en fragmentos: un chat, un script, una página de wiki. Paso 2: la plataforma lo consolida en una receta versionada con prompt, contexto, evaluaciones y dueño. Paso 3: varios equipos la reutilizan. El ejemplo de rollback asistido es ilustrativo.</aside>
+</section>
+
+<section class="slide keynote editorial metrics-scene" data-title="Medir journeys, no demos" data-secs="100">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 · PLATAFORMA</span></span><span>MEDICIÓN</span></header>
+<p class="eyebrow enter-deco">Medición</p>
+<h2 class="enter-lead">Medir journeys,<br><em>no demos.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 420" role="img" aria-label="Métricas de actividad tachadas frente a tendencias de resultado">
+    <path class="s-line" stroke-width="2" d="M560 20V400"/>
+    <g class="beat" data-beat="0">
+      <text x="20" y="40" class="t-mono t-mu" font-size="16" font-weight="600">ACTIVIDAD</text>
+      <g class="t-mu" font-size="28"><text x="20" y="130">licencias asignadas</text><text x="20" y="220">prompts enviados</text><text x="20" y="310">botones de IA lanzados</text></g>
+      <g class="s-r" stroke-width="3"><path d="M14 120H262"/><path d="M14 210H240"/><path d="M14 300H316"/></g>
+    </g>
+    <g class="beat" data-beat="1">
+      <text x="620" y="40" class="t-mono t-a" font-size="16" font-weight="600">RESULTADO DEL JOURNEY</text>
+      <g font-size="26"><text x="620" y="110">tiempo hasta el primer deploy</text><text x="620" y="190">veces que se pidió ayuda</text><text x="620" y="270">tiempo de recuperación</text><text x="620" y="350">equipos que repiten el journey</text></g>
+      <g class="f-none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline class="trace s-a" pathLength="1" points="1100,82 1150,90 1200,86 1250,104 1300,110 1350,118"/><polyline class="trace s-a" pathLength="1" points="1100,160 1150,168 1200,166 1250,180 1300,186 1350,194"/><polyline class="trace s-a" pathLength="1" points="1100,242 1150,246 1200,256 1250,258 1300,268 1350,272"/><polyline class="trace s-m" pathLength="1" points="1100,356 1150,350 1200,344 1250,334 1300,330 1350,318"/></g>
+      <text x="1388" y="404" text-anchor="end" class="t-mono t-mu" font-size="13">TENDENCIAS ILUSTRATIVAS · SIN DATOS REALES</text>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Complementa con DORA y SPACE: <strong>flujo, estabilidad y experiencia.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. Las curvas son ilustrativas, sin datos reales.
+Actividad no es valor: licencias, prompts o botones describen uso, no resultado. Medimos el journey: tiempo hasta el primer deploy, cuántas veces hubo que pedir ayuda, tiempo de recuperación y si los equipos repiten el camino. DORA y SPACE dan el marco complementario.</aside>
+</section>
+
+<section class="slide keynote editorial anti-scene" data-title="Cuatro formas de romper la plataforma con IA" data-secs="90">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 2 · PLATAFORMA</span></span><span>ANTIPATRONES</span></header>
+<p class="eyebrow enter-deco">Antipatrones</p>
+<h2 class="enter-lead">Cuatro formas de romper<br><em>la plataforma con IA.</em></h2>
+<div class="art-wrap">
+<div class="scene-grid">
+  <ol class="anti-list">
+    <li class="beat" data-beat="0"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" class="f-none s-r" stroke-width="2"/><path class="s-r" stroke-width="2.5" stroke-linecap="round" d="M12 12L24 24M24 12L12 24"/></svg><span>Un chatbot sobre el portal, <strong>sin core detrás.</strong></span></li>
+    <li class="beat" data-beat="1"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" class="f-none s-r" stroke-width="2"/><path class="s-r" stroke-width="2.5" stroke-linecap="round" d="M12 12L24 24M24 12L12 24"/></svg><span>Agentes con permisos de administrador «para probar».</span></li>
+    <li class="beat" data-beat="2"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" class="f-none s-r" stroke-width="2"/><path class="s-r" stroke-width="2.5" stroke-linecap="round" d="M12 12L24 24M24 12L12 24"/></svg><span>Prompts críticos copiados que nadie versiona.</span></li>
+    <li class="beat" data-beat="3"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" class="f-none s-r" stroke-width="2"/><path class="s-r" stroke-width="2.5" stroke-linecap="round" d="M12 12L24 24M24 12L12 24"/></svg><span>Uso de IA presentado como prueba de valor.</span></li>
+  </ol>
+  <svg class="art enter-art" viewBox="0 0 500 420" role="img" aria-label="Fachada de portal con chatbot y vacío detrás">
+    <rect x="20" y="20" width="460" height="230" rx="14" class="f-bg2 s-line" stroke-width="2"/>
+    <path class="s-line" stroke-width="2" d="M20 58H480"/><g class="f-mu"><circle cx="44" cy="39" r="6"/><circle cx="64" cy="39" r="6"/><circle cx="84" cy="39" r="6"/></g>
+    <rect x="44" y="84" width="180" height="16" rx="8" class="f-mu" opacity=".35"/><rect x="44" y="114" width="130" height="16" rx="8" class="f-mu" opacity=".25"/>
+    <path class="f-v" d="M250 120H450A12 12 0 0 1 462 132V188A12 12 0 0 1 450 200H300L276 222V200H250A12 12 0 0 1 238 188V132A12 12 0 0 1 250 120Z"/>
+    <text x="350" y="156" text-anchor="middle" class="t-on" font-size="17">¿Te ayudo a</text><text x="350" y="180" text-anchor="middle" class="t-on" font-size="17">desplegar?</text>
+    <rect x="20" y="270" width="460" height="130" rx="14" class="f-none s-r dash" stroke-width="2"/>
+    <text x="250" y="328" text-anchor="middle" class="t-r" font-size="40" font-weight="300">?</text>
+    <text x="250" y="370" text-anchor="middle" class="t-mono t-r" font-size="14" font-weight="600">SIN CONTRATO · SIN CORE</text>
+  </svg>
+</div>
+</div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 4 pasos.
+Cuatro patrones que vemos con frecuencia. Un chatbot que promete desplegar sin contrato ni core detrás. Agentes con permisos amplios "temporales". Prompts críticos que viven en el portapapeles de alguien. Y reportar adopción como si fuera impacto. Pregunta: ¿cuál es el más probable aquí?</aside>
+</section>
+
+<section class="slide keynote accent-scene statement-scene" data-title="El camino seguro debe ser el camino fácil" data-secs="40">
+<header><span class="brand"><b>0VAS</b><span class="event">CIERRE BLOQUE 2</span></span><span>PLATAFORMA</span></header>
+<p class="eyebrow enter-deco">Cierre del bloque 2</p>
+<h2 class="enter-lead">El camino seguro<br>debe ser el <span class="ink-mark">camino fácil</span>.</h2>
+<p class="lede enter-support" style="--d:360ms">También — y sobre todo — para la IA.</p>
+<div class="pixel-grid statement-pixels" data-pattern="0110/1011/1110/0101" aria-hidden="true"></div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">Pausa. Puente al bloque 3: nada de esto se sostiene sin personas que respondan por cada decisión.</aside>
+</section>
+
+<!-- ═══════════════════════════ BLOQUE 3 ═══════════════════════════ -->
+
+<section class="slide keynote accent-scene block-divider" data-block="3" data-title="3. Roles críticos para los puntos 1 y 2" data-secs="30">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 / 3</span></span><span>ROLES</span></header>
+<span class="block-num enter-deco" style="--d:120ms" aria-hidden="true">03</span>
+<div class="pixel-grid divider-pixels" data-pattern="110110/011101/101011/110110" aria-hidden="true"></div>
+<p class="eyebrow enter-deco">Bloque 3 de 3</p>
+<h2 class="enter-lead">Roles críticos para<br>los puntos 1 y 2<span class="period">.</span></h2>
+<p class="lede enter-support" style="--d:280ms">La IA no elimina roles. Mueve responsabilidades. <strong style="color:#fff">Si nadie las toma, las toma el azar.</strong></p>
+<div class="chapter-chain enter-support" style="--d:420ms"><span>MAPA</span><i></i><span>TU ROL</span><i></i><span>QUÉ / CÓMO</span><i></i><span>CONFIANZA</span><i></i><span>ADOPCIÓN</span><i></i><span>RACI</span></div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">Apertura bloque 3. Los bloques 1 y 2 generan decisiones; este bloque asigna quién las toma.</aside>
+</section>
+
+<section class="slide keynote editorial roles-scene" data-title="Seis roles, una misma cadena" data-secs="110">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>MAPA DE ROLES</span></header>
+<p class="eyebrow enter-deco">Mapa de roles</p>
+<h2 class="enter-lead">Seis roles.<br><em>Una misma cadena.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 440" role="img" aria-label="Constelación de seis roles alrededor del flujo y la plataforma">
+    <ellipse cx="704" cy="230" rx="404" ry="160" class="f-none s-line" stroke-width="2" stroke-dasharray="4 10"/>
+    <circle cx="704" cy="230" r="80" class="f-v"/>
+    <text x="704" y="226" text-anchor="middle" class="t-on t-b" font-size="20">FLUJO</text><text x="704" y="250" text-anchor="middle" class="t-on" font-size="17">+ plataforma</text>
+    <g class="beat" data-beat="0">
+      <g class="s-mu" stroke-width="1.5" opacity=".6"><path d="M624 230H330"/><path d="M650 170L520 104"/><path d="M758 170L888 104"/></g>
+      <g class="f-bg s-v" stroke-width="3"><circle cx="300" cy="230" r="30"/><circle cx="502" cy="91" r="30"/><circle cx="906" cy="91" r="30"/></g>
+      <g class="t-mono t-v" font-size="14" font-weight="600" text-anchor="middle"><text x="300" y="235">DE</text><text x="502" y="96">PE</text><text x="906" y="96">PM</text></g>
+      <text x="300" y="294" text-anchor="middle" font-size="23" font-weight="640">DevOps Engineer</text><text x="300" y="320" text-anchor="middle" class="t-mu" font-size="18">diseña el flujo asistido</text>
+      <text x="452" y="84" text-anchor="end" font-size="23" font-weight="640">Platform Engineer</text><text x="452" y="110" text-anchor="end" class="t-mu" font-size="18">construye core y paths</text>
+      <text x="956" y="84" font-size="23" font-weight="640">Platform PM</text><text x="956" y="110" class="t-mu" font-size="18">prioriza journeys y adopción</text>
+    </g>
+    <g class="beat" data-beat="1">
+      <g class="s-mu" stroke-width="1.5" opacity=".6"><path d="M784 230H1078"/><path d="M758 290L888 356"/><path d="M650 290L520 356"/></g>
+      <g class="f-bg s-a" stroke-width="3"><circle cx="1108" cy="230" r="30"/><circle cx="906" cy="369" r="30"/><circle cx="502" cy="369" r="30"/></g>
+      <g class="t-mono t-a" font-size="14" font-weight="600" text-anchor="middle"><text x="1108" y="235">SEC</text><text x="906" y="374">SRE</text><text x="502" y="374">CH</text></g>
+      <text x="1108" y="294" text-anchor="middle" font-size="23" font-weight="640">Security / AppSec</text><text x="1108" y="320" text-anchor="middle" class="t-mu" font-size="18">políticas de datos y modelos</text>
+      <text x="956" y="362" font-size="23" font-weight="640">SRE</text><text x="956" y="388" class="t-mu" font-size="18">confiabilidad de cambios asistidos</text>
+      <text x="452" y="362" text-anchor="end" font-size="23" font-weight="640">Champions</text><text x="452" y="388" text-anchor="end" class="t-mu" font-size="18">convierten práctica en hábito</text>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Ningún cargo nuevo es obligatorio. <strong>Las responsabilidades sí.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Primero el anillo de construcción: DevOps Engineer, Platform Engineer y Platform PM. Después el anillo de confianza y adopción: Security, SRE y Champions. No hace falta crear cargos nuevos; hace falta que estas seis responsabilidades tengan nombre.</aside>
+</section>
+
+<section class="slide keynote editorial devops-role-scene" data-title="De operar pipelines a diseñar flujos asistidos" data-secs="110">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>TU ROL</span></header>
+<p class="eyebrow enter-deco">Tu rol · DevOps Engineer</p>
+<h2 class="enter-lead">De operar pipelines<br><em>a diseñar flujos asistidos.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 420" role="img" aria-label="Transformación del rol DevOps de hoy a lo próximo">
+    <g class="beat" data-beat="0">
+      <text x="40" y="40" class="t-mono t-mu" font-size="16" font-weight="600">HOY</text>
+      <g class="t-mu" font-size="27"><text x="40" y="118">scripts que solo uno entiende</text><text x="40" y="198">tickets para cada permiso</text><text x="40" y="278">alertas sin contexto</text><text x="40" y="358">revisión manual de todo</text></g>
+    </g>
+    <g class="beat" data-beat="1">
+      <g class="s-v f-none" stroke-width="2.5"><path class="trace" pathLength="1" d="M470 110C620 110 640 110 790 110" marker-end="url(#arr-v)"/><path class="trace" pathLength="1" d="M430 190C620 190 640 190 790 190" marker-end="url(#arr-v)"/><path class="trace" pathLength="1" d="M340 270C600 270 640 270 790 270" marker-end="url(#arr-v)"/><path class="trace" pathLength="1" d="M400 350C600 350 640 350 790 350" marker-end="url(#arr-v)"/></g>
+      <text x="820" y="40" class="t-mono t-v" font-size="16" font-weight="600">PRÓXIMO</text>
+      <g font-size="27" font-weight="600" class="lag"><text x="820" y="118">modo de IA definido por paso</text><text x="820" y="198">evaluaciones dentro del pipeline</text><text x="820" y="278">guardrails como código</text><text x="820" y="358">runbooks consultables por agentes</text></g>
+    </g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Tu ventaja no es escribir más YAML. <strong>Es saber qué no debe automatizarse todavía.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. Este es el slide de la audiencia.
+Hoy muchas tareas viven en scripts, tickets y revisiones manuales. Lo próximo no elimina el trabajo: lo sube de nivel. Definir el modo de IA por paso, poner evaluaciones en el pipeline, escribir guardrails como código y dejar runbooks que un agente pueda consultar. El criterio para no automatizar algo todavía es la habilidad más valiosa.</aside>
+</section>
+
+<section class="slide keynote editorial seam-scene" data-title="Platform PM decide el qué; Platform Engineering, el cómo" data-secs="100">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>PRODUCTO Y PLATAFORMA</span></header>
+<p class="eyebrow enter-deco">Producto y plataforma</p>
+<h2 class="enter-lead">Platform PM decide el qué.<br><em>Platform Engineering, el cómo.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 410" role="img" aria-label="Separación entre qué y cómo unida por un contrato">
+    <g class="beat" data-beat="0">
+      <text x="40" y="40" class="t-mono t-a" font-size="16" font-weight="600">QUÉ · PLATFORM PM</text>
+      <g font-size="27"><text x="40" y="120">journeys priorizados por fricción</text><text x="40" y="196">acuerdos con los equipos usuarios</text><text x="40" y="272">roadmap de capacidades de IA</text><text x="40" y="348">adopción y resultados del journey</text></g>
+      <g class="f-a"><circle cx="24" cy="111" r="5"/><circle cx="24" cy="187" r="5"/><circle cx="24" cy="263" r="5"/><circle cx="24" cy="339" r="5"/></g>
+    </g>
+    <g class="beat fade" data-beat="1">
+      <path class="s-v" stroke-width="3" stroke-dasharray="10 10" d="M690 20V400M718 20V400"/>
+      <text transform="translate(712 210) rotate(-90)" text-anchor="middle" class="t-mono t-v" font-size="17" font-weight="600" letter-spacing="6">CONTRATO</text>
+    </g>
+    <g class="beat" data-beat="2">
+      <text x="790" y="40" class="t-mono t-v" font-size="16" font-weight="600">CÓMO · PLATFORM ENGINEERING</text>
+      <g font-size="27"><text x="790" y="120">core, identidad y orquestación</text><text x="790" y="196">integración de modelos permitidos</text><text x="790" y="272">golden paths versionados</text><text x="790" y="348">observabilidad del path y de la IA</text></g>
+      <g class="f-v"><circle cx="774" cy="111" r="5"/><circle cx="774" cy="187" r="5"/><circle cx="774" cy="263" r="5"/><circle cx="774" cy="339" r="5"/></g>
+    </g>
+  </svg>
+</div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+El PM de plataforma decide qué journeys importan, con qué acuerdos y cómo se mide el resultado. Platform Engineering decide cómo se construyen: core, integración de modelos permitidos, paths versionados y observabilidad. El contrato al centro evita que un lado le dicte la implementación al otro.</aside>
+</section>
+
+<section class="slide keynote editorial balance-scene" data-title="Los controles también son producto" data-secs="100">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>CONFIANZA</span></header>
+<p class="eyebrow enter-deco">Confianza · Security y SRE</p>
+<h2 class="enter-lead">Los controles<br><em>también son producto.</em></h2>
+<div class="art-wrap" style="flex-direction:column;align-items:stretch;gap:8px">
+  <svg class="art enter-art" viewBox="0 0 1408 270" style="height:270px" role="img" aria-label="Balanza entre velocidad y confianza que se equilibra">
+    <path class="s-fg" stroke-width="4" stroke-linecap="round" d="M704 70V240M624 240H784"/>
+    <g class="beam"><path class="s-fg" stroke-width="5" stroke-linecap="round" d="M344 70H1064"/><circle cx="704" cy="70" r="10" class="f-v"/></g>
+    <g class="pan-l"><path class="s-mu" stroke-width="2" d="M344 70L284 160M344 70L404 160"/><path class="f-a" d="M264 160H424Q344 214 264 160Z"/><text x="344" y="250" text-anchor="middle" class="t-mono t-a" font-size="17" font-weight="600">VELOCIDAD</text></g>
+    <g class="pan-r"><path class="s-mu" stroke-width="2" d="M1064 70L1004 160M1064 70L1124 160"/><path class="f-v" d="M984 160H1144Q1064 214 984 160Z"/><text x="1064" y="250" text-anchor="middle" class="t-mono t-v" font-size="17" font-weight="600">CONFIANZA</text></g>
+  </svg>
+  <div class="role-cols">
+    <div class="beat" data-beat="0"><b style="color:var(--violet)">SECURITY / APPSEC</b><p>Clasificación de datos, modelos y proveedores permitidos, políticas como código.</p></div>
+    <div class="beat" data-beat="1"><b style="color:var(--aqua)">SRE</b><p>SLOs para cambios asistidos, rollback probado y error budget que también aplica a la IA.</p></div>
+  </div>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Un control que el equipo evita no protege. <strong>Hazlo usable.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. La balanza se equilibra en el último paso.
+La velocidad pesa más por defecto. Security aporta la mitad de la confianza: qué datos pueden ir a qué modelos y con qué proveedores, escrito como política ejecutable. SRE aporta la otra mitad: SLOs y rollback para cambios asistidos. Cuando ambos diseñan sus controles como producto, la balanza se equilibra.</aside>
+</section>
+
+<section class="slide keynote editorial adoption-scene" data-title="La adopción se diseña" data-secs="90">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>ADOPCIÓN</span></header>
+<div class="art-wrap">
+<div class="scene-grid">
+  <div class="copy-col">
+    <p class="eyebrow enter-deco">Adopción · Champions</p>
+    <h2 class="enter-lead">La adopción<br><em>se diseña.</em></h2>
+    <p class="lede enter-support">Champions no son evangelizadores: son <strong>usuarios avanzados con tiempo asignado.</strong></p>
+    <ul class="plain-list beat" data-beat="2"><li>office hours semanales</li><li class="lag">ejemplos con el código propio</li><li class="lag">paths documentados con dueño</li></ul>
+  </div>
+  <svg class="art enter-art" viewBox="0 0 760 430" role="img" aria-label="Curva de adopción con cuatro etapas">
+    <path class="s-line" stroke-width="2" d="M30 400H740M30 400V20"/>
+    <path class="draw f-none s-v" pathLength="1" stroke-width="4" stroke-linecap="round" d="M40 385C300 385 360 70 730 55"/>
+    <g class="beat" data-beat="0"><circle cx="110" cy="383" r="10" class="f-v"/><text x="100" y="352" font-size="22" font-weight="600">curiosidad</text>
+      <circle cx="268" cy="330" r="10" class="f-v"/><text x="248" y="300" text-anchor="end" font-size="22" font-weight="600">piloto acompañado</text></g>
+    <g class="beat" data-beat="1"><circle cx="420" cy="180" r="10" class="f-v"/><text x="400" y="160" text-anchor="end" font-size="22" font-weight="600">práctica compartida</text>
+      <circle cx="660" cy="62" r="10" class="f-v"/><text x="640" y="36" text-anchor="end" font-size="22" font-weight="600">estándar de plataforma</text>
+      <use href="#person" x="290" y="350" width="34" height="34" style="color:var(--aqua)"/><use href="#person" x="440" y="196" width="34" height="34" style="color:var(--aqua)"/><text x="476" y="222" class="t-mono t-a" font-size="14" font-weight="600">CHAMPION</text></g>
+  </svg>
+</div>
+</div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+La adopción no ocurre por anuncio. Curiosidad y piloto acompañado; luego práctica compartida y, solo al final, estándar de plataforma. Los champions están en el tramo empinado: son usuarios avanzados con tiempo asignado para ayudar. Paso 3: los artefactos que sostienen la curva.</aside>
+</section>
+
+<section class="slide keynote editorial raci-scene" data-title="Quién decide qué" data-secs="150">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>DECISIONES</span></header>
+<p class="eyebrow enter-deco">Decisiones</p>
+<h2 class="enter-lead">Quién decide qué.<br><em>Propuesta para discutir.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 450" role="img" aria-label="Matriz de responsabilidades por decisión y rol">
+    <g class="t-mono t-mu" font-size="15" font-weight="600" text-anchor="middle"><text x="660" y="28">DEVOPS</text><text x="790" y="28">PLAT ENG</text><text x="920" y="28">PLAT PM</text><text x="1050" y="28">SECURITY</text><text x="1180" y="28">SRE</text><text x="1310" y="28">CHAMPIONS</text></g>
+    <g class="s-line" stroke-width="1.5"><path d="M20 50H1388"/><path d="M20 112H1388"/><path d="M20 174H1388"/><path d="M20 236H1388"/><path d="M20 298H1388"/><path d="M20 360H1388"/></g>
+    <g class="beat" data-beat="0">
+      <g font-size="24"><text x="20" y="90">Modo de IA por paso del flujo</text><text x="20" y="152">Política de datos y modelos</text><text x="20" y="214">Golden path con IA</text></g>
+      <g class="f-v"><circle cx="660" cy="82" r="16"/><circle cx="1050" cy="144" r="16"/><circle cx="920" cy="206" r="16"/></g>
+      <g class="t-on t-b" font-size="16" text-anchor="middle"><text x="660" y="88">A</text><text x="1050" y="150">A</text><text x="920" y="212">A</text></g>
+      <g class="f-none s-a" stroke-width="2.5"><circle cx="790" cy="82" r="15"/><circle cx="790" cy="144" r="15"/><circle cx="790" cy="206" r="15"/></g>
+      <g class="t-a t-b" font-size="15" text-anchor="middle"><text x="790" y="88">R</text><text x="790" y="150">R</text><text x="790" y="212">R</text></g>
+      <g class="f-mu"><circle cx="920" cy="82" r="6"/><circle cx="1050" cy="82" r="6"/><circle cx="1180" cy="82" r="6"/><circle cx="660" cy="144" r="6"/><circle cx="660" cy="206" r="6"/><circle cx="1050" cy="206" r="6"/><circle cx="1180" cy="206" r="6"/><circle cx="1310" cy="206" r="6"/></g>
+    </g>
+    <g class="beat" data-beat="1">
+      <g font-size="24"><text x="20" y="276">Evaluación de calidad de la IA</text><text x="20" y="338">Incidentes asistidos</text><text x="20" y="400">Adopción y métricas de journey</text></g>
+      <g class="f-v"><circle cx="660" cy="268" r="16"/><circle cx="1180" cy="330" r="16"/><circle cx="920" cy="392" r="16"/></g>
+      <g class="t-on t-b" font-size="16" text-anchor="middle"><text x="660" y="274">A</text><text x="1180" y="336">A</text><text x="920" y="398">A</text></g>
+      <g class="f-none s-a" stroke-width="2.5"><circle cx="790" cy="268" r="15"/><circle cx="660" cy="330" r="15"/><circle cx="1310" cy="392" r="15"/></g>
+      <g class="t-a t-b" font-size="15" text-anchor="middle"><text x="790" y="274">R</text><text x="660" y="336">R</text><text x="1310" y="398">R</text></g>
+      <g class="f-mu"><circle cx="1050" cy="268" r="6"/><circle cx="1180" cy="268" r="6"/><circle cx="790" cy="330" r="6"/><circle cx="1050" cy="330" r="6"/><circle cx="660" cy="392" r="6"/><circle cx="790" cy="392" r="6"/></g>
+    </g>
+    <g class="beat fade" data-beat="2"><text x="20" y="442" class="t-mono t-mu" font-size="15"><tspan class="t-v" font-weight="600">A</tspan> RESPONDE POR LA DECISIÓN   <tspan class="t-a" font-weight="600">R</tspan> EJECUTA   ● CONSULTADO   SIN MARCA: INFORMADO</text></g>
+  </svg>
+</div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. Es una propuesta, no una imposición.
+Una sola A por fila. DevOps responde por el modo de IA en el flujo y por la evaluación de calidad. Security por la política de datos y modelos. El PM de plataforma por el golden path y la adopción. SRE por los incidentes asistidos. Platform Engineering ejecuta casi todo. Pide a la sala que cuestione al menos una fila; ese debate es el entregable.</aside>
+</section>
+
+<section class="slide keynote editorial timeline-scene" data-title="Noventa días, tres capacidades" data-secs="110">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>PRÓXIMOS 90 DÍAS</span></header>
+<p class="eyebrow enter-deco">Próximos 90 días</p>
+<h2 class="enter-lead">Noventa días.<br><em>Tres capacidades.</em></h2>
+<div class="art-wrap">
+  <svg class="art enter-art" viewBox="0 0 1408 400" role="img" aria-label="Línea de tiempo de 90 días">
+    <path class="s-line" stroke-width="3" d="M80 210H1328"/>
+    <g class="f-fg"><circle cx="80" cy="210" r="7"/><circle cx="496" cy="210" r="7"/><circle cx="912" cy="210" r="7"/><circle cx="1328" cy="210" r="7"/></g>
+    <g class="t-mono t-mu" font-size="15" text-anchor="middle"><text x="80" y="250">DÍA 0</text><text x="496" y="250">30</text><text x="912" y="250">60</text><text x="1328" y="250">90</text></g>
+    <g class="beat" data-beat="0"><path class="trace s-a" pathLength="1" stroke-width="12" stroke-linecap="round" d="M96 210H480"/>
+      <text x="288" y="110" text-anchor="middle" class="t-mono t-a" font-size="15" font-weight="600">DÍAS 0–30</text><text x="288" y="160" text-anchor="middle" font-size="29" font-weight="640">Inventario y política mínima</text>
+      <g class="t-mu lag" font-size="21" text-anchor="middle"><text x="288" y="300">inventario de herramientas en uso</text><text x="288" y="332">clasificación de datos para prompts</text></g></g>
+    <g class="beat" data-beat="1"><path class="trace s-v" pathLength="1" stroke-width="12" stroke-linecap="round" d="M512 210H896"/>
+      <text x="704" y="110" text-anchor="middle" class="t-mono t-v" font-size="15" font-weight="600">DÍAS 30–60</text><text x="704" y="160" text-anchor="middle" font-size="29" font-weight="640">Un journey piloto con IA</text>
+      <g class="t-mu lag" font-size="21" text-anchor="middle"><text x="704" y="300">un equipo, un journey</text><text x="704" y="332">evaluaciones dentro de CI</text></g></g>
+    <g class="beat" data-beat="2"><path class="trace s-g" pathLength="1" stroke-width="12" stroke-linecap="round" d="M928 210H1312"/>
+      <text x="1120" y="110" text-anchor="middle" class="t-mono t-g" font-size="15" font-weight="600">DÍAS 60–90</text><text x="1120" y="160" text-anchor="middle" font-size="29" font-weight="640">Path versionado y medido</text>
+      <g class="t-mu lag" font-size="21" text-anchor="middle"><text x="1120" y="300">receta publicada en el catálogo</text><text x="1120" y="332">RACI con nombres y revisión</text></g></g>
+  </svg>
+</div>
+<p class="scene-takeaway beat" data-beat="2">Pequeño, medido y con dueño. <strong>Escalar viene después.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Primeros 30 días: saber qué se usa hoy y clasificar datos. Del 30 al 60: un solo journey piloto con un equipo, con evaluaciones en CI y una métrica base. Del 60 al 90: publicar la receta en el catálogo y firmar el RACI con nombres. No es un programa de transformación: es una prueba controlada.</aside>
+</section>
+
+<section class="slide keynote editorial synth-scene" data-title="Si te llevas tres frases" data-secs="70">
+<header><span class="brand"><b>0VAS</b><span class="event">SÍNTESIS</span></span><span>CIERRE</span></header>
+<p class="eyebrow enter-deco">Síntesis</p>
+<h2 class="enter-lead">Si te llevas<br><em>tres frases.</em></h2>
+<ol class="synth">
+  <li class="beat" data-beat="0"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="44" class="f-v"/><text x="48" y="60" text-anchor="middle" class="t-on t-b" font-size="34">1</text></svg><span>En el flujo, la IA <span class="ink-mark">propone</span>; los gates deterministas disponen.</span></li>
+  <li class="beat" data-beat="1"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="44" class="f-a"/><text x="48" y="60" text-anchor="middle" class="t-b" font-size="34" style="fill:var(--bg)">2</text></svg><span>En la plataforma, la IA es <span class="ink-mark">una puerta más</span> hacia el mismo core.</span></li>
+  <li class="beat" data-beat="2"><svg viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="44" class="f-g"/><text x="48" y="60" text-anchor="middle" class="t-b" font-size="34" style="fill:var(--bg)">3</text></svg><span>En los roles, la IA <span class="ink-mark">mueve responsabilidades</span>: nómbralas.</span></li>
+</ol>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. Una frase por bloque. Léelas despacio.</aside>
+</section>
+
+<section class="slide keynote editorial agree-scene" data-title="Tres acuerdos antes de salir" data-secs="90">
+<header><span class="brand"><b>0VAS</b><span class="event">CIERRE OPERATIVO</span></span><span>ACUERDOS</span></header>
+<p class="eyebrow enter-deco">Cierre operativo</p>
+<h2 class="enter-lead">Tres acuerdos<br><em>antes de salir.</em></h2>
+<ol class="agree">
+  <li class="beat" data-beat="0"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="4" y="4" width="48" height="48" rx="10" class="f-none s-v" stroke-width="3"/><path class="trace s-v f-none" pathLength="1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M16 29L25 38L41 18"/></svg><p>Modo de IA acordado para cada paso del flujo.</p><span class="owner">DUEÑO: <b>DEVOPS ENGINEERS</b></span></li>
+  <li class="beat" data-beat="1"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="4" y="4" width="48" height="48" rx="10" class="f-none s-v" stroke-width="3"/><path class="trace s-v f-none" pathLength="1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M16 29L25 38L41 18"/></svg><p>Un journey de plataforma elegido para el piloto.</p><span class="owner">DUEÑO: <b>PLATFORM PM</b></span></li>
+  <li class="beat" data-beat="2"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="4" y="4" width="48" height="48" rx="10" class="f-none s-v" stroke-width="3"/><path class="trace s-v f-none" pathLength="1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M16 29L25 38L41 18"/></svg><p>RACI revisado, con nombres y no con áreas.</p><span class="owner">DUEÑO: <b>TODOS LOS ROLES</b></span></li>
+</ol>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos.
+Estas son las tres marcas del mapa del inicio, ahora como acuerdos. Pide un nombre concreto para cada dueño antes de cerrar.</aside>
+</section>
+
+<section class="slide keynote accent-scene thanks-scene" data-title="Gracias · conversemos" data-secs="300">
+<header><span class="brand"><b>0VAS</b><span class="event">ASESORÍA INTERNA<br>DEVOPS ENGINEERS</span></span><span>PREGUNTAS</span></header>
+<p class="eyebrow enter-deco">Gracias</p>
+<h2 class="enter-lead">Gracias.<br><span class="light">Conversemos.</span></h2>
+<p class="lede enter-support" style="--d:300ms">Preguntas, casos reales y desacuerdos son bienvenidos.</p>
+<div class="thanks-links enter-support" style="--d:420ms">
+  <a class="profile-qr" href="https://www.linkedin.com/in/oscarlobatons/" target="_blank" rel="noopener" aria-label="LinkedIn de Oscar Lobaton"><img src="media/linkedin-qr.svg" alt="QR del LinkedIn de Oscar Lobaton"><span><b>Oscar Lobaton</b>LinkedIn<strong>@oscarlobatons ↗</strong></span></a>
+  <div class="thanks-site"><a href="https://0vas.com" target="_blank" rel="noopener">0vas.com ↗</a><a href="https://slides.0vas.com" target="_blank" rel="noopener">slides.0vas.com ↗</a></div>
+</div>
+<div class="pixel-grid thanks-pixels" data-pattern="0010110/0101101/1011011/0110110/1101101/1011010/0110100" aria-hidden="true"></div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">Cierra con: "La IA no reemplaza el diseño del flujo ni de la plataforma; lo vuelve urgente." Abre preguntas. El QR abre LinkedIn. M pausa el fondo.</aside>
+</section>
+
+<section class="slide keynote sources-scene" data-title="Anexo · siguiente sesión" data-secs="30">
+<header><span class="brand"><b>0VAS</b><span class="event">ANEXO</span></span><span>MATERIAL DE TRABAJO</span></header>
+<p class="eyebrow enter-deco">Anexo</p>
+<h2 class="enter-lead">Para la<br><em>siguiente sesión.</em></h2>
+<div class="annex-cols">
+  <div class="beat" data-beat="0"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h6v3H9z"/><path d="M7 5H5v16h14V5h-2"/><path d="M9 12h6M9 16h4"/></svg>INSUMOS</b>
+    <ol><li>Inventario de herramientas de IA en uso, oficiales y no oficiales.</li><li>Journeys de plataforma y su fricción actual.</li><li>Borrador de política de datos, modelos y retención de logs.</li><li>Candidatos a champions con tiempo asignado.</li></ol></div>
+  <div class="beat" data-beat="1"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h8"/></svg>LECTURAS</b>
+    <ol><li><a href="https://dora.dev/capabilities/platform-engineering/" target="_blank" rel="noopener">DORA · Platform engineering</a></li><li><a href="https://queue.acm.org/detail.cfm?id=3454124" target="_blank" rel="noopener">Forsgren et al. · The SPACE of Developer Productivity</a></li><li><a href="https://learn.microsoft.com/en-us/platform-engineering/what-is-platform-engineering" target="_blank" rel="noopener">Microsoft Learn · What is platform engineering?</a></li></ol></div>
+</div>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">No se lee en voz alta. Material para preparar la siguiente sesión de trabajo.</aside>
+</section>
+
+</div>
+
+<nav class="controls show" id="controls" aria-label="Controles de presentación">
+  <button id="prev" aria-label="Anterior" title="Anterior (←)">←</button>
+  <output id="counter">01 / 36</output>
+  <output id="build-counter" aria-label="Etapa"></output>
+  <button id="next" aria-label="Siguiente" title="Siguiente (→)">→</button>
+  <span class="divider"></span>
+  <button id="replay" title="Repetir escena (R)">↻ Repetir</button>
+  <button id="reveal-all" title="Ver todo (A)">Ver todo</button>
+  <button id="motion-toggle" title="Pausar fondo (M)">Pausar fondo</button>
+  <button id="theme" title="Cambiar tema (T)">Tema</button>
+  <button id="index" title="Índice (I)">Índice</button>
+  <button id="fullscreen" title="Pantalla completa (F)">Pantalla completa</button>
+  <button id="presenter" title="Notas (P)">Notas ↗</button>
+</nav>
+<div class="progress" id="progress"></div>
+<div class="help">← → pasos · Shift+←→ slides · A ver todo · R repetir · T tema · M fondo</div>
+<div class="blackout" id="blackout" aria-hidden="true"></div>
+<dialog id="index-dialog" class="index-dialog">
+  <button id="close-index" aria-label="Cerrar">×</button>
+  <h2>IA en DevOps y la plataforma</h2>
+  <div class="index-grid" id="index-grid"></div>
+</dialog>
+<div class="sr-only" id="announcement" aria-live="polite"></div>
+<div class="speaker">
+  <header><span>NOTAS · ASESORÍA IA</span><output id="clock">00:00</output></header>
+  <p class="instruction">Proyecta la ventana de diapositivas. Aquí van tus notas.</p>
+  <button id="sp-prev">← Anterior</button>
+  <button id="sp-next">Siguiente →</button>
+  <button id="clock-start">Iniciar reloj</button>
+  <button id="clock-reset">Reiniciar reloj</button>
+  <div class="speaker-preview"><iframe id="sp-preview" title="Vista actual" tabindex="-1"></iframe></div>
+  <div class="speaker-content">
+    <div class="speaker-meta" id="sp-meta"></div>
+    <h1 id="sp-title"></h1>
+    <p id="sp-notes"></p>
+    <div class="next-title" id="sp-next-title"></div>
+  </div>
+</div>
+
+<script>
+'use strict';
+const slides=[...document.querySelectorAll('#stage > .slide')];
+const SLIDES=slides.map(s=>({title:s.dataset.title||'',secs:Number(s.dataset.secs||0),notes:(s.querySelector('.notes')?.textContent||'').trim()}));
+const params=new URLSearchParams(location.search);
+const isPresenter=params.has('presenter');
+const isPreview=params.has('preview');
+let current=0,presenterWindow=null,controlTimeout=null;
+let buildStep=0;
+let ambientStopped=false;
+let deckTransition=null,transitionSerial=0;
+const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
+const $=id=>document.getElementById(id);
+const clamp=n=>Math.max(0,Math.min(slides.length-1,Number.isFinite(n)?n:0));
+const pad=n=>String(n).padStart(2,'0');
+
+function applyTheme(theme){
+  const next=theme==='light'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('0vas-asesoria-theme',next);}catch{}
+}
+(function initTheme(){
+  const q=params.get('theme');
+  if(q==='light'||q==='dark')return applyTheme(q);
+  try{const s=localStorage.getItem('0vas-asesoria-theme');if(s==='light'||s==='dark')return applyTheme(s);}catch{}
+  applyTheme(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+})();
+
+/* Pixel art: each tile assembles from slightly outside its final cell, then joins the ambient loop. */
+document.querySelectorAll('.pixel-grid[data-pattern]').forEach(grid=>{
+  const rows=grid.dataset.pattern.split('/'),cols=rows[0].length;
+  grid.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  grid.style.gridTemplateRows=`repeat(${rows.length},1fr)`;
+  let n=0;
+  rows.forEach((row,y)=>[...row].forEach((c,x)=>{
+    const i=document.createElement('i');
+    i.className='pixel '+(c==='1'?'on':'off');
+    i.style.setProperty('--n',n++);
+    i.style.setProperty('--dx',((x-(cols-1)/2)*19)+'px');
+    i.style.setProperty('--dy',((y-(rows.length-1)/2)*12)+'px');
+    grid.append(i);
+  }));
+});
+slides.forEach((s,i)=>s.querySelectorAll('.foot .num').forEach(el=>el.textContent=`${pad(i+1)} / ${pad(slides.length)}`));
+
+const buildGroups=slides.map(slide=>{
+  const byBeat={};
+  slide.querySelectorAll('.beat').forEach(el=>{const b=String(el.dataset.beat??'0');(byBeat[b]=byBeat[b]||[]).push(el);});
+  return Object.keys(byBeat).sort((a,b)=>a-b).map(k=>byBeat[k]);
+});
+
+function paintBuild(step){
+  const groups=buildGroups[current],max=Math.max(0,groups.length-1);
+  buildStep=Math.max(0,Math.min(max,Number.isFinite(step)?step:0));
+  slides[current].querySelectorAll('.beat').forEach(el=>{
+    const shown=Number(el.dataset.beat||0)<=buildStep;
+    el.classList.toggle('shown',shown);
+    el.setAttribute('aria-hidden',String(!shown));
+  });
+  slides[current].dataset.step=buildStep;
+  $('build-counter').textContent=groups.length?`PASO ${buildStep+1} / ${groups.length}`:'';
+  $('prev').disabled=current===0&&buildStep===0;
+  $('next').disabled=current===slides.length-1&&buildStep>=max;
+  $('next').title=buildStep<max?'Revelar siguiente paso (→)':'Siguiente diapositiva (→)';
+  $('counter').textContent=`${pad(current+1)} / ${pad(slides.length)}`;
+  $('progress').style.transform=`scaleX(${(current+(groups.length?(buildStep+1)/groups.length:1))/slides.length})`;
+  document.querySelectorAll('#index-grid button').forEach((b,i)=>b.setAttribute('aria-current',String(i===current)));
+  renderNotes();sendState();
+}
+function playEntry(){
+  if(isPresenter)return;
+  const slide=slides[current];
+  slide.classList.remove('scene-running');void slide.offsetWidth;slide.classList.add('scene-running');
+}
+function move(delta){
+  if(delta>0&&buildStep<buildGroups[current].length-1){paintBuild(buildStep+1);return;}
+  if(delta<0&&buildStep>0){paintBuild(buildStep-1);return;}
+  if(delta>0&&current<slides.length-1)go(current+1,true,0);
+  else if(delta<0&&current>0)go(current-1,true,Math.max(0,buildGroups[current-1].length-1));
+}
+function revealAll(){paintBuild(Math.max(0,buildGroups[current].length-1));}
+function replay(){paintBuild(0);playEntry();}
+function renderSlide(destination,animate=true,step=0){
+  current=clamp(destination);
+  slides.forEach((s,i)=>{
+    s.classList.toggle('active',i===current);
+    if(i!==current)s.classList.remove('scene-running');
+    s.setAttribute('aria-hidden',String(i!==current));
+    s.inert=i!==current;
+  });
+  paintBuild(step);
+  if(animate&&!isPresenter&&!isPreview)playEntry();
+  try{history.replaceState(null,'',`${location.search}#${current+1}`);}catch{}
+  $('announcement').textContent=`Diapositiva ${current+1}: ${SLIDES[current].title}`;
+}
+function go(n,animate=true,step=0){
+  const destination=clamp(n),serial=++transitionSerial;
+  if(deckTransition){deckTransition.skipTransition();deckTransition=null;}
+  if(!animate||isPresenter||isPreview||motionPreference.matches||!document.startViewTransition||destination===current){
+    renderSlide(destination,animate,step);return;
+  }
+  document.documentElement.classList.add('native-deck-transitions');
+  document.documentElement.classList.toggle('deck-backward',destination<current);
+  const tx=document.startViewTransition(()=>{if(serial===transitionSerial)renderSlide(destination,true,step);});
+  deckTransition=tx;
+  tx.ready.catch(()=>{});
+  tx.finished.catch(()=>{}).finally(()=>{if(deckTransition===tx)deckTransition=null;});
+}
+function scale(){document.documentElement.style.setProperty('--scale',Math.min(innerWidth/1600,innerHeight/900));}
+function showControls(){$('controls').classList.add('show');clearTimeout(controlTimeout);controlTimeout=setTimeout(()=>$('controls').classList.remove('show'),2200);}
+function openIndex(){if(!$('index-dialog').open)$('index-dialog').showModal();}
+function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});else document.exitFullscreen?.();}
+function syncAmbientPause(){
+  const paused=ambientStopped||motionPreference.matches||document.hidden||$('blackout').classList.contains('on')||isPreview;
+  document.body.classList.toggle('ambient-paused',paused);
+  document.querySelectorAll('#stage svg').forEach(svg=>{if(svg.pauseAnimations)paused?svg.pauseAnimations():svg.unpauseAnimations();});
+  $('motion-toggle').textContent=ambientStopped?'Reanudar fondo':'Pausar fondo';
+}
+function toggleAmbient(){ambientStopped=!ambientStopped;syncAmbientPause();}
+
+
+/* Neural cover — particle bolts + traveling charges */
+(function(){
+  const stage=document.querySelector('.neural-stage');
+  if(!stage) return;
+  const canvas=stage.querySelector('.neural-canvas');
+  const svg=stage.querySelector('.neural-net');
+  if(!canvas||!svg) return;
+  const ctx=canvas.getContext('2d');
+  const dpr=Math.min(2, window.devicePixelRatio||1);
+  function resize(){
+    const r=canvas.getBoundingClientRect();
+    canvas.width=Math.round(r.width*dpr); canvas.height=Math.round(r.height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize(); addEventListener('resize', resize);
+  const vb=svg.viewBox.baseVal;
+  const nodes=[...svg.querySelectorAll('.neuron')].map(g=>{
+    const t=g.getAttribute('transform').match(/translate\(([-\d.]+) ([-\d.]+)\)/);
+    return {x:+t[1], y:+t[2], hub:g.classList.contains('hub')};
+  });
+  const charges=[];
+  const bolts=[];
+  let last=0;
+  function spawnCharge(){
+    if(nodes.length<2) return;
+    const a=nodes[(Math.random()*nodes.length)|0];
+    let b=nodes[(Math.random()*nodes.length)|0];
+    if(b===a) b=nodes[(a===nodes[0]?1:0)];
+    charges.push({a,b,t:0,speed:.55+Math.random()*.85,hue:180+Math.random()*160,w:1.8+Math.random()*3.2});
+  }
+  function spawnBolt(){
+    const hubs=nodes.filter(n=>n.hub);
+    const origin=hubs[(Math.random()*hubs.length)|0]||nodes[0];
+    const target=nodes[(Math.random()*nodes.length)|0];
+    const segs=[];
+    let x=origin.x,y=origin.y;
+    const steps=5+(Math.random()*4)|0;
+    for(let i=1;i<=steps;i++){
+      const t=i/steps;
+      const nx=origin.x+(target.x-origin.x)*t+(Math.random()-.5)*28;
+      const ny=origin.y+(target.y-origin.y)*t+(Math.random()-.5)*28;
+      segs.push({x,y,nx,ny}); x=nx; y=ny;
+    }
+    bolts.push({segs, life:1, hue:260+Math.random()*80});
+  }
+  for(let i=0;i<18;i++) spawnCharge();
+  function tick(now){
+    const dt=Math.min(40, now-(last||now))/1000; last=now;
+    const cover=document.querySelector('.key-cover');
+    const active=cover?.classList.contains('active');
+    const paused=document.body.classList.contains('ambient-paused')||matchMedia('(prefers-reduced-motion: reduce)').matches||document.hidden||!active;
+    const r=canvas.getBoundingClientRect();
+    const sx=r.width/vb.width, sy=r.height/vb.height;
+    ctx.clearRect(0,0,r.width,r.height);
+    if(!paused){
+      if(Math.random()<.22) spawnCharge();
+      if(Math.random()<.12) spawnBolt();
+      if(Math.random()<.06){spawnBolt();spawnBolt();}
+      for(const c of charges){
+        c.t+=dt*c.speed;
+        const t=c.t%1;
+        const x=(c.a.x+(c.b.x-c.a.x)*t)*sx;
+        const y=(c.a.y+(c.b.y-c.a.y)*t)*sy;
+        const g=ctx.createRadialGradient(x,y,0,x,y,10*c.w);
+        g.addColorStop(0,`hsla(${c.hue},100%,85%,1)`);
+        g.addColorStop(.35,`hsla(${c.hue},100%,65%,.55)`);
+        g.addColorStop(1,'transparent');
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,16*c.w,0,Math.PI*2); ctx.fill();
+        ctx.strokeStyle=`hsla(${c.hue},100%,78%,.85)`; ctx.lineWidth=c.w*1.4; ctx.shadowColor=`hsla(${c.hue},100%,70%,.9)`; ctx.shadowBlur=12;
+        ctx.beginPath();
+        ctx.moveTo((c.a.x+(c.b.x-c.a.x)*Math.max(0,t-.12))*sx,(c.a.y+(c.b.y-c.a.y)*Math.max(0,t-.12))*sy);
+        ctx.lineTo(x,y); ctx.stroke(); ctx.shadowBlur=0;
+      }
+      if(charges.length>28) charges.splice(0, charges.length-22);
+      for(let i=bolts.length-1;i>=0;i--){
+        const b=bolts[i]; b.life-=dt*1.8;
+        if(b.life<=0){bolts.splice(i,1); continue;}
+        ctx.strokeStyle=`hsla(${b.hue},100%,88%,${Math.min(1,b.life*1.2)})`;
+        ctx.shadowColor=`hsla(${b.hue},100%,75%,1)`; ctx.shadowBlur=22;
+        ctx.lineWidth=3.4*b.life+1;
+        ctx.beginPath();
+        for(const s of b.segs){ ctx.moveTo(s.x*sx,s.y*sy); ctx.lineTo(s.nx*sx,s.ny*sy); }
+        ctx.stroke(); ctx.shadowBlur=0;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* Talk carousel — stacked peek like F13 bio */
+let talkIndex=0,talkLastTime=0,talkAccum=0;
+const talkCards=[...document.querySelectorAll('.talk-card')];
+const bioSlideIndex=[...document.querySelectorAll('#stage > .slide')].findIndex(s=>s.classList.contains('bio-keynote'));
+function paintTalk(){
+  if(!talkCards.length)return;
+  talkCards.forEach((c,i)=>{
+    const rel=((i-talkIndex)%talkCards.length+talkCards.length)%talkCards.length;
+    c.classList.toggle('current',rel===0);
+    c.classList.toggle('is-next',rel===1);
+    c.classList.toggle('is-prev',rel===talkCards.length-1);
+    c.setAttribute('aria-hidden',String(rel!==0));
+    c.inert=rel!==0;
+  });
+}
+function spinTalk(now){
+  const dt=Math.min(now-(talkLastTime||now),50);talkLastTime=now;
+  const visible=current===bioSlideIndex&&buildStep>=1&&!document.hidden&&!$('blackout').classList.contains('on');
+  const isPreview=document.body.classList.contains('preview-mode');
+  if(visible&&!ambientStopped&&!motionPreference.matches&&!isPresenter&&!isPreview){
+    talkAccum+=dt;
+    if(talkAccum>=2800){talkAccum=0;talkIndex=(talkIndex+1)%talkCards.length;paintTalk()}
+  }
+  requestAnimationFrame(spinTalk);
+}
+if(talkCards.length){paintTalk();requestAnimationFrame(spinTalk)}
+
+function sendState(){if(presenterWindow&&!presenterWindow.closed)presenterWindow.postMessage({type:'asesoria-state',index:current,step:buildStep},'*');}
+function openPresenter(){
+  const u=new URL(location.href);u.searchParams.set('presenter','1');u.hash=String(current+1);
+  presenterWindow=window.open(u.href,'asesoria-presenter','width=1100,height=850');
+  if(!presenterWindow)$('announcement').textContent='Permite ventanas emergentes para las notas.';
+  else presenterWindow.focus();
+}
+function renderNotes(){
+  if(!isPresenter)return;
+  const s=SLIDES[current],before=SLIDES.slice(0,current).reduce((a,x)=>a+(x.secs||0),0);
+  $('sp-title').textContent=s.title;
+  $('sp-notes').textContent=s.notes;
+  $('sp-meta').textContent=`${pad(current+1)} / ${SLIDES.length}${buildGroups[current].length?' · etapa '+(buildStep+1)+'/'+buildGroups[current].length:''} · ${s.secs?s.secs+' s':''} · inicio ${pad(Math.floor(before/60))}:${pad(before%60)}`;
+  $('sp-next-title').textContent=current+1<SLIDES.length?'Siguiente: '+SLIDES[current+1].title:'Fin de la presentación';
+  $('sp-prev').disabled=current===0&&buildStep===0;
+  $('sp-next').disabled=current===SLIDES.length-1&&buildStep>=Math.max(0,buildGroups[current].length-1);
+  const u=new URL(location.href);u.search='?preview=1&step='+buildStep;u.hash=current+1;
+  const frame=$('sp-preview');if(frame.src!==u.href)frame.src=u.href;
+}
+let clockBase=null,clockAcc=0;
+function updateClock(){
+  let t=clockAcc;if(clockBase!=null)t+=Date.now()-clockBase;
+  $('clock').textContent=`${pad(Math.floor(t/60000))}:${pad(Math.floor((t%60000)/1000))}`;
+}
+
+$('index-grid').innerHTML=SLIDES.map((s,i)=>`<button type="button" data-i="${i}"><strong>${pad(i+1)}</strong><br>${s.title}</button>`).join('');
+$('index-grid').onclick=e=>{const b=e.target.closest('button[data-i]');if(!b)return;$('index-dialog').close();go(Number(b.dataset.i),true,0);};
+$('close-index').onclick=()=>$('index-dialog').close();
+$('prev').onclick=()=>move(-1);
+$('next').onclick=()=>move(1);
+$('replay').onclick=replay;
+$('reveal-all').onclick=revealAll;
+$('motion-toggle').onclick=toggleAmbient;
+$('index').onclick=openIndex;
+$('fullscreen').onclick=toggleFullscreen;
+$('presenter').onclick=openPresenter;
+$('theme').onclick=()=>applyTheme(document.documentElement.getAttribute('data-theme')==='light'?'dark':'light');
+
+document.addEventListener('mousemove',showControls);
+document.addEventListener('keydown',e=>{
+  if(e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.key==='Escape'){$('blackout').classList.remove('on');syncAmbientPause();return;}
+  if($('index-dialog').open)return;
+  const k=e.key.toLowerCase();
+  if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){if(e.key===' '&&e.target.tagName==='BUTTON')return;e.preventDefault();e.shiftKey?go(current+1,true,0):navigate(1);}
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();e.shiftKey?go(current-1,true,0):navigate(-1);}
+  else if(e.key==='Home'){e.preventDefault();go(0,true,0);}
+  else if(e.key==='End'){e.preventDefault();go(slides.length-1,true,0);}
+  else if(k==='a')revealAll();
+  else if(k==='r'&&!isPresenter)replay();
+  else if(k==='m')toggleAmbient();
+  else if(k==='b'&&!isPresenter){$('blackout').classList.toggle('on');syncAmbientPause();}
+  else if(k==='i'&&!isPresenter)openIndex();
+  else if(k==='f'&&!isPresenter)toggleFullscreen();
+  else if(k==='p'&&!isPresenter)openPresenter();
+  else if(k==='t')$('theme').click();
+  showControls();
+});
+function navigate(delta){
+  if(isPresenter&&window.opener&&!window.opener.closed)window.opener.postMessage({type:'asesoria-move',delta},'*');
+  else move(delta);
+}
+$('blackout').onclick=()=>{$('blackout').classList.remove('on');syncAmbientPause();};
+$('stage').addEventListener('click',e=>{
+  if(e.target.closest('a,button,input,select,textarea'))return;
+  move(1);
+});
+let touchStart=null;
+$('stage').addEventListener('touchstart',e=>{if(e.touches.length!==1||e.target.closest('a,button'))return;touchStart=[e.touches[0].clientX,e.touches[0].clientY];},{passive:true});
+$('stage').addEventListener('touchend',e=>{
+  if(!touchStart)return;
+  const dx=e.changedTouches[0].clientX-touchStart[0],dy=e.changedTouches[0].clientY-touchStart[1];touchStart=null;
+  if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.5)move(dx<0?1:-1);
+},{passive:true});
+addEventListener('resize',scale);
+addEventListener('hashchange',()=>{const n=parseInt(location.hash.slice(1),10)-1;if(n!==current)go(n,true,0);});
+document.addEventListener('visibilitychange',syncAmbientPause);
+motionPreference.addEventListener?.('change',syncAmbientPause);
+addEventListener('message',e=>{
+  if(isPresenter&&e.source===window.opener&&e.data?.type==='asesoria-state'){go(e.data.index,false,e.data.step);}
+  else if(!isPresenter&&e.source===presenterWindow){
+    if(e.data?.type==='asesoria-move')move(e.data.delta);
+    if(e.data?.type==='asesoria-ready')sendState();
+  }
+});
+if(isPresenter){
+  document.body.classList.add('presenter-mode');
+  setInterval(updateClock,500);
+  $('sp-prev').onclick=()=>navigate(-1);
+  $('sp-next').onclick=()=>navigate(1);
+  $('clock-start').onclick=()=>{if(clockBase==null){clockBase=Date.now();$('clock-start').textContent='Pausar reloj';}else{clockAcc+=Date.now()-clockBase;clockBase=null;$('clock-start').textContent='Continuar reloj';}};
+  $('clock-reset').onclick=()=>{clockBase=null;clockAcc=0;$('clock-start').textContent='Iniciar reloj';updateClock();};
+  if(window.opener)window.opener.postMessage({type:'asesoria-ready'},'*');
+}
+if(isPreview)document.body.classList.add('preview-mode');
+scale();syncAmbientPause();showControls();
+go(parseInt(location.hash.slice(1),10)-1,!isPreview,Number(params.get('step')||0));
+</script>
+</body>
+</html>

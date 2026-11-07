@@ -17,6 +17,7 @@ on:
           - mas-alla-del-titulo
           - olympus-workshop
           - platform-engineering-that-teams-actually-adopt
+          - asesoria-ia-devops-plataforma
           - custom
       custom_deck:
         description: Deck slug when target is custom

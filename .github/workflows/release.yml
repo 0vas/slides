@@ -22,7 +22,10 @@ concurrency:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    # Pin 24.04: ubuntu-latest moved to 26.04 and older Playwright installers fail there.
+    runs-on: ubuntu-24.04
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v4

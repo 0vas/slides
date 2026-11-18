@@ -18,6 +18,7 @@ on:
           - olympus-workshop
           - platform-engineering-that-teams-actually-adopt
           - asesoria-ia-devops-plataforma
+          - muchas-empresas-una-forma-de-operar
           - custom
       custom_deck:
         description: Deck slug when target is custom

@@ -80,3 +80,12 @@ test('balance scene tips via CSS data-step and adoption keeps narrative stages',
   assert.match(html, /class="champion-call beat"/)
   assert.match(html, /animation-duration:\s*820ms/)
 })
+
+test('roles block names emerging market roles without forcing new headcount', () => {
+  assert.match(html, /market-roles-scene/)
+  assert.match(html, /Orchestrator/i)
+  assert.match(html, /Forward Deployed|FDE/)
+  assert.match(html, /Context Curator/i)
+  assert.match(html, /No son moda de organigrama/)
+  assert.match(html, /MERCADO/)
+})

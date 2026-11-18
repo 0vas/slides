@@ -95,6 +95,7 @@ scripts/
 | Deck | Purpose | Command |
 | --- | --- | --- |
 | `abstraccion-o-friccion-f13` | Original standalone HTML talk, Abstracción o fricción · F13 2026. | `make dev DECK=abstraccion-o-friccion-f13` |
+| `innersource-summit-2026` | Original HTML talk: GitOps in InnerSource · InnerSource Summit 2026. | `make dev DECK=innersource-summit-2026` |
 | `github-enterprise-platform` | Main talk about GitHub as an enterprise platform. | `make dev DECK=github-enterprise-platform` |
 | `intro-devops-es` | Spanish introduction to DevOps, DevSecOps, Platform Engineering, and learning path. | `make dev DECK=intro-devops-es` |
 | `platform-engineering-that-teams-actually-adopt` | Internal platform engineering adoption and operating-model talk. | `make dev DECK=platform-engineering-that-teams-actually-adopt` |

@@ -10,7 +10,7 @@
 - Required points:
   1. IA en los flujos de DevOps
   2. IA en la plataforma de ingeniería
-  3. Roles críticos para los puntos 1 y 2
+  3. Roles críticos para los puntos 1 y 2 (incluye roles emergentes de mercado: Orchestrator, FDE, Context Curator)
 - Tone/context: Spanish, internal advisory (not keynote marketing)
 - Constraints: publish via `0vas/slides` → `slides.0vas.com`; HTML cinematic format matching F13 rules; no invented metrics
 - Visual background mode: dual theme using 0vas.com light/dark tokens; accent scenes allowed

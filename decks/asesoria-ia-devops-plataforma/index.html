@@ -227,6 +227,32 @@ body.ambient-paused .pixel{animation-play-state:paused!important}
 }
 .adoption-scene .champion-call .lede{font-size:24px;max-width:28ch;margin:0 0 8px}
 
+/* Emerging market roles — Orchestrator / FDE / Context Curator */
+.market-roles-scene .art-wrap{gap:12px}
+.market-roles-scene h2{font-size:58px;max-width:18ch}
+.market-roles-scene .market-roles{
+  list-style:none;padding:0;margin:8px 0 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 28px;width:100%;
+}
+.market-roles-scene .market-roles li{
+  border-top:2px solid var(--line);padding-top:14px;min-width:0;
+}
+.market-roles-scene .market-roles .code{
+  display:block;font:13px/1.2 var(--mono);letter-spacing:.12em;margin-bottom:8px;font-weight:650;
+}
+.market-roles-scene .market-roles .name{
+  display:block;font-size:26px;line-height:1.15;font-weight:640;margin-bottom:8px;color:var(--fg);
+}
+.market-roles-scene .market-roles .why{
+  margin:0;font-size:18px;line-height:1.35;color:var(--muted);max-width:28ch;
+}
+.market-roles-scene .market-roles .map{
+  display:block;margin-top:12px;font:12px/1.35 var(--mono);letter-spacing:.08em;color:var(--violet);
+}
+.market-roles-scene .market-roles .beat[data-beat="0"]{border-color:color-mix(in srgb,var(--violet) 55%,var(--line))}
+.market-roles-scene .market-roles .beat[data-beat="1"]{border-color:color-mix(in srgb,var(--aqua) 55%,var(--line))}
+.market-roles-scene .market-roles .beat[data-beat="2"]{border-color:color-mix(in srgb,var(--mint) 55%,var(--line))}
+.market-roles-scene .scene-takeaway{margin-top:18px}
+
 .modes{list-style:none;padding:0;margin:0;display:grid;gap:0;align-content:center}
 .modes li{display:grid;grid-template-columns:132px 1fr;column-gap:18px;row-gap:4px;border-top:1px solid var(--line);padding:16px 0 14px;align-items:start}
 .modes .tag{font:13px/1.2 var(--mono);letter-spacing:.14em;font-weight:650;padding-top:4px}
@@ -1139,11 +1165,11 @@ Cuatro patrones que vemos con frecuencia. Un chatbot que promete desplegar sin c
 <p class="eyebrow enter-deco">Bloque 3 de 3</p>
 <h2 class="enter-lead">Roles críticos para<br>los puntos 1 y 2<span class="period">.</span></h2>
 <p class="lede enter-support" style="--d:280ms">La IA no elimina roles. Mueve responsabilidades. <strong style="color:#fff">Si nadie las toma, las toma el azar.</strong></p>
-<div class="chapter-chain enter-support" style="--d:420ms"><span>MAPA</span><i></i><span>TU ROL</span><i></i><span>QUÉ / CÓMO</span><i></i><span>CONFIANZA</span><i></i><span>ADOPCIÓN</span><i></i><span>RACI</span></div>
+<div class="chapter-chain enter-support" style="--d:420ms"><span>MAPA</span><i></i><span>MERCADO</span><i></i><span>TU ROL</span><i></i><span>QUÉ / CÓMO</span><i></i><span>CONFIANZA</span><i></i><span>ADOPCIÓN</span><i></i><span>RACI</span></div>
 </div>
 <div class="neural-mount" aria-hidden="true"></div>
 <div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
-<aside class="notes">Apertura bloque 3. Los bloques 1 y 2 generan decisiones; este bloque asigna quién las toma.</aside>
+<aside class="notes">Apertura bloque 3. Los bloques 1 y 2 generan decisiones; este bloque asigna quién las toma. Incluye los roles que ya suenan en el mercado: Orchestrator, FDE y Context Curator.</aside>
 </section>
 
 <section class="slide keynote editorial roles-scene" data-title="Seis roles, una misma cadena" data-secs="110">
@@ -1176,7 +1202,57 @@ Cuatro patrones que vemos con frecuencia. Un chatbot que promete desplegar sin c
 <p class="scene-takeaway beat" data-beat="2">Ningún cargo nuevo es obligatorio. <strong>Las responsabilidades sí.</strong></p>
 <div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
 <aside class="notes">CONTROL: 3 pasos.
-Primero el anillo de construcción: DevOps Engineer, Platform Engineer y Platform PM. Después el anillo de confianza y adopción: Security, SRE y Champions. No hace falta crear cargos nuevos; hace falta que estas seis responsabilidades tengan nombre.</aside>
+Primero el anillo de construcción: DevOps Engineer, Platform Engineer y Platform PM. Después el anillo de confianza y adopción: Security, SRE y Champions. No hace falta crear cargos nuevos; hace falta que estas seis responsabilidades tengan nombre. Puente: el mercado ya está nombrando tres capacidades nuevas.</aside>
+</section>
+
+<section class="slide keynote editorial market-roles-scene" data-title="Orchestrator, FDE y Context Curator" data-secs="120">
+<header><span class="brand"><b>0VAS</b><span class="event">BLOQUE 3 · ROLES</span></span><span>MERCADO</span></header>
+<p class="eyebrow enter-deco">Roles emergentes · mercado</p>
+<h2 class="enter-lead">Tres nombres que<br><em>ya suenan afuera.</em></h2>
+<div class="art-wrap" style="flex-direction:column;align-items:stretch">
+  <svg class="art enter-art" viewBox="0 0 1408 170" style="height:150px" role="img" aria-label="Tres roles emergentes que se conectan al flujo y la plataforma">
+    <path class="s-line" stroke-width="2" d="M120 86H1288"/>
+    <g class="beat" data-beat="0">
+      <circle cx="240" cy="86" r="28" class="f-v"/>
+      <text x="240" y="92" text-anchor="middle" class="t-on t-b" font-size="15">ORC</text>
+      <text x="240" y="148" text-anchor="middle" class="t-mono t-v" font-size="14" font-weight="600">ORCHESTRATOR</text>
+    </g>
+    <g class="beat" data-beat="1">
+      <circle cx="704" cy="86" r="28" class="f-a"/>
+      <text x="704" y="92" text-anchor="middle" class="t-b" font-size="15" style="fill:var(--bg)">FDE</text>
+      <text x="704" y="148" text-anchor="middle" class="t-mono t-a" font-size="14" font-weight="600">FORWARD DEPLOYED</text>
+    </g>
+    <g class="beat" data-beat="2">
+      <circle cx="1168" cy="86" r="28" class="f-m"/>
+      <text x="1168" y="92" text-anchor="middle" class="t-b" font-size="14" style="fill:var(--bg)">CTX</text>
+      <text x="1168" y="148" text-anchor="middle" class="t-mono" font-size="14" font-weight="600" style="fill:var(--mint)">CONTEXT CURATOR</text>
+    </g>
+  </svg>
+  <ul class="market-roles">
+    <li class="beat" data-beat="0">
+      <span class="code" style="color:var(--violet)">01 · ORCHESTRATOR</span>
+      <span class="name">Diseña la coreografía humano + agente.</span>
+      <p class="why">Quién sugiere, quién ejecuta y cuándo escalar. Sin esto, cada equipo inventa su propio «modo de IA».</p>
+      <span class="map">ENCAJA CON · DEVOPS / PLATFORM ENG</span>
+    </li>
+    <li class="beat" data-beat="1">
+      <span class="code" style="color:var(--aqua)">02 · FDE</span>
+      <span class="name">Hace aterrizar la capacidad en el trabajo real.</span>
+      <p class="why">Forward Deployed Engineer: se embebe con el equipo, prueba el path y cierra la brecha entre plataforma y uso diario.</p>
+      <span class="map">ENCAJA CON · PLATFORM ENG / CHAMPIONS</span>
+    </li>
+    <li class="beat" data-beat="2">
+      <span class="code" style="color:var(--mint)">03 · CONTEXT CURATOR</span>
+      <span class="name">Cuida el contexto que la IA consume.</span>
+      <p class="why">Catálogo, runbooks, ADRs y fuentes recuperables. Sin curator, el asistente alucina tu organización con seguridad.</p>
+      <span class="map">ENCAJA CON · PLATFORM / CATÁLOGO</span>
+    </li>
+  </ul>
+</div>
+<p class="scene-takeaway beat" data-beat="2">No son moda de organigrama. <strong>Son responsabilidades que hoy casi nadie nombra.</strong></p>
+<div class="foot"><span>OSCAR LOBATON · ASESORÍA IA</span><span class="num"></span></div>
+<aside class="notes">CONTROL: 3 pasos. El mercado ya habla de Orchestrator, FDE y Context Curator.
+Paso 1: Orchestrator — diseña la coreografía humano+agente (modos, escalamiento). Paso 2: FDE — aterriza la capacidad en equipos reales; no es preventa, es ingeniería embebida. Paso 3: Context Curator — dueño del contexto recuperable. Remata: no obligan a contratar tres cargos; obligan a nombrar tres responsabilidades. Conecta con el mapa de seis roles: son capas nuevas sobre la misma cadena.</aside>
 </section>
 
 <section class="slide keynote editorial devops-role-scene" data-title="De operar pipelines a diseñar flujos asistidos" data-secs="110">

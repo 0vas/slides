@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title><!-- TITLE --></title>
+  <style>/* DECK CSS */</style>
+</head>
+<body>
+  <main id="stage" tabindex="-1" aria-label="SSDLC, seguridad de extremo a extremo">
+<!-- SCENES -->
+  </main>
+  <nav id="controls" aria-label="Controles de presentación">
+    <button id="prev" type="button" aria-label="Anterior" title="Anterior (←)">←</button>
+    <output id="status" aria-live="polite"></output>
+    <button id="next" type="button" aria-label="Siguiente" title="Siguiente (→)">→</button>
+    <button id="replay" type="button" aria-label="Repetir escena" title="Repetir escena (R)">↻</button>
+    <button id="reveal-all" type="button" title="Ver toda la escena (A)">Ver todo</button>
+    <button id="motion-toggle" type="button" title="Pausar movimiento ambiental (M)">Pausa</button>
+    <button id="motion-choice" type="button" title="Alternar movimiento reducido">Reducir</button>
+    <button id="show-index" type="button" title="Índice (I)">Índice</button>
+    <button id="show-notes" type="button" title="Notas (P)">Notas</button>
+    <button id="fullscreen" type="button" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
+  </nav>
+  <div id="blackout" aria-hidden="true"></div>
+  <dialog id="index" aria-labelledby="index-title">
+    <h2 id="index-title">Índice</h2>
+    <form method="dialog"><button aria-label="Cerrar índice">✕</button></form>
+    <div class="index-filters">
+      <label>Capítulo <select id="index-chapter"><option value="">Todos los capítulos</option></select></label>
+      <label>Buscar tema <input type="search" id="index-search" placeholder="Por ejemplo, Snyk o SBOM" autofocus></label>
+    </div>
+    <p id="index-count" role="status"></p>
+    <div id="indexlinks"></div>
+    <p class="keys">← → Pasos · Shift + ← → Láminas · A Ver todo · R Repetir · M Pausa · B Pantalla negra · F Pantalla completa · P Notas</p>
+  </dialog>
+  <dialog id="notes" aria-labelledby="note-title">
+    <h2 id="note-title">Notas</h2>
+    <form method="dialog"><button aria-label="Cerrar notas">✕</button></form>
+    <p id="notetext"></p>
+    <p id="note-next" class="keys"></p>
+  </dialog>
+  <script>/* DECK SCRIPT */</script>
+</body>
+</html>

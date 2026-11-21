@@ -21,6 +21,7 @@ on:
           - platform-engineering-that-teams-actually-adopt
           - asesoria-ia-devops-plataforma
           - muchas-empresas-una-forma-de-operar
+          - ssdlc-seguridad-end-to-end
           - custom
       custom_deck:
         description: Deck slug when target is custom

@@ -1,0 +1,316 @@
+.source { max-width: 1320px; font-size: 13px; line-height: 1.3; }
+.source abbr { text-decoration: none; }
+.gartner-source { font-weight: 700; color: var(--fg); }
+
+.technical-art { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; }
+.technical-art .faint-guide { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 8; }
+.technical-art .ghost-wire { stroke: var(--rule); stroke-width: 2; stroke-dasharray: 5 7; }
+.technical-art .progress-line {
+  stroke: var(--accent); stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 650ms var(--ease);
+}
+.scene[data-step="0"] .progress-line:not([data-from="0"]),
+.scene[data-step="1"] .progress-line:is([data-from="2"], [data-from="3"]),
+.scene[data-step="2"] .progress-line[data-from="3"] { stroke-dashoffset: 1; }
+.crosspoint, .risk-field, .reuse-assembly, .handover-field, .pillar-bridge,
+.compass-field, .timer-field, .cohort-lab, .scan-field, .reservoir-field {
+  position: relative; isolation: isolate;
+}
+:is(.interfaces, .branch, .reuse, .handover, .pillars, .ownership, .score, .measurement, .maturity, .funding) .body {
+  margin-top: 30px;
+}
+
+/* Three entry surfaces converge on the same contract and evidence. */
+.crosspoint {
+  height: 444px;
+  background:
+    radial-gradient(ellipse at 53% 43%, #c5ddd1a8, transparent 56%),
+    radial-gradient(#6e92894a 1px, transparent 1.2px);
+  background-size: 100% 100%, 21px 21px;
+}
+.entry-input { position: absolute; left: 23px; width: 295px; }
+.entry-input .label { margin-bottom: 7px; }
+.portal-input { top: 43px; }
+.terminal-input { top: 168px; }
+.api-input { top: 297px; }
+.portal-preview {
+  position: relative; height: 64px; border: 1px solid #6b9487; border-radius: 6px; padding: 24px 10px 9px;
+  display: flex; align-items: center; justify-content: space-between; background: #f5f2e7;
+}
+.portal-preview i { position: absolute; inset: 0 0 auto; height: 17px; background: #d3e5da; border-bottom: 1px solid #90ae9f; }
+.portal-preview i::before { content: "···"; position: absolute; left: 9px; top: -5px; font-weight: 800; color: #37675e; }
+.portal-preview b { font-size: 19px; }
+.portal-preview span { font: 13px var(--mono); color: var(--accent); }
+.entry-input code { display: block; padding: 13px; font: 16px var(--mono); }
+.terminal-input code { background: var(--piano); color: var(--ivory); border-radius: 6px; box-shadow: 5px 5px #1b433d33; }
+.terminal-input code span { color: var(--surf); }
+.api-input code { background: #d8e7df; border-left: 3px solid var(--accent); color: var(--fg); }
+.api-input code span { color: var(--accent); font-weight: 700; }
+.switch-slot { fill: #b6d2c6; stroke: #719b8c; stroke-width: 2; }
+.switch-top { fill: #1b3430; stroke: #427d6e; stroke-width: 2; }
+.switch-orbit { stroke: #8cb9ac; stroke-dasharray: 2 6; stroke-width: 2; }
+.switch-glyph { stroke: var(--surf); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.switch-led, .entry-packet { fill: var(--accent); }
+.entry-packet { stroke: #bff9eb; stroke-width: 1.5; transform: translate(462px, 111px); transition: transform 630ms var(--ease); }
+.interfaces[data-step="1"] .entry-packet { transform: translate(522px, 204px); }
+.interfaces[data-step="2"] .entry-packet { transform: translate(491px, 270px); }
+.output-slip { fill: #eaf0e4; stroke: #719b8d; stroke-width: 2; }
+.output-slip path:not(:first-child) { fill: none; }
+.output-slip .slip-check { stroke: var(--accent); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.switch-text, .switch-output { position: absolute; text-align: center; }
+.switch-text { left: 526px; width: 440px; top: 354px; }
+.switch-output { left: 1075px; width: 314px; top: 313px; }
+:is(.switch-text, .switch-output) strong { font: 650 34px/.99 var(--display); letter-spacing: -.049em; }
+.switch-output .label { margin-bottom: 8px; }
+:is(.switch-text, .switch-output) p { color: var(--muted); font-size: 19px; margin-top: 4px; }
+
+/* Rotary risk switch with persistent branch traces. */
+.risk-field { height: 458px; background: linear-gradient(90deg, #dedacd92, transparent 77%); }
+.risk-inlet, .risk-track { stroke: #8c9c90; stroke-width: 9; stroke-linecap: round; }
+.risk-track { opacity: .34; }
+.risk-rim { fill: #d6e4d8; stroke: #6d9888; stroke-width: 2; }
+.risk-dial { fill: #203c35; stroke: #3a7063; stroke-width: 3; }
+.risk-markings { stroke: #4e8b7c; stroke-width: 2; }
+.risk-cap { fill: #d6ece1; stroke: #2d6a5a; stroke-width: 2; }
+.risk-needle {
+  fill: var(--surf); transform-origin: 380px 220px; rotate: -37deg;
+  transition: rotate 540ms var(--ease);
+}
+.branch[data-step="1"] .risk-needle { rotate: 0deg; }
+.branch[data-step="2"] .risk-needle { rotate: 37deg; }
+.risk-port { fill: var(--accent); opacity: .35; transition: opacity 440ms; }
+.branch .port-0, .branch:not([data-step="0"]) .port-1, .branch[data-step="2"] .port-2 { opacity: 1; }
+.risk-intent, .risk-profile, .risk-out { position: absolute; }
+.risk-intent { left: 48px; top: 145px; }
+.risk-profile { left: 263px; width: 236px; text-align: center; top: 343px; }
+:is(.risk-intent,.risk-profile) strong { margin-top: 6px; font: 650 28px/1 var(--display); letter-spacing: -.046em; }
+.risk-out { left: 969px; width: 429px; border-bottom: 1px solid var(--rule); padding-bottom: 11px; }
+.risk-out-0 { top: 55px; }
+.risk-out-1 { top: 187px; }
+.risk-out-2 { top: 319px; }
+.risk-out strong { font: 640 33px/1 var(--display); letter-spacing: -.051em; }
+.risk-out p { margin-top: 6px; font-size: 20px; color: var(--muted); }
+
+/* A second rail connects to the same three modules. */
+.reuse-assembly { height: 474px; background: linear-gradient(#e8e4d8 33%, #d7e8dc42 33% 68%, #e8e4d8 68%); }
+.reuse-truss { stroke: #9aa79b; stroke-width: 11; stroke-dasharray: 8 4; }
+.reuse-outline { fill: #d0e2d7; stroke: #7e9b8e; stroke-width: 2; }
+.reuse-pin { stroke: #659088; stroke-width: 3; stroke-dasharray: 5 5; opacity: .5; transition: opacity 450ms var(--ease); }
+.reuse[data-step="1"] .reuse-pin { opacity: 1; }
+.reuse-jack { fill: var(--accent); stroke: #bce7db; stroke-width: 2; }
+.lower-jack { opacity: .35; transition: opacity 440ms; }
+.reuse[data-step="1"] .lower-jack { opacity: 1; }
+.reuse-arrow { stroke: #5c8377; stroke-width: 3; }
+.assembly-label { position: absolute; left: 389px; width: 684px; top: 171px; text-align: center; }
+.assembly-core {
+  position: absolute; left: 416px; top: 207px; width: 608px; min-height: 83px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+}
+.assembly-slot { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.assembly-slot + .assembly-slot { border-left: 1px dashed #93afa1; }
+.assembly-slot .glyph { width: 46px; height: 46px; color: var(--accent); }
+.assembly-slot strong { font: 640 26px/1 var(--display); letter-spacing: -.04em; }
+.assembly-a, .assembly-b, .assembly-end { position: absolute; }
+.assembly-a, .assembly-b { left: 76px; width: 320px; }
+.assembly-a { top: 66px; }
+.assembly-b { top: 348px; }
+.assembly-end { left: 1136px; width: 255px; }
+.assembly-end.a { top: 83px; }
+.assembly-end.b { top: 348px; }
+:is(.assembly-a,.assembly-b,.assembly-end) strong { margin-top: 5px; font: 650 30px/1 var(--display); letter-spacing: -.047em; }
+:is(.assembly-a,.assembly-b) p { margin-top: 4px; color: var(--muted); font-size: 17px; }
+
+/* Send one incident from the service to the owner of the failing capability. */
+.handover-field { height: 476px; background: radial-gradient(ellipse at 50% 45%, #24413a 2%, transparent 70%); }
+.handover-service :is(.service-case,.service-screen) { stroke: #80a698; stroke-width: 2; }
+.service-case { fill: #31554a; }
+.service-screen { fill: #1b322c; }
+.service-details { stroke: #749e90; stroke-width: 2; }
+.service-signal { stroke: var(--surf); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.service-controls { fill: #a4c4ba; }
+.handover-rack { fill: #233b35; stroke: #80a698; stroke-width: 1.9; }
+.handover-rack .rack-back { fill: #2a4b41; }
+.handover-rack .rack-edge, .handover-rack .rack-mark { fill: none; stroke: #73998b; stroke-width: 2; }
+.handover-rack circle { fill: #78a99a; transition: fill 330ms; }
+.handover[data-step="1"] .rack-platform circle { fill: var(--surf); }
+.handover-rail { stroke: #6a8e83; stroke-width: 3; stroke-dasharray: 9 7; }
+.handover-port { fill: #233f37; stroke: #90b2a7; stroke-width: 2; }
+.handover-flag { stroke: #94b9ad; stroke-width: 2; stroke-dasharray: 3 4; }
+.incident-ticket { transform: translate(434px, 201px); transition: transform 720ms var(--ease); }
+.incident-ticket path:first-child { fill: var(--ivory); stroke: var(--surf); stroke-width: 2; }
+.incident-ticket path:last-child { stroke: #43776b; stroke-width: 3; }
+.handover[data-step="1"] .incident-ticket { transform: translate(912px, 201px); }
+.handover-app, .handover-platform, .handover-intent { position: absolute; }
+.handover-app { left: 140px; top: 350px; width: 338px; }
+.handover-platform { left: 1054px; top: 350px; width: 342px; }
+.handover-intent { left: 505px; width: 412px; top: 60px; text-align: center; }
+:is(.handover-app,.handover-platform,.handover-intent) strong { margin-top: 6px; font: 640 34px/1.02 var(--display); letter-spacing: -.055em; }
+:is(.handover-app,.handover-platform) p, .handover-example p { font-size: 19px; margin-top: 7px; color: var(--muted); }
+.handover-example { position: absolute; inset: 280px 470px auto; text-align: center; }
+
+/* The deck of the bridge lights only when all three supports are in place. */
+.pillar-bridge { height: 463px; background: radial-gradient(ellipse at 50% 42%, #c8e0d372, transparent 68%); }
+.bridge-top { fill: #a9cabd; stroke: #5f8b7d; stroke-width: 2; }
+.bridge-rib { fill: #30564a; stroke: #64988a; stroke-width: 2; }
+.bridge-running { stroke: #477e6f; stroke-dasharray: 9 6; stroke-width: 2; }
+.bridge-pillar { opacity: 1; translate: 0 0; transition: translate 645ms var(--ease), opacity 440ms var(--ease); }
+.pillars[data-step="0"] :is(.pillar-1,.pillar-2), .pillars[data-step="1"] .pillar-2 { opacity: .18; translate: 0 25px; }
+.pillar-base { fill: #b2d0c4; stroke: #6d9285; }
+.pillar-face { fill: #d5e5d9; stroke: #508074; stroke-width: 2; }
+.pillar-side, .pillar-joint { fill: #568f80; stroke: #406f63; stroke-width: 1.5; }
+.pillar-braces { stroke: #4c8273; stroke-width: 4; }
+.bridge-check { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; opacity: 0; transition: opacity 420ms ease 430ms; }
+.pillars[data-step="2"] .bridge-check { opacity: 1; }
+.bridge-traveller {
+  fill: var(--surf); stroke: #1d695c; stroke-width: 2; opacity: 0;
+  transform: translateX(0); transition: transform 680ms var(--ease), opacity 400ms;
+}
+.pillars[data-step="2"] .bridge-traveller { transform: translateX(1180px); opacity: 1; }
+.pillar-caption {
+  position: absolute; top: 365px; width: 399px; display: flex; align-items: center;
+  gap: 0 12px; padding-top: 7px; border-top: 1px solid var(--rule);
+}
+.pillar-caption-0 { left: 77px; }
+.pillar-caption-1 { left: 511px; }
+.pillar-caption-2 { left: 945px; }
+.pillar-caption .glyph { width: 36px; height: 36px; color: var(--accent); }
+.pillar-caption strong { font: 650 25px/1 var(--display); letter-spacing: -.048em; }
+.pillar-caption p { margin-left: auto; color: var(--muted); font-size: 18px; text-align: right; }
+
+/* The compass gives one decision right the focus at each advance. */
+.compass-field { height: 458px; background: radial-gradient(ellipse at 50% 50%, #c5e0d479, transparent 47%); }
+.compass-outer { stroke: #91b1a3; stroke-width: 1.6; stroke-dasharray: 4 6; }
+.compass-rim { fill: #d8e7de; stroke: #739b8f; stroke-width: 1.8; }
+.compass-inner { fill: #bdd9cb; stroke: #87a79a; stroke-width: 1.8; }
+.compass-ticks { stroke: #527b6f; stroke-width: 2; }
+.compass-axes { stroke: #6d9285; stroke-dasharray: 4 7; stroke-width: 1.5; }
+.compass-hand { transform-origin: 710px 228px; rotate: -45deg; transition: rotate 660ms var(--ease); }
+.ownership[data-step="1"] .compass-hand { rotate: 45deg; }
+.ownership[data-step="2"] .compass-hand { rotate: 135deg; }
+.ownership[data-step="3"] .compass-hand { rotate: 225deg; }
+.compass-hand path, .compass-sockets { fill: var(--accent); }
+.compass-hand circle { fill: var(--surf); }
+.compass-hub { fill: #233b34; stroke: #76a092; stroke-width: 3; }
+.compass-caption {
+  position: absolute; left: 638px; top: 213px; width: 144px; text-align: center;
+  font: 650 25px/1 var(--display); color: var(--ivory);
+}
+.compass-role { position: absolute; width: 435px; border-top: 1px solid var(--rule); padding-top: 12px; }
+.compass-role :is(strong,p) { max-width: 415px; }
+.compass-role strong { margin-top: 7px; font: 650 31px/1 var(--display); letter-spacing: -.051em; }
+.compass-role p { margin-top: 8px; color: var(--muted); font-size: 20px; }
+.compass-field .role-0, .compass-field .role-3 { left: 38px; text-align: right; }
+.compass-field .role-0 :is(strong,p), .compass-field .role-3 :is(strong,p) { margin-left: auto; }
+.compass-field .role-1, .compass-field .role-2 { left: 947px; }
+.compass-field .role-0, .compass-field .role-1 { top: 57px; }
+.compass-field .role-2, .compass-field .role-3 { top: 291px; }
+
+/* The stopwatch measures the full journey. The two side readings add context. */
+.timer-field { height: 478px; background: radial-gradient(ellipse at 22% 44%, #c6dfd395, transparent 43%); }
+.timer-buttons, .timer-outer { fill: #cee1d6; stroke: #5b8578; stroke-width: 3; }
+.timer-inner { fill: #f0eddf; stroke: #7a9d91; stroke-width: 2; }
+.timer-ticks { stroke: #64867b; stroke-width: 2; }
+.timer-arc { stroke: var(--surf); stroke-width: 9; stroke-linecap: round; stroke-dasharray: 1; }
+.timer-hand { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; transform-origin: 313px 226px; rotate: 116deg; }
+.timer-pin { fill: var(--accent); stroke: #aadccc; stroke-width: 3; }
+.run .timer-hand { animation: timer-sweep 840ms var(--ease) calc(var(--entry, 0ms) + 260ms) both; }
+.run .timer-arc { animation: timer-stroke 840ms var(--ease) calc(var(--entry, 0ms) + 260ms) both; }
+@keyframes timer-sweep { from { rotate: 0deg; } to { rotate: 116deg; } }
+@keyframes timer-stroke { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.guard-posts { stroke: #5c9183; stroke-width: 2; }
+.timer-value, .timer-span, .timer-adoption, .timer-guard { position: absolute; }
+.timer-value { left: 578px; top: 72px; width: 800px; }
+.timer-value strong { margin-top: 10px; font: 650 61px/.95 var(--display); letter-spacing: -.061em; }
+.timer-span { left: 74px; top: 409px; width: 454px; }
+.timer-span p { font-size: 18px; margin-top: 7px; }
+.timer-adoption { left: 658px; top: 245px; width: 665px; }
+.timer-guard { left: 658px; top: 366px; width: 665px; }
+:is(.timer-adoption,.timer-guard) strong { margin-top: 6px; font: 650 34px/1 var(--display); letter-spacing: -.05em; }
+:is(.timer-adoption,.timer-guard) p { margin-top: 5px; color: var(--muted); font-size: 19px; }
+
+/* Identical sampling windows reveal what belongs in a comparison. */
+.cohort-lab { height: 465px; }
+.cohort-band { fill: #e0e3d6; stroke: #a0a69a; stroke-width: 1.5; }
+.cohort-axis { stroke: #738f84; stroke-width: 2; }
+.cohort-ruler-tick { stroke: #93a89d; stroke-width: 1.2; }
+.cohort-window { fill: #9adac67a; stroke: #579787; stroke-width: 1.4; clip-path: inset(0); opacity: 1; transition: clip-path 610ms var(--ease), opacity 380ms; }
+.cohort-sightlines, .cohort-align { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 1; transition: opacity 450ms; }
+.cohort-sightlines { stroke-dasharray: 3 5; }
+.measurement[data-step="0"] .cohort-window { clip-path: inset(0 50%); opacity: 0; }
+.measurement[data-step="0"] :is(.cohort-sightlines, .cohort-align) { opacity: 0; }
+.cohort-sample { fill: #3d7769; stroke: #deeee4; stroke-width: 2; transition: opacity 390ms var(--ease); }
+.sample-1 { fill: #008e80; }
+.measurement:not([data-step="0"]) .cohort-sample.excluded { opacity: .27; }
+.cohort-key { position: absolute; left: 15px; }
+.cohort-key.baseline { top: 95px; }
+.cohort-key.pilot { top: 188px; }
+.cohort-condition { position: absolute; top: 284px; left: 315px; width: 780px; text-align: center; }
+.cohort-condition p { color: var(--muted); font-size: 19px; }
+.cohort-readings {
+  position: absolute; inset: 341px 14px auto; display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 27px; padding-top: 13px; border-top: 1px solid var(--rule);
+}
+.cohort-reading { padding-left: 14px; border-left: 3px solid #84ad9e; }
+.cohort-reading strong { margin-top: 7px; font: 650 32px/1 var(--display); letter-spacing: -.05em; }
+
+/* Scan the route to locate the constraint before choosing an investment. */
+.scan-field {
+  height: 470px;
+  background: linear-gradient(#d7e8de95, transparent 76%), radial-gradient(#6e998c58 1px, transparent 1.2px);
+  background-size: 100% 100%, 22px 22px;
+}
+.scan-tube { fill: none; stroke: #8db2a5; stroke-width: 22; opacity: .61; }
+.scan-signal { fill: none; stroke: #416e62; stroke-width: 2.5; stroke-dasharray: 9 6; }
+.scan-station { fill: #dbe9df; stroke: #729e91; stroke-width: 1.8; }
+.scan-station line, .scan-station path { stroke-dasharray: 4 6; }
+.scan-probe { stroke: var(--accent); stroke-width: 2; transform: translateX(190px); transition: transform 670ms var(--ease); }
+.scan-probe .probe-wash { fill: #00c2b529; stroke: #67ac99; stroke-width: 1; }
+.scan-probe .probe-anchor { fill: var(--accent); }
+.maturity[data-step="1"] .scan-probe { transform: translateX(533px); }
+.maturity[data-step="2"] .scan-probe { transform: translateX(884px); }
+.maturity[data-step="3"] .scan-probe { transform: translateX(1229px); }
+.maturity[data-step="0"] .station-0 circle, .maturity[data-step="1"] .station-1 circle,
+.maturity[data-step="2"] .station-2 circle, .maturity[data-step="3"] .station-3 circle { fill: var(--surf); stroke: var(--accent); }
+.scan-label { position: absolute; top: 366px; width: 323px; padding-top: 8px; border-top: 1px solid var(--rule); }
+.scan-label-0 { left: 28px; }
+.scan-label-1 { left: 371px; }
+.scan-label-2 { left: 721px; }
+.scan-label-3 { left: 1067px; }
+.scan-label .glyph { position: absolute; top: 6px; width: 31px; height: 31px; color: var(--accent); }
+.scan-label strong { margin-left: 39px; min-height: 31px; font: 650 24px/1.11 var(--display); letter-spacing: -.045em; }
+.scan-label p { margin-top: 6px; font-size: 20px; color: var(--muted); }
+
+/* Funding channels illuminate different layers of one operating system. */
+.reservoir-field { height: 470px; background: radial-gradient(ellipse at 29% 61%, #245249a1, transparent 57%); }
+.reservoir-shadow { fill: #101714; }
+.reservoir-base { fill: #31564b; stroke: #67978a; stroke-width: 2; }
+.reservoir-front { fill: url(#reservoir-shell); stroke: #608f81; stroke-width: 1.6; }
+.reservoir-side { fill: #152b25; stroke: #608f81; stroke-width: 1.6; }
+.well-top { fill: #4b776b; stroke: #86b4a5; stroke-width: 2; }
+.well-front { fill: #2b5148; stroke: #74a494; stroke-width: 2; }
+.well-side { fill: #1c352e; stroke: #648e82; stroke-width: 2; }
+.well-lanes { stroke: #6f9f90; stroke-width: 1.4; }
+.reservoir-field :is(.energy-upper,.energy-middle,.energy-lower) {
+  stroke: var(--surf); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 7px #00c2b56b); opacity: 1; transition: opacity 500ms var(--ease);
+}
+.funding[data-step="0"] :is(.energy-middle,.energy-lower), .funding[data-step="1"] .energy-lower { opacity: .12; }
+.funding-port { fill: var(--accent); opacity: .25; transition: opacity 400ms; }
+.funding .fund-port-0, .funding:not([data-step="0"]) .fund-port-1, .funding[data-step="2"] .fund-port-2 { opacity: 1; }
+.funding-label { position: absolute; left: 1031px; width: 365px; }
+.fund-proof { top: 54px; }
+.fund-core { top: 194px; }
+.fund-meter { top: 333px; }
+.funding-label strong { margin-top: 6px; font: 650 43px/.96 var(--display); letter-spacing: -.054em; }
+.funding-label p { margin-top: 7px; color: var(--muted); font-size: 20px; }
+
+@media print {
+  .technical-art .progress-line { stroke-dashoffset: 0 !important; }
+  .scan-probe { display: none; }
+  .cohort-window { clip-path: none !important; opacity: 1 !important; }
+  .cohort-sightlines, .cohort-align, .bridge-pillar, .bridge-check, .bridge-traveller, .funding-port,
+  .reservoir-field :is(.energy-upper,.energy-middle,.energy-lower) { opacity: 1 !important; }
+  .bridge-pillar { translate: none !important; }
+  .bridge-traveller { transform: translateX(1180px) !important; }
+  .incident-ticket { transform: translate(912px, 201px) !important; }
+}

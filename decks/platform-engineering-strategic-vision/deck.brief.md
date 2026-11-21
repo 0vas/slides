@@ -14,7 +14,7 @@ Crear una visión estratégica de Platform Engineering a partir de las doce fuen
 | Resultado | Decidir si patrocinar un piloto con un equipo, un journey y criterios de salida |
 | Temas | Portafolio de journeys, golden paths y abstracción, arquitectura por planos, personas/procesos/tecnología, gobierno, medición, eficiencia e IA |
 | Idioma | Español, con el título en inglés |
-| Activos | Doce PDFs de Gartner, referencia de paleta y perfil compartido de Oscar |
+| Activos | Doce PDFs de Gartner, extracto del modelo de madurez, gráfico Hype Cycle de mayo de 2026, paleta y perfil compartido de Oscar |
 | Entregable | Presentación HTML autónoma en el repositorio |
 | Slug | `platform-engineering-strategic-vision` |
 
@@ -33,7 +33,7 @@ Crear una visión estratégica de Platform Engineering a partir de las doce fuen
 - La charla dura unos 30 minutos y culmina en una propuesta de inversión para un público de liderazgo.
 - El primer servicio HTTP interno es ficticio. El piloto y las señales de medición son una propuesta.
 - Las tres capturas aportan la metáfora, los pilares y una arquitectura de referencia. El 80/20 y USD 100 mil son supuestos para un escenario de capacidad. Las cifras de la tabla de la captura quedan como preguntas de validación para el piloto.
-- Las figuras son interpretaciones originales. El pie de cada lámina identifica la fuente Gartner, con título abreviado, número de documento y páginas donde corresponde.
+- Las figuras son interpretaciones originales. Las referencias quedan en dos láminas al final, después del cierre. Sus notas relacionan cada documento con las láminas y páginas consultadas. El radar aplica las nueve filas de la Tabla 1 y usa valores ilustrativos. El Hype Cycle muestra una selección cualitativa de tecnologías del gráfico de mayo de 2026.
 
 ## Narrative plan
 
@@ -43,10 +43,10 @@ Crear una visión estratégica de Platform Engineering a partir de las doce fuen
 | Journey | Observar la fricción, pavimentar el recorrido y explicar la abstracción | 5 |
 | Capacidades | Definir el contrato, la arquitectura, las interfaces y las variantes | 6 |
 | Operación | Conectar pilares, asignar responsabilidades y construir un ciclo de adopción | 4 |
-| Evidencia e inversión | Medir el resultado, contrastarlo y estimar capacidad recuperable | 5 |
-| IA y horizonte | Reutilizar los contratos con agentes y priorizar experimentos | 2 |
+| Evidencia e inversión | Medir el resultado, contrastar línea base y meta de madurez y estimar capacidad recuperable | 6 |
+| IA y horizonte | Reutilizar contratos con agentes, leer el Hype Cycle y priorizar inversiones | 3 |
 | Decisión | Acordar un piloto de 90 días y revisar su continuidad | 2 |
-| Fuentes y cierre | Referencias y decisión solicitada | 3 |
+| Cierre y referencias | Decisión solicitada y referencias vinculadas en anexo | 3 |
 
 ## Asset and component plan
 

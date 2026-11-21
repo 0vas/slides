@@ -1,22 +1,24 @@
 import { adoptionLoop, agentGate, capacityModel, icon, illustratedTiles, kitchen, systemsBoard } from './illustrations.mjs';
 import {
   cohortScope, decisionCompass, entryPoints, fundingReservoir, incidentHandover,
-  journeyTimer, maturityScanner, pillarBridge, reuseAssembly, riskSwitch
+  hypeLandscape, journeyTimer, maturityRadar, maturitySteps, pillarBridge,
+  portfolioDecisions, reuseAssembly, riskSwitch
 } from './strategy-art.mjs';
 
 const library = {
-  principles: ['Five Principles to Achieve Platform Engineering Success', 'G00839599', 2025, 'Five Principles'],
-  trends: ['Strategic Trends in Platform Engineering, 2025', 'G00833890', 2025, 'Strategic Trends'],
-  start: ['Start and Scale Platform Engineering for Measurable Impact', 'G00840435', 2026, 'Start and Scale'],
-  maturity: ['Gartner Platform Engineering Maturity Model', 'G00840745', 2026, 'Maturity Model'],
-  roles: ['A CIO’s Guide to Platform Teams and Roles', 'G00832142', 2025, 'Platform Teams and Roles'],
-  infra: ['How to Develop Infrastructure Platform Engineering Teams', 'G00798400', 2025, 'Infrastructure Platform Teams'],
-  run: ['Enable “You Build It, You Run It” With Platform Engineering', 'G00819769', 2025, 'You Build It, You Run It'],
-  cases: ['How Leading CIOs Implement Platform Engineering', 'G00813892', '2024 · caso histórico', 'How Leading CIOs Implement PE'],
-  fund: ['How to Fund Platforms and Platform Engineering', 'G00817889', 2025, 'How to Fund Platforms'],
-  cio: ['Tool: CIO Guide to Unlocking Platform Engineering’s Value', 'G00841079', 2025, 'CIO Guide'],
-  agents: ['Agentic AI Readiness Requires Platform Engineering', 'G00854107', 2026, 'Agentic AI Readiness'],
-  hype: ['Hype Cycle for Platform Engineering, 2026', 'G00846917', 2026, 'Hype Cycle 2026']
+  principles: ['Five Principles to Achieve Platform Engineering Success', 'G00839599', 2025, 'https://www.gartner.com/en/documents/7155330'],
+  trends: ['Strategic Trends in Platform Engineering, 2025', 'G00833890', 2025, 'https://www.gartner.com/en/documents/6809534'],
+  start: ['Start and Scale Platform Engineering for Measurable Impact', 'G00840435', 2026, 'https://www.gartner.com/en/documents/7319230'],
+  maturity: ['Gartner Platform Engineering Maturity Model', 'G00840745', 2026, 'https://www.gartner.com/en/documents/7348030'],
+  roles: ['A CIO’s Guide to Platform Teams and Roles', 'G00832142', 2025, 'https://www.gartner.com/en/documents/7184330'],
+  infra: ['How to Develop Infrastructure Platform Engineering Teams', 'G00798400', 2025, 'https://www.gartner.com/en/documents/5352063'],
+  run: ['Enable “You Build It, You Run It” With Platform Engineering', 'G00819769', 2025, 'https://www.gartner.com/en/documents/7075598'],
+  cases: ['How Leading CIOs Implement Platform Engineering', 'G00813892', '2024 · caso histórico', 'https://www.gartner.com/en/documents/5514795'],
+  fund: ['How to Fund Platforms and Platform Engineering', 'G00817889', 2025, 'https://www.gartner.com/en/documents/7218230'],
+  cio: ['Tool: CIO Guide to Unlocking Platform Engineering’s Value', 'G00841079', 2025, 'https://www.gartner.com/en/documents/6988166'],
+  agents: ['Agentic AI Readiness Requires Platform Engineering', 'G00854107', 2026, 'https://www.gartner.com/en/documents/7963773'],
+  hype: ['Hype Cycle for Platform Engineering, 2026', 'G00846917', 2026, 'https://www.gartner.com/en/documents/7856981'],
+  dora: ['DORA’s software delivery performance metrics', 'DORA', 'Guía', 'https://dora.dev/guides/dora-metrics/']
 };
 
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
@@ -28,11 +30,7 @@ const heading = (a, b) => `<span>${a}</span><span>${b}</span>`;
 const paragraph = text => `<p>${text}</p>`;
 const titleDetail = (name, detail) => `<strong>${name}</strong><p>${detail}</p>`;
 const callout = (n, text) => reveal(n, paragraph(text), 'callout');
-const source = (...entries) => '<span class="gartner-source">Gartner</span> · ' + entries.map(([key, pages]) => {
-  const [title, id, , short] = library[key];
-  return `<abbr title="${esc(title)}">${esc(short)}</abbr> [${id}], pp. ${esc(pages)}`;
-}).join(' · ');
-const bibliographySource = details => '<span class="gartner-source">Gartner</span> · ' + details;
+const source = (...entries) => entries;
 const diagrams = {
   cover: 'M32 556 H144 Q179 556 179 521 V408 Q179 372 215 372 H320 Q366 372 366 326 V254 Q366 215 405 215 H500 Q534 215 534 181 V102 Q534 62 574 62 H684',
   branch: 'M56 112 H131 Q164 112 164 145 V228 Q164 260 196 260 H304 Q344 260 344 220 V130 Q344 96 378 96 H576',
@@ -142,17 +140,35 @@ function chapterQuote(title, detail, consequence) {
     box('decision-note', kicker('Decisión estratégica') + paragraph(consequence)));
 }
 
-function references(keys) {
-  return box('references', keys.map(key => {
-    const [title, id, year] = library[key];
-    return `<article>${kicker(id + ' / ' + year)}<p>${esc(title)}</p></article>`;
+function slideRanges(numbers) {
+  const spans = [];
+  for (const number of numbers) {
+    const last = spans.at(-1);
+    if (last && number === last[1] + 1) last[1] = number;
+    else spans.push([number,number]);
+  }
+  return spans.map(([first,last])=>first===last?String(first):first+'–'+last).join(', ');
+}
+
+function references(keys, slides) {
+  const usage = key => slides.flatMap((slide,i) => slide.citations
+    .filter(([ref])=>ref===key).map(([,pages])=>({ slide: i+1, pages })));
+  const body = box('references', keys.map(key => {
+    const [title, id, year, url] = library[key];
+    const numbers = usage(key).map(({slide})=>slide);
+    return `<article>${kicker(id + ' / ' + year)}<p>${anchor(url,title)}</p><small>${numbers.length===1?'Lámina':'Láminas'} ${slideRanges(numbers)}</small></article>`;
   }).join(''));
+  const note = keys.map(key => {
+    const [,id] = library[key];
+    return id + ' · ' + usage(key).map(({slide,pages})=>`lámina ${slide}${pages?', pp. '+pages:''}`).join(', ');
+  }).join('. ');
+  return { body, note };
 }
 
 const chapters = ['Apertura', '01 / Del journey al golden path', '02 / Capacidades', '03 / Modelo de operación', '04 / Evidencia e inversión', '05 / IA y horizonte', '06 / Decisión', 'Fuentes'];
 
-function scene(title, heading, chapter, tag, theme, layout, steps, body, note, citation = '', continuity = '') {
-  return { title, heading, chapter: chapters[chapter], tag, theme, layout, steps, body, note, source: citation, continuity };
+function scene(title, heading, chapter, tag, theme, layout, steps, body, note, citations = [], continuity = '') {
+  return { title, heading, chapter: chapters[chapter], tag, theme, layout, steps, body, note, citations, continuity };
 }
 
 function strategyScenes() {
@@ -180,11 +196,15 @@ function strategyScenes() {
     scene('Indicadores para contrastar el piloto', 'Compara <em>cohortes equivalentes.</em>', 4, 'Línea base → Piloto', 'light', 'measurement', 2,
       cohortScope(),
       'La referencia del expositor propone lead time E2E, onboarding, cobertura SLI/SLO, recuperación, tasa de cambios fallidos, reúso y automatización. Distingue lead time de cambios (commit a producción, según DORA) del tiempo E2E del journey. Onboarding es tiempo al primer resultado autónomo; cobertura SLO es servicios elegibles con SLO y SLI monitorizado; reúso y automatización requieren denominadores acordados. DORA también mide frecuencia de despliegue, recuperación de despliegues fallidos y retrabajo. El estudio de 2024 reportó asociaciones en direcciones distintas para productividad, throughput y estabilidad. Compara tu línea base con el piloto bajo condiciones comparables. Los rangos de la captura no son metas ni benchmarks verificados.',
-      source(['start','2–6']) + ' · ' + anchor('https://dora.dev/guides/dora-metrics/', 'DORA · Definiciones')),
+      source(['start','2–6'], ['dora'])),
 
-    scene('Madurez orientada al próximo resultado', 'Sube la madurez <em>donde hay fricción.</em>', 4, 'Diagnóstico / ejemplo de brechas', 'light', 'maturity', 3,
-      maturityScanner(),
-      'Inspirado por las dimensiones del modelo Gartner. Es una guía para tomar decisiones, no una autoevaluación ni una copia de su matriz. Identifica cuál brecha frena el resultado actual, cuál debe cerrarse ahora y qué quedará en observación. Recalibra tras el piloto. Usa niveles y dimensiones del modelo original si se requiere una evaluación formal.', source(['maturity','4–8'])),
+    scene('Cinco niveles de madurez', 'Cinco niveles. <em>Distintas metas.</em>', 4, 'Diagnóstico / madurez por capacidad', 'light', 'maturity-levels', 3,
+      maturitySteps(),
+      'El modelo de Gartner va de ad hoc a continuo. La lámina resume las señales que permiten reconocer la progresión. El nivel inicial puede ser una plataforma mínima viable, o TVP, que resuelve una fricción de punta a punta. En el fundacional hay dueño, autoservicio y rutas soportadas. En el avanzado, el uso y la demanda informan las decisiones. En el continuo, se ajusta con datos de experiencia y valor de negocio. Define un objetivo distinto para cada capacidad y justifica con evidencia la inversión necesaria.', source(['maturity','3–7, 11–12']), 'diagnostico'),
+
+    scene('Radar de madurez del primer servicio', 'Invierte en <em>la brecha que frena el journey.</em>', 4, 'Diagnóstico / ejemplo de línea base y meta', 'light', 'maturity', 2,
+      maturityRadar(),
+      'Ejemplo ficticio. Puntúa la línea base y la meta de las nueve filas que enumera la Tabla 1 de Gartner, aunque el resumen indica ocho. Usa evidencia de dueño, uso, autonomía, habilidades, controles y señales de resultado. En el caso propuesto, las rutas pasan de 1 a 3 con un golden path gobernado y la experiencia de 2 a 3 con autoservicio. Adopción pasa de 1 a 2 al pilotear con equipos elegibles. Mantén IA en 1 durante esta inversión y reevalúa tras el día 90. Los números son un ejemplo y pertenecen a la escala ordinal del modelo.', source(['maturity','4–7, 11–12']), 'diagnostico'),
 
     scene('Financiar el ciclo de vida', 'La ruta tiene <em>un costo de operación.</em>', 4, 'Inversión / opciones de financiación', 'dark', 'funding', 2,
       fundingReservoir(),
@@ -193,19 +213,19 @@ function strategyScenes() {
     scene('Capacidad recuperable', '¿Cuánta capacidad <em>podemos recuperar?</em>', 4, 'Escenario ilustrativo / supuestos del ejemplo', 'dark', 'capacity', 2,
       capacityModel(),
       'Supuestos tomados de la referencia del expositor: un FTE dedicado por squad a USD 100.000 al año; 80% del tiempo candidato a automatizar y 20% de coordinación, reuniones y actividades puntuales. El máximo teórico bruto es USD 80.000 anuales por squad elegible, bajo captura total y sin costos. Para estimar capacidad equivalente: costo base × fracción candidata × fracción de capacidad efectivamente recuperada × adopción. Solo si disminuye gasto real hay un ahorro contable. Considera coste de plataforma, soporte, migración y demanda. No extrapoles la proporción 80/20 sin muestrear trabajo real ni presupuestes reducciones de plantilla con esta hipótesis.',
-      'Supuestos del ejemplo · ' + source(['fund','3–8'])),
+      source(['fund','3–8'])),
 
     scene('Capacidades para agentes', 'Humanos y agentes. <em>Controles comunes.</em>', 5, 'IA agéntica / superficie de ejecución', 'dark', 'agents', 2,
       agentGate(),
       'Antes de delegar acciones a agentes, expón una interfaz declarada, contexto de servicio y precondiciones. La plataforma controla identidad, permisos, cuota y registro. Diseña acciones idempotentes, fallas comprensibles y devolución de control a humanos. Primer experimento propuesto: consultar el estado o preparar un cambio que un humano aprueba. Amplía alcance sólo con evidencia y riesgo acotado.', source(['agents','3–8'], ['hype','2–5'])),
 
-    scene('Invertir, experimentar, observar', 'Prioriza por <em>problema y evidencia.</em>', 5, 'Horizonte / decisiones reversibles', 'light', 'horizon', 2,
-      illustratedTiles([
-        [0, 'layers', 'Ahora', 'Construir base', 'Autoservicio, políticas y telemetría.'],
-        [1, 'chip', 'Siguiente', 'Probar con límites', 'Un agente prepara un cambio.'],
-        [2, 'target', 'Después', 'Ampliar con evidencia', 'Controles y reversión probados.']
-      ]),
-      'El Hype Cycle de Gartner informa sobre expectativas y disponibilidad. La prioridad local sale de problemas, preparación, riesgo y valor observables. Separa inversión de base de experimentos reversibles. Para IA mide también ejecución rechazada, intervención humana, costo por resultado verificable y fallos recuperables.', source(['hype','2–6'], ['agents','3–8'])),
+    scene('Hype Cycle de Platform Engineering · mayo 2026', 'Lee el mercado <em>por fase de adopción.</em>', 5, 'Horizonte / Hype Cycle de mayo de 2026', 'dark', 'hype', 3,
+      hypeLandscape(),
+      'Lectura cualitativa de la figura de Gartner. En innovación emergente aparecen eval-driven development, AI Gateways, GenAI model routers y spec-driven development. En el pico se ubican MCP, gobernanza de IA y plataformas de información sobre productividad. En el valle figuran DevEx, GitOps y service mesh. En la pendiente aparecen seguridad de la cadena de software, IDP y Platform Engineering. La meseta se muestra como fase conceptual. Los puntos indican fase de mercado, y las posiciones son aproximadas. Evalúa después beneficios, madurez, costo y preparación propios antes de financiar una capacidad.', source(['hype','2–5']), 'horizonte'),
+
+    scene('Invertir, experimentar, observar', 'Convierte el horizonte <em>en decisiones.</em>', 5, 'Portafolio / propuesta para el piloto', 'light', 'horizon', 2,
+      portfolioDecisions(),
+      'Aplicación propuesta al piloto. Consolida IDP y seguridad de la cadena de software alrededor del primer servicio. Si surge un caso real de IA, pilota AI Gateway y evaluaciones en un flujo acotado. Para agentes, routers y MCP, acordar identidad, permisos, registros, costo por resultado y salida segura antes de ampliar. La decisión local combina demanda, preparación, exposición y resultados observables. El Hype Cycle aporta contexto de mercado a la conversación.', source(['hype','2–6'], ['agents','3–8'], ['maturity','5–8']), 'horizonte'),
 
     scene('Piloto de 90 días', 'Un journey. <em>Noventa días.</em>', 6, 'Propuesta / piloto financiable', 'light', 'roadmap', 2,
       milestones([
@@ -213,7 +233,7 @@ function strategyScenes() {
         [1, 'Días 31–60', 'Pavimentar', 'Una ruta completa.', 'route'],
         [2, 'Días 61–90', 'Verificar', 'Uso, control y costo.', 'target']
       ]) + callout(2, 'Patrocinio, dueño de producto y equipo piloto desde el día uno.'),
-      'El calendario es una propuesta para decidir. Días 1–30: seguir casos reales, acordar medición, criterio de elegibilidad y salida segura. Días 31–60: integrar capacidades existentes, desplegar un caso real elegible y ensayar reversión y escalamiento. Días 61–90: sustituir soporte manual repetido, revisar abandonos y costo, y validar con un segundo equipo si el tamaño del piloto lo permite.', source(['start','2–8'], ['principles','7–8'])),
+      'El calendario es una propuesta para decidir. Días 1–30: seguir casos reales, acordar medición, criterio de elegibilidad y salida segura. Días 31–60: construir una TVP con capacidades que ya existen, resolver una fricción de punta a punta con un equipo piloto y ensayar reversión y escalamiento. Días 61–90: sustituir soporte manual repetido, revisar abandonos y costo, y validar con un segundo equipo si el tamaño del piloto lo permite.', source(['start','2–8'], ['principles','7–8'])),
 
     scene('Puerta de decisión al día 90', 'Decide con <em>evidencia del piloto.</em>', 6, 'Continuidad de inversión', 'light', 'decision', 2,
       illustratedTiles([
@@ -226,14 +246,14 @@ function strategyScenes() {
 }
 
 export function storyboard(speaker, qr, photo) {
-  return [
+  const content = [
     scene('Platform Engineering Strategic Vision', heading('Platform', 'Engineering <em>Strategic Vision</em>'), 0, 'Visión estratégica', 'dark', 'cover', 0,
       atlas() + box('cover-deck', paragraph('Cómo convertir un journey crítico en una ruta segura que toda la organización pueda reutilizar.') + kicker(esc(speaker.name))),
       'Abre con una pregunta: ¿cuánto tarda un equipo nuevo en poner su primer servicio en producción con dueño, evidencia y alertas? Lo que sigue es una propuesta estratégica. El servicio HTTP y sus señales son ilustrativos.', source(['principles','3–5'], ['cio','1–3'])),
 
     scene(speaker.name, heading('Oscar', 'Lobaton Salas<em>.</em>'), 0, 'Quién está detrás de esta conversación', 'light', 'profile', 0,
       profile(speaker, qr, photo),
-      'Presentación breve. Soy Oscar Lobaton Salas, SRE FDE en Cobre. Mi trabajo cruza confiabilidad, plataformas y experiencia de ingeniería. Las tarjetas rotan automáticamente. Usa M para pausar; el QR abre mi perfil de LinkedIn.', 'Marco de la charla · ' + source(['principles','3–5'])),
+      'Presentación breve. Soy Oscar Lobaton Salas, SRE FDE en Cobre. Mi trabajo cruza confiabilidad, plataformas y experiencia de ingeniería. Las tarjetas rotan automáticamente. Usa M para pausar; el QR abre mi perfil de LinkedIn.', source(['principles','3–5'])),
 
     scene('La visión', 'Entregar con autonomía.<br><em>Operar con confianza.</em>', 1, 'Mandato de la plataforma', 'dark', 'statement', 0,
       chapterQuote('Un camino soportado para cada resultado frecuente.', 'El equipo toma decisiones de producto. La plataforma hace repetibles las decisiones comunes de entrega y operación.', 'Empezar por un segmento y un journey completos.'),
@@ -290,14 +310,18 @@ export function storyboard(speaker, qr, photo) {
       'El rollback agrega la capacidad específica de recuperación, pero puede consumir los contratos existentes de identidad, política y evidencia. Si el segundo journey requiere clonar toda la plataforma, examina límites e interfaces. El caso histórico de Cepsa ilustra el valor de organizar capacidades compartidas para recombinarlas. Seleccionar el segundo journey depende de demanda y evidencia local.', source(['cases','6–10'], ['principles','7–8'])),
 
     ...strategyScenes(),
-    scene('Fuentes sobre journeys y operación', 'Fuentes <em>de diseño y operación.</em>', 7, 'Investigación / Gartner', 'light', 'bibliography', 0,
-      references(['principles','trends','roles','infra','run','cases']),
-      'Fuentes entregadas para esta presentación. Los mapas y ejemplos se han elaborado para esta charla. El documento G00813892 se utiliza como caso histórico.', bibliographySource('Seis documentos sobre diseño, equipos y operación, 2024–2025')),
-    scene('Fuentes sobre inversión e IA', 'Fuentes <em>de inversión y futuro.</em>', 7, 'Investigación / Gartner', 'light', 'bibliography', 0,
-      references(['start','maturity','fund','cio','agents','hype']),
-      'Usa el índice para volver a cualquier lámina. Las láminas de contenido muestran el número de documento y las páginas consultadas.', bibliographySource('Seis documentos sobre medición, inversión e IA, 2025–2026')),
     scene('Lo que debemos poder repetir', 'Que el siguiente equipo<br><em>ya tenga camino.</em>', 6, 'Decisión solicitada', 'dark', 'cover closing', 0,
       atlas() + box('cover-deck', paragraph('Patrocinar un piloto de 90 días para llevar un servicio a producción con dueño, evidencia y capacidad de operar.') + kicker(esc(speaker.name))),
       'Cierra retomando la pregunta inicial. Pide nombrar un sponsor, asignar a un dueño del piloto y confirmar un equipo de producto elegible. El día 90 se revisan resultado, guardrails y costo para decidir si se escala, ajusta o detiene.', source(['start','2–8'], ['cio','1–3']))
   ];
+  const groups = [
+    ['Diseño y operación','de diseño y operación',['principles','trends','roles','infra','run','cases']],
+    ['Medición, inversión e IA','de medición, inversión e IA',['start','maturity','fund','cio','agents','hype','dora']]
+  ];
+  const appendix = groups.map(([title, emphasis, keys])=>{
+    const {body,note} = references(keys,content);
+    return scene('Referencias · ' + title, 'Referencias <em>' + emphasis + '.</em>', 7,
+      'Anexo / investigación y guías', 'light', 'bibliography', 0, body, note);
+  });
+  return [...content,...appendix];
 }

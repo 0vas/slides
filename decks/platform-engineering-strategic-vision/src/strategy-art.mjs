@@ -221,32 +221,6 @@ export function cohortScope() {
   </figure>`;
 }
 
-export function maturityScanner() {
-  const points = [
-    [190,'search','Abandono','Mejorar descubrimiento.'],
-    [533,'clock','Colas en entornos','Mostrar el estado de provisión.'],
-    [884,'flag','Incidentes sin dueño','Practicar el escalamiento.'],
-    [1229,'pulse','Resultado invisible','Correlacionar eventos.']
-  ];
-  const conduit = 'M45 225H130Q160 225 179 203L240 124H465Q514 124 533 178L569 259Q584 291 626 291H806Q860 291 884 235L921 158Q936 128 975 128H1154Q1195 128 1229 192L1260 250Q1275 280 1305 280H1375';
-  return `<figure class="scan-field">
-    <svg class="technical-art" viewBox="0 0 1420 470" aria-hidden="true">
-      <path class="faint-guide" d="M32 109h1350M32 332h1350"/>
-      <path class="scan-tube" d="${conduit}"/>
-      <path class="scan-signal" d="${conduit}"/>
-      ${points.map(([x],i) => `<g class="scan-station station-${i}" transform="translate(${x} 0)">
-        <line y1="62" y2="350"/><circle cy="${[191,178,235,192][i]}" r="13"/><path d="M-8 63h16m-9 287h18"/>
-      </g>`).join('')}
-      <g class="scan-probe">
-        <path class="probe-wash" d="M-26 74h52v260h-52z"/>
-        <path d="M0 74v260M-28 73h56m-56 261h56"/>
-        <path class="probe-anchor" d="M-14 45h28v19L0 75l-14-11z"/>
-      </g>
-    </svg>
-    ${points.map(([,glyph,title,text],i) => show(i,'scan-label scan-label-'+i,icon(glyph) + details(title,text))).join('')}
-  </figure>`;
-}
-
 export function fundingReservoir() {
   const circuits = [
     'M459 117H759L899 84H1007',
@@ -288,4 +262,105 @@ export function fundingReservoir() {
     ${show(1,'funding-label fund-core',tag('Producto') + details('Sostener','Soporte, seguridad y evolución.'))}
     ${show(2,'funding-label fund-meter',tag('Consumo') + details('Atribuir','Costo variable por servicio.'))}
   </figure>`;
+}
+
+export function maturitySteps() {
+  const levels = [
+    ['Ad hoc', 'Soluciones aisladas por equipo.'],
+    ['Inicial', 'Una plataforma mínima resuelve una fricción.'],
+    ['Fundacional', 'Dueño, autoservicio y una ruta gobernada.'],
+    ['Avanzado', 'La demanda y el uso orientan la evolución.'],
+    ['Continuo', 'Se itera con datos de experiencia y valor.']
+  ];
+  const stair = 'M20 306H292V252H569V198H846V144H1123V90H1399';
+  return `<figure class="maturity-staircase">
+    <svg class="technical-art" viewBox="0 0 1420 460" aria-hidden="true">
+      <path class="stair-guide" d="M20 64h1379m-1379 362h1379"/>
+      <path class="stair-fill" d="${stair}v326H20z"/>
+      <path class="stair-edge" d="${stair}"/>
+      ${draw('M20 306H292',0)}${draw('M292 306v-54H569v-54H846',1)}
+      ${draw('M846 198v-54H1123',2)}${draw('M1123 144V90H1399',3)}
+    </svg>
+    <div class="stair-levels">${levels.map(([name, evidence],i) => show([0,1,1,2,3][i],'stair-level',
+      tag('Nivel ' + (i+1)) + details(name,evidence))).join('')}</div>
+    <figcaption>Busca evidencia de cada capacidad y elige el nivel que necesita el objetivo.</figcaption>
+  </figure>`;
+}
+
+export function maturityRadar() {
+  const axes = [
+    ['Modelo operativo', 2, 3], ['Producto', 2, 3], ['Capacidades', 3, 3],
+    ['Experiencia', 2, 3], ['Adopción', 1, 2], ['Habilidades', 2, 2],
+    ['Rutas curadas', 1, 3], ['IA en plataforma', 1, 1], ['Métricas', 2, 3]
+  ];
+  const xy = (i, level) => {
+    const angle = i * 2 * Math.PI / axes.length - Math.PI / 2;
+    return [414 + 31 * level * Math.cos(angle), 235 + 31 * level * Math.sin(angle)].map(n => n.toFixed(1));
+  };
+  const polygon = values => values.map((level,i) => xy(i,level).join(',')).join(' ');
+  return `<figure class="maturity-radar">
+    <svg class="technical-art" viewBox="0 0 1420 481" role="img" aria-label="${axes.map(([name,actual,target]) => name + ' ' + actual + ' a ' + target).join('; ')}">
+      ${[1,2,3,4,5].map(level=>`<polygon class="radar-ring" points="${polygon(axes.map(()=>level))}"/>`).join('')}
+      ${axes.map((_,i)=>{const [x,y] = xy(i,5);return `<path class="radar-spoke" d="M414 235L${x} ${y}"/>`;}).join('')}
+      <polygon class="radar-current" points="${polygon(axes.map(axis=>axis[1]))}"/>
+      <polygon class="radar-target" points="${polygon(axes.map(axis=>axis[2]))}"/>
+      ${axes.map(([name],i)=>{
+        const [x,y]=xy(i,5.55);
+        const anchor=i===0?'middle':i<5?'start':'end';
+        return `<text class="radar-label" x="${x}" y="${y}" text-anchor="${anchor}">${name}</text>`;
+      }).join('')}
+    </svg>
+    <div class="radar-key"><span>Línea base</span>${show(1,'radar-target-key','Meta del piloto')}<small>Escala 1–5</small></div>
+    <div class="radar-decisions">
+      ${show(0,'radar-decision',tag('Caso ilustrativo · primer servicio') + details('Puntúa con evidencia','Usa entrevistas, uso real y resultados del journey.'))}
+      ${show(1,'radar-decision',tag('Brecha prioritaria · 1 → 3') + details('Pavimenta una ruta','Entrega autoservicio con políticas y un dueño.'))}
+      ${show(2,'radar-decision',tag('Decisión de alcance · 1 → 1') + details('IA queda en observación','Reevalúa el perfil con los resultados del piloto.'))}
+    </div>
+  </figure>`;
+}
+
+export function hypeLandscape() {
+  const phases = [['Innovación','emergente'],['Pico de','expectativas'],['Valle de','desilusión'],['Pendiente de','aprendizaje'],['Meseta de','productividad']];
+  const gaps = [58,340,548,852,1166,1380];
+  const curve = 'M65 365C143 364 201 185 270 103S349 45 407 51C501 55 514 106 548 138C599 185 592 289 651 324S758 355 852 326C951 300 993 253 1069 215S1210 166 1378 163';
+  const tech = [
+    [0, [171,264], [202,295], [195,290], 'Eval-driven development'],
+    [0, [266,108], [75,143], [195,137], 'AI Gateways'],
+    [1, [407,51], [389,24], [401,29], 'MCP'],
+    [1, [482,71], [323,113], [454,94], 'Gobernanza de IA'],
+    [2, [558,149], [594,141], [589,137], 'DevEx'],
+    [2, [586,204], [639,197], [632,193], 'GitOps'],
+    [2, [823,335], [648,285], [777,287], 'Service mesh'],
+    [3, [914,304], [934,361], [928,357], 'Seguridad de la cadena de software'],
+    [3, [961,280], [996,313], [989,309], 'IDP'],
+    [3, [1006,252], [1044,266], [1038,262], 'Platform Engineering']
+  ];
+  return `<figure class="hype-landscape">
+    <svg class="technical-art" viewBox="0 0 1420 465" role="img" aria-label="Selección cualitativa de tecnologías por fase del Hype Cycle de Gartner, mayo de 2026">
+      ${phases.map((_,i)=>`<rect class="hype-band band-${i}" x="${gaps[i]}" y="46" width="${gaps[i+1]-gaps[i]}" height="331"/>`).join('')}
+      <path class="hype-axis" d="M58 33v344H1380"/>
+      <path class="hype-curve" d="${curve}"/>
+      <text class="hype-axis-label" x="25" y="212" transform="rotate(-90 25 212)" text-anchor="middle">EXPECTATIVAS</text>
+      ${tech.map(([step,[x,y],[tx,ty],[endX,endY],name])=>`<g class="hype-tech" data-hype-step="${step}">
+          <path d="M${x} ${y}L${endX} ${endY}"/><circle cx="${x}" cy="${y}" r="6"/>
+          <text x="${tx}" y="${ty}">${name}</text>
+        </g>`).join('')}
+      ${phases.map(([a,b],i)=>{
+        const x=(gaps[i]+gaps[i+1])/2;
+        return `<text class="hype-phase" x="${x}" y="402" text-anchor="middle"><tspan x="${x}">${a}</tspan><tspan x="${x}" dy="20">${b}</tspan></text>`;
+      }).join('')}
+    </svg>
+    <figcaption><span>Selección por fase · mayo de 2026</span><span>Tiempo →</span></figcaption>
+  </figure>`;
+}
+
+export function portfolioDecisions() {
+  const decisions=[
+    ['Consolidar','IDP y cadena de software','Integra aprovisionamiento, evidencia y despliegue en el primer golden path.','Tiempo al primer despliegue y controles verificados.'],
+    ['Probar','AI Gateway y evaluaciones','Pilota un flujo de IA con cuota, trazabilidad y criterios de calidad.','Costo por resultado aceptado y fallos de evaluación.'],
+    ['Observar','Agentes, routers y MCP','Mantén el alcance acotado hasta resolver identidad, permisos y operación.','Señales de demanda, estabilidad y esfuerzo operativo.']
+  ];
+  return `<figure class="horizon-decisions">${decisions.map(([action,name,detail,check],i)=>
+    show(i,'horizon-row',`<strong>${action}</strong><div>${tag(name)}<p>${detail}</p></div><div>${tag('Evidencia para decidir')}<p>${check}</p></div>`)
+  ).join('')}</figure>`;
 }

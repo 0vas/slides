@@ -24,9 +24,6 @@ const sections = scenes.map((scene, i) => {
   const n = String(i + 1).padStart(2, '0');
   const tag = i === 0 ? 'h1' : 'h2';
   const heading = scene.heading ?? escape(scene.title);
-  if (!scene.source.includes('class="gartner-source"')) {
-    throw new Error('Missing Gartner footer in scene ' + n + ': ' + scene.title);
-  }
   return [
     '<section class="scene ' + scene.theme + ' ' + (scene.layout ?? '') + '" data-title="' + escape(scene.title) +
       '" data-chapter="' + escape(scene.chapter) + '" data-continuity="' + escape(scene.continuity) + '" data-max="' + (scene.steps ?? 0) + '" data-step="0" data-note="' +
@@ -36,7 +33,6 @@ const sections = scenes.map((scene, i) => {
     '<div class="eyebrow"><i aria-hidden="true"></i>' + escape(scene.tag) + '</div>',
     '<' + tag + '>' + heading + '</' + tag + '>',
     '<div class="body">' + scene.body + '</div>',
-    '<p class="source">' + scene.source + '</p>',
     '<footer class="folio">' + n + ' / ' + scenes.length + '</footer>',
     '</section>'
   ].join('\n');

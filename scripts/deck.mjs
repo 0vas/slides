@@ -9,7 +9,7 @@ import { buildStaticDeck, serveStaticDeck, staticDeckMeta } from './static-decks
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const decksDir = join(root, 'decks')
 const repoName = basename(root)
-const repositoryUrl = 'https://github.com/0vas/slides-personal'
+const repositoryUrl = 'https://github.com/0vas/slides'
 const sharedFavicon = join(root, 'shared', 'public', 'favicon.svg')
 
 const command = process.argv[2] || 'list'

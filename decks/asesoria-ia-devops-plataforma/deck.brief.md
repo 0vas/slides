@@ -33,7 +33,7 @@
 - `make check DECK=asesoria-ia-devops-plataforma`
 - `SITE_BASE_PATH=/ make build-all` when packaging
 - Browser review of cover, speaker, chapter openers, dense role map, close at 1440x900
-- Confirm portal GitHub icon → `https://github.com/0vas/slides-personal`
+- Confirm portal GitHub icon → `https://github.com/0vas/slides`
 
 
 ## Rewrite 2026-11-05

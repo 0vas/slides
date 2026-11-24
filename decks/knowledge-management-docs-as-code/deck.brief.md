@@ -1,0 +1,9 @@
+# Knowledge Management y Documentation as Code
+
+Presentación técnica en español para desarrollo, SRE, plataforma y líderes de ingeniería. Se estima una sesión de 40–45 minutos. La acción final es probar el ciclo completo en un dominio y comprobar si otra persona puede resolver la misma tarea.
+
+La charla DevSecOps 2024 es la referencia de contenido. Se retoman la lectura del Manifiesto Ágil, los cuatro niveles del conocimiento, lectores, creadores y validadores, la publicación desde Git, las etapas de adopción y el uso en IA. Los resultados de la encuesta se atribuyen al material original y su metodología no está disponible. Las 800 horas son una simulación aritmética. El servicio Pedidos y sus eventos son ficticios.
+
+HTML autónomo de 1600 × 900 con el motor de navegación, el perfil aprobado en la lámina 2, QR y carrusel. Crema Clásica y Verde Abeto se muestrearon de la referencia. Rojo Tomate usa #EE4129 y se aclara u oscurece para texto según el fondo. Space Grotesk y Manrope se incrustan con licencia OFL. Las figuras de documentos, diagramas, tablas y terminales se dibujan con HTML, CSS y SVG. Las referencias van al final. La brújula de Diátaxis y su aplicación al runbook se desarrollan junto al caso de Pedidos. La comparación con Confluence distingue licencias, operación, escaneo de secretos y personalización. Las 24 escenas principales tienen cinco avances reversibles cada una. La silueta de la guía conecta las secuencias de captura, revisión, publicación, recuperación y traspaso mediante trayectorias, reacciones a cada control y sellos de estado.
+
+Criterios de entrega. Cada sección debe cubrir un trabajo verificable del ciclo de conocimiento. La navegación, estados reversibles, índice, carrusel, modo de movimiento reducido y HTML sin red deben funcionar. Revisar capturas a 1440 × 900 y verificar controles y compilación local.
